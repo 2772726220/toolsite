@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大小写转换 - 在线英文大小写转换工具</title>
+  <meta name="description" content="免费在线大小写转换工具，大写、小写、首字母大写、驼峰式、下划线式一键转换，浏览器本地处理，文案与代码命名必备。" />
+  <meta name="keywords" content="大小写转换,英文大写转换,首字母大写,驼峰转换,下划线转换,单词首字母大写">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔠</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u6587\u4e0d\u53d7\u5927\u5c0f\u5199\u5f71\u54cd\uff0c\u82f1\u6587\u6b63\u5e38\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u9a7c\u5cf0\u548c\u4e0b\u5212\u7ebf\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9a7c\u5cf0\u5982 userName\uff0c\u4e0b\u5212\u7ebf\u5982 user_name\uff0c\u662f\u4e24\u79cd\u547d\u540d\u89c4\u8303\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}},{"@type":"Question","name":"\u80fd\u4e00\u952e\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔠 大小写转换</h1>
+    <p>文本大小写、驼峰、下划线转换</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="ccInput">输入文本</label>
+  <textarea id="ccInput" placeholder="输入英文或代码..."></textarea>
+</div>
+<div class="actions">
+  <button class="btn btn-secondary" data-case="upper" type="button">全部大写</button>
+  <button class="btn btn-secondary" data-case="lower" type="button">全部小写</button>
+  <button class="btn btn-secondary" data-case="title" type="button">首字母大写</button>
+  <button class="btn btn-secondary" data-case="words" type="button">每个单词大写</button>
+  <button class="btn btn-secondary" data-case="camel" type="button">驼峰式</button>
+  <button class="btn btn-secondary" data-case="snake" type="button">下划线式</button>
+</div>
+<div class="actions">
+  <button class="btn" id="ccCopyBtn" type="button">复制结果</button>
+</div>
+<div class="result-box" id="ccResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要大小写转换？</h2><p>写英文文案、变量命名（驼峰式/下划线式）、批量改字母大小写，工具一键完成。</p><h2>支持哪几种转换？</h2><p>全大写、全小写、首字母大写、每个单词首字母大写、驼峰式、下划线式。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文吗？</summary><p>中文不受大小写影响，英文正常转换。</p></details><details class="faq-item"><summary>驼峰和下划线是什么？</summary><p>驼峰如 userName，下划线如 user_name，是两种命名规范。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地处理。</p></details><details class="faq-item"><summary>能一键复制吗？</summary><p>可以。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>大小写转换 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var ccResult = document.getElementById('ccResult');
+  var lastCc = '';
+
+  function words(text) {
+    return text.trim().split(/[\s_\-]+/).filter(Boolean);
+  }
+
+  document.querySelectorAll('[data-case]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = document.getElementById('ccInput').value;
+      if (!text.trim()) { showToast('请输入文本'); return; }
+      var c = btn.dataset.case;
+      if (c === 'upper') lastCc = text.toUpperCase();
+      else if (c === 'lower') lastCc = text.toLowerCase();
+      else if (c === 'title') lastCc = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+      else if (c === 'words') lastCc = words(text).map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); }).join(' ');
+      else if (c === 'camel') {
+        lastCc = words(text).map(function (w, i) { return i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); }).join('');
+      } else if (c === 'snake') lastCc = words(text).map(function (w) { return w.toLowerCase(); }).join('_');
+      ccResult.hidden = false;
+      ccResult.textContent = lastCc;
+    });
+  });
+
+  document.getElementById('ccCopyBtn').addEventListener('click', function () {
+    if (!lastCc) { showToast('请先转换'); return; }
+    navigator.clipboard.writeText(lastCc).then(function () { showToast('已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
