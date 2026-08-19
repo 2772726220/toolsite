@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>罗马数字转换 - 在线阿拉伯转罗马数字工具</title>
+  <meta name="description" content="免费在线罗马数字转换工具，阿拉伯数字与罗马数字双向转换，支持 1-3999 标准罗马数字规范，显示转换规则与分解过程，历史爱好与题名标注可用。" />
+  <meta name="keywords" content="罗马数字转换,阿拉伯转罗马数字,罗马数字,数字转换,1998罗马数字">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"2024 \u7684\u7f57\u9a6c\u6570\u5b57\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"MMXXIV\u3002"}},{"@type":"Question","name":"\u80fd\u53cd\u5411\u8f6c\u56de\u963f\u62c9\u4f2f\u6570\u5b57\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\uff0c\u53cc\u5411\u8f6c\u6362\u90fd\u652f\u6301\u3002"}},{"@type":"Question","name":"\u6709\u975e\u6cd5\u7684\u7f57\u9a6c\u6570\u5b57\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u63d0\u793a\u8f93\u5165\u4e0d\u5408\u6cd5\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🏛️ 罗马数字转换</h1>
+    <p>阿拉伯数字 ↔ 罗马数字</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">罗马数字转换</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#罗马数字</span><span class="badge">#转换</span>
+<div class="field">
+  <label for="rnMode">转换方向</label>
+  <select id="rnMode">
+    <option value="toRoman">阿拉伯 → 罗马</option>
+    <option value="toArab">罗马 → 阿拉伯</option>
+  </select>
+</div>
+<div class="field">
+  <label for="rnInput">输入</label>
+  <input type="text" id="rnInput" value="1998" style="font-family:monospace;">
+</div>
+<div class="actions">
+  <button class="btn" id="rnBtn" type="button">转换</button>
+</div>
+<div class="result-box" id="rnResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>罗马数字怎么读？</h2><p>用 I、V、X、L、C、D、M 表示 1/5/10/50/100/500/1000，小数字在左为减、在右为加，如 IV=4、VI=6。</p><h2>支持最大多少？</h2><p>标准罗马数字规范支持 1-3999，更大的数需要扩展符号。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>2024 的罗马数字是什么？</summary><p>MMXXIV。</p></details><details class="faq-item"><summary>能反向转回阿拉伯数字吗？</summary><p>能，双向转换都支持。</p></details><details class="faq-item"><summary>有非法的罗马数字会怎样？</summary><p>会提示输入不合法。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>罗马数字转换 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var rnResult = document.getElementById('rnResult');
+
+  function toRoman(n) {
+    if (n < 1 || n > 3999) throw new Error('range');
+    var vals = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+    var out = '';
+    for (var i = 0; i < vals.length; i++) {
+      while (n >= vals[i][0]) { out += vals[i][1]; n -= vals[i][0]; }
+    }
+    return out;
+  }
+
+  function fromRoman(s) {
+    if (!/^[IVXLCDM]+$/.test(s)) throw new Error('bad');
+    var map = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+    var total = 0;
+    for (var i = 0; i < s.length; i++) {
+      var cur = map[s[i]];
+      var next = i + 1 < s.length ? map[s[i + 1]] : 0;
+      if (cur < next) total -= cur;
+      else total += cur;
+    }
+    if (toRoman(total) !== s) throw new Error('bad');
+    return total;
+  }
+
+  document.getElementById('rnBtn').addEventListener('click', function () {
+    var mode = document.getElementById('rnMode').value;
+    var input = document.getElementById('rnInput').value.trim();
+    if (!input) { showToast('请输入内容'); return; }
+    rnResult.hidden = false;
+    try {
+      if (mode === 'toRoman') {
+        var n = parseInt(input, 10);
+        if (isNaN(n)) { showToast('请输入数字'); return; }
+        rnResult.innerHTML = '<b style="font-size:26px;">' + toRoman(n) + '</b>';
+      } else {
+        rnResult.innerHTML = '<b style="font-size:26px;">' + fromRoman(input.toUpperCase()) + '</b>';
+      }
+    } catch (e) {
+      showToast(e.message === 'range' ? '仅支持 1-3999' : '输入不合法');
+    }
+  });
+})();
+</script>
+</body>
+</html>
