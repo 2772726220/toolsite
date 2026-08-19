@@ -91,22 +91,24 @@ var amountResult = document.getElementById('amountResult');
   function integerToUpper(str) {
     var len = str.length;
     if (len === 0) return '';
-    var out = '';
-    var groupIndex = 0;
-    var zeroAppended = false;
+    var groups = [];
     while (len > 0) {
       var start = Math.max(0, len - 4);
-      var section = str.slice(start, len).split('').map(Number);
-      var secStr = sectionToUpper(section);
-      if (secStr) {
-        if (zeroAppended && out) out += '零';
-        out += secStr + CN_GROUP[groupIndex];
-        zeroAppended = false;
-      } else {
-        zeroAppended = true;
-      }
+      groups.unshift(str.slice(start, len).split('').map(Number));
       len = start;
-      groupIndex++;
+    }
+    var out = '';
+    var needZero = false;
+    for (var i = 0; i < groups.length; i++) {
+      var secStr = sectionToUpper(groups[i]);
+      var groupUnit = CN_GROUP[groups.length - 1 - i];
+      if (secStr) {
+        if (needZero && out && !secStr.startsWith('零')) out += '零';
+        out += secStr + groupUnit;
+        needZero = false;
+      } else {
+        needZero = true;
+      }
     }
     return out;
   }
@@ -125,9 +127,15 @@ var amountResult = document.getElementById('amountResult');
     else out += integerToUpper(intPart) + '元';
     if (decPart) {
       var jiao = decPart[0], fen = decPart[1];
-      if (jiao && jiao !== '0') out += CN_NUM[+jiao] + '角';
-      else if (fen && fen !== '0') out += '零';
-      if (fen && fen !== '0') out += CN_NUM[+fen] + '分';
+      if (jiao && jiao !== '0') {
+        out += CN_NUM[+jiao] + '角';
+        if (fen && fen !== '0') out += CN_NUM[+fen] + '分';
+        else out += '整';
+      } else if (fen && fen !== '0') {
+        out += '零' + CN_NUM[+fen] + '分';
+      } else {
+        out += '整';
+      }
     } else {
       out += '整';
     }
