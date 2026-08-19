@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渐变生成器 - 在线CSS渐变背景生成工具</title>
+  <meta name="description" content="免费在线 CSS 渐变生成器，创建线性/径向渐变，自定义颜色、角度、位置，实时预览并一键复制 CSS 代码，前端开发必备。" />
+  <meta name="keywords" content="渐变生成器,渐变背景,在线渐变,CSS渐变,渐变颜色,background渐变">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u590d\u5236 CSS \u4ee3\u7801\u5230 background \u5c5e\u6027\u5373\u53ef\uff0c\u517c\u5bb9\u6240\u6709\u73b0\u4ee3\u6d4f\u89c8\u5668\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5f84\u5411\u6e10\u53d8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u5728\u7c7b\u578b\u4e2d\u9009\u62e9\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u52a0\u591a\u4e2a\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 2-5 \u4e2a\u989c\u8272\u8282\u70b9\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🌈 渐变生成器</h1>
+    <p>生成 CSS 渐变背景，一键复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="gradType">渐变类型</label>
+  <select id="gradType" style="width:auto;">
+    <option value="linear">线性渐变</option>
+    <option value="radial">径向渐变</option>
+  </select>
+</div>
+<div class="field">
+  <label for="gradAngle">方向/角度</label>
+  <input type="range" id="gradAngle" min="0" max="360" value="135" style="width:100%;accent-color:var(--primary);">
+  <span class="quality-value" id="gradAngleValue">135°</span>
+</div>
+<div class="field">
+  <label>颜色（2-5 个）</label>
+  <div id="gradColors"></div>
+  <button class="btn btn-secondary" id="gradAddBtn" type="button" style="margin-top:8px;padding:8px 16px;font-size:13px;">+ 添加颜色</button>
+</div>
+<div class="result-box" id="gradPreview" style="height:120px;border-radius:12px;"></div>
+<div class="actions">
+  <button class="btn btn-secondary" id="gradCopyBtn" type="button">复制 CSS 代码</button>
+</div>
+<div class="result-box" id="gradCode" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>渐变背景怎么用？</h2><p>网页背景、按钮、卡片、封面都可以用 CSS 渐变实现，比纯色更有层次感。工具可视化编辑，自动生成代码。</p><h2>支持哪几种渐变？</h2><p>支持线性渐变和径向渐变，可添加多个颜色节点、调节方向和位置。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的代码怎么用？</summary><p>复制 CSS 代码到 background 属性即可，兼容所有现代浏览器。</p></details><details class="faq-item"><summary>支持径向渐变吗？</summary><p>支持，可在类型中选择。</p></details><details class="faq-item"><summary>可以加多个颜色吗？</summary><p>支持 2-5 个颜色节点。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地生成。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>渐变生成器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var gradType = document.getElementById('gradType');
+  var gradAngle = document.getElementById('gradAngle');
+  var gradAngleValue = document.getElementById('gradAngleValue');
+  var gradColors = document.getElementById('gradColors');
+  var gradPreview = document.getElementById('gradPreview');
+  var gradCode = document.getElementById('gradCode');
+
+  function renderColors() {
+    var rows = gradColors.querySelectorAll('.grad-row');
+    if (rows.length < 2) {
+      document.getElementById('gradAddBtn').disabled = false;
+    }
+    document.getElementById('gradAddBtn').disabled = rows.length >= 5;
+    if (rows.length <= 2) {
+      var removes = gradColors.querySelectorAll('.grad-remove');
+      removes.forEach(function (b) { b.style.visibility = 'hidden'; });
+    } else {
+      gradColors.querySelectorAll('.grad-remove').forEach(function (b) { b.style.visibility = 'visible'; });
+    }
+    update();
+  }
+
+  function addColor(color) {
+    var row = document.createElement('div');
+    row.className = 'grad-row';
+    row.style.cssText = 'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+    row.innerHTML = '<input type="color" value="' + (color || '#2563eb') + '" style="width:44px;height:34px;border:none;background:none;">' +
+      '<input type="text" class="grad-hex" value="' + (color || '#2563eb') + '" style="width:120px;">' +
+      '<button class="btn btn-secondary grad-remove" type="button" style="padding:6px 10px;font-size:12px;">删除</button>';
+    row.querySelector('input[type=color]').addEventListener('input', function () {
+      row.querySelector('.grad-hex').value = this.value;
+      update();
+    });
+    row.querySelector('.grad-hex').addEventListener('input', function () {
+      if (/^#[0-9a-fA-F]{6}$/.test(this.value)) {
+        row.querySelector('input[type=color]').value = this.value;
+        update();
+      }
+    });
+    row.querySelector('.grad-remove').addEventListener('click', function () {
+      row.remove();
+      renderColors();
+    });
+    gradColors.appendChild(row);
+    renderColors();
+  }
+
+  gradType.addEventListener('change', update);
+  gradAngle.addEventListener('input', function () { gradAngleValue.textContent = gradAngle.value + '°'; update(); });
+  document.getElementById('gradAddBtn').addEventListener('click', function () { addColor(); });
+  document.getElementById('gradCopyBtn').addEventListener('click', function () {
+    navigator.clipboard.writeText(gradCode.textContent).then(function () { showToast('CSS 代码已复制'); });
+  });
+
+  function update() {
+    var colors = Array.prototype.map.call(gradColors.querySelectorAll('.grad-hex'), function (i) { return i.value; });
+    if (colors.length < 2) return;
+    var code;
+    if (gradType.value === 'linear') {
+      code = 'background: linear-gradient(' + gradAngle.value + 'deg, ' + colors.join(', ') + ');';
+    } else {
+      code = 'background: radial-gradient(circle, ' + colors.join(', ') + ');';
+    }
+    gradPreview.style.background = code.replace('background: ', '');
+    gradCode.hidden = false;
+    gradCode.textContent = code;
+  }
+
+  addColor('#2563eb');
+  addColor('#9333ea');
+})();
+</script>
+</body>
+</html>
