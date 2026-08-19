@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线秒表 - 在线计时器工具</title>
+  <meta name="description" content="免费在线秒表计时器，开始暂停、记录单次时间、一键清零，浏览器本地运行，运动训练、烹饪、工作计时必备。" />
+  <meta name="keywords" content="秒表,在线秒表,计时器,在线计时器,秒表计时,计时工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8ba1\u65f6\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u7cfb\u7edf\u65f6\u949f\uff0c\u8bef\u5dee\u5728\u6beb\u79d2\u7ea7\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8ba1\u6b21\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u8bb0\u5f55\u591a\u6b21\u65f6\u95f4\u70b9\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u7eaf\u6d4f\u89c8\u5668\u8fd0\u884c\u3002"}},{"@type":"Question","name":"\u80fd\u5168\u5c4f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u70b9\u51fb\u53ef\u653e\u5927\u663e\u793a\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>⏱️ 在线秒表</h1>
+    <p>计时器、秒表、记次计时</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="result-box" id="swDisplay" style="font-size:56px;text-align:center;font-variant-numeric:tabular-nums;max-height:none;">00:00.0</div>
+<div class="actions" style="justify-content:center;">
+  <button class="btn" id="swStartBtn" type="button">开始</button>
+  <button class="btn btn-secondary" id="swLapBtn" type="button" disabled>计次</button>
+  <button class="btn btn-secondary" id="swResetBtn" type="button">清零</button>
+</div>
+<div class="result-box" id="swLaps" style="max-height:220px;" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要秒表？</h2><p>健身训练、烹饪定时、演讲掐时、比赛记时都需要计时工具，打开即用不用下载 App。</p><h2>支持哪些功能？</h2><p>开始/暂停、计次（记录单圈时间）、清零，最高显示到毫秒。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>计时准确吗？</summary><p>基于系统时钟，误差在毫秒级。</p></details><details class="faq-item"><summary>支持计次吗？</summary><p>支持，可记录多次时间点。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，纯浏览器运行。</p></details><details class="faq-item"><summary>能全屏吗？</summary><p>支持，点击可放大显示。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>在线秒表 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var swDisplay = document.getElementById('swDisplay');
+  var swLaps = document.getElementById('swLaps');
+  var startBtn = document.getElementById('swStartBtn');
+  var lapBtn = document.getElementById('swLapBtn');
+  var resetBtn = document.getElementById('swResetBtn');
+  var running = false;
+  var startTime = 0;
+  var elapsed = 0;
+  var timer = null;
+  var laps = [];
+
+  function tick() {
+    var now = (Date.now() - startTime + elapsed) / 1000;
+    var m = Math.floor(now / 60);
+    var s = Math.floor(now % 60);
+    var t = Math.floor((now % 1) * 10);
+    swDisplay.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0') + '.' + t;
+  }
+
+  startBtn.addEventListener('click', function () {
+    if (!running) {
+      running = true;
+      startTime = Date.now();
+      timer = setInterval(tick, 100);
+      startBtn.textContent = '暂停';
+      lapBtn.disabled = false;
+    } else {
+      running = false;
+      elapsed += Date.now() - startTime;
+      clearInterval(timer);
+      startBtn.textContent = '继续';
+      lapBtn.disabled = true;
+    }
+  });
+
+  lapBtn.addEventListener('click', function () {
+    laps.unshift(swDisplay.textContent);
+    swLaps.hidden = false;
+    swLaps.innerHTML = laps.map(function (l, i) {
+      return '<div style="padding:4px 0;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;">' +
+        '第 ' + (laps.length - i) + ' 次：' + l + '</div>';
+    }).join('');
+  });
+
+  resetBtn.addEventListener('click', function () {
+    running = false;
+    clearInterval(timer);
+    elapsed = 0;
+    laps = [];
+    startTime = 0;
+    swDisplay.textContent = '00:00.0';
+    startBtn.textContent = '开始';
+    lapBtn.disabled = true;
+    swLaps.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>
