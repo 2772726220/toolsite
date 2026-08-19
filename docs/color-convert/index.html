@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色转换器 - 在线HEX/RGB/HSL颜色互转工具</title>
+  <meta name="description" content="免费在线颜色转换器，HEX、RGB、HSL、HSV 颜色格式一键互转，实时预览色块和透明度，浏览器本地处理，设计师与开发者必备。" />
+  <meta name="keywords" content="颜色转换器,颜色互转,HEX转RGB,RGB转HEX,HSL转换,在线取色,颜色代码">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"HEX \u989c\u8272\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"HEX \u7528 6 \u4f4d\u5341\u516d\u8fdb\u5236\u8868\u793a\u989c\u8272\uff0c\u5982 #ff0000 \u662f\u7ea2\u8272\uff0c\u4e24\u4f4d\u4e00\u7ec4\u5206\u522b\u4ee3\u8868\u7ea2\u7eff\u84dd\u3002"}},{"@type":"Question","name":"\u8f6c\u6362\u540e\u7684\u989c\u8272\u4f1a\u53d8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5404\u683c\u5f0f\u53ea\u662f\u540c\u4e00\u989c\u8272\u7684\u4e0d\u540c\u8868\u8fbe\u65b9\u5f0f\uff0c\u8f6c\u6362\u7ed3\u679c\u7cbe\u786e\u4e00\u81f4\u3002"}},{"@type":"Question","name":"\u652f\u6301\u900f\u660e\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0cHEX 8 \u4f4d\uff08#rrggbbaa\uff09\u548c rgba() \u5747\u80fd\u8f6c\u6362\u5e76\u4fdd\u7559\u900f\u660e\u5ea6\u3002"}},{"@type":"Question","name":"\u6709\u4ec0\u4e48\u7528\u9014\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5199 CSS\u3001\u505a\u8bbe\u8ba1\u7a3f\u53d6\u8272\u3001\u5c0f\u7a0b\u5e8f\u6837\u5f0f\u5f00\u53d1\u7b49\u573a\u666f\u90fd\u9700\u8981\u5728\u4e0d\u540c\u989c\u8272\u683c\u5f0f\u95f4\u5207\u6362\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎨 颜色转换器</h1>
+    <p>HEX/RGB/HSL/HSV 颜色格式互转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="colorInput">输入颜色代码</label>
+  <input type="text" id="colorInput" placeholder="#ff0000 或 rgb(255,0,0) 或 hsl(0,100%,50%)" value="#2563eb">
+</div>
+<div class="stat-bar">
+  <div class="stat" style="grid-column:span 3;"><div style="height:60px;border-radius:8px;" id="colorPreview"></div></div>
+</div>
+<div class="result-box" id="colorResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>颜色代码有哪些格式？</h2><p>网页设计中常见 HEX（#ff0000）、RGB（rgb(255,0,0)）、HSL（hsl(0,100%,50%)）等格式，不同场景需要用不同格式，本工具一键互转。</p><h2>怎么快速得到目标颜色？</h2><p>输入任意一种格式的颜色代码，工具实时转换并显示色块预览，可直接复制其他格式的结果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>HEX 颜色是什么？</summary><p>HEX 用 6 位十六进制表示颜色，如 #ff0000 是红色，两位一组分别代表红绿蓝。</p></details><details class="faq-item"><summary>转换后的颜色会变吗？</summary><p>不会，各格式只是同一颜色的不同表达方式，转换结果精确一致。</p></details><details class="faq-item"><summary>支持透明度吗？</summary><p>支持，HEX 8 位（#rrggbbaa）和 rgba() 均能转换并保留透明度。</p></details><details class="faq-item"><summary>有什么用途？</summary><p>写 CSS、做设计稿取色、小程序样式开发等场景都需要在不同颜色格式间切换。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>颜色转换器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var colorInput = document.getElementById('colorInput');
+  var colorPreview = document.getElementById('colorPreview');
+  var colorResult = document.getElementById('colorResult');
+
+  function hexToRgb(hex) {
+    var m = hex.replace('#', '');
+    if (m.length === 3) m = m.split('').map(function (c) { return c + c; }).join('');
+    if (m.length !== 6) return null;
+    var n = parseInt(m, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255, a: 1 };
+  }
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+  }
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h /= 6;
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+  function hslToRgb(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    if (s === 0) { var v = Math.round(l * 255); return { r: v, g: v, b: v }; }
+    var hue2rgb = function (p, q, t) {
+      if (t < 0) t += 1; if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+    return {
+      r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+      g: Math.round(hue2rgb(p, q, h) * 255),
+      b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
+    };
+  }
+
+  function parse(input) {
+    var v = input.trim();
+    var m = v.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/);
+    if (m) {
+      var hex = m[1];
+      if (hex.length === 8) return { type: 'hex8', hex: hex };
+      if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+      return { type: 'hex', hex: hex };
+    }
+    m = v.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*([\d.]+))?\s*\)/i);
+    if (m) {
+      var rgb = { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+      if (rgb.r > 255 || rgb.g > 255 || rgb.b > 255) return null;
+      return { type: 'rgb', rgb: rgb };
+    }
+    m = v.match(/hsla?\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%(?:\s*,\s*([\d.]+))?\s*\)/i);
+    if (m) {
+      var hsl = { h: +m[1], s: +m[2], l: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+      if (hsl.h > 360 || hsl.s > 100 || hsl.l > 100) return null;
+      return { type: 'hsl', hsl: hsl };
+    }
+    return null;
+  }
+
+  function convert(input) {
+    var p = parse(input);
+    if (!p) return null;
+    var rgb, alpha = 1;
+    if (p.type === 'hex') { rgb = hexToRgb(p.hex); }
+    else if (p.type === 'hex8') {
+      var r = parseInt(p.hex.slice(0, 2), 16), g = parseInt(p.hex.slice(2, 4), 16), b = parseInt(p.hex.slice(4, 6), 16);
+      alpha = Math.round(parseInt(p.hex.slice(6, 8), 16) / 255 * 100) / 100;
+      rgb = { r: r, g: g, b: b };
+    }
+    else if (p.type === 'rgb') { rgb = p.rgb; alpha = p.rgb.a; }
+    else if (p.type === 'hsl') { rgb = hslToRgb(p.hsl.h, p.hsl.s, p.hsl.l); alpha = p.hsl.a; }
+    var hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+    var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    return {
+      hex: hex,
+      hex8: alpha < 1 ? hex + ('0' + Math.round(alpha * 255).toString(16)).slice(-2) : null,
+      rgb: 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')',
+      rgba: 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + alpha + ')',
+      hsl: 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)',
+      hsla: 'hsla(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%, ' + alpha + ')',
+      preview: alpha < 1 ? 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + alpha + ')' : hex
+    };
+  }
+
+  colorInput.addEventListener('input', function () {
+    var res = convert(colorInput.value);
+    if (!res) { colorResult.hidden = true; colorPreview.style.background = '#fff'; return; }
+    colorPreview.style.background = res.preview;
+    colorResult.hidden = false;
+    colorResult.innerHTML =
+      'HEX：<b>' + res.hex + '</b>' + (res.hex8 ? '<br>HEX（含透明度）：<b>' + res.hex8 + '</b>' : '') +
+      '<br>RGB：<b>' + res.rgb + '</b>' +
+      '<br>RGBA：<b>' + res.rgba + '</b>' +
+      '<br>HSL：<b>' + res.hsl + '</b>' +
+      '<br>HSLA：<b>' + res.hsla + '</b>';
+  });
+  colorInput.dispatchEvent(new Event('input'));
+})();
+</script>
+</body>
+</html>
