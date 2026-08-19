@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS圆角生成器 - 在线圆角边框生成工具</title>
+  <meta name="description" content="免费在线 CSS 圆角生成器，可视化调整四角圆角半径，实时预览盒子效果，一键复制 border-radius 代码，前端开发必备。" />
+  <meta name="keywords" content="圆角生成器,border-radius,CSS圆角,圆角代码,在线圆角工具,盒模型">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟦</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u72ec\u7acb\u5706\u89d2\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u56db\u89d2\u53ef\u5206\u522b\u8bbe\u7f6e\u3002"}},{"@type":"Question","name":"\u80fd\u5b9e\u65f6\u9884\u89c8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u53f3\u4fa7\u5b9e\u65f6\u663e\u793a\u76d2\u5b50\u6548\u679c\u3002"}},{"@type":"Question","name":"\u4ee3\u7801\u600e\u4e48\u590d\u5236\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e00\u952e\u590d\u5236\u6807\u51c6 border-radius \u4ee3\u7801\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🟦 圆角生成器</h1>
+    <p>可视化生成 CSS 圆角代码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label>圆角设置</label>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <label>左上 <input type="range" class="br" data-pos="tl" min="0" max="200" value="16" style="width:140px;accent-color:var(--primary);"></label>
+    <label>右上 <input type="range" class="br" data-pos="tr" min="0" max="200" value="16" style="width:140px;accent-color:var(--primary);"></label>
+    <label>右下 <input type="range" class="br" data-pos="br" min="0" max="200" value="16" style="width:140px;accent-color:var(--primary);"></label>
+    <label>左下 <input type="range" class="br" data-pos="bl" min="0" max="200" value="16" style="width:140px;accent-color:var(--primary);"></label>
+  </div>
+  <label style="display:flex;align-items:center;gap:6px;margin-top:10px;"><input type="checkbox" id="brLink" checked> 四角联动</label>
+</div>
+<div class="result-box" id="brPreview" style="height:180px;background:linear-gradient(135deg,#2563eb,#9333ea);margin-bottom:12px;"></div>
+<div class="actions"><button class="btn btn-secondary" id="brCopyBtn" type="button">复制 CSS 代码</button></div>
+<div class="result-box" id="brCode" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>圆角样式怎么调？</h2><p>卡片、按钮、头像都需要圆角，用可视化工具拖拽即可得到精确的 border-radius 代码。</p><h2>支持独立调四角吗？</h2><p>支持四个角分别设置，也可一键统一。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持独立圆角吗？</summary><p>支持，四角可分别设置。</p></details><details class="faq-item"><summary>能实时预览吗？</summary><p>可以，右侧实时显示盒子效果。</p></details><details class="faq-item"><summary>代码怎么复制？</summary><p>一键复制标准 border-radius 代码。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地生成。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>圆角生成器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var brSliders = Array.prototype.slice.call(document.querySelectorAll('.br'));
+  var brLink = document.getElementById('brLink');
+  var brPreview = document.getElementById('brPreview');
+  var brCode = document.getElementById('brCode');
+  var values = { tl: 16, tr: 16, br: 16, bl: 16 };
+
+  function update() {
+    if (brLink.checked) {
+      var v = values.tl;
+      values = { tl: v, tr: v, br: v, bl: v };
+      brSliders.forEach(function (s) { s.value = v; });
+    }
+    brPreview.style.borderRadius = values.tl + 'px ' + values.tr + 'px ' + values.br + 'px ' + values.bl + 'px';
+    var code = 'border-radius: ' + values.tl + 'px ' + values.tr + 'px ' + values.br + 'px ' + values.bl + 'px;';
+    brCode.hidden = false;
+    brCode.textContent = code;
+  }
+
+  brSliders.forEach(function (s) {
+    s.addEventListener('input', function () {
+      values[s.dataset.pos] = parseInt(s.value, 10);
+      update();
+    });
+  });
+  brLink.addEventListener('change', update);
+  document.getElementById('brCopyBtn').addEventListener('click', function () {
+    navigator.clipboard.writeText(brCode.textContent).then(function () { showToast('CSS 代码已复制'); });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
