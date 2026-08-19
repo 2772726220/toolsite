@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间差计算 - 在线时间间隔计算器</title>
+  <meta name="description" content="免费在线时间差计算器，计算两个时间点之间的间隔，精确到天、时、分、秒，也可计算从现在到目标时间的倒计时，浏览器本地计算。" />
+  <meta name="keywords" content="时间差计算,时间间隔,时间计算器,在线时间计算,两个时间相差,倒计时计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏳</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7cbe\u786e\u5230\u79d2\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\uff0c\u663e\u793a\u5929/\u65f6/\u5206/\u79d2\u5b8c\u6574\u95f4\u9694\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8de8\u5929\u8ba1\u7b97\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u81ea\u52a8\u8de8\u5929\u7d2f\u8ba1\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u7b97\u5012\u8ba1\u65f6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u7528'\u8ddd\u73b0\u5728'\u6a21\u5f0f\u8f93\u5165\u76ee\u6807\u65f6\u95f4\u5373\u53ef\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>⏳ 时间差计算</h1>
+    <p>计算两个时间点相差多少</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="tdStart">开始时间</label>
+  <input type="datetime-local" id="tdStart">
+</div>
+<div class="field">
+  <label for="tdEnd">结束时间</label>
+  <input type="datetime-local" id="tdEnd">
+</div>
+<div class="actions">
+  <button class="btn" id="tdBtn" type="button">计算差值</button>
+  <button class="btn btn-secondary" id="tdNowBtn" type="button">到现在的差值</button>
+</div>
+<div class="result-box" id="tdResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要时间差？</h2><p>计算工作时长、活动时长、从开始到现在过了多久，输入两个时间点即可得到精确间隔。</p><h2>支持哪些单位？</h2><p>自动展开为天、时、分、秒，也可查看总分钟数和总秒数。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>精确到秒吗？</summary><p>是，显示天/时/分/秒完整间隔。</p></details><details class="faq-item"><summary>支持跨天计算吗？</summary><p>支持，自动跨天累计。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>可以算倒计时吗？</summary><p>可以，用'距现在'模式输入目标时间即可。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>时间差计算 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var tdResult = document.getElementById('tdResult');
+  var tdStart = document.getElementById('tdStart');
+  var tdEnd = document.getElementById('tdEnd');
+
+  function fmt(dt) {
+    return dt.toLocaleString('zh-CN', { hour12: false });
+  }
+
+  function calc(s, e) {
+    var diff = e - s;
+    var sign = diff < 0 ? '（结束早于开始）' : '';
+    diff = Math.abs(diff);
+    var days = Math.floor(diff / 86400000);
+    var hrs = Math.floor(diff % 86400000 / 3600000);
+    var mins = Math.floor(diff % 3600000 / 60000);
+    var secs = Math.floor(diff % 60000 / 1000);
+    var totalMin = Math.floor(diff / 60000);
+    var totalSec = Math.floor(diff / 1000);
+    tdResult.hidden = false;
+    tdResult.innerHTML = '从 <b>' + fmt(s) + '</b> 到 <b>' + fmt(e) + '</b>' + sign + '<br>' +
+      '间隔：<b>' + days + '</b> 天 <b>' + hrs + '</b> 小时 <b>' + mins + '</b> 分 <b>' + secs + '</b> 秒<br>' +
+      '合计：' + totalMin + ' 分钟 / ' + totalSec + ' 秒';
+  }
+
+  document.getElementById('tdBtn').addEventListener('click', function () {
+    var s = new Date(tdStart.value);
+    var e = new Date(tdEnd.value);
+    if (isNaN(s) || isNaN(e)) { showToast('请选择两个时间'); return; }
+    calc(s, e);
+  });
+
+  document.getElementById('tdNowBtn').addEventListener('click', function () {
+    var s = new Date(tdStart.value);
+    if (isNaN(s)) { showToast('请选择开始时间'); return; }
+    calc(s, new Date());
+  });
+
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  tdStart.value = now.toISOString().slice(0, 16);
+  now.setHours(now.getHours() + 1);
+  tdEnd.value = now.toISOString().slice(0, 16);
+})();
+</script>
+</body>
+</html>
