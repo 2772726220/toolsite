@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片旋转翻转 - 在线图片旋转工具</title>
+  <meta name="description" content="免费在线图片旋转翻转工具，旋转 90/180/270 度、水平/垂直翻转，浏览器本地处理，无需上传，隐私安全。" />
+  <meta name="keywords" content="图片旋转,图片翻转,在线旋转图片,图片转90度,水平翻转图片">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4efb\u610f\u89d2\u5ea6\u65cb\u8f6c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 90/180/270 \u5ea6\uff0c\u65cb\u8f6c\u540e\u4f1a\u81ea\u9002\u5e94\u753b\u5e03\u5c3a\u5bf8\u3002"}},{"@type":"Question","name":"\u7167\u7247\u4f1a\u81ea\u52a8\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u5904\u7406\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u652f\u6301\u7ffb\u8f6c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6c34\u5e73\u7ffb\u8f6c\u548c\u5782\u76f4\u7ffb\u8f6c\u3002"}},{"@type":"Question","name":"\u65cb\u8f6c\u540e\u80cc\u666f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8d85\u51fa\u533a\u57df\u4ee5\u767d\u8272\u80cc\u666f\u586b\u5145\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔄 图片旋转</h1>
+    <p>图片旋转 90/180/270 度，一键翻转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="dropzone" id="dropzone">
+  <div class="icon">🔄</div>
+  <p>拖拽图片到此处，或点击选择文件</p>
+  <button class="btn" id="fileBtn" type="button">选择图片</button>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+</div>
+<div class="controls">
+  <label for="angle">旋转角度</label>
+  <select id="angle" style="width:auto;padding:8px 12px;">
+    <option value="90">顺时针 90°</option>
+    <option value="180">旋转 180°</option>
+    <option value="270">逆时针 90°</option>
+    <option value="flipH">水平翻转</option>
+    <option value="flipV">垂直翻转</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="rotateBtn" type="button" disabled>处理并下载</button>
+</div>
+<div class="result-box" id="result" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>图片方向不对怎么办？</h2><p>手机竖拍的照片在部分平台显示横了，用旋转工具一键纠正方向。支持 90 度、180 度、270 度旋转和水平/垂直翻转。</p><h2>旋转会损失画质吗？</h2><p>旋转 90/180/270 度不会损失画质；任意角度旋转需要重采样，可能有轻微损失。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持任意角度旋转吗？</summary><p>支持 90/180/270 度，旋转后会自适应画布尺寸。</p></details><details class="faq-item"><summary>照片会自动上传吗？</summary><p>不会，所有处理在浏览器本地完成。</p></details><details class="faq-item"><summary>支持翻转吗？</summary><p>支持水平翻转和垂直翻转。</p></details><details class="faq-item"><summary>旋转后背景是什么？</summary><p>超出区域以白色背景填充。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片旋转 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var fileBtn = document.getElementById('fileBtn');
+  var rotateBtn = document.getElementById('rotateBtn');
+  var result = document.getElementById('result');
+  var selected = null;
+
+  fileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault(); dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length) loadFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  function loadFile(file) {
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) { showToast('请选择图片文件'); return; }
+    var reader = new FileReader();
+    reader.onload = function (e) { selected = { file: file, dataUrl: e.target.result }; rotateBtn.disabled = false; showToast('图片已就绪'); };
+    reader.readAsDataURL(file);
+  }
+
+  rotateBtn.addEventListener('click', function () {
+    if (!selected) return;
+    var img = new Image();
+    img.onload = function () {
+      var op = document.getElementById('angle').value;
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (op === 'flipH' || op === 'flipV') {
+        canvas.width = w; canvas.height = h;
+        ctx.translate(op === 'flipH' ? w : 0, op === 'flipV' ? h : 0);
+        ctx.scale(op === 'flipH' ? -1 : 1, op === 'flipV' ? -1 : 1);
+        ctx.drawImage(img, 0, 0);
+      } else {
+        var angle = parseInt(op, 10);
+        var swap = angle === 90 || angle === 270;
+        canvas.width = swap ? h : w;
+        canvas.height = swap ? w : h;
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(angle * Math.PI / 180);
+        ctx.drawImage(img, -w / 2, -h / 2);
+      }
+      canvas.toBlob(function (blob) {
+        var ext = selected.file.type === 'image/png' ? 'png' : (selected.file.type === 'image/webp' ? 'webp' : 'jpg');
+        window.download(URL.createObjectURL(blob), selected.file.name.replace(/\.[^.]+$/, '') + '_rotated.' + ext);
+        result.hidden = false;
+        result.textContent = '✅ 处理完成：' + formatSize(blob.size);
+        setTimeout(function () { result.hidden = true; }, 5000);
+      }, selected.file.type, 0.92);
+    };
+    img.src = selected.dataUrl;
+  });
+})();
+</script>
+</body>
+</html>
