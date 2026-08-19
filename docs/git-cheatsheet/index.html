@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git命令速查 - 在线Git常用命令大全</title>
+  <meta name="description" content="免费在线 Git 命令速查表，覆盖配置、提交、分支、合并、撤销、远程仓库等常用命令及示例，程序员开发必备，浏览器本地查看。" />
+  <meta name="keywords" content="git命令,git速查,git常用命令,git教程,git命令大全,git cheatsheet">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u547d\u4ee4\u53ef\u9760\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6574\u7406\u81ea\u5b98\u65b9\u6587\u6863\u7684\u5e38\u7528\u547d\u4ee4\uff0c\u9644\u6ce8\u91ca\u8bf4\u660e\u3002"}},{"@type":"Question","name":"\u80fd\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6bcf\u6761\u547d\u4ee4\u53ef\u4e00\u952e\u590d\u5236\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u672c\u5730\u67e5\u770b\u3002"}},{"@type":"Question","name":"\u9002\u5408\u65b0\u624b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9002\u5408\uff0c\u6309\u573a\u666f\u5206\u7c7b\u5e76\u6709\u4e2d\u6587\u6ce8\u91ca\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🌿 Git命令速查</h1>
+    <p>Git 常用命令速查表</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="result-box" id="gitResult" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>有哪些 Git 常用命令？</h2><p>配置、提交、分支、合并、回退、远程仓库操作等按场景分类，每条附示例。</p><h2>怎么快速查？</h2><p>按使用场景分类速查，复制命令到终端即可使用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>命令可靠吗？</summary><p>整理自官方文档的常用命令，附注释说明。</p></details><details class="faq-item"><summary>能复制吗？</summary><p>每条命令可一键复制。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，本地查看。</p></details><details class="faq-item"><summary>适合新手吗？</summary><p>适合，按场景分类并有中文注释。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>Git命令速查 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var gitResult = document.getElementById('gitResult');
+  var GIT = [
+    ['配置', [
+      ['git config --global user.name "名字"', '设置用户名'],
+      ['git config --global user.email "邮箱"', '设置邮箱'],
+      ['git config --list', '查看所有配置'],
+      ['git config --global core.editor "vim"', '设置默认编辑器'],
+      ['git config --global color.ui true', '开启颜色显示']
+    ]],
+    ['初始化/克隆', [
+      ['git init', '初始化新仓库'],
+      ['git clone <仓库地址>', '克隆远程仓库'],
+      ['git clone <地址> <目录>', '克隆到指定目录']
+    ]],
+    ['提交', [
+      ['git status', '查看工作区状态'],
+      ['git add <文件>', '暂存单个文件'],
+      ['git add .', '暂存所有修改'],
+      ['git commit -m "说明"', '提交暂存内容'],
+      ['git commit -am "说明"', '暂存并提交（跳过已跟踪文件）'],
+      ['git log --oneline', '查看提交历史（精简）'],
+      ['git diff', '查看未暂存的改动']
+    ]],
+    ['分支', [
+      ['git branch', '列出本地分支'],
+      ['git branch <名字>', '创建分支'],
+      ['git checkout <分支>', '切换分支'],
+      ['git checkout -b <名字>', '创建并切换分支'],
+      ['git merge <分支>', '合并分支到当前'],
+      ['git branch -d <名字>', '删除分支'],
+      ['git branch -a', '列出所有分支（含远程）']
+    ]],
+    ['撤销/回退', [
+      ['git restore <文件>', '丢弃工作区改动'],
+      ['git restore --staged <文件>', '取消暂存'],
+      ['git reset --hard HEAD~1', '回退上一个提交（丢弃改动）'],
+      ['git reset --soft HEAD~1', '回退提交但保留改动'],
+      ['git revert <commit>', '用新提交撤销指定提交'],
+      ['git stash', '暂存当前改动'],
+      ['git stash pop', '恢复暂存改动']
+    ]],
+    ['远程仓库', [
+      ['git remote -v', '查看远程仓库'],
+      ['git remote add origin <地址>', '添加远程仓库'],
+      ['git push -u origin main', '首次推送并关联'],
+      ['git push', '推送提交'],
+      ['git pull', '拉取并合并'],
+      ['git fetch', '拉取但不合并'],
+      ['git push origin --delete <分支>', '删除远程分支']
+    ]],
+    ['标签/其他', [
+      ['git tag', '列出标签'],
+      ['git tag v1.0.0', '打标签'],
+      ['git show <commit>', '查看提交详情'],
+      ['git log --graph', '查看图形化提交历史'],
+      ['git blame <文件>', '查看每行是谁改的'],
+      ['git clean -fd', '删除未跟踪文件']
+    ]]
+  ];
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  GIT.forEach(function (group) {
+    var block = document.createElement('div');
+    block.style.cssText = 'margin-bottom:16px;';
+    var title = document.createElement('div');
+    title.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:8px;color:var(--primary);';
+    title.textContent = group[0];
+    block.appendChild(title);
+    group[1].forEach(function (item) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);';
+      var code = document.createElement('code');
+      code.textContent = item[0];
+      code.style.cssText = 'flex:1;font-size:13px;white-space:nowrap;overflow-x:auto;';
+      var desc = document.createElement('span');
+      desc.textContent = item[1];
+      desc.style.cssText = 'color:var(--muted);font-size:12px;min-width:150px;text-align:right;';
+      var btn = document.createElement('button');
+      btn.className = 'btn btn-secondary';
+      btn.type = 'button';
+      btn.textContent = '复制';
+      btn.style.cssText = 'padding:4px 10px;font-size:12px;flex-shrink:0;';
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(item[0]).then(function () { showToast('命令已复制'); });
+      });
+      row.appendChild(code); row.appendChild(desc); row.appendChild(btn);
+      block.appendChild(row);
+    });
+    gitResult.appendChild(block);
+  });
+})();
+</script>
+</body>
+</html>
