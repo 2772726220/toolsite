@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则测试 - 在线正则表达式测试匹配工具</title>
+  <meta name="description" content="免费在线正则表达式测试工具，输入正则和文本实时显示匹配结果与高亮，支持全局匹配、忽略大小写等常用选项，浏览器本地处理，程序员调试必备。" />
+  <meta name="keywords" content="正则测试,正则表达式,正则在线测试,正则匹配,regex工具,regexp">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6211\u7684\u5185\u5bb9\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6b63\u5219\u5339\u914d\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u6267\u884c\u3002"}},{"@type":"Question","name":"\u5339\u914d\u7ed3\u679c\u600e\u4e48\u67e5\u770b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6587\u672c\u4e2d\u7684\u547d\u4e2d\u90e8\u5206\u4f1a\u9ad8\u4eae\uff0c\u4e0b\u65b9\u5217\u8868\u4f1a\u9010\u4e00\u5217\u51fa\u6bcf\u4e2a\u5339\u914d\u7684\u5b8c\u6574\u5185\u5bb9\u3001\u8d77\u59cb\u4f4d\u7f6e\u548c\u957f\u5ea6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5206\u7ec4\u6355\u83b7\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u5339\u914d\u5217\u8868\u4f1a\u663e\u793a\u6355\u83b7\u7ec4\u5185\u5bb9\uff0c\u65b9\u4fbf\u63d0\u53d6\u90e8\u5206\u4fe1\u606f\u3002"}},{"@type":"Question","name":"\u6b63\u5219\u5199\u9519\u4e86\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u4f1a\u63d0\u793a\u8bed\u6cd5\u9519\u8bef\u4f4d\u7f6e\uff0c\u4e0d\u5f71\u54cd\u7ee7\u7eed\u7f16\u8f91\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🧩 正则测试</h1>
+    <p>正则表达式在线测试，高亮匹配结果</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="pattern">正则表达式</label>
+  <input type="text" id="pattern" placeholder="如 \d{11}" value="\d{11}">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="optG" checked> 全局 g</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="optI"> 忽略大小写 i</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="optM"> 多行 m</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="optS"> 点匹配换行 s</label>
+</div>
+<div class="field">
+  <label for="testText">测试文本</label>
+  <textarea id="testText" placeholder="粘贴要测试的文本..."></textarea>
+</div>
+<div class="result-box" id="regexResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是正则表达式？</h2><p>正则表达式是一套描述字符串匹配模式的语法，如验证手机号、提取邮箱、过滤脏数据都能用正则实现，是程序员的日常工具。</p><h2>怎么用这个工具？</h2><p>上方输入正则表达式，下方输入待匹配文本，匹配结果实时高亮显示，并列出所有匹配的具体内容，方便调试。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>我的内容会上传吗？</summary><p>不会，正则匹配完全在浏览器本地执行。</p></details><details class="faq-item"><summary>匹配结果怎么查看？</summary><p>文本中的命中部分会高亮，下方列表会逐一列出每个匹配的完整内容、起始位置和长度。</p></details><details class="faq-item"><summary>支持分组捕获吗？</summary><p>支持，匹配列表会显示捕获组内容，方便提取部分信息。</p></details><details class="faq-item"><summary>正则写错了会怎样？</summary><p>工具会提示语法错误位置，不影响继续编辑。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>正则测试 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var patternInput = document.getElementById('pattern');
+  var testText = document.getElementById('testText');
+  var regexResult = document.getElementById('regexResult');
+
+  function test() {
+    var flags = '';
+    if (document.getElementById('optG').checked) flags += 'g';
+    if (document.getElementById('optI').checked) flags += 'i';
+    if (document.getElementById('optM').checked) flags += 'm';
+    if (document.getElementById('optS').checked) flags += 's';
+    var re;
+    try { re = new RegExp(patternInput.value, flags); }
+    catch (e) {
+      regexResult.hidden = false;
+      regexResult.innerHTML = '<span style="color:var(--danger)">正则语法错误：' + escapeHtml(e.message) + '</span>';
+      return;
+    }
+    var text = testText.value;
+    var matches = [];
+    var m;
+    var reG = new RegExp(patternInput.value, flags.indexOf('g') >= 0 ? flags : flags + 'g');
+    while ((m = reG.exec(text)) !== null) {
+      matches.push({ text: m[0], index: m.index });
+      if (m[0] === '') reG.lastIndex++;
+      if (matches.length > 500) break;
+    }
+    if (!matches.length) {
+      regexResult.hidden = false;
+      regexResult.innerHTML = '未找到匹配';
+      return;
+    }
+    var highlight = '';
+    var last = 0;
+    matches.forEach(function (mm) {
+      highlight += escapeHtml(text.slice(last, mm.index));
+      highlight += '<mark style="background:#fde68a;padding:0 2px;">' + escapeHtml(mm.text) + '</mark>';
+      last = mm.index + mm.text.length;
+    });
+    highlight += escapeHtml(text.slice(last));
+    regexResult.hidden = false;
+    regexResult.innerHTML = '共匹配 <b>' + matches.length + '</b> 处：<br>' + highlight;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  ['pattern', 'testText'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', test);
+  });
+  ['optG', 'optI', 'optM', 'optS'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', test);
+  });
+  testText.value = '联系方式：13812345678\n备用：15800001111\n不是手机号：12345';
+  test();
+})();
+</script>
+</body>
+</html>
