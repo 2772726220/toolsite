@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI计算器 - 在线BMI体重指数计算工具</title>
+  <meta name="description" content="免费在线 BMI 计算器，输入身高体重自动计算体重指数并给出健康等级判断（偏瘦/正常/超重/肥胖），浏览器本地计算，隐私安全。" />
+  <meta name="keywords" content="BMI计算器,BMI在线计算,体重指数,身高体重计算,体脂健康标准">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"BMI \u6807\u51c6\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u56fd\u6210\u4eba\u6807\u51c6\uff1a\u504f\u7626<18.5\u3001\u6b63\u5e3818.5-23.9\u3001\u8d85\u91cd24-27.9\u3001\u80a5\u80d6\u226528\u3002"}},{"@type":"Question","name":"\u5355\u4f4d\u600e\u4e48\u586b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8eab\u9ad8\u586b\u5398\u7c73\u3001\u4f53\u91cd\u586b\u5343\u514b\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"BMI \u9002\u5408\u6240\u6709\u4eba\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8fd0\u52a8\u5458\u3001\u5b55\u5987\u3001\u9752\u5c11\u5e74\u7b49\u7fa4\u4f53 BMI \u53c2\u8003\u4ef7\u503c\u6709\u9650\uff0c\u8bf7\u7ed3\u5408\u4f53\u8102\u7387\u8bc4\u4f30\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>⚖️ BMI计算器</h1>
+    <p>身高体重算BMI，看体重是否健康</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="bmiHeight">身高(cm)</label>
+  <input type="number" id="bmiHeight" value="170" style="width:100px;">
+  <label for="bmiWeight" style="margin-left:8px;">体重(kg)</label>
+  <input type="number" id="bmiWeight" value="65" style="width:100px;">
+</div>
+<div class="actions"><button class="btn" id="bmiBtn" type="button">计算 BMI</button></div>
+<div class="result-box" id="bmiResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 BMI？</h2><p>BMI（体重指数）= 体重(kg) ÷ 身高(m)²，是国际通用的体重健康评估指标。</p><h2>怎么判断胖瘦？</h2><p>中国标准：<18.5 偏瘦，18.5-23.9 正常，24-27.9 超重，≥28 肥胖。工具自动给出等级和建议。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>BMI 标准是什么？</summary><p>中国成人标准：偏瘦<18.5、正常18.5-23.9、超重24-27.9、肥胖≥28。</p></details><details class="faq-item"><summary>单位怎么填？</summary><p>身高填厘米、体重填千克即可。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>BMI 适合所有人吗？</summary><p>运动员、孕妇、青少年等群体 BMI 参考价值有限，请结合体脂率评估。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>BMI计算器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var bmiResult = document.getElementById('bmiResult');
+
+  document.getElementById('bmiBtn').addEventListener('click', function () {
+    var h = parseFloat(document.getElementById('bmiHeight').value);
+    var w = parseFloat(document.getElementById('bmiWeight').value);
+    if (!h || !w || h <= 0 || w <= 0) { showToast('请输入有效身高体重'); return; }
+    var bmi = w / Math.pow(h / 100, 2);
+    var level, color;
+    if (bmi < 18.5) { level = '偏瘦'; color = '#f59e0b'; }
+    else if (bmi < 24) { level = '正常'; color = '#16a34a'; }
+    else if (bmi < 28) { level = '超重'; color = '#f59e0b'; }
+    else { level = '肥胖'; color = '#dc2626'; }
+    bmiResult.hidden = false;
+    bmiResult.innerHTML = 'BMI = <b style="font-size:24px;">' + bmi.toFixed(1) + '</b><br>' +
+      '等级：<b style="color:' + color + ';">' + level + '</b>（中国成人标准）';
+  });
+})();
+</script>
+</body>
+</html>
