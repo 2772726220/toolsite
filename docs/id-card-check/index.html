@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>身份证校验 - 在线身份证号码验证工具</title>
+  <meta name="description" content="免费在线身份证号码校验工具，验证 18 位身份证号是否合法，自动提取出生日期、性别、籍贯地区，浏览器本地计算，隐私安全。" />
+  <meta name="keywords" content="身份证校验,身份证验证,身份证号码查询,身份证生日提取,身份证性别,身份证地区">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪪</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6821\u9a8c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u56fd\u5bb6\u6807\u51c6\u7684\u52a0\u6743\u6821\u9a8c\u4f4d\u7b97\u6cd5\u8ba1\u7b97\uff0c\u51c6\u786e\u53ef\u9760\u3002"}},{"@type":"Question","name":"\u652f\u6301 15 \u4f4d\u8001\u8eab\u4efd\u8bc1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6682\u53ea\u652f\u6301 18 \u4f4d\uff0c15 \u4f4d\u4f1a\u63d0\u793a\u65e0\u6548\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u672c\u5730\u8ba1\u7b97\uff0c\u9690\u79c1\u5b89\u5168\u3002"}},{"@type":"Question","name":"\u80fd\u63d0\u53d6\u54ea\u4e9b\u4fe1\u606f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u51fa\u751f\u65e5\u671f\u3001\u6027\u522b\u3001\u5e74\u9f84\u3001\u7701\u4efd\u5730\u533a\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🪪 身份证校验</h1>
+    <p>校验身份证号合法性，提取生日信息</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="idInput">身份证号码（18 位）</label>
+  <input type="text" id="idInput" placeholder="输入 18 位身份证号" maxlength="18">
+</div>
+<div class="actions"><button class="btn" id="idBtn" type="button">校验</button></div>
+<div class="result-box" id="idResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要校验身份证号？</h2><p>表单录入、数据清洗时需要确认身份证号格式正确，工具自动校验校验位并提取生日、性别等信息。</p><h2>这个工具能做什么？</h2><p>校验 18 位身份证号合法性，提取出生日期、性别、省份地区，全程本地计算。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>校验准确吗？</summary><p>按国家标准的加权校验位算法计算，准确可靠。</p></details><details class="faq-item"><summary>支持 15 位老身份证吗？</summary><p>暂只支持 18 位，15 位会提示无效。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，全部本地计算，隐私安全。</p></details><details class="faq-item"><summary>能提取哪些信息？</summary><p>出生日期、性别、年龄、省份地区。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>身份证校验 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var idResult = document.getElementById('idResult');
+  var WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+  var CHECK = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+  var PROVINCES = {
+    11: '北京', 12: '天津', 13: '河北', 14: '山西', 15: '内蒙古', 21: '辽宁', 22: '吉林', 23: '黑龙江',
+    31: '上海', 32: '江苏', 33: '浙江', 34: '安徽', 35: '福建', 36: '江西', 37: '山东',
+    41: '河南', 42: '湖北', 43: '湖南', 44: '广东', 45: '广西', 46: '海南',
+    50: '重庆', 51: '四川', 52: '贵州', 53: '云南', 54: '西藏',
+    61: '陕西', 62: '甘肃', 63: '青海', 64: '宁夏', 65: '新疆'
+  };
+
+  document.getElementById('idBtn').addEventListener('click', function () {
+    var id = document.getElementById('idInput').value.trim().toUpperCase();
+    if (!/^\d{17}[\dX]$/.test(id)) {
+      idResult.hidden = false;
+      idResult.innerHTML = '<span style="color:var(--danger)">✗ 格式错误：必须为 18 位，前 17 位数字，末位数字或 X</span>';
+      return;
+    }
+    var year = +id.slice(6, 10), month = +id.slice(10, 12), day = +id.slice(12, 14);
+    if (year < 1900 || month < 1 || month > 12 || day < 1 || day > 31) {
+      idResult.hidden = false;
+      idResult.innerHTML = '<span style="color:var(--danger)">✗ 出生日期无效</span>';
+      return;
+    }
+    var sum = 0;
+    for (var i = 0; i < 17; i++) sum += +id[i] * WEIGHTS[i];
+    var expect = CHECK[sum % 11];
+    if (expect !== id[17]) {
+      idResult.hidden = false;
+      idResult.innerHTML = '<span style="color:var(--danger)">✗ 校验位错误，末位应为 ' + expect + '</span>';
+      return;
+    }
+    var gender = (+id[16]) % 2 === 0 ? '女' : '男';
+    var now = new Date();
+    var age = now.getFullYear() - year - (now.getMonth() + 1 < month || (now.getMonth() + 1 === month && now.getDate() < day) ? 1 : 0);
+    var prov = PROVINCES[+id.slice(0, 2)];
+    idResult.hidden = false;
+    idResult.innerHTML = '✅ <b>合法身份证号</b><br>' +
+      '出生日期：' + year + '-' + month + '-' + day + '<br>' +
+      '性别：' + gender + '<br>' +
+      '年龄：' + age + ' 岁<br>' +
+      '地区：' + (prov || '未知省份');
+  });
+})();
+</script>
+</body>
+</html>
