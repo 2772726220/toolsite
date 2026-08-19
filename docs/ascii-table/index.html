@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字符编码查看 - 在线ASCII码查询工具</title>
+  <meta name="description" content="免费在线字符编码查看工具，输入任意字符显示其十进制、十六进制、二进制、Unicode 码点与 HTML 实体，附完整 ASCII 表，浏览器本地处理，程序员必备。" />
+  <meta name="keywords" content="ascii码,字符编码,unicode查询,ascii表,字符十六进制,html实体">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u6c49\u5b57\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u663e\u793a Unicode \u7801\u70b9\uff08\u5982 \u4f60 = U+4F60\uff09\u3002"}},{"@type":"Question","name":"HTML \u5b9e\u4f53\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5982 &amp;\u3001&#60; \u7b49\u7f51\u9875\u4e2d\u4f7f\u7528\u7684\u8f6c\u4e49\u5199\u6cd5\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}},{"@type":"Question","name":"\u80fd\u6279\u91cf\u67e5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u8f93\u5165\u6574\u6bb5\u6587\u672c\u9010\u4e2a\u5b57\u7b26\u663e\u793a\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔤 字符编码查看</h1>
+    <p>查看字符的 ASCII/Unicode/HTML实体</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">字符编码查看</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#ASCII</span><span class="badge">#对照表</span>
+<div class="field">
+  <label for="acInput">输入文本（可多个字符）</label>
+  <textarea id="acInput" placeholder="如：A 或 你好"></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="acBtn" type="button">查看编码</button>
+</div>
+<div class="result-box" id="acResult" hidden></div>
+<div class="result-box" id="acTable" style="background:var(--bg);max-height:300px;overflow-y:auto;font-family:monospace;font-size:13px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>能查什么？</h2><p>任意字符的十进制、十六进制、二进制码、Unicode 码点和 HTML 实体编码。</p><h2>有 ASCII 表吗？</h2><p>附完整 0-127 ASCII 对照表，含控制字符说明。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持汉字吗？</summary><p>支持，显示 Unicode 码点（如 你 = U+4F60）。</p></details><details class="faq-item"><summary>HTML 实体是什么？</summary><p>如 &amp;、&#60; 等网页中使用的转义写法。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地处理。</p></details><details class="faq-item"><summary>能批量查吗？</summary><p>可以，输入整段文本逐个字符显示。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>字符编码查看 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var acResult = document.getElementById('acResult');
+  var acTable = document.getElementById('acTable');
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  document.getElementById('acBtn').addEventListener('click', function () {
+    var text = document.getElementById('acInput').value;
+    if (!text) { showToast('请输入文本'); return; }
+    var rows = Array.from(text).map(function (ch) {
+      var cp = ch.codePointAt(0);
+      var entity = cp <= 0xFFFF ? '&#x' + cp.toString(16).toUpperCase() + ';' : '&#x' + cp.toString(16).toUpperCase() + ';';
+      return '<tr><td style="padding:4px 10px;">' + esc(ch) + '</td>' +
+        '<td style="padding:4px 10px;">' + cp + '</td>' +
+        '<td style="padding:4px 10px;">' + cp.toString(16).toUpperCase() + '</td>' +
+        '<td style="padding:4px 10px;">' + cp.toString(2) + '</td>' +
+        '<td style="padding:4px 10px;">' + entity + '</td></tr>';
+    }).join('');
+    acResult.hidden = false;
+    acResult.innerHTML = '<table style="border-collapse:collapse;width:100%;font-family:monospace;font-size:13px;">' +
+      '<tr><th style="text-align:left;padding:4px 10px;">字符</th><th style="text-align:left;padding:4px 10px;">十进制</th><th style="text-align:left;padding:4px 10px;">十六进制</th><th style="text-align:left;padding:4px 10px;">二进制</th><th style="text-align:left;padding:4px 10px;">HTML实体</th></tr>' +
+      rows + '</table>';
+  });
+
+  var rows = '';
+  for (var i = 0; i < 128; i++) {
+    var ch = i < 33 || i === 127 ? (i === 32 ? '&nbsp;(空格)' : '&#' + i + ';') : String.fromCharCode(i);
+    rows += '<tr><td style="padding:2px 10px;">' + i + '</td><td style="padding:2px 10px;">' + ch + '</td><td style="padding:2px 10px;">' + i.toString(16).toUpperCase().padStart(2, '0') + '</td></tr>';
+  }
+  acTable.innerHTML = '<div style="font-weight:600;margin-bottom:6px;">ASCII 0-127 对照表：</div><table style="border-collapse:collapse;width:100%;">' +
+    '<tr><th style="text-align:left;padding:2px 10px;">十进制</th><th style="text-align:left;padding:2px 10px;">字符</th><th style="text-align:left;padding:2px 10px;">十六进制</th></tr>' + rows + '</table>';
+})();
+</script>
+</body>
+</html>
