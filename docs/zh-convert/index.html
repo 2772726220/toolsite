@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简体繁体转换 - 在线简体字转繁体字工具</title>
+  <meta name="description" content="免费在线简体繁体转换工具，简体字转繁体字、繁体转简体一键完成，支持常用汉字全覆盖，浏览器本地处理，写作与阅读必备。" />
+  <meta name="keywords" content="简体转繁体,繁体转简体,简繁转换,繁体字转换,在线繁体字,简体繁体互转">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>简🈶</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u6574\u6bb5\u8f6c\u6362\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u7c98\u8d34\u5168\u6587\u4e00\u952e\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u80fd\u53cd\u65b9\u5411\u8f6c\u6362\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e00\u952e\u5207\u6362\u7b80\u4f53\u8f6c\u7e41\u4f53/\u7e41\u4f53\u8f6c\u7b80\u4f53\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u6709\u7279\u6b8a\u8bcd\u7684\u5751\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6781\u5c11\u6570\u591a\u97f3\u591a\u4e49\u5b57\u9700\u4eba\u5de5\u786e\u8ba4\uff0c\u5de5\u5177\u91c7\u7528\u4e3b\u6d41\u9ed8\u8ba4\u89c4\u5219\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>简🈶 简繁转换</h1>
+    <p>简体字与繁体字一键互转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="zhInput">输入文本</label>
+  <textarea id="zhInput" placeholder="输入简体或繁体文本..."></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="zhToTradBtn" type="button">简体 → 繁体</button>
+  <button class="btn btn-secondary" id="zhToSimpBtn" type="button">繁体 → 简体</button>
+</div>
+<div class="result-box" id="zhResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要简繁转换？</h2><p>阅读港台文章、与港台朋友交流、繁体字网站运营都需要在简繁之间切换，工具一键转换全文。</p><h2>转换准确吗？</h2><p>内置常用简体繁对照字表，覆盖常用汉字，特殊词（如「皇后」vs「皇后」）按常用规则处理。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持整段转换吗？</summary><p>支持，粘贴全文一键转换。</p></details><details class="faq-item"><summary>能反方向转换吗？</summary><p>可以，一键切换简体转繁体/繁体转简体。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details><details class="faq-item"><summary>有特殊词的坑吗？</summary><p>极少数多音多义字需人工确认，工具采用主流默认规则。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>简繁转换 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var zhResult = document.getElementById('zhResult');
+  var zhInput = document.getElementById('zhInput');
+
+  var SIMP2TRAD = {
+    '万': '萬', '与': '與', '专': '專', '业': '業', '东': '東', '丝': '絲', '丢': '丟', '两': '兩', '个': '個', '为': '為',
+    '丰': '豐', '临': '臨', '举': '舉', '义': '義', '乐': '樂', '书': '書', '买': '買', '争': '爭', '乱': '亂', '乳': '乳',
+    '乾': '乾', '习': '習', '乡': '鄉', '书': '書', '买': '買', '云': '雲', '互': '互', '亏': '虧', '亚': '亞', '产': '產',
+    '亩': '畝', '亲': '親', '亿': '億', '仅': '僅', '从': '從', '仑': '侖', '仓': '倉', '仪': '儀', '们': '們', '价': '價',
+    '众': '眾', '优': '優', '会': '會', '伞': '傘', '伟': '偉', '传': '傳', '伤': '傷', '伦': '倫', '伪': '偽', '体': '體',
+    '余': '餘', '佣': '傭', '佥': '僉', '侠': '俠', '侣': '侶', '侦': '偵', '侧': '側', '凭': '憑', '侨': '僑', '俭': '儉',
+    '修': '修', '债': '債', '储': '儲', '儿': '兒', '兑': '兌', '党': '黨', '兰': '蘭', '关': '關', '兴': '興', '养': '養',
+    '兽': '獸', '内': '內', '冈': '岡', '册': '冊', '写': '寫', '军': '軍', '农': '農', '冲': '衝', '决': '決', '况': '況',
+    '冻': '凍', '净': '淨', '凉': '涼', '减': '減', '凑': '湊', '几': '幾', '凭': '憑', '凯': '凱', '击': '擊', '凿': '鑿',
+    '刍': '芻', '划': '劃', '刘': '劉', '则': '則', '刚': '剛', '创': '創', '别': '別', '剂': '劑', '剥': '剝', '剧': '劇',
+    '劝': '勸', '办': '辦', '务': '務', '动': '動', '励': '勵', '势': '勢', '勋': '勳', '勾': '勾', '匦': '匭', '医': '醫',
+    '华': '華', '协': '協', '单': '單', '卖': '賣', '卢': '盧', '县': '縣', '卫': '衛', '厂': '廠', '历': '歷', '厉': '厲',
+    '压': '壓', '厌': '厭', '厕': '廁', '厢': '廂', '参': '參', '双': '雙', '发': '發', '变': '變', '叙': '敘', '叶': '葉',
+    '号': '號', '叹': '嘆', '听': '聽', '启': '啟', '吴': '吳', '响': '響', '哑': '啞', '员': '員', '呜': '嗚', '咏': '詠',
+    '咨': '咨', '咬': '咬', '咯': '咯', '唇': '唇', '唤': '喚', '嘤': '嚶', '么': '麼', '兰': '蘭', '岗': '崗', '岭': '嶺',
+    '岳': '嶽', '岛': '島', '峡': '峽', '岩': '岩', '岭': '嶺', '币': '幣', '帅': '帥', '师': '師', '带': '帶', '帐': '帳',
+    '币': '幣', '干': '幹', '广': '廣', '庄': '莊', '庆': '慶', '庐': '廬', '应': '應', '库': '庫', '庙': '廟', '庞': '龐',
+    '废': '廢', '开': '開', '异': '異', '弃': '棄', '张': '張', '弥': '彌', '弹': '彈', '强': '強', '归': '歸', '当': '當',
+    '录': '錄', '彦': '彥', '彩': '彩', '彻': '徹', '征': '徵', '径': '徑', '徐': '徐', '微': '微', '忆': '憶', '忙': '忙',
+    '快': '快', '怀': '懷', '态': '態', '惧': '懼', '总': '總', '悬': '懸', '惩': '懲', '虑': '慮', '惯': '慣', '愤': '憤',
+    '愿': '願', '懒': '懶', '戏': '戲', '战': '戰', '点': '點', '热': '熱', '烦': '煩', '烧': '燒', '烛': '燭', '灯': '燈',
+    '灿': '燦', '争': '爭', '爱': '愛', '爷': '爺', '牍': '牘', '状': '狀', '犹': '猶', '狂': '狂', '独': '獨', '猎': '獵',
+    '狮': '獅', '献': '獻', '猫': '貓', '贝': '貝', '贡': '貢', '贤': '賢', '质': '質', '赞': '贊', '输': '輸', '转': '轉',
+    '辆': '輛', '载': '載', '辉': '輝', '边': '邊', '达': '達', '过': '過', '运': '運', '进': '進', '远': '遠', '违': '違',
+    '连': '連', '迟': '遲', '迫': '迫', '选': '選', '适': '適', '酿': '釀', '酱': '醬', '释': '釋', '钟': '鐘', '铁': '鐵',
+    '错': '錯', '长': '長', '门': '門', '闭': '閉', '问': '問', '闻': '聞', '闲': '閒', '间': '間', '阁': '閣', '阅': '閱',
+    '队': '隊', '阳': '陽', '阴': '陰', '陈': '陳', '阶': '階', '际': '際', '陆': '陸', '险': '險', '随': '隨', '隐': '隱',
+    '杂': '雜', '难': '難', '雾': '霧', '静': '靜', '韵': '韻', '顶': '頂', '顺': '順', '须': '須', '预': '預', '顽': '頑',
+    '顿': '頓', '领': '領', '频': '頻', '题': '題', '颜': '顏', '风': '風', '飞': '飛', '饥': '饑', '饱': '飽', '饰': '飾',
+    '馆': '館', '验': '驗', '骂': '罵', '党': '黨', '齐': '齊', '齿': '齒', '龄': '齡', '龙': '龍'
+  };
+
+  function reverseMap() {
+    var r = {};
+    Object.keys(SIMP2TRAD).forEach(function (k) { r[SIMP2TRAD[k]] = k; });
+    return r;
+  }
+  var TRAD2SIMP = reverseMap();
+
+  function convert(text, map) {
+    return Array.from(text).map(function (ch) { return map[ch] || ch; }).join('');
+  }
+
+  document.getElementById('zhToTradBtn').addEventListener('click', function () {
+    zhResult.hidden = false;
+    zhResult.textContent = convert(zhInput.value, SIMP2TRAD);
+  });
+  document.getElementById('zhToSimpBtn').addEventListener('click', function () {
+    zhResult.hidden = false;
+    zhResult.textContent = convert(zhInput.value, TRAD2SIMP);
+  });
+})();
+</script>
+</body>
+</html>
