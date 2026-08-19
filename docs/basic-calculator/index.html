@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线计算器 - 免费基础数学计算器</title>
+  <meta name="description" content="免费在线基础计算器，支持加减乘除、括号、百分比、小数运算，键盘可输入，浏览器本地计算，日常计算必备。" />
+  <meta name="keywords" content="在线计算器,基础计算器,加减乘除,百分比计算,数学计算器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u952e\u76d8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u6570\u5b57\u548c\u5c0f\u6570\u70b9\u53ef\u76f4\u63a5\u952e\u76d8\u8f93\u5165\uff0c\u56de\u8f66\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u767e\u5206\u6bd4\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u5165\u6570\u5b57\u540e\u70b9 %% \u5373\u9664\u4ee5 100\uff0c\u5982 50%% = 0.5\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u76f4\u63a5\u8f93\u5165\u8d1f\u53f7\u6216\u4f7f\u7528\u62ec\u53f7\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔢 基础计算器</h1>
+    <p>加减乘除百分比计算器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">基础计算器</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#计算器</span><span class="badge">#四则运算</span>
+<div class="field">
+  <label>表达式</label>
+  <div id="calcDisplay" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:22px;font-family:monospace;text-align:right;min-height:28px;word-break:break-all;"></div>
+</div>
+<div class="grid" style="grid-template-columns:repeat(4,1fr);gap:8px;">
+  <button class="btn btn-secondary" data-c="C" type="button">C</button>
+  <button class="btn btn-secondary" data-c="(" type="button">(</button>
+  <button class="btn btn-secondary" data-c=")" type="button">)</button>
+  <button class="btn btn-secondary" data-c="/" type="button">÷</button>
+  <button class="btn btn-secondary" data-c="7" type="button">7</button>
+  <button class="btn btn-secondary" data-c="8" type="button">8</button>
+  <button class="btn btn-secondary" data-c="9" type="button">9</button>
+  <button class="btn btn-secondary" data-c="*" type="button">×</button>
+  <button class="btn btn-secondary" data-c="4" type="button">4</button>
+  <button class="btn btn-secondary" data-c="5" type="button">5</button>
+  <button class="btn btn-secondary" data-c="6" type="button">6</button>
+  <button class="btn btn-secondary" data-c="-" type="button">−</button>
+  <button class="btn btn-secondary" data-c="1" type="button">1</button>
+  <button class="btn btn-secondary" data-c="2" type="button">2</button>
+  <button class="btn btn-secondary" data-c="3" type="button">3</button>
+  <button class="btn btn-secondary" data-c="+" type="button">＋</button>
+  <button class="btn btn-secondary" data-c="0" type="button">0</button>
+  <button class="btn btn-secondary" data-c="." type="button">.</button>
+  <button class="btn btn-secondary" data-c="%" type="button">%</button>
+  <button class="btn" data-c="=" type="button" style="background:var(--primary);color:#fff;">=</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些运算？</h2><p>加减乘除、括号嵌套、小数与百分比，支持连续运算。</p><h2>怎么用？</h2><p>点击按钮或键盘输入表达式，按等号或回车得出结果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持键盘吗？</summary><p>支持，数字和小数点可直接键盘输入，回车计算。</p></details><details class="faq-item"><summary>百分比怎么算？</summary><p>输入数字后点 %% 即除以 100，如 50%% = 0.5。</p></details><details class="faq-item"><summary>支持负数吗？</summary><p>支持，可直接输入负号或使用括号。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>基础计算器 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var calcDisplay = document.getElementById('calcDisplay');
+  var expr = '';
+
+  function render() { calcDisplay.textContent = expr || '0'; }
+
+  function evaluate(input) {
+    input = input.replace(/\s+/g, '');
+    if (!/^[0-9+\-*/().%]+$/.test(input)) throw new Error('bad');
+    var tokens = [];
+    var num = '';
+    for (var i = 0; i < input.length; i++) {
+      var ch = input[i];
+      if (/[0-9.]/.test(ch)) { num += ch; continue; }
+      if (ch === '%') {
+        if (num === '') throw new Error('bad');
+        tokens.push({ t: 'num', v: parseFloat(num) / 100 });
+        tokens.push({ t: 'op', v: '*' });
+        tokens.push({ t: 'num', v: 1 });
+        num = '';
+        continue;
+      }
+      if (num !== '') { tokens.push({ t: 'num', v: parseFloat(num) }); num = ''; }
+      if (ch === '-' && (tokens.length === 0 || tokens[tokens.length - 1].t === 'op' || tokens[tokens.length - 1].t === 'lp')) {
+        tokens.push({ t: 'num', v: 0 });
+        tokens.push({ t: 'op', v: '-' });
+        continue;
+      }
+      if (ch === '+' || ch === '-' || ch === '*' || ch === '/') { tokens.push({ t: 'op', v: ch }); continue; }
+      if (ch === '(') { tokens.push({ t: 'lp' }); continue; }
+      if (ch === ')') {
+        if (num !== '') { tokens.push({ t: 'num', v: parseFloat(num) }); num = ''; }
+        tokens.push({ t: 'rp' });
+        continue;
+      }
+    }
+    if (num !== '') tokens.push({ t: 'num', v: parseFloat(num) });
+    if (!tokens.length) throw new Error('bad');
+
+    var prec = { '+': 1, '-': 1, '*': 2, '/': 2 };
+    var ops = [];
+    var out = [];
+    tokens.forEach(function (tk) {
+      if (tk.t === 'num') { out.push(tk.v); return; }
+      if (tk.t === 'op') {
+        while (ops.length && ops[ops.length - 1] !== '(' && prec[ops[ops.length - 1]] >= prec[tk.v]) {
+          out.push(ops.pop());
+        }
+        ops.push(tk.v);
+        return;
+      }
+      if (tk.t === 'lp') { ops.push('('); return; }
+      if (tk.t === 'rp') {
+        while (ops.length && ops[ops.length - 1] !== '(') out.push(ops.pop());
+        if (!ops.length) throw new Error('bad');
+        ops.pop();
+        return;
+      }
+    });
+    while (ops.length) {
+      var o = ops.pop();
+      if (o === '(' || o === ')') throw new Error('bad');
+      out.push(o);
+    }
+    var stack = [];
+    out.forEach(function (v) {
+      if (typeof v === 'number') { stack.push(v); return; }
+      var b = stack.pop(), a = stack.pop();
+      if (a === undefined || b === undefined) throw new Error('bad');
+      if (v === '+') stack.push(a + b);
+      else if (v === '-') stack.push(a - b);
+      else if (v === '*') stack.push(a * b);
+      else if (v === '/') {
+        if (b === 0) throw new Error('div0');
+        stack.push(a / b);
+      }
+    });
+    if (stack.length !== 1) throw new Error('bad');
+    return stack[0];
+  }
+
+  function press(c) {
+    if (c === 'C') { expr = ''; render(); return; }
+    if (c === '=') {
+      try {
+        var r = evaluate(expr);
+        expr = String(+r.toFixed(10));
+      } catch (e) {
+        expr = e.message === 'div0' ? '不能除以 0' : '表达式错误';
+      }
+      render();
+      return;
+    }
+    if (expr === '表达式错误' || expr === '不能除以 0') expr = '';
+    var lastCh = expr[expr.length - 1];
+    if (/[+\-*/]/.test(c) && /[+\-*/]/.test(lastCh)) {
+      expr = expr.slice(0, -1) + c;
+    } else if (c === '.' && /\.\d*$/.test(expr.split(/[+\-*/()]/).pop())) {
+      return;
+    } else {
+      expr += c;
+    }
+    render();
+  }
+
+  document.querySelectorAll('[data-c]').forEach(function (btn) {
+    btn.addEventListener('click', function () { press(btn.dataset.c); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (/[0-9+\-*/().]/.test(e.key)) { press(e.key === '*' || e.key === '/' ? e.key : e.key); }
+    else if (e.key === 'Enter') { press('='); e.preventDefault(); }
+    else if (e.key === 'Backspace') { expr = expr.slice(0, -1); render(); }
+    else if (e.key === 'Escape') { press('C'); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
