@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本反转 - 在线文本倒序反转工具</title>
+  <meta name="description" content="免费在线文本反转工具，整段倒序、逐字符反转、每行反转，一键复制结果，浏览器本地处理，文案编辑必备。" />
+  <meta name="keywords" content="文本反转,文字倒序,在线倒序,文字镜像,文本翻转工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>↔️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u53cd\u8f6c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u4e2d\u6587\u6309\u5b57\u7b26\u6b63\u5e38\u53cd\u8f6c\u3002"}},{"@type":"Question","name":"\u80fd\u4e00\u952e\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u7ed3\u679c\u53ef\u4e00\u952e\u590d\u5236\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}},{"@type":"Question","name":"\u8868\u60c5\u7b26\u53f7\u4f1a\u4e71\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u666e\u901a\u6587\u672c\u6b63\u5e38\uff1b\u7ec4\u5408\u578b\u8868\u60c5\u53ef\u80fd\u53d7\u5f71\u54cd\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>↔️ 文本反转</h1>
+    <p>文本反转/倒序/镜像翻转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="revInput">输入文本</label>
+  <textarea id="revInput" placeholder="输入要反转的文字..."></textarea>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="revMode">反转方式</label>
+  <select id="revMode" style="width:auto;">
+    <option value="all">整段倒序</option>
+    <option value="char">逐字符反转</option>
+    <option value="line">每行反转</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="revBtn" type="button">反转</button>
+  <button class="btn btn-secondary" id="revCopyBtn" type="button">复制结果</button>
+</div>
+<div class="result-box" id="revResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要文本反转？</h2><p>趣味文案、游戏谜题、特殊排版场景需要反转文字，工具一键完成。</p><h2>支持哪几种反转？</h2><p>整段倒序（连行也倒）、逐字符反转、每行独立反转三种方式。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文反转吗？</summary><p>支持，中文按字符正常反转。</p></details><details class="faq-item"><summary>能一键复制吗？</summary><p>可以，结果可一键复制。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地处理。</p></details><details class="faq-item"><summary>表情符号会乱吗？</summary><p>普通文本正常；组合型表情可能受影响。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本反转 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var revInput = document.getElementById('revInput');
+  var revResult = document.getElementById('revResult');
+  var lastRev = '';
+
+  document.getElementById('revBtn').addEventListener('click', function () {
+    var text = revInput.value;
+    var mode = document.getElementById('revMode').value;
+    if (mode === 'all') lastRev = text.split('\n').reverse().join('\n');
+    else if (mode === 'char') lastRev = Array.from(text).reverse().join('');
+    else lastRev = text.split('\n').map(function (l) { return Array.from(l).reverse().join(''); }).join('\n');
+    revResult.hidden = false;
+    revResult.textContent = lastRev;
+  });
+
+  document.getElementById('revCopyBtn').addEventListener('click', function () {
+    if (!lastRev) { showToast('请先反转'); return; }
+    navigator.clipboard.writeText(lastRev).then(function () { showToast('已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
