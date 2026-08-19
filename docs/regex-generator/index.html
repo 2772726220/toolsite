@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则表达式生成 - 在线常用正则模板工具</title>
+  <meta name="description" content="免费在线正则表达式模板工具，内置手机号、邮箱、身份证、网址、IP、日期等常用正则，一键复制即用，浏览器本地处理，程序员必备。" />
+  <meta name="keywords" content="正则表达式生成,常用正则,正则模板,手机号正则,邮箱正则,身份证正则">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6a21\u677f\u53ef\u9760\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u4e3b\u6d41\u6821\u9a8c\u89c4\u5219\uff0c\u8986\u76d6\u5e38\u89c1\u4e1a\u52a1\u573a\u666f\u3002"}},{"@type":"Question","name":"\u80fd\u5728\u7ebf\u6d4b\u8bd5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6bcf\u4e2a\u6a21\u677f\u9644\u7b80\u77ed\u793a\u4f8b\uff0c\u53ef\u590d\u5236\u5230\u6b63\u5219\u6d4b\u8bd5\u5de5\u5177\u8fdb\u4e00\u6b65\u9a8c\u8bc1\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u4f7f\u7528\u3002"}},{"@type":"Question","name":"\u6a21\u677f\u53ef\u4ee5\u4fee\u6539\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u590d\u5236\u540e\u53ef\u81ea\u884c\u8c03\u6574\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎯 正则表达式生成</h1>
+    <p>常用正则模板一键生成复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="result-box" id="rgList" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>常用正则怎么写？</h2><p>验证手机号、邮箱、身份证等有固定模板，不用记复杂的表达式，从模板里选直接复制。</p><h2>支持哪些模板？</h2><p>手机号、邮箱、身份证、网址、IP 地址、日期、数字、金额、中文、密码强度等常用场景。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>模板可靠吗？</summary><p>内置主流校验规则，覆盖常见业务场景。</p></details><details class="faq-item"><summary>能在线测试吗？</summary><p>每个模板附简短示例，可复制到正则测试工具进一步验证。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地使用。</p></details><details class="faq-item"><summary>模板可以修改吗？</summary><p>可以，复制后可自行调整。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>正则表达式生成 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var rgList = document.getElementById('rgList');
+  var TEMPLATES = [
+    { name: '手机号（中国大陆）', pattern: '^1[3-9]\\d{9}$', example: '13800138000' },
+    { name: '邮箱', pattern: '^[\\w.+-]+@[\\w-]+(\\.[\\w-]+)+$', example: 'user@example.com' },
+    { name: '身份证（18位）', pattern: '^\\d{17}[\\dXx]$', example: '11010119900307715X' },
+    { name: '网址 URL', pattern: '^(https?|ftp)://[^\\s/$.?#].[^\\s]*$', example: 'https://example.com' },
+    { name: 'IPv4 地址', pattern: '^(\\d{1,3}\\.){3}\\d{1,3}$', example: '192.168.1.1' },
+    { name: '日期 YYYY-MM-DD', pattern: '^\\d{4}-\\d{2}-\\d{2}$', example: '2024-01-01' },
+    { name: '纯数字', pattern: '^\\d+$', example: '123456' },
+    { name: '整数（可正负）', pattern: '^-?\\d+$', example: '-42' },
+    { name: '小数（两位内）', pattern: '^-?\\d+\\.\\d{1,2}$', example: '19.99' },
+    { name: '金额（人民币）', pattern: '^¥?\\d{1,3}(,\\d{3})*(\\.\\d{1,2})?$', example: '¥1,234.56' },
+    { name: '中文字符', pattern: '^[\\u4e00-\\u9fa5]+$', example: '你好世界' },
+    { name: '用户名（字母数字下划线）', pattern: '^[a-zA-Z0-9_]{4,16}$', example: 'user_name1' },
+    { name: '密码强度（8位以上含大小写数字）', pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$', example: 'Passw0rd!' },
+    { name: '邮政编码（6位）', pattern: '^\\d{6}$', example: '100000' },
+    { name: '车牌号（新能源可选）', pattern: '^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4,5}[A-HJ-NP-Z0-9挂学警港澳]$', example: '京A12345' },
+    { name: 'QQ号', pattern: '^[1-9]\\d{4,10}$', example: '123456789' }
+  ];
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  TEMPLATES.forEach(function (t) {
+    var row = document.createElement('div');
+    row.style.cssText = 'padding:12px 0;border-bottom:1px solid var(--border);';
+    row.innerHTML = '<div style="font-weight:600;">' + t.name + '</div>' +
+      '<code style="display:block;background:var(--bg);padding:8px;border-radius:6px;margin:6px 0;font-size:13px;overflow-x:auto;white-space:pre;">' + esc(t.pattern) + '</code>' +
+      '<div style="font-size:12px;color:var(--muted);">示例：' + t.example + '</div>' +
+      '<button class="btn btn-secondary" style="margin-top:8px;" data-pattern="' + esc(t.pattern) + '" type="button">复制正则</button>';
+    rgList.appendChild(row);
+  });
+
+  rgList.addEventListener('click', function (e) {
+    if (e.target.dataset.pattern) {
+      navigator.clipboard.writeText(e.target.dataset.pattern).then(function () {
+        showToast('正则已复制');
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
