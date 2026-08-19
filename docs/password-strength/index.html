@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密码强度检测 - 在线密码安全测试工具</title>
+  <meta name="description" content="免费在线密码强度检测工具，评估密码长度、字符种类、常见弱密码，打分并给出改进建议，浏览器本地检测，保护账号安全必备。" />
+  <meta name="keywords" content="密码强度检测,密码测试,密码安全,强密码检测,在线密码检测,密码评分">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u68c0\u6d4b\u6570\u636e\u4f1a\u6cc4\u9732\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u68c0\u6d4b\u90fd\u5728\u672c\u5730\u6d4f\u89c8\u5668\u5b8c\u6210\uff0c\u4e0d\u8054\u7f51\u3002"}},{"@type":"Question","name":"\u4ec0\u4e48\u7b97\u5f3a\u5bc6\u7801\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u957f\u5ea6 12 \u4f4d\u4ee5\u4e0a\u4e14\u5305\u542b\u591a\u79cd\u5b57\u7b26\u7c7b\u578b\u3001\u4e0d\u91cd\u590d\u4e0d\u5e38\u89c1\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5bc6\u7801\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u957f\u5ea6\u8d8a\u957f\u8d8a\u5b89\u5168\u3002"}},{"@type":"Question","name":"\u4f1a\u88ab\u8bb0\u5f55\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b8c\u5168\u672c\u5730\u8fd0\u884c\uff0c\u4e0d\u4fdd\u5b58\u4efb\u4f55\u8f93\u5165\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🛡️ 密码强度检测</h1>
+    <p>检测密码强度并给出改进建议</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="psInput">输入密码</label>
+  <input type="password" id="psInput" placeholder="输入要检测的密码" style="font-size:16px;">
+</div>
+<div class="result-box" id="psResult" hidden></div>
+<div class="result-box" id="psSuggest" style="background:var(--bg);" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要检测密码强度？</h2><p>弱密码是账号被盗的最大原因，检测工具帮你评估密码是否安全并给出改进方向。</p><h2>如何提高密码强度？</h2><p>使用 12 位以上、包含大小写字母数字符号、避免生日和常见单词，不同网站用不同密码。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>检测数据会泄露吗？</summary><p>不会，所有检测都在本地浏览器完成，不联网。</p></details><details class="faq-item"><summary>什么算强密码？</summary><p>长度 12 位以上且包含多种字符类型、不重复不常见。</p></details><details class="faq-item"><summary>支持中文密码吗？</summary><p>支持，长度越长越安全。</p></details><details class="faq-item"><summary>会被记录吗？</summary><p>完全本地运行，不保存任何输入。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>密码强度检测 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var psResult = document.getElementById('psResult');
+  var psSuggest = document.getElementById('psSuggest');
+
+  var WEAK = ['123456', 'password', '12345678', 'qwerty', '123456789', '12345', '1234', '111111', '1234567', 'dragon', '123123', 'abc123', '11111111', '000000', 'admin', 'iloveyou', 'letmein', 'monkey', 'master', '1234567890'];
+
+  function scorePw(pw) {
+    var score = 0;
+    var types = 0;
+    if (/[a-z]/.test(pw)) { score += 1; types++; }
+    if (/[A-Z]/.test(pw)) { score += 2; types++; }
+    if (/\d/.test(pw)) { score += 1; types++; }
+    if (/[^a-zA-Z0-9]/.test(pw)) { score += 2; types++; }
+    score += Math.min(4, Math.floor(pw.length / 4));
+    if (pw.length >= 12) score += 2;
+    if (types >= 3) score += 2;
+    if (/^(.)\1+$/.test(pw) || WEAK.indexOf(pw) >= 0) score = Math.min(score, 1);
+    if (pw.length < 6) score = Math.min(score, 1);
+    return Math.min(10, score);
+  }
+
+  function build() {
+    var sets = [['ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abcdefghijklmnopqrstuvwxyz'], ['0123456789'], ['!@#$%^&*()-_=+']];
+    var pw = '';
+    sets.forEach(function (s) { pw += s[0][Math.floor(Math.random() * s[0].length)]; });
+    var all = sets.join('').split('');
+    var rnd = new Uint32Array(8);
+    crypto.getRandomValues(rnd);
+    for (var i = 0; i < 8; i++) pw += all[rnd[i] % all.length];
+    pw = pw.split('').sort(function () { return Math.random() - 0.5; }).join('');
+    return pw;
+  }
+
+  document.getElementById('psInput').addEventListener('input', function () {
+    var pw = this.value;
+    if (!pw) { psResult.hidden = true; psSuggest.hidden = true; return; }
+    var score = scorePw(pw);
+    var label, color;
+    if (score <= 2) { label = '弱'; color = '#dc2626'; }
+    else if (score <= 4) { label = '偏弱'; color = '#f59e0b'; }
+    else if (score <= 7) { label = '中等'; color = '#2563eb'; }
+    else { label = '强'; color = '#16a34a'; }
+    var bar = Math.round(score / 10 * 100);
+    psResult.hidden = false;
+    psResult.innerHTML = '<div style="background:var(--bg);border-radius:8px;height:10px;overflow:hidden;"><div style="background:' + color + ';height:10px;width:' + bar + '%;transition:width .2s;"></div></div>' +
+      '<div style="margin-top:8px;">强度：<b style="color:' + color + ';">' + label + '</b>（' + score + '/10）</div>';
+    var tips = [];
+    if (pw.length < 10) tips.push('建议长度至少 10-12 位');
+    if (!/[A-Z]/.test(pw)) tips.push('加入大写字母');
+    if (!/[^a-zA-Z0-9]/.test(pw)) tips.push('加入特殊符号');
+    if (WEAK.indexOf(pw) >= 0) tips.push('该密码在常见弱密码列表中，请更换');
+    if (/^(\d+)$/.test(pw)) tips.push('纯数字密码极易被破解');
+    if (tips.length) {
+      psSuggest.hidden = false;
+      psSuggest.innerHTML = '改进建议：<br>' + tips.map(function (t) { return '· ' + t; }).join('<br>');
+    } else {
+      psSuggest.hidden = true;
+    }
+  });
+
+  document.getElementById('psGenBtn').addEventListener('click', function () {
+    document.getElementById('psInput').value = build();
+    document.getElementById('psInput').dispatchEvent(new Event('input'));
+  });
+})();
+</script>
+</body>
+</html>
