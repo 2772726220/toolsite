@@ -97,6 +97,7 @@ var mdInput = document.getElementById('mdInput');
     var inTable = false;
     var tableRows = [];
     var listStack = [];
+    var pendingList = null;
 
     while (i < lines.length) {
       var line = lines[i];
@@ -120,14 +121,18 @@ var mdInput = document.getElementById('mdInput');
         html.push('<h' + lvl + '>' + renderLine(h[2]) + '</h' + lvl + '>');
         i++; continue;
       }
-      if (/^\s*[-*+]\s+/.test(line)) {
-        flushTable(); flushList();
-        html.push('<ul><li>' + renderLine(line.replace(/^\s*[-*+]\s+/, '')) + '</li></ul>');
-        i++; continue;
-      }
-      if (/^\s*\d+\.\s+/.test(line)) {
-        flushTable(); flushList();
-        html.push('<ol><li>' + renderLine(line.replace(/^\s*\d+\.\s+/, '')) + '</li></ol>');
+      var ul = line.match(/^\s*[-*+]\s+(.*)$/);
+      var ol = line.match(/^\s*\d+\.\s+(.*)$/);
+      if (ul || ol) {
+        flushTable();
+        var ordered = !!ol;
+        var content = renderLine(ordered ? ol[1] : ul[1]);
+        if (pendingList && pendingList.tag === (ordered ? 'ol' : 'ul')) {
+          pendingList.items.push(content);
+        } else {
+          flushList();
+          pendingList = { tag: ordered ? 'ol' : 'ul', items: [content] };
+        }
         i++; continue;
       }
       if (/^\s*>\s?/.test(line)) {
@@ -171,7 +176,14 @@ var mdInput = document.getElementById('mdInput');
       });
       html.push(out + '</table>');
     }
-    function flushList() { }
+    function flushList() {
+      if (!pendingList) return;
+      var items = pendingList.items.map(function (li) {
+        return '<li>' + li + '</li>';
+      }).join('');
+      html.push('<' + pendingList.tag + '>' + items + '</' + pendingList.tag + '>');
+      pendingList = null;
+    }
 
     lastHtml = html.join('\n');
     mdPreview.innerHTML = lastHtml;
