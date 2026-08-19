@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年龄计算器 - 在线周岁年龄计算工具</title>
+  <meta name="description" content="免费在线年龄计算器，输入出生日期精确计算周岁、月、天，还可算距离下一个生日的天数，浏览器本地计算，日常必备。" />
+  <meta name="keywords" content="年龄计算器,周岁计算,年龄计算,生日计算,精确年龄,在线年龄">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7cbe\u786e\u5230\u5929\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\uff0c\u663e\u793a\u5e74\u9f84\u603b\u5929\u6570\u4e0e\u5e74\u6708\u65e5\u62c6\u5206\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8de8\u5e74\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u81ea\u52a8\u5904\u7406\u95f0\u5e74\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u9009\u76ee\u6807\u65e5\u671f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u4eca\u5929\uff0c\u4e5f\u53ef\u6307\u5b9a\u4efb\u610f\u65e5\u671f\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎂 年龄计算器</h1>
+    <p>精确计算出生到现在的年龄</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">年龄计算器</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#年龄</span><span class="badge">#周岁</span>
+<div class="field">
+  <label for="acBirth">出生日期</label>
+  <input type="date" id="acBirth">
+</div>
+<div class="field">
+  <label for="acTarget">目标日期（默认今天）</label>
+  <input type="date" id="acTarget">
+</div>
+<div class="actions">
+  <button class="btn" id="acBtn" type="button">计算年龄</button>
+</div>
+<div class="result-box" id="acResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>周岁怎么算？</h2><p>按公历生日计算，满一个整年算一岁，未过生日减一岁。</p><h2>能算距离生日还有几天吗？</h2><p>可以，同时显示今年生日已过/未过和下次生日倒计时。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>精确到天吗？</summary><p>是，显示年龄总天数与年月日拆分。</p></details><details class="faq-item"><summary>支持跨年吗？</summary><p>支持，自动处理闰年。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>可以选目标日期吗？</summary><p>默认今天，也可指定任意日期计算。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>年龄计算器 · <a href="../category/date/">📅 日期时间</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var acResult = document.getElementById('acResult');
+
+  function daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+
+  function diffYMD(birth, target) {
+    var b = { y: birth.getFullYear(), m: birth.getMonth() + 1, d: birth.getDate() };
+    var t = { y: target.getFullYear(), m: target.getMonth() + 1, d: target.getDate() };
+    var years = t.y - b.y;
+    var months = t.m - b.m;
+    var days = t.d - b.d;
+    if (days < 0) {
+      months--;
+      var prevMonth = t.m - 1;
+      var prevMonthYear = t.y;
+      if (prevMonth === 0) { prevMonth = 12; prevMonthYear--; }
+      days += daysInMonth(prevMonthYear, prevMonth);
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    return { years: years, months: months, days: days };
+  }
+
+  document.getElementById('acBtn').addEventListener('click', function () {
+    var birthV = document.getElementById('acBirth').value;
+    var targetV = document.getElementById('acTarget').value;
+    if (!birthV) { showToast('请选择出生日期'); return; }
+    var birth = new Date(birthV + 'T00:00:00');
+    var target = targetV ? new Date(targetV + 'T00:00:00') : new Date();
+    target = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+    if (isNaN(birth) || isNaN(target)) { showToast('日期无效'); return; }
+    if (birth > target) { showToast('出生日期不能晚于目标日期'); return; }
+    var r = diffYMD(birth, target);
+    var totalDays = Math.round((target - birth) / 86400000);
+    var isBirthday = birth.getMonth() === target.getMonth() && birth.getDate() === target.getDate();
+    var nextBirthday = new Date(target.getFullYear(), birth.getMonth(), birth.getDate());
+    if (nextBirthday < target) nextBirthday = new Date(target.getFullYear() + 1, birth.getMonth(), birth.getDate());
+    var daysToNext = Math.round((nextBirthday - target) / 86400000);
+    acResult.hidden = false;
+    acResult.innerHTML =
+      '周岁年龄：<b style="font-size:24px;">' + r.years + '</b> 岁 ' + r.months + ' 个月 ' + r.days + ' 天<br>' +
+      '总天数：' + totalDays + ' 天<br>' +
+      (isBirthday ? '🎂 今天正好是生日！' : '距离下一个生日还有 ' + daysToNext + ' 天');
+  });
+
+  var today = new Date();
+  document.getElementById('acBirth').value = '1990-01-01';
+  document.getElementById('acTarget').value = today.toISOString().slice(0, 10);
+})();
+</script>
+</body>
+</html>
