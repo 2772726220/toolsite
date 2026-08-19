@@ -81,13 +81,18 @@ var radixResult = document.getElementById('radixResult');
     var input = document.getElementById('radixInput').value.trim();
     var from = parseInt(document.getElementById('radixFrom').value, 10);
     if (!input) { showToast('请输入数值'); return; }
-    var valid = new RegExp('^[0-9A-Fa-f]+$').test(input) && parseInt(input.replace(/^0[xob]/i, ''), from) === parseInt(input.replace(/^0[xob]/i, ''), from);
-    if (!valid) { showToast('输入内容与所选进制不匹配'); return; }
-    var neg = input.startsWith('-');
-    var clean = input.replace(/^[-0]*(?=[0-9A-Fa-f])/, '').replace(/^[-]/, '');
+    var neg = false;
+    var s = input;
+    if (s.charAt(0) === '-') { neg = true; s = s.slice(1); }
+    s = s.replace(/^0[xob]/i, '');
+    if (!s) { showToast('请输入数值'); return; }
+    var validChars = from === 2 ? /^[01]+$/ : from === 8 ? /^[0-7]+$/ : from === 16 ? /^[0-9A-Fa-f]+$/ : /^[0-9]+$/;
+    if (!validChars.test(s)) { showToast('输入内容与所选进制不匹配'); return; }
     var dec;
-    try { dec = BigInt(clean, from); }
-    catch (e) { showToast('无法解析，请检查输入'); return; }
+    if (from === 2) dec = BigInt('0b' + s);
+    else if (from === 8) dec = BigInt('0o' + s);
+    else if (from === 16) dec = BigInt('0x' + s);
+    else dec = BigInt(s);
     if (neg) dec = -dec;
     radixResult.hidden = false;
     radixResult.innerHTML =
