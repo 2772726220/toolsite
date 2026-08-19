@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>性格测试 - 在线趣味性格测试工具</title>
+  <meta name="description" content="免费在线趣味性格测试，通过 12 道选择题测出你的性格倾向（E/I、S/N、T/F、J/P 四维），浏览器本地答题，轻松有趣。" />
+  <meta name="keywords" content="性格测试,MBTI测试,人格测试,心理测试,性格分析,在线测试">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6d4b\u8bd5\u79d1\u5b66\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5a31\u4e50\u6027\u7b80\u5316\u7248\uff0c\u4ec5\u4f9b\u53c2\u8003\uff0c\u4e0d\u662f\u4e13\u4e1a\u5fc3\u7406\u6d4b\u8bc4\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u600e\u4e48\u89e3\u8bfb\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6bcf\u4e2a\u7ef4\u5ea6\u503e\u5411\u5373\u4ee3\u8868\u4f60\u7684\u504f\u597d\u98ce\u683c\uff0c\u9644\u8be6\u7ec6\u63cf\u8ff0\u3002"}},{"@type":"Question","name":"\u9700\u8981\u6ce8\u518c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u5373\u7b54\u5373\u51fa\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5206\u6790\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🧠 性格测试</h1>
+    <p>趣味 MBTI 风格性格小测试</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="result-box" id="ptBox" style="max-height:none;text-align:center;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是四维性格测试？</h2><p>参考 MBTI 理论，从外向/内向、实感/直觉、理性/感性、计划/随性四个维度描述性格倾向。</p><h2>怎么测试？</h2><p>回答 12 道情景选择题，自动统计四维倾向并给出性格描述，无对错之分，仅供了解自己。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>测试科学吗？</summary><p>娱乐性简化版，仅供参考，不是专业心理测评。</p></details><details class="faq-item"><summary>结果怎么解读？</summary><p>每个维度倾向即代表你的偏好风格，附详细描述。</p></details><details class="faq-item"><summary>需要注册吗？</summary><p>不需要，即答即出结果。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地分析。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>性格测试 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var ptBox = document.getElementById('ptBox');
+  var QUESTIONS = [
+    ['周末你更倾向于？', '约朋友出去玩', '在家独处休息'],
+    ['面对新计划，你先想？', '实际怎么落地执行', '天马行空的可能性'],
+    ['做决定时，你更看重？', '逻辑和事实', '感受和人心'],
+    ['出行前你会？', '做好详细行程规划', '走一步看一步'],
+    ['和人聊天时，你常常？', '边说边想，话题跳跃', '想清楚了再说'],
+    ['学习新东西你更喜欢？', '照着教程一步步做', '自己摸索尝试'],
+    ['买东西时？', '比较参数性价比', '凭第一眼感觉'],
+    ['你的桌面通常？', '整洁有序', '随性堆放'],
+    ['发生分歧时你？', '摆事实讲道理', '先照顾对方情绪'],
+    ['假期你更想去？', '热闹的城市', '安静的自然风光'],
+    ['工作计划你习惯？', '列出清单按时完成', '看心情弹性推进'],
+    ['遇到突发状况？', '快速冷静处理', '情绪先上来再说']
+  ];
+
+  var idx = 0;
+  var scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+  function renderQ() {
+    ptBox.innerHTML = '<div style="font-size:14px;color:var(--muted);margin-bottom:8px;">第 ' + (idx + 1) + ' / ' + QUESTIONS.length + ' 题</div>' +
+      '<div style="font-size:18px;font-weight:600;margin-bottom:20px;">' + QUESTIONS[idx][0] + '</div>' +
+      '<button class="btn" style="width:100%;margin-bottom:10px;" data-a="1" type="button">' + QUESTIONS[idx][1] + '</button>' +
+      '<button class="btn btn-secondary" style="width:100%;" data-a="2" type="button">' + QUESTIONS[idx][2] + '</button>';
+  }
+
+  var DIMS = [
+    ['E', 'I', '精力来源', '外向：从社交与行动中获得能量', '内向：从独处与思考中获得能量'],
+    ['S', 'N', '信息获取', '实感：关注具体细节和现实', '直觉：关注整体模式和可能性'],
+    ['T', 'F', '决策方式', '理性：以逻辑和客观标准决策', '感性：以价值观和他人感受决策'],
+    ['J', 'P', '生活方式', '计划：喜欢条理与确定性', '随性：喜欢灵活与开放性']
+  ];
+
+  function renderResult() {
+    var code = '';
+    var lines = '';
+    DIMS.forEach(function (d) {
+      var a = scores[d[0]], b = scores[d[1]];
+      var label = a >= b ? d[0] : d[1];
+      code += label;
+      var pct = Math.round(a / (a + b) * 100);
+      lines += '<div style="margin:10px 0;"><div style="font-weight:600;">' + d[2] + '：' + (a >= b ? d[3] : d[4]) + '（' + pct + '%）</div>' +
+        '<div style="background:var(--bg);border-radius:6px;height:8px;margin-top:6px;"><div style="background:var(--primary);height:8px;border-radius:6px;width:' + Math.max(pct, 8) + '%;"></div></div></div>';
+    });
+    ptBox.innerHTML = '<div style="font-size:28px;font-weight:800;margin-bottom:6px;">' + code + '</div>' +
+      '<div style="font-size:13px;color:var(--muted);margin-bottom:16px;">你的性格倾向（娱乐参考）</div>' + lines +
+      '<button class="btn btn-secondary" id="ptRetry" style="margin-top:16px;" type="button">重新测试</button>';
+    document.getElementById('ptRetry').addEventListener('click', function () {
+      idx = 0; scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+      renderQ();
+    });
+  }
+
+  ptBox.addEventListener('click', function (e) {
+    if (!e.target.dataset.a) return;
+    var dims = [['E', 'I'], ['S', 'N'], ['T', 'F'], ['J', 'P']];
+    var d = dims[idx % 4];
+    scores[d[e.target.dataset.a === '1' ? 0 : 1]]++;
+    idx++;
+    if (idx < QUESTIONS.length) renderQ();
+    else renderResult();
+  });
+
+  renderQ();
+})();
+</script>
+</body>
+</html>
