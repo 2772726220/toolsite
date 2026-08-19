@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片加水印 - 在线图片文字水印工具</title>
+  <meta name="description" content="免费在线图片加水印工具，给 JPG、PNG 图片添加文字水印，可自定义内容、大小、颜色、透明度、位置，浏览器本地处理，隐私安全。" />
+  <meta name="keywords" content="图片加水印,在线水印工具,文字水印,图片水印,加水印防盗图">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u6c34\u5370\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u4efb\u610f\u6587\u5b57\u5185\u5bb9\u5747\u53ef\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u8c03\u6c34\u5370\u900f\u660e\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u652f\u6301\u900f\u660e\u5ea6\u8c03\u8282\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5904\u7406\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u4f4d\u7f6e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u56db\u89d2\u3001\u9876\u90e8\u3001\u5e95\u90e8\u3001\u5c45\u4e2d\u4f4d\u7f6e\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>💧 图片加水印</h1>
+    <p>给图片加文字水印，保护版权</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="dropzone" id="dropzone">
+  <div class="icon">💧</div>
+  <p>拖拽图片到此处，或点击选择文件</p>
+  <button class="btn" id="fileBtn" type="button">选择图片</button>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+</div>
+<div class="field">
+  <label for="wmText">水印文字</label>
+  <input type="text" id="wmText" value="© 版权所有">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label>字号</label>
+  <input type="range" id="wmSize" min="12" max="120" value="48" style="flex:1;accent-color:var(--primary);">
+  <span class="quality-value" id="wmSizeValue">48</span>
+  <label for="wmPos" style="margin-left:8px;">位置</label>
+  <select id="wmPos" style="width:auto;padding:8px 12px;">
+    <option value="br">右下</option>
+    <option value="bl">左下</option>
+    <option value="tr">右上</option>
+    <option value="tl">左上</option>
+    <option value="c">居中</option>
+  </select>
+  <label for="wmColor" style="margin-left:8px;">颜色</label>
+  <input type="color" id="wmColor" value="#ffffff" style="width:40px;height:32px;border:none;">
+</div>
+<div class="actions">
+  <button class="btn" id="wmBtn" type="button" disabled>加水印并下载</button>
+</div>
+<div class="result-box" id="result" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要给图片加水印？</h2><p>发布原创图片到平台时，水印能标明出处、防止盗用。支持自定义文字内容和位置。</p><h2>水印会影响图片吗？</h2><p>水印是直接绘制在图片上的，保存后无法去除，请确认位置和内容后再下载。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文水印吗？</summary><p>支持，任意文字内容均可。</p></details><details class="faq-item"><summary>可以调水印透明度吗？</summary><p>可以，支持透明度调节。</p></details><details class="faq-item"><summary>图片会上传吗？</summary><p>不会，处理完全在浏览器本地完成。</p></details><details class="faq-item"><summary>支持哪些位置？</summary><p>支持四角、顶部、底部、居中位置。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片加水印 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var fileBtn = document.getElementById('fileBtn');
+  var wmBtn = document.getElementById('wmBtn');
+  var result = document.getElementById('result');
+  var wmSize = document.getElementById('wmSize');
+  var wmSizeValue = document.getElementById('wmSizeValue');
+  var selected = null;
+
+  wmSize.addEventListener('input', function () { wmSizeValue.textContent = wmSize.value; });
+
+  fileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault(); dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length) loadFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  function loadFile(file) {
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) { showToast('请选择图片文件'); return; }
+    var reader = new FileReader();
+    reader.onload = function (e) { selected = { file: file, dataUrl: e.target.result }; wmBtn.disabled = false; showToast('图片已就绪'); };
+    reader.readAsDataURL(file);
+  }
+
+  wmBtn.addEventListener('click', function () {
+    if (!selected) return;
+    var text = document.getElementById('wmText').value.trim();
+    if (!text) { showToast('请输入水印文字'); return; }
+    var img = new Image();
+    img.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      var size = parseInt(wmSize.value, 10);
+      var pos = document.getElementById('wmPos').value;
+      var color = document.getElementById('wmColor').value;
+      ctx.font = 'bold ' + size + 'px sans-serif';
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.7;
+      var tw = ctx.measureText(text).width;
+      var pad = Math.round(size * 0.5);
+      var x, y;
+      if (pos === 'br') { x = canvas.width - tw - pad; y = canvas.height - pad; }
+      else if (pos === 'bl') { x = pad; y = canvas.height - pad; }
+      else if (pos === 'tr') { x = canvas.width - tw - pad; y = pad + size; }
+      else if (pos === 'tl') { x = pad; y = pad + size; }
+      else { x = (canvas.width - tw) / 2; y = (canvas.height + size) / 2; }
+      ctx.fillText(text, x, y);
+      ctx.globalAlpha = 1;
+      canvas.toBlob(function (blob) {
+        var ext = selected.file.type === 'image/png' ? 'png' : (selected.file.type === 'image/webp' ? 'webp' : 'jpg');
+        window.download(URL.createObjectURL(blob), selected.file.name.replace(/\.[^.]+$/, '') + '_watermarked.' + ext);
+        result.hidden = false;
+        result.textContent = '✅ 水印已添加：' + formatSize(blob.size);
+        setTimeout(function () { result.hidden = true; }, 5000);
+      }, selected.file.type, 0.92);
+    };
+    img.src = selected.dataUrl;
+  });
+})();
+</script>
+</body>
+</html>
