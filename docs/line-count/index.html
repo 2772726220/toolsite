@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>行数统计 - 在线代码行数统计工具</title>
+  <meta name="description" content="免费在线行数统计工具，统计代码总行数、有效行数、空行数、字符数，支持常见注释格式识别，浏览器本地处理，程序员开发必备。" />
+  <meta name="keywords" content="行数统计,代码行数,统计代码行,有效行数,在线行数统计,代码统计">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u8bed\u8a00\u6ce8\u91ca\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 //\u3001#\u3001<!-- -->\u3001/* */ \u7b49\u5e38\u89c1\u6ce8\u91ca\u683c\u5f0f\u3002"}},{"@type":"Question","name":"\u5b9e\u65f6\u7edf\u8ba1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\uff0c\u8f93\u5165\u5373\u65f6\u66f4\u65b0\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u7edf\u8ba1\u3002"}},{"@type":"Question","name":"\u7edf\u8ba1\u54ea\u4e9b\u6307\u6807\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u603b\u884c\u6570\u3001\u6709\u6548\u884c\u3001\u7a7a\u884c\u3001\u6ce8\u91ca\u884c\u3001\u603b\u5b57\u7b26\u6570\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📊 行数统计</h1>
+    <p>统计代码行数、注释行、空行</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="lcInput">粘贴代码</label>
+  <textarea id="lcInput" placeholder="粘贴代码，实时统计行数..."></textarea>
+</div>
+<div class="stat-bar">
+  <div class="stat"><div class="num" id="lcTotal">0</div><div class="label">总行数</div></div>
+  <div class="stat"><div class="num" id="lcCode">0</div><div class="label">有效行</div></div>
+  <div class="stat"><div class="num" id="lcBlank">0</div><div class="label">空行</div></div>
+</div>
+<div class="stat-bar">
+  <div class="stat"><div class="num" id="lcComment">0</div><div class="label">注释行</div></div>
+  <div class="stat"><div class="num" id="lcChars">0</div><div class="label">字符数</div></div>
+  <div class="stat"><div class="num" id="lcWords">0</div><div class="label">单词数</div></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要统计代码行数？</h2><p>评估代码量、汇报工作量、学习复盘时统计行数很常见。工具自动区分有效行、空行和注释行。</p><h2>怎么用？</h2><p>粘贴代码即自动统计，支持常见注释符号（//、#、/* */）识别。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些语言注释？</summary><p>支持 //、#、<!-- -->、/* */ 等常见注释格式。</p></details><details class="faq-item"><summary>实时统计吗？</summary><p>是，输入即时更新。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地统计。</p></details><details class="faq-item"><summary>统计哪些指标？</summary><p>总行数、有效行、空行、注释行、总字符数。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>行数统计 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var lcInput = document.getElementById('lcInput');
+
+  function count() {
+    var text = lcInput.value;
+    var lines = text.split('\n');
+    var total = lines.length;
+    var code = 0, blank = 0, comment = 0;
+    var inBlock = false;
+    lines.forEach(function (line) {
+      var t = line.trim();
+      if (inBlock) {
+        comment++;
+        if (t.includes('*/')) inBlock = false;
+        return;
+      }
+      if (!t) { blank++; return; }
+      if (t.startsWith('//') || t.startsWith('#')) { comment++; return; }
+      if (t.startsWith('/*')) {
+        comment++;
+        if (!t.includes('*/')) inBlock = true;
+        return;
+      }
+      if (t.startsWith('<!--')) { comment++; return; }
+      code++;
+    });
+    document.getElementById('lcTotal').textContent = total;
+    document.getElementById('lcCode').textContent = code;
+    document.getElementById('lcBlank').textContent = blank;
+    document.getElementById('lcComment').textContent = comment;
+    document.getElementById('lcChars').textContent = text.length;
+    document.getElementById('lcWords').textContent = (text.match(/[\w\u4e00-\u9fa5]+/g) || []).length;
+  }
+  lcInput.addEventListener('input', count);
+  count();
+})();
+</script>
+</body>
+</html>
