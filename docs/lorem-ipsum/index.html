@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机文本生成器 - 在线占位文字生成工具</title>
+  <meta name="description" content="免费在线随机文本生成器，一键生成中文、英文 Lorem Ipsum 占位文本，可调段落数和长度，网页设计排版测试必备，浏览器本地生成。" />
+  <meta name="keywords" content="随机文本,占位文本,lorem ipsum,随机文字生成,假文生成,排版测试">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u63a7\u5236\u6570\u91cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u8c03\u8282\u6bb5\u843d\u6570\u548c\u6bcf\u6bb5\u957f\u5ea6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4e00\u952e\u590d\u5236\u751f\u6210\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}},{"@type":"Question","name":"\u4e2d\u6587\u5047\u6587\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7531\u5e38\u7528\u6c49\u5b57\u968f\u673a\u7ec4\u5408\u7684\u5360\u4f4d\u6bb5\u843d\uff0c\u89c2\u611f\u8d34\u8fd1\u771f\u5b9e\u6392\u7248\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>✍️ 随机文本生成</h1>
+    <p>生成中文/英文占位文本</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="liLang">语言</label>
+  <select id="liLang" style="width:auto;">
+    <option value="cn">中文占位</option>
+    <option value="en">英文 Lorem Ipsum</option>
+  </select>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="liParas">段落数</label>
+  <input type="number" id="liParas" value="3" min="1" max="20" style="width:70px;">
+  <span style="color:var(--muted);">每段约</span>
+  <input type="number" id="liSent" value="4" min="1" max="20" style="width:60px;">
+  <span style="color:var(--muted);">句</span>
+</div>
+<div class="actions">
+  <button class="btn" id="liBtn" type="button">生成</button>
+  <button class="btn btn-secondary" id="liCopyBtn" type="button">复制</button>
+</div>
+<div class="result-box" id="liResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要占位文本？</h2><p>设计网页、做排版预览时用占位文本填充内容，避免真实文字干扰视觉效果。</p><h2>支持哪些语言？</h2><p>支持中文占位文本和经典 Lorem Ipsum 英文占位文本。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能控制数量吗？</summary><p>可调节段落数和每段长度。</p></details><details class="faq-item"><summary>支持复制吗？</summary><p>支持一键复制生成结果。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地生成。</p></details><details class="faq-item"><summary>中文假文是什么？</summary><p>由常用汉字随机组合的占位段落，观感贴近真实排版。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>随机文本生成 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var liResult = document.getElementById('liResult');
+  var lastText = '';
+
+  var CN_WORDS = ['在', '这', '一', '个', '为', '的', '是', '和', '我们', '可以', '通过', '用户', '使用', '系统', '进行', '功能', '需要', '内容', '数据', '信息', '页面', '网站', '工具', '服务', '提供', '支持', '包括', '如果', '那么', '因为', '所以', '但是', '而且', '或者', '可能', '已经', '没有', '得到', '实现', '完成', '设计', '开发', '测试', '上线', '运行', '处理', '操作', '显示', '展示', '效果', '体验', '快速', '简单', '方便', '轻松', '高效', '专业', '可靠', '安全'];
+  var EN_WORDS = ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'in', 'reprehenderit', 'voluptate', 'velit', 'esse', 'cillum', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint', 'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia', 'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum'];
+
+  function rnd(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function cnSentence() {
+    var n = 6 + Math.floor(Math.random() * 8);
+    var parts = [];
+    for (var i = 0; i < n; i++) parts.push(rnd(CN_WORDS));
+    return parts.join('') + '。';
+  }
+  function enSentence() {
+    var n = 6 + Math.floor(Math.random() * 8);
+    var words = [];
+    for (var i = 0; i < n; i++) words.push(rnd(EN_WORDS));
+    var s = words.join(' ');
+    return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+  }
+
+  document.getElementById('liBtn').addEventListener('click', function () {
+    var lang = document.getElementById('liLang').value;
+    var paras = parseInt(document.getElementById('liParas').value, 10) || 3;
+    var sent = parseInt(document.getElementById('liSent').value, 10) || 4;
+    paras = Math.max(1, Math.min(20, paras));
+    sent = Math.max(1, Math.min(20, sent));
+    var out = [];
+    for (var p = 0; p < paras; p++) {
+      var sents = [];
+      for (var s = 0; s < sent; s++) {
+        sents.push(lang === 'cn' ? cnSentence() : enSentence());
+      }
+      out.push(sents.join(lang === 'cn' ? '' : ' '));
+    }
+    lastText = out.join('\n\n');
+    liResult.hidden = false;
+    liResult.textContent = lastText;
+  });
+
+  document.getElementById('liCopyBtn').addEventListener('click', function () {
+    if (!lastText) { showToast('请先生成'); return; }
+    navigator.clipboard.writeText(lastText).then(function () { showToast('已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
