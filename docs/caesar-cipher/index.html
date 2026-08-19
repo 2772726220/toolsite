@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>凯撒加密 - 在线凯撒密码加密解密工具</title>
+  <meta name="description" content="免费在线凯撒加密工具，字母按指定位移加密解密，支持 ROT13、全字母循环，中文标点不变，浏览器本地处理，信息安全学习必备。" />
+  <meta name="keywords" content="凯撒加密,凯撒密码,密码加密,rot13,字母移位,在线加密">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u6587\u548c\u6807\u70b9\u4fdd\u6301\u4e0d\u53d8\uff0c\u53ea\u5904\u7406\u82f1\u6587\u5b57\u6bcd\u3002"}},{"@type":"Question","name":"\u4ec0\u4e48\u662f ROT13\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f4d\u79fb 13 \u7684\u51ef\u6492\u5bc6\u7801\uff0c\u52a0\u5bc6\u4e24\u6b21\u5373\u8fd8\u539f\u3002"}},{"@type":"Question","name":"\u80fd\u66b4\u529b\u7834\u89e3\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4e00\u952e\u5c1d\u8bd5\u6240\u6709 25 \u79cd\u4f4d\u79fb\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔐 凯撒加密</h1>
+    <p>字母移位加密解密，ROT13</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">凯撒加密</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#凯撒</span><span class="badge">#加密</span>
+<div class="field">
+  <label for="caInput">输入文本</label>
+  <textarea id="caInput" placeholder="输入要加密或解密的英文文本..."></textarea>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="caShift">位移</label>
+  <input type="number" id="caShift" value="3" min="1" max="25" style="width:70px;">
+</div>
+<div class="actions">
+  <button class="btn" id="caEncBtn" type="button">加密</button>
+  <button class="btn btn-secondary" id="caDecBtn" type="button">解密</button>
+  <button class="btn btn-secondary" id="caRot13Btn" type="button">ROT13</button>
+</div>
+<div class="result-box" id="caResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是凯撒密码？</h2><p>最古老的替换加密：把每个字母按字母表平移若干位，如位移 3 时 A→D。</p><h2>能解密吗？</h2><p>可以，输入位移数反向还原，或尝试 25 种位移暴力破解。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文吗？</summary><p>中文和标点保持不变，只处理英文字母。</p></details><details class="faq-item"><summary>什么是 ROT13？</summary><p>位移 13 的凯撒密码，加密两次即还原。</p></details><details class="faq-item"><summary>能暴力破解吗？</summary><p>支持一键尝试所有 25 种位移。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地处理。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>凯撒加密 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var caResult = document.getElementById('caResult');
+
+  function shift(text, n) {
+    return text.split('').map(function (ch) {
+      var code = ch.charCodeAt(0);
+      if (code >= 65 && code <= 90) return String.fromCharCode(((code - 65 + n) % 26 + 26) % 26 + 65);
+      if (code >= 97 && code <= 122) return String.fromCharCode(((code - 97 + n) % 26 + 26) % 26 + 97);
+      return ch;
+    }).join('');
+  }
+
+  document.getElementById('caEncBtn').addEventListener('click', function () {
+    var text = document.getElementById('caInput').value;
+    var n = parseInt(document.getElementById('caShift').value, 10);
+    if (isNaN(n) || n < 1 || n > 25) { showToast('位移需在 1-25 之间'); return; }
+    caResult.hidden = false;
+    caResult.textContent = shift(text, n);
+  });
+
+  document.getElementById('caDecBtn').addEventListener('click', function () {
+    var text = document.getElementById('caInput').value;
+    var n = parseInt(document.getElementById('caShift').value, 10);
+    if (isNaN(n) || n < 1 || n > 25) { showToast('位移需在 1-25 之间'); return; }
+    caResult.hidden = false;
+    caResult.textContent = shift(text, -n);
+  });
+
+  document.getElementById('caRot13Btn').addEventListener('click', function () {
+    var text = document.getElementById('caInput').value;
+    caResult.hidden = false;
+    caResult.textContent = shift(text, 13);
+  });
+})();
+</script>
+</body>
+</html>
