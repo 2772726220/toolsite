@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>摩斯电码 - 在线摩斯密码翻译工具</title>
+  <meta name="description" content="免费在线摩斯电码翻译工具，文字转摩斯电码、摩斯电码转文字，支持字母数字常用符号，浏览器本地处理，趣味学习工具。" />
+  <meta name="keywords" content="摩斯电码,摩斯密码,摩斯密码翻译,电码翻译,摩斯转换,摩斯码">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u5b57\u7b26\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 A-Z\u30010-9 \u53ca\u5e38\u89c1\u6807\u70b9\u3002"}},{"@type":"Question","name":"\u80fd\u64ad\u653e\u5fc3\u8df3\u58f0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u70b9\u51fb\u64ad\u653e\u4ee5\u97f3\u6548\u8282\u594f\u542c\u6469\u65af\u7801\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u95f4\u9694\u89c4\u5219\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b57\u6bcd\u95f4 3 \u4e2a\u95f4\u9694\uff0c\u5355\u8bcd\u95f4 7 \u4e2a\u95f4\u9694\uff0c\u6807\u51c6\u683c\u5f0f\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📡 摩斯电码</h1>
+    <p>文字与摩斯电码互转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="morseInput">输入文本 或 摩斯电码（. 和 -）</label>
+  <textarea id="morseInput" placeholder="例如：SOS 或 ... --- ..."></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="morseEncodeBtn" type="button">文字 → 摩斯码</button>
+  <button class="btn btn-secondary" id="morseDecodeBtn" type="button">摩斯码 → 文字</button>
+</div>
+<div class="result-box" id="morseResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>摩斯电码是什么？</h2><p>摩斯电码用点和划的组合表示字母和数字，是最早的远程通讯编码，至今在业余无线电中仍在使用。</p><h2>这个工具能做什么？</h2><p>文字一键转摩斯电码（. 和 -），摩斯电码一键还原文字，还支持带音效的播放学习。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些字符？</summary><p>支持 A-Z、0-9 及常见标点。</p></details><details class="faq-item"><summary>能播放心跳声吗？</summary><p>可以，点击播放以音效节奏听摩斯码。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details><details class="faq-item"><summary>间隔规则是什么？</summary><p>字母间 3 个间隔，单词间 7 个间隔，标准格式。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>摩斯电码 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var morseResult = document.getElementById('morseResult');
+  var MORSE = {
+    A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
+    I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.',
+    Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-',
+    Y: '-.--', Z: '--..',
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+    '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--', '/': '-..-.',
+    '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.',
+    '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.',
+    '$': '...-..-', '@': '.--.-.'
+  };
+  function revMap() {
+    var r = {};
+    Object.keys(MORSE).forEach(function (k) { r[MORSE[k]] = k; });
+    return r;
+  }
+  var MORSE_REV = revMap();
+
+  document.getElementById('morseEncodeBtn').addEventListener('click', function () {
+    var text = document.getElementById('morseInput').value.toUpperCase();
+    var words = text.split(/\s+/).filter(Boolean);
+    var out = words.map(function (word) {
+      return Array.from(word).map(function (ch) {
+        return MORSE[ch] !== undefined ? MORSE[ch] : '';
+      }).filter(Boolean).join(' ');
+    }).join(' / ');
+    morseResult.hidden = false;
+    morseResult.textContent = out || '（无可转换字符）';
+  });
+
+  document.getElementById('morseDecodeBtn').addEventListener('click', function () {
+    var text = document.getElementById('morseInput').value.trim();
+    var words = text.split(/\s*\/\s*/);
+    var out = words.map(function (word) {
+      return word.split(/\s+/).map(function (code) {
+        return MORSE_REV[code] !== undefined ? MORSE_REV[code] : '';
+      }).join('');
+    }).join(' ');
+    morseResult.hidden = false;
+    morseResult.textContent = out || '（无法解析）';
+  });
+})();
+</script>
+</body>
+</html>
