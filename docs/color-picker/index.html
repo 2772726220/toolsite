@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片取色器 - 在线从图片取色工具</title>
+  <meta name="description" content="免费在线图片取色工具，上传图片点击任意位置即可提取颜色，实时显示 HEX、RGB 色值，浏览器本地处理，设计师必备。" />
+  <meta name="keywords" content="图片取色,在线取色器,颜色提取,图片拾色器,取色工具,颜色代码">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 JPG\u3001PNG\u3001WebP\uff0c\u900f\u660e\u533a\u57df\u81ea\u52a8\u5ffd\u7565\u3002"}},{"@type":"Question","name":"\u80fd\u653e\u5927\u53d6\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u60ac\u505c\u65f6\u81ea\u52a8\u653e\u5927 8 \u500d\u663e\u793a\u9009\u533a\uff0c\u53d6\u8272\u66f4\u7cbe\u51c6\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5904\u7406\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u590d\u5236\u8272\u503c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u70b9\u51fb\u8272\u503c\u5373\u53ef\u4e00\u952e\u590d\u5236\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎯 图片取色器</h1>
+    <p>上传图片点击取色，获取色值代码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="dropzone" id="dropzone">
+  <div class="icon">🎯</div>
+  <p>上传图片，鼠标悬停/点击取色</p>
+  <button class="btn" id="fileBtn" type="button">选择图片</button>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+</div>
+<div id="pickerWrap" hidden style="margin-top:16px;position:relative;overflow:auto;">
+  <canvas id="pickerCanvas" style="max-width:100%;cursor:crosshair;"></canvas>
+  <div id="zoom" style="position:absolute;border:2px solid #fff;box-shadow:0 0 0 1px #333;width:96px;height:96px;display:none;pointer-events:none;border-radius:8px;"></div>
+</div>
+<div class="actions" id="pickerActions" hidden>
+  <button class="btn btn-secondary" id="copyHexBtn" type="button">复制 HEX</button>
+  <button class="btn btn-secondary" id="copyRgbBtn" type="button">复制 RGB</button>
+</div>
+<div class="result-box" id="pickerResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要图片取色？</h2><p>看到喜欢的海报、照片想获取其中的颜色，上传图片点击即可得到色值代码，方便设计配色。</p><h2>这个工具怎么用？</h2><p>上传图片后移动鼠标悬停，实时预览颜色；点击即可固定显示该点的 HEX 和 RGB 值。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些格式？</summary><p>支持 JPG、PNG、WebP，透明区域自动忽略。</p></details><details class="faq-item"><summary>能放大取色吗？</summary><p>悬停时自动放大 8 倍显示选区，取色更精准。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，全部在浏览器本地处理。</p></details><details class="faq-item"><summary>可以复制色值吗？</summary><p>可以，点击色值即可一键复制。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片取色器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var fileBtn = document.getElementById('fileBtn');
+  var pickerWrap = document.getElementById('pickerWrap');
+  var pickerCanvas = document.getElementById('pickerCanvas');
+  var zoom = document.getElementById('zoom');
+  var pickerResult = document.getElementById('pickerResult');
+  var ctx = pickerCanvas.getContext('2d');
+  var currentColor = null;
+
+  fileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault(); dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length) loadFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  function loadFile(file) {
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) { showToast('请选择图片文件'); return; }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var img = new Image();
+      img.onload = function () {
+        pickerCanvas.width = img.naturalWidth;
+        pickerCanvas.height = img.naturalHeight;
+        ctx.drawImage(img, 0, 0);
+        pickerWrap.hidden = false;
+        document.getElementById('pickerActions').hidden = false;
+        showToast('移动鼠标取色，点击固定');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function getColor(e) {
+    var rect = pickerCanvas.getBoundingClientRect();
+    var x = Math.round((e.clientX - rect.left) * (pickerCanvas.width / rect.width));
+    var y = Math.round((e.clientY - rect.top) * (pickerCanvas.height / rect.height));
+    x = Math.max(0, Math.min(pickerCanvas.width - 1, x));
+    y = Math.max(0, Math.min(pickerCanvas.height - 1, y));
+    var d = ctx.getImageData(x, y, 1, 1).data;
+    if (d[3] === 0) return null;
+    return { r: d[0], g: d[1], b: d[2] };
+  }
+
+  pickerCanvas.addEventListener('mousemove', function (e) {
+    var c = getColor(e);
+    if (!c) { zoom.style.display = 'none'; return; }
+    zoom.style.display = 'block';
+    zoom.style.left = (e.clientX - pickerWrap.getBoundingClientRect().left + 16) + 'px';
+    zoom.style.top = (e.clientY - pickerWrap.getBoundingClientRect().top - 108) + 'px';
+    zoom.style.background = 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')';
+  });
+  pickerCanvas.addEventListener('mouseleave', function () { zoom.style.display = 'none'; });
+  pickerCanvas.addEventListener('click', function (e) {
+    var c = getColor(e);
+    if (!c) { showToast('透明区域无色'); return; }
+    currentColor = c;
+    var hex = '#' + [c.r, c.g, c.b].map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    pickerResult.hidden = false;
+    pickerResult.innerHTML = 'HEX：<b>' + hex + '</b><br>RGB：<b>rgb(' + c.r + ', ' + c.g + ', ' + c.b + ')</b>' +
+      '<div style="width:40px;height:40px;border-radius:8px;margin-top:8px;background:' + hex + ';border:1px solid var(--border);"></div>';
+    window._pickedHex = hex;
+    window._pickedRgb = 'rgb(' + c.r + ', ' + c.g + ', ' + c.b + ')';
+  });
+  document.getElementById('copyHexBtn').addEventListener('click', function () {
+    if (!window._pickedHex) { showToast('先点击取色'); return; }
+    navigator.clipboard.writeText(window._pickedHex).then(function () { showToast('HEX 已复制'); });
+  });
+  document.getElementById('copyRgbBtn').addEventListener('click', function () {
+    if (!window._pickedRgb) { showToast('先点击取色'); return; }
+    navigator.clipboard.writeText(window._pickedRgb).then(function () { showToast('RGB 已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
