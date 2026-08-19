@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL编码解码 - 在线URL转码工具</title>
+  <meta name="description" content="免费在线 URL 编码解码工具，中文字符与特殊符号转百分号编码、解码还原，支持空格编码选择，浏览器本地处理，开发调试必备。" />
+  <meta name="keywords" content="url编码,url解码,网址编码,转码工具,百分号编码,在线url转码">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e2d\u6587\u4f1a\u88ab\u8f6c\u6210\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f6c\u6210\u4ee5 % \u5f00\u5934\u7684 UTF-8 \u5341\u516d\u8fdb\u5236\u5b57\u8282\uff0c\u5982\u300c\u4e2d\u300d\u8f6c\u6210 %E4%B8%AD\u3002"}},{"@type":"Question","name":"\u80fd\u89e3\u7801\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u7c98\u8d34\u7f16\u7801\u4e32\u4e00\u952e\u8fd8\u539f\u4e3a\u539f\u6587\u3002"}},{"@type":"Question","name":"\u7a7a\u683c\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u63d0\u4f9b %20 \u4e0e + \u4e24\u79cd\u7f16\u7801\u65b9\u5f0f\u5207\u6362\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔗 URL编码解码</h1>
+    <p>网址编码解码，中文字符转百分号编码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="urlInput">输入文本或 URL</label>
+  <textarea id="urlInput" placeholder="粘贴中文、特殊字符或编码串..."></textarea>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="urlSpace">空格编码</label>
+  <select id="urlSpace" style="width:auto;">
+    <option value="pct">%20</option>
+    <option value="plus">+（表单）</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="urlEncBtn" type="button">编码</button>
+  <button class="btn btn-secondary" id="urlDecBtn" type="button">解码</button>
+</div>
+<div class="result-box" id="urlResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要 URL 编码？</h2><p>URL 中不允许出现中文和部分特殊字符，需转为 %XX 百分号编码才能在浏览器和接口中传输。</p><h2>支持哪些选项？</h2><p>可切换空格编码为 %20 或 +（表单格式），支持一键编码/解码。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>中文会被转成什么？</summary><p>转成以 % 开头的 UTF-8 十六进制字节，如「中」转成 %E4%B8%AD。</p></details><details class="faq-item"><summary>能解码吗？</summary><p>可以，粘贴编码串一键还原为原文。</p></details><details class="faq-item"><summary>空格怎么处理？</summary><p>提供 %20 与 + 两种编码方式切换。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地处理。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>URL编码解码 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var urlResult = document.getElementById('urlResult');
+
+  document.getElementById('urlEncBtn').addEventListener('click', function () {
+    var v = document.getElementById('urlInput').value;
+    var spaceMode = document.getElementById('urlSpace').value;
+    var enc = encodeURIComponent(v);
+    if (spaceMode === 'plus') enc = enc.replace(/%20/g, '+');
+    urlResult.hidden = false;
+    urlResult.textContent = enc;
+  });
+
+  document.getElementById('urlDecBtn').addEventListener('click', function () {
+    var v = document.getElementById('urlInput').value.trim().replace(/\+/g, '%20');
+    try {
+      urlResult.hidden = false;
+      urlResult.textContent = decodeURIComponent(v);
+    } catch (e) {
+      showToast('解码失败：内容不是有效的 URL 编码');
+    }
+  });
+})();
+</script>
+</body>
+</html>
