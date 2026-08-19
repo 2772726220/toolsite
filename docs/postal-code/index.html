@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>邮政编码查询 - 在线中国邮编查询工具</title>
+  <meta name="description" content="免费在线邮政编码查询工具，按省份/城市快速查询中国主要城市邮政编码，浏览器本地查询，寄信寄包裹必备。" />
+  <meta name="keywords" content="邮政编码,邮编查询,中国邮编,城市邮编,在线邮编,邮编查询工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📮</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u636e\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8986\u76d6\u5168\u56fd\u7701\u4f1a\u53ca\u4e3b\u8981\u57ce\u5e02\u5e38\u7528\u90ae\u7f16\u3002"}},{"@type":"Question","name":"\u80fd\u6309\u57ce\u5e02\u67e5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6309\u7701\u4efd\u548c\u57ce\u5e02\u7b5b\u9009\u67e5\u8be2\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u67e5\u8be2\u3002"}},{"@type":"Question","name":"\u90ae\u7f16\u662f\u591a\u5c11\u4f4d\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u56fd\u90ae\u7f16\u7edf\u4e00\u4e3a 6 \u4f4d\u6570\u5b57\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📮 邮政编码查询</h1>
+    <p>省份城市邮编快速查询</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="pcSearch">搜索城市/邮编</label>
+  <input type="text" id="pcSearch" placeholder="输入城市名或邮编">
+</div>
+<div class="result-box" id="pcResult" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要邮编？</h2><p>寄信、寄包裹、填写快递单、注册国外网站常需要填写邮政编码，工具内置全国主要城市邮编。</p><h2>支持哪些地区？</h2><p>覆盖全国各省会、主要城市和地区邮编。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数据全吗？</summary><p>覆盖全国省会及主要城市常用邮编。</p></details><details class="faq-item"><summary>能按城市查吗？</summary><p>支持按省份和城市筛选查询。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地查询。</p></details><details class="faq-item"><summary>邮编是多少位？</summary><p>中国邮编统一为 6 位数字。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>邮政编码查询 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pcResult = document.getElementById('pcResult');
+  var CODES = [
+    ['北京', '100000'], ['上海', '200000'], ['天津', '300000'], ['重庆', '400000'],
+    ['广州', '510000'], ['深圳', '518000'], ['杭州', '310000'], ['南京', '210000'],
+    ['武汉', '430000'], ['成都', '610000'], ['西安', '710000'], ['长沙', '410000'],
+    ['郑州', '450000'], ['济南', '250000'], ['青岛', '266000'], ['沈阳', '110000'],
+    ['大连', '116000'], ['长春', '130000'], ['哈尔滨', '150000'], ['石家庄', '050000'],
+    ['太原', '030000'], ['呼和浩特', '010000'], ['合肥', '230000'], ['福州', '350000'],
+    ['厦门', '361000'], ['南昌', '330000'], ['昆明', '650000'], ['贵阳', '550000'],
+    ['南宁', '530000'], ['海口', '570000'], ['兰州', '730000'], ['西宁', '810000'],
+    ['银川', '750000'], ['乌鲁木齐', '830000'], ['拉萨', '850000'], ['呼和浩特', '010000'],
+    ['苏州', '215000'], ['无锡', '214000'], ['宁波', '315000'], ['温州', '325000'],
+    ['佛山', '528000'], ['东莞', '523000'], ['珠海', '519000'], ['中山', '528400'],
+    ['泉州', '362000'], ['烟台', '264000'], ['潍坊', '261000'], ['保定', '071000']
+  ];
+
+  function render(list) {
+    pcResult.innerHTML = '';
+    if (!list.length) {
+      pcResult.innerHTML = '<p style="color:var(--muted);text-align:center;">未找到匹配城市</p>';
+      return;
+    }
+    list.forEach(function (c) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);';
+      row.innerHTML = '<span><b>' + c[0] + '</b></span><code style="font-size:15px;">' + c[1] + '</code>';
+      pcResult.appendChild(row);
+    });
+  }
+
+  document.getElementById('pcSearch').addEventListener('input', function () {
+    var q = this.value.trim();
+    if (!q) { render(CODES); return; }
+    render(CODES.filter(function (c) { return c[0].includes(q) || c[1].includes(q); }));
+  });
+
+  render(CODES);
+})();
+</script>
+</body>
+</html>
