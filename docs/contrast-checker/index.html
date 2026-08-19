@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色对比度 - 在线WCAG对比度检测工具</title>
+  <meta name="description" content="免费在线颜色对比度检测工具，输入前景色与背景色，按 WCAG 标准计算对比度比值，自动判断 AA/AAA 级别是否达标，网页无障碍设计必备。" />
+  <meta name="keywords" content="颜色对比度,WCAG,对比度检测,文字可读性,无障碍设计,色值对比">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8fbe\u6807\u6807\u51c6\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"AA \u7ea7\u6b63\u6587 \u22654.5:1\u3001\u5927\u53f7/\u7c97\u4f53 \u22653:1\uff1bAAA \u7ea7\u6b63\u6587 \u22657:1\u3001\u5927\u53f7 \u22654.5:1\u3002"}},{"@type":"Question","name":"\u652f\u6301\u900f\u660e\u80cc\u666f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u652f\u6301\u4e0d\u900f\u660e\u8272\uff0c\u900f\u660e\u4f1a\u6309\u767d\u5e95\u8fd1\u4f3c\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u80fd\u76f4\u63a5\u8c03\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u70b9\u8272\u5757\u5b9e\u65f6\u8c03\u6574\u5e76\u5373\u65f6\u66f4\u65b0\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>👁️ 颜色对比度</h1>
+    <p>前景/背景对比度与 WCAG 达标检测</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">颜色对比度</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#对比度</span><span class="badge">#无障碍</span><span class="badge">#WCAG</span>
+<div class="field">
+  <label for="ccFg">前景色</label>
+  <input type="color" id="ccFg" value="#333333" style="width:56px;height:40px;border:none;background:none;">
+  <span style="font-family:monospace;font-size:13px;" id="ccFgLabel">#333333</span>
+</div>
+<div class="field">
+  <label for="ccBg">背景色</label>
+  <input type="color" id="ccBg" value="#ffffff" style="width:56px;height:40px;border:none;background:none;">
+  <span style="font-family:monospace;font-size:13px;" id="ccBgLabel">#ffffff</span>
+</div>
+<div class="result-box" id="ccResult" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么对比度重要？</h2><p>低对比度文字在弱光、色弱人群中难以辨认，WCAG 规定正文至少 4.5:1、大号字 3:1 才算达标。</p><h2>怎么用？</h2><p>选择或输入前景色和背景色，自动给出比值与达标等级，实时更新。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>达标标准是什么？</summary><p>AA 级正文 ≥4.5:1、大号/粗体 ≥3:1；AAA 级正文 ≥7:1、大号 ≥4.5:1。</p></details><details class="faq-item"><summary>支持透明背景吗？</summary><p>仅支持不透明色，透明会按白底近似计算。</p></details><details class="faq-item"><summary>能直接调颜色吗？</summary><p>可以，点色块实时调整并即时更新结果。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>颜色对比度 · <a href="../category/design/">🎨 颜色设计</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var ccResult = document.getElementById('ccResult');
+
+  function lum(hex) {
+    var m = hex.replace('#', '');
+    if (m.length === 3) m = m.split('').map(function (c) { return c + c; }).join('');
+    var n = parseInt(m, 16);
+    var r = ((n >> 16) & 255) / 255;
+    var g = ((n >> 8) & 255) / 255;
+    var b = (n & 255) / 255;
+    var f = function (v) {
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    };
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  }
+
+  function ratio(fg, bg) {
+    var l1 = lum(fg), l2 = lum(bg);
+    var hi = Math.max(l1, l2), lo = Math.min(l1, l2);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+
+  function render() {
+    var fg = document.getElementById('ccFg').value;
+    var bg = document.getElementById('ccBg').value;
+    document.getElementById('ccFgLabel').textContent = fg;
+    document.getElementById('ccBgLabel').textContent = bg;
+    var r = ratio(fg, bg);
+    var passAA = r >= 4.5, passAALarge = r >= 3, passAAA = r >= 7, passAAALarge = r >= 4.5;
+    ccResult.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+      '<span>对比度比值</span><b style="font-size:30px;font-family:monospace;">' + r.toFixed(2) + ':1</b></div>' +
+      '<div style="margin-top:12px;display:grid;gap:6px;font-size:13px;">' +
+      '<div>' + (passAA ? '✅' : '❌') + ' WCAG AA 正文（≥4.5:1）' + (passAA ? '达标' : '未达标') + '</div>' +
+      '<div>' + (passAALarge ? '✅' : '❌') + ' WCAG AA 大号字（≥3:1）' + (passAALarge ? '达标' : '未达标') + '</div>' +
+      '<div>' + (passAAA ? '✅' : '❌') + ' WCAG AAA 正文（≥7:1）' + (passAAA ? '达标' : '未达标') + '</div>' +
+      '<div>' + (passAAALarge ? '✅' : '❌') + ' WCAG AAA 大号字（≥4.5:1）' + (passAAALarge ? '达标' : '未达标') + '</div>' +
+      '</div>' +
+      '<div style="margin-top:14px;padding:18px;border-radius:8px;background:' + bg + ';color:' + fg + ';border:1px solid var(--border);">' +
+      '示例文字：在背景上的显示效果</div>';
+  }
+
+  document.getElementById('ccFg').addEventListener('input', render);
+  document.getElementById('ccBg').addEventListener('input', render);
+  render();
+})();
+</script>
+</body>
+</html>
