@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期第几周 - 在线周数计算工具</title>
+  <meta name="description" content="免费在线周数计算工具，输入日期即可知道它是当年的第几周、星期几、距离年末还有多少天，浏览器本地计算，工作排期必备。" />
+  <meta name="keywords" content="第几周,周数计算,周几查询,日期周数,当年第几周,在线日历工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5468\u4e00\u8fd8\u662f\u5468\u65e5\u7b97\u4e00\u5468\u5f00\u59cb\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u63d0\u4f9b\u5207\u6362\u9009\u9879\uff0c\u9ed8\u8ba4 ISO \u5468\u4e00\u4e3a\u4e00\u5468\u5f00\u59cb\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u5230\u661f\u671f\u51e0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u540c\u65f6\u663e\u793a\u661f\u671f\u51e0\u548c\u5f53\u5e74\u7b2c\u51e0\u5929\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8303\u56f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4efb\u610f\u65e5\u671f\uff0c\u81ea\u52a8\u5904\u7406\u95f0\u5e74\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📅 日期第几周</h1>
+    <p>计算日期是当年的第几周</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="wnDate">选择日期</label>
+  <input type="date" id="wnDate">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="wnStart">每周从</label>
+  <select id="wnStart" style="width:auto;">
+    <option value="1">周一（ISO 标准）</option>
+    <option value="0">周日</option>
+  </select>
+</div>
+<div class="actions"><button class="btn" id="wnBtn" type="button">查询</button></div>
+<div class="result-box" id="wnResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要知道第几周？</h2><p>工作排期、项目计划、教学周历、周报统计常按周计算，工具一键得出日期所在周数。</p><h2>周怎么划分？</h2><p>默认周一为一周开始，也可切换周日起始（ISO 标准）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>周一还是周日算一周开始？</summary><p>提供切换选项，默认 ISO 周一为一周开始。</p></details><details class="faq-item"><summary>能看到星期几吗？</summary><p>可以，同时显示星期几和当年第几天。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>支持范围？</summary><p>支持任意日期，自动处理闰年。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>日期第几周 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var wnResult = document.getElementById('wnResult');
+  var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  document.getElementById('wnBtn').addEventListener('click', function () {
+    var v = document.getElementById('wnDate').value;
+    if (!v) { showToast('请选择日期'); return; }
+    var d = new Date(v + 'T00:00:00');
+    if (isNaN(d)) { showToast('日期无效'); return; }
+    var startWeekday = parseInt(document.getElementById('wnStart').value, 10);
+    var y = d.getFullYear();
+    var jan1 = new Date(y, 0, 1);
+    var offset = (jan1.getDay() - startWeekday + 7) % 7;
+    var firstDay = new Date(y, 0, 1);
+    firstDay.setDate(firstDay.getDate() - offset);
+    var weekNum = Math.floor((d - firstDay) / 86400000 / 7) + 1;
+    if (weekNum === 0) {
+      y--;
+      var prevJan1 = new Date(y, 0, 1);
+      var prevOffset = (prevJan1.getDay() - startWeekday + 7) % 7;
+      var prevFirst = new Date(y, 0, 1);
+      prevFirst.setDate(prevFirst.getDate() - prevOffset);
+      weekNum = Math.floor((d - prevFirst) / 86400000 / 7) + 1;
+    }
+    var dayOfYear = Math.floor((d - new Date(y, 0, 1)) / 86400000) + 1;
+    var yearEnd = new Date(y, 11, 31);
+    var daysLeft = Math.round((yearEnd - d) / 86400000);
+    var iso = weekNum < 10 ? '0' + weekNum : '' + weekNum;
+    wnResult.hidden = false;
+    wnResult.innerHTML =
+      v + ' 是<b> ' + y + '</b> 年第 <b style="font-size:22px;">' + iso + '</b> 周<br>' +
+      '星期' + WEEK[d.getDay()] + ' · 当年第 ' + dayOfYear + ' 天<br>' +
+      '距离 ' + y + ' 年结束还有 ' + daysLeft + ' 天';
+  });
+
+  document.getElementById('wnDate').value = new Date().toISOString().slice(0, 10);
+})();
+</script>
+</body>
+</html>
