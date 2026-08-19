@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金额大写转换 - 数字转人民币大写工具</title>
+  <meta name="description" content="免费在线金额大写转换工具，把数字金额转换成人民币大写（壹贰叁…），支持小数分角，财务报销、合同发票必备，浏览器本地处理。" />
+  <meta name="keywords" content="金额大写,数字转大写,人民币大写,金额转换,大写金额工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💴</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u89d2\u3001\u5206\u4f4d\u81ea\u52a8\u5904\u7406\u3002"}},{"@type":"Question","name":"\u683c\u5f0f\u89c4\u8303\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9075\u5faa\u8d22\u52a1\u5e38\u7528\u89c4\u8303\uff0c\u6574\u6570\u8865'\u6574'\u5b57\u3001\u96f6\u4f4d\u6b63\u786e\u5904\u7406\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8d1f\u6570\u524d\u81ea\u52a8\u52a0'\u8d1f'\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>💴 金额大写转换</h1>
+    <p>阿拉伯数字转人民币大写</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="amountInput">金额（数字）</label>
+  <input type="text" id="amountInput" placeholder="如 12345.67">
+</div>
+<div class="actions">
+  <button class="btn" id="amountBtn" type="button">转换</button>
+  <button class="btn btn-secondary" id="amountCopyBtn" type="button">复制</button>
+</div>
+<div class="result-box" id="amountResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要转金额大写？</h2><p>财务报销单、合同、发票、借条等正式单据要求金额同时写数字和大写，防止篡改。</p><h2>这个工具能做什么？</h2><p>输入数字金额自动生成标准人民币大写，含元角分完整格式。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持小数吗？</summary><p>支持，角、分位自动处理。</p></details><details class="faq-item"><summary>格式规范吗？</summary><p>遵循财务常用规范，整数补'整'字、零位正确处理。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details><details class="faq-item"><summary>支持负数吗？</summary><p>支持，负数前自动加'负'。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>金额大写转换 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var amountResult = document.getElementById('amountResult');
+  var lastAmount = '';
+
+  var CN_NUM = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+  var CN_UNIT = ['', '拾', '佰', '仟'];
+  var CN_GROUP = ['', '万', '亿', '万亿'];
+
+  function sectionToUpper(section) {
+    var out = '';
+    var zero = false;
+    for (var i = 0; i < section.length; i++) {
+      var digit = section[i];
+      if (digit === 0) { zero = true; continue; }
+      if (zero) { out += '零'; zero = false; }
+      out += CN_NUM[digit] + CN_UNIT[section.length - 1 - i];
+    }
+    return out;
+  }
+
+  function integerToUpper(str) {
+    var len = str.length;
+    if (len === 0) return '';
+    var out = '';
+    var groupIndex = 0;
+    var zeroAppended = false;
+    while (len > 0) {
+      var start = Math.max(0, len - 4);
+      var section = str.slice(start, len).split('').map(Number);
+      var secStr = sectionToUpper(section);
+      if (secStr) {
+        if (zeroAppended && out) out += '零';
+        out += secStr + CN_GROUP[groupIndex];
+        zeroAppended = false;
+      } else {
+        zeroAppended = true;
+      }
+      len = start;
+      groupIndex++;
+    }
+    return out;
+  }
+
+  function convert(input) {
+    var v = input.trim();
+    var neg = false;
+    if (v.startsWith('-')) { neg = true; v = v.slice(1); }
+    if (!/^\d+(\.\d{1,2})?$/.test(v)) return null;
+    var parts = v.split('.');
+    var intPart = parts[0].replace(/^0+(?=\d)/, '');
+    var decPart = parts[1] || '';
+    var out = '';
+    if (neg) out += '负';
+    if (intPart === '0' || intPart === '') out += '零元';
+    else out += integerToUpper(intPart) + '元';
+    if (decPart) {
+      var jiao = decPart[0], fen = decPart[1];
+      if (jiao && jiao !== '0') out += CN_NUM[+jiao] + '角';
+      else if (fen && fen !== '0') out += '零';
+      if (fen && fen !== '0') out += CN_NUM[+fen] + '分';
+    } else {
+      out += '整';
+    }
+    return out;
+  }
+
+  document.getElementById('amountBtn').addEventListener('click', function () {
+    var res = convert(document.getElementById('amountInput').value);
+    if (!res) { showToast('请输入有效金额（最多两位小数）'); return; }
+    lastAmount = res;
+    amountResult.hidden = false;
+    amountResult.textContent = res;
+  });
+
+  document.getElementById('amountCopyBtn').addEventListener('click', function () {
+    if (!lastAmount) { showToast('请先转换'); return; }
+    navigator.clipboard.writeText(lastAmount).then(function () { showToast('已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
