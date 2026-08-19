@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待办清单 - 在线任务管理工具</title>
+  <meta name="description" content="免费在线待办清单，添加、勾选、删除任务，数据自动保存在浏览器本地，关闭页面不丢失，无需注册，效率工具。" />
+  <meta name="keywords" content="待办清单,在线待办,任务清单,todo list,待办事项,每日计划">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e22\u5931\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6570\u636e\u4fdd\u5b58\u5728\u5f53\u524d\u6d4f\u89c8\u5668\u672c\u5730\uff0c\u6e05\u9664\u6d4f\u89c8\u5668\u7f13\u5b58\u4f1a\u4e22\u5931\u3002"}},{"@type":"Question","name":"\u9700\u8981\u6ce8\u518c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u5373\u5f00\u5373\u7528\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5220\u9664\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u5355\u9879\u5220\u9664\u6216\u4e00\u952e\u6e05\u7a7a\u5df2\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5b8c\u5168\u672c\u5730\u4fdd\u5b58\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>✅ 待办清单</h1>
+    <p>在线待办事项，数据保存在本地</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="todoInput">新任务</label>
+  <div style="display:flex;gap:10px;">
+    <input type="text" id="todoInput" placeholder="输入待办事项，回车添加" style="flex:1;">
+    <button class="btn" id="todoAddBtn" type="button">添加</button>
+  </div>
+</div>
+<div class="result-box" id="todoList" style="max-height:none;"></div>
+<div class="actions">
+  <button class="btn btn-secondary" id="todoClearDone" type="button">清除已完成</button>
+  <button class="btn btn-secondary" id="todoClearAll" type="button">清空全部</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>待办清单有什么好处？</h2><p>把任务写下来避免遗忘，完成一项勾掉一项有成就感，是简单有效的效率管理方式。</p><h2>数据存在哪里？</h2><p>保存在浏览器本地（localStorage），刷新或关闭页面后数据不丢失，但换设备或清缓存会清除。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数据会丢失吗？</summary><p>数据保存在当前浏览器本地，清除浏览器缓存会丢失。</p></details><details class="faq-item"><summary>需要注册吗？</summary><p>不需要，即开即用。</p></details><details class="faq-item"><summary>支持删除吗？</summary><p>支持，可单项删除或一键清空已完成。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，完全本地保存。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>待办清单 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var todoInput = document.getElementById('todoInput');
+  var todoList = document.getElementById('todoList');
+  var STORE_KEY = 'toolsite_todos';
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+    catch (e) { return []; }
+  }
+  function save(list) { localStorage.setItem(STORE_KEY, JSON.stringify(list)); }
+
+  function render() {
+    var list = load();
+    todoList.innerHTML = '';
+    if (!list.length) { todoList.innerHTML = '<p style="color:var(--muted);text-align:center;">暂无待办，添加第一条吧</p>'; return; }
+    list.forEach(function (item, idx) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = item.done;
+      cb.style.cssText = 'width:18px;height:18px;accent-color:var(--primary);';
+      cb.addEventListener('change', function () {
+        var l = load(); l[idx].done = cb.checked; save(l); render();
+      });
+      var label = document.createElement('span');
+      label.style.flex = '1';
+      label.textContent = item.text;
+      label.style.cssText = item.done ? 'text-decoration:line-through;color:var(--muted);' : '';
+      var del = document.createElement('button');
+      del.className = 'btn btn-secondary';
+      del.type = 'button';
+      del.textContent = '删除';
+      del.style.cssText = 'padding:4px 10px;font-size:12px;';
+      del.addEventListener('click', function () {
+        var l = load(); l.splice(idx, 1); save(l); render();
+      });
+      row.appendChild(cb); row.appendChild(label); row.appendChild(del);
+      todoList.appendChild(row);
+    });
+  }
+
+  function add() {
+    var text = todoInput.value.trim();
+    if (!text) return;
+    var l = load();
+    l.push({ text: text, done: false });
+    save(l);
+    todoInput.value = '';
+    render();
+  }
+
+  document.getElementById('todoAddBtn').addEventListener('click', add);
+  todoInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') add(); });
+  document.getElementById('todoClearDone').addEventListener('click', function () {
+    save(load().filter(function (t) { return !t.done; })); render();
+  });
+  document.getElementById('todoClearAll').addEventListener('click', function () {
+    if (confirm('确定清空全部待办？')) { save([]); render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
