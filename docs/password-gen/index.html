@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密码生成器 - 在线高强度随机密码生成工具</title>
+  <meta name="description" content="免费在线密码生成器，生成 8-64 位高强度随机密码，可自定义包含大小写字母、数字、符号，一键复制，浏览器本地生成，安全可靠。" />
+  <meta name="keywords" content="密码生成器,随机密码,强密码生成,密码工具,随机密码生成器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u5bc6\u7801\u5b89\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u6d4f\u89c8\u5668\u52a0\u5bc6\u7ea7\u968f\u673a\u6570\u751f\u6210\uff0c\u914d\u5408\u8db3\u591f\u957f\u5ea6\u548c\u5b57\u7b26\u7ec4\u5408\uff0c\u5b89\u5168\u5f3a\u5ea6\u9ad8\u3002"}},{"@type":"Question","name":"\u5bc6\u7801\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u4fdd\u5b58\u4efb\u4f55\u8bb0\u5f55\uff0c\u751f\u6210\u540e\u4ec5\u663e\u793a\u5728\u5f53\u524d\u9875\u9762\uff0c\u5173\u95ed\u5373\u6d88\u5931\u3002"}},{"@type":"Question","name":"\u591a\u957f\u6bd4\u8f83\u5408\u9002\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91cd\u8981\u8d26\u53f7\u5efa\u8bae 16 \u4f4d\u4ee5\u4e0a\uff0c\u914d\u5408\u5927\u5c0f\u5199+\u6570\u5b57+\u7b26\u53f7\u7efc\u5408\u4f7f\u7528\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u6279\u91cf\u751f\u6210\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u652f\u6301\u4e00\u6b21\u751f\u6210\u591a\u4e2a\u5bc6\u7801\uff0c\u65b9\u4fbf\u6279\u91cf\u66f4\u6362\u8d26\u53f7\u5bc6\u7801\u3002"}},{"@type":"Question","name":"\u652f\u6301\u81ea\u5b9a\u4e49\u5b57\u7b26\u96c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u81ea\u5b9a\u4e49\u662f\u5426\u5305\u542b\u5927\u5c0f\u5199\u5b57\u6bcd\u3001\u6570\u5b57\u3001\u7b26\u53f7\u53ca\u6392\u9664\u6613\u6df7\u6dc6\u5b57\u7b26\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔑 密码生成器</h1>
+    <p>生成高强度随机密码，多种字符组合</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label>长度</label>
+  <input type="range" id="pwLen" min="8" max="64" value="16" style="flex:1;accent-color:var(--primary);">
+  <span class="quality-value" id="pwLenValue">16</span>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="pwUpper" checked> 大写 A-Z</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="pwLower" checked> 小写 a-z</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="pwDigit" checked> 数字 0-9</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="pwSym"> 符号 !@#$%</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="pwExclude"> 排除易混淆 0O1lI</label>
+</div>
+<div class="actions">
+  <button class="btn" id="genBtn" type="button">生成密码</button>
+  <button class="btn btn-secondary" id="genMoreBtn" type="button">生成 5 个</button>
+</div>
+<div class="result-box" id="pwResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要用密码生成器？</h2><p>很多人用生日、手机号做密码，极易被破解。随机生成的强密码包含大小写、数字、符号，破解难度指数级提升。</p><h2>这个工具安全吗？</h2><p>安全。密码在你的浏览器本地用加密级随机数生成，不上传任何数据，不保存记录，关闭页面即消失。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的密码安全吗？</summary><p>使用浏览器加密级随机数生成，配合足够长度和字符组合，安全强度高。</p></details><details class="faq-item"><summary>密码会保存吗？</summary><p>不会保存任何记录，生成后仅显示在当前页面，关闭即消失。</p></details><details class="faq-item"><summary>多长比较合适？</summary><p>重要账号建议 16 位以上，配合大小写+数字+符号综合使用。</p></details><details class="faq-item"><summary>可以批量生成吗？</summary><p>可以，支持一次生成多个密码，方便批量更换账号密码。</p></details><details class="faq-item"><summary>支持自定义字符集吗？</summary><p>支持，可自定义是否包含大小写字母、数字、符号及排除易混淆字符。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>密码生成器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pwLen = document.getElementById('pwLen');
+  var pwLenValue = document.getElementById('pwLenValue');
+  var pwResult = document.getElementById('pwResult');
+
+  pwLen.addEventListener('input', function () { pwLenValue.textContent = pwLen.value; });
+
+  function buildCharset() {
+    var sets = [];
+    if (document.getElementById('pwUpper').checked) sets.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    if (document.getElementById('pwLower').checked) sets.push('abcdefghijklmnopqrstuvwxyz');
+    if (document.getElementById('pwDigit').checked) sets.push('0123456789');
+    if (document.getElementById('pwSym').checked) sets.push('!@#$%^&*()-_=+');
+    var all = sets.join('');
+    if (document.getElementById('pwExclude').checked) all = all.replace(/[0O1lI]/g, '');
+    return all;
+  }
+
+  function randChar(charset) {
+    var arr = new Uint32Array(1);
+    crypto.getRandomValues(arr);
+    return charset[arr[0] % charset.length];
+  }
+
+  function generate() {
+    var charset = buildCharset();
+    if (!charset.length) { showToast('请至少勾选一种字符类型'); return ''; }
+    var len = parseInt(pwLen.value, 10);
+    var out = '';
+    for (var i = 0; i < len; i++) out += randChar(charset);
+    return out;
+  }
+
+  function renderPasswords(list) {
+    pwResult.hidden = false;
+    pwResult.innerHTML = list.map(function (p) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);">' +
+        '<code style="font-size:15px;word-break:break-all;">' + escapeHtml(p) + '</code>' +
+        '<button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;flex-shrink:0;" onclick="window.copyPw(\'' + escapeAttr(p) + '\')">复制</button></div>';
+    }).join('');
+    window.copyPw = function (v) {
+      navigator.clipboard.writeText(v).then(function () { showToast('已复制密码'); });
+    };
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function escapeAttr(s) {
+    return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  }
+
+  document.getElementById('genBtn').addEventListener('click', function () {
+    var p = generate(); if (p) renderPasswords([p]);
+  });
+  document.getElementById('genMoreBtn').addEventListener('click', function () {
+    var list = [];
+    for (var i = 0; i < 5; i++) list.push(generate());
+    renderPasswords(list);
+  });
+})();
+</script>
+</body>
+</html>
