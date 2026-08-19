@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单位换算 - 在线长度重量温度面积单位转换器</title>
+  <meta name="description" content="免费在线单位换算工具，长度（米/英尺/英寸）、重量（千克/斤/磅）、温度（摄氏度/华氏度）、面积（平方米/亩/公顷）等单位一键互转，实时计算。" />
+  <meta name="keywords" content="单位换算,单位转换器,长度换算,重量换算,温度换算,面积换算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📏</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5e02\u5236\u5355\u4f4d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u65a4\u3001\u4e24\u3001\u4ea9\u3001\u91cc\u7b49\u5e38\u89c1\u5e02\u5236\u5355\u4f4d\u5747\u53ef\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u6e29\u5ea6\u652f\u6301\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6444\u6c0f\u5ea6\u3001\u534e\u6c0f\u5ea6\u3001\u5f00\u5c14\u6587\u4e92\u8f6c\u3002"}},{"@type":"Question","name":"\u6362\u7b97\u7ed3\u679c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u6807\u51c6\u6362\u7b97\u7cfb\u6570\uff0c\u7ed3\u679c\u7cbe\u786e\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📏 单位换算</h1>
+    <p>长度/重量/温度/面积单位互转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="ucValue">数值</label>
+  <input type="number" id="ucValue" value="1" step="any">
+</div>
+<div class="field">
+  <label for="ucCat">类别</label>
+  <select id="ucCat" style="width:auto;">
+    <option value="length">长度</option>
+    <option value="weight">重量</option>
+    <option value="temp">温度</option>
+    <option value="area">面积</option>
+    <option value="volume">体积</option>
+    <option value="speed">速度</option>
+  </select>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="ucFrom">从</label>
+  <select id="ucFrom" style="width:auto;"></select>
+  <label for="ucTo" style="margin-left:8px;">到</label>
+  <select id="ucTo" style="width:auto;"></select>
+</div>
+<div class="actions"><button class="btn" id="ucBtn" type="button">换算</button></div>
+<div class="result-box" id="ucResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>单位换算有什么用？</h2><p>买菜看斤和千克、买衣服看英寸和厘米、出国看华氏度和摄氏度，单位换算器覆盖日常生活全部常用单位。</p><h2>支持哪些单位？</h2><p>长度、重量、温度、面积、体积、速度六类，每类包含国际单位和常用市制单位。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持市制单位吗？</summary><p>支持，斤、两、亩、里等常见市制单位均可换算。</p></details><details class="faq-item"><summary>温度支持什么？</summary><p>支持摄氏度、华氏度、开尔文互转。</p></details><details class="faq-item"><summary>换算结果准确吗？</summary><p>使用标准换算系数，结果精确。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，全部本地计算。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>单位换算 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var UNITS = {
+    length: {
+      '米': 1, '千米': 1000, '厘米': 0.01, '毫米': 0.001, '英寸': 0.0254, '英尺': 0.3048, '码': 0.9144, '里': 500, '公里': 1000, '英里': 1609.344
+    },
+    weight: {
+      '千克': 1, '克': 0.001, '毫克': 0.000001, '吨': 1000, '斤': 0.5, '两': 0.05, '磅': 0.45359237, '盎司': 0.0283495231
+    },
+    temp: {
+      '摄氏度': 'c', '华氏度': 'f', '开尔文': 'k'
+    },
+    area: {
+      '平方米': 1, '平方千米': 1000000, '公顷': 10000, '亩': 666.6667, '平方英尺': 0.09290304, '平方英里': 2589988.110336, '平方厘米': 0.0001
+    },
+    volume: {
+      '升': 1, '毫升': 0.001, '立方米': 1000, '加仑(美)': 3.785411784, '加仑(英)': 4.54609, '立方英尺': 28.316846592, '立方英寸': 0.016387064
+    },
+    speed: {
+      '米/秒': 1, '千米/小时': 0.2777778, '英里/小时': 0.44704, '节': 0.5144444, '马赫': 340.3
+    }
+  };
+  var ucValue = document.getElementById('ucValue');
+  var ucCat = document.getElementById('ucCat');
+  var ucFrom = document.getElementById('ucFrom');
+  var ucTo = document.getElementById('ucTo');
+  var ucResult = document.getElementById('ucResult');
+
+  function fillUnits() {
+    var cat = ucCat.value;
+    var units = Object.keys(UNITS[cat]);
+    var prevFrom = ucFrom.value, prevTo = ucTo.value;
+    ucFrom.innerHTML = ''; ucTo.innerHTML = '';
+    units.forEach(function (u) {
+      ucFrom.add(new Option(u, u));
+      ucTo.add(new Option(u, u));
+    });
+    if (units.indexOf(prevFrom) >= 0) ucFrom.value = prevFrom;
+    if (units.indexOf(prevTo) >= 0) ucTo.value = prevTo;
+    if (ucFrom.value === ucTo.value) {
+      ucTo.selectedIndex = (ucTo.selectedIndex + 1) % units.length;
+    }
+  }
+
+  function toBase(v, unit, cat) {
+    var u = UNITS[cat][unit];
+    if (cat === 'temp') {
+      if (u === 'c') return v;
+      if (u === 'f') return (v - 32) * 5 / 9;
+      return v - 273.15;
+    }
+    return v * u;
+  }
+  function fromBase(v, unit, cat) {
+    var u = UNITS[cat][unit];
+    if (cat === 'temp') {
+      if (u === 'c') return v;
+      if (u === 'f') return v * 9 / 5 + 32;
+      return v + 273.15;
+    }
+    return v / u;
+  }
+
+  ucCat.addEventListener('change', fillUnits);
+  ucFrom.addEventListener('change', function () { if (ucFrom.value === ucTo.value) ucTo.selectedIndex = (ucTo.selectedIndex + 1) % ucTo.options.length; });
+  ucTo.addEventListener('change', function () { if (ucFrom.value === ucTo.value) ucFrom.selectedIndex = (ucFrom.selectedIndex + 1) % ucFrom.options.length; });
+
+  document.getElementById('ucBtn').addEventListener('click', function () {
+    var v = parseFloat(ucValue.value);
+    if (isNaN(v)) { showToast('请输入数值'); return; }
+    var base = toBase(v, ucFrom.value, ucCat.value);
+    var out = fromBase(base, ucTo.value, ucCat.value);
+    ucResult.hidden = false;
+    ucResult.textContent = v + ' ' + ucFrom.value + ' = ' + (+out.toPrecision(12)) + ' ' + ucTo.value;
+  });
+
+  fillUnits();
+})();
+</script>
+</body>
+</html>
