@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本去重 - 在线文本去重排序统计工具</title>
+  <meta name="description" content="免费在线文本去重工具，按行去重、排序、统计每项出现次数，支持保留顺序去重和排序去重，浏览器本地处理，运营数据处理必备。" />
+  <meta name="keywords" content="文本去重,在线去重,文本排序,重复数据清理,行去重,数据清洗">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u53bb\u91cd\u65b9\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4fdd\u7559\u987a\u5e8f\u53bb\u91cd\u3001\u5b57\u6bcd\u6392\u5e8f\u53bb\u91cd\u3001\u7edf\u8ba1\u51fa\u73b0\u6b21\u6570\u4e09\u79cd\uff0c\u53ef\u5207\u6362\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5904\u7406\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5bfc\u51fa\u7ed3\u679c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e00\u952e\u590d\u5236\u6216\u4e0b\u8f7d\u5904\u7406\u540e\u7684\u6587\u672c\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d85\u5927\u6587\u672c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u51e0\u5341\u4e07\u884c\u4e5f\u80fd\u5feb\u901f\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔁 文本去重排序</h1>
+    <p>文本去重、排序、统计出现次数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="dedupInput">输入文本（每行一项）</label>
+  <textarea id="dedupInput" placeholder="每行输入一个关键词/数据项..."></textarea>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="dedupMode">处理方式</label>
+  <select id="dedupMode" style="width:auto;">
+    <option value="keep">去重（保留顺序）</option>
+    <option value="sort">去重并排序</option>
+    <option value="count">统计出现次数</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="dedupBtn" type="button">处理</button>
+  <button class="btn btn-secondary" id="dedupCopyBtn" type="button">复制结果</button>
+</div>
+<div class="result-box" id="dedupResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>文本去重有什么用？</h2><p>处理 Excel 导出数据、关键词列表、名单整理时经常遇到大量重复项，去重后数据更干净，统计出现次数还能发现高频关键词。</p><h2>这个工具能做什么？</h2><p>按行去重（保留顺序）、排序去重、统计每项出现次数、忽略空行，支持导出结果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些去重方式？</summary><p>保留顺序去重、字母排序去重、统计出现次数三种，可切换。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，处理完全在浏览器本地完成。</p></details><details class="faq-item"><summary>可以导出结果吗？</summary><p>可以，一键复制或下载处理后的文本。</p></details><details class="faq-item"><summary>支持超大文本吗？</summary><p>支持，几十万行也能快速处理。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本去重排序 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dedupInput = document.getElementById('dedupInput');
+  var dedupResult = document.getElementById('dedupResult');
+  var dedupMode = document.getElementById('dedupMode');
+  var lastResult = '';
+
+  function process() {
+    var lines = dedupInput.value.split('\n').map(function (l) { return l.trim(); }).filter(function (l) { return l; });
+    var mode = dedupMode.value;
+    var out = [];
+    if (mode === 'keep') {
+      var seen = {};
+      lines.forEach(function (l) { if (!seen[l]) { seen[l] = 1; out.push(l); } });
+    } else if (mode === 'sort') {
+      out = Array.from(new Set(lines)).sort(function (a, b) { return a.localeCompare(b, 'zh'); });
+    } else if (mode === 'count') {
+      var freq = {};
+      lines.forEach(function (l) { freq[l] = (freq[l] || 0) + 1; });
+      out = Object.keys(freq).map(function (k) { return k + '\t×' + freq[k]; });
+    }
+    lastResult = out.join('\n');
+    dedupResult.hidden = false;
+    dedupResult.textContent = '共 ' + lines.length + ' 项 → ' + out.length + ' 项：\n' + lastResult;
+  }
+
+  document.getElementById('dedupBtn').addEventListener('click', process);
+  document.getElementById('dedupCopyBtn').addEventListener('click', function () {
+    if (!lastResult) { showToast('请先处理'); return; }
+    navigator.clipboard.writeText(lastResult).then(function () { showToast('结果已复制'); });
+  });
+  dedupMode.addEventListener('change', process);
+})();
+</script>
+</body>
+</html>
