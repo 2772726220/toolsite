@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机抽签 - 在线随机抽取决定工具</title>
+  <meta name="description" content="免费在线随机抽签工具，粘贴多个选项随机抽取一个，支持滚动静止动画与抽取历史，适合抽奖、抽人回答问题、决定今天吃什么，公平随机全靠它。" />
+  <meta name="keywords" content="随机抽签,随机抽取,抽签工具,随机决定,抽人回答问题,抽奖">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎰</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6700\u591a\u652f\u6301\u591a\u5c11\u4e2a\u9009\u9879\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6700\u591a 100 \u4e2a\uff0c\u6bcf\u4e2a 50 \u5b57\u4ee5\u5185\u3002"}},{"@type":"Question","name":"\u4f1a\u91cd\u590d\u62bd\u5230\u540c\u4e00\u4e2a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u5141\u8bb8\u91cd\u590d\uff0c\u53ef\u5f00\u542f\u300e\u4e0d\u91cd\u590d\u300f\u6a21\u5f0f\u9010\u6b21\u6392\u9664\u5df2\u62bd\u9009\u9879\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u516c\u5e73\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u6d4f\u89c8\u5668\u968f\u673a\u6570\uff0c\u6982\u7387\u5747\u7b49\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u9879\u548c\u62bd\u53d6\u5386\u53f2\u672c\u5730\u4fdd\u5b58\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎰 随机抽签</h1>
+    <p>多个选项随机抽取一个</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">随机抽签</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#抽签</span><span class="badge">#随机</span>
+<div class="field">
+  <label for="rpOptions">选项（每行一个）</label>
+  <textarea id="rpOptions" placeholder="苹果&#10;香蕉&#10;橙子&#10;西瓜&#10;葡萄"></textarea>
+</div>
+<div class="field">
+  <label for="rpNoRepeat">不重复模式</label>
+  <select id="rpNoRepeat">
+    <option value="0">允许重复</option>
+    <option value="1">不重复（抽完排除）</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="rpBtn" type="button">🎲 抽取</button>
+  <button class="btn btn-secondary" id="rpResetBtn" type="button">重置抽取历史</button>
+</div>
+<div class="result-box" id="rpResult" hidden></div>
+<div class="result-box" id="rpHistory" style="background:var(--bg);max-height:180px;overflow-y:auto;font-size:13px;" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么用？</h2><p>把选项每行一个粘贴进去，点『抽取』即可随机得到其中一个，滚动静止更有仪式感。</p><h2>适合什么场景？</h2><p>上课抽人、公司抽奖、聚会决定谁买单、选择困难症今天吃什么。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>最多支持多少个选项？</summary><p>最多 100 个，每个 50 字以内。</p></details><details class="faq-item"><summary>会重复抽到同一个吗？</summary><p>默认允许重复，可开启『不重复』模式逐次排除已抽选项。</p></details><details class="faq-item"><summary>结果公平吗？</summary><p>使用浏览器随机数，概率均等。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>选项和抽取历史本地保存。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>随机抽签 · <a href="../category/fun/">🎮 娱乐游戏</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var rpResult = document.getElementById('rpResult');
+  var rpHistory = document.getElementById('rpHistory');
+  var history = [];
+
+  function getOptions() {
+    var text = document.getElementById('rpOptions').value;
+    var arr = text.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (arr.length > 100) { showToast('最多 100 个选项'); return null; }
+    return arr;
+  }
+
+  document.getElementById('rpBtn').addEventListener('click', function () {
+    var opts = getOptions();
+    if (!opts) return;
+    if (!opts.length) { showToast('请至少输入一个选项'); return; }
+    var noRepeat = document.getElementById('rpNoRepeat').value === '1';
+    var pool = opts.slice();
+    if (noRepeat) {
+      history.forEach(function (h) {
+        var i = pool.indexOf(h);
+        if (i >= 0) pool.splice(i, 1);
+      });
+      if (!pool.length) { showToast('所有选项都已抽过，请重置历史'); return; }
+    }
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    rpResult.hidden = false;
+    rpResult.innerHTML = '<span style="color:var(--muted);">抽中：</span><b style="font-size:26px;">' + pick + '</b>';
+    history.push(pick);
+    if (history.length > 30) history = history.slice(-30);
+    var items = history.slice().reverse().map(function (h, i) {
+      return '<span style="color:var(--muted);">#' + (history.length - i) + '</span> ' + h;
+    }).join('<br>');
+    rpHistory.hidden = false;
+    rpHistory.innerHTML = '<div style="font-weight:600;margin-bottom:4px;">抽取历史：</div>' + items;
+  });
+
+  document.getElementById('rpResetBtn').addEventListener('click', function () {
+    history = [];
+    rpHistory.hidden = true;
+    rpResult.hidden = true;
+    showToast('已清空抽取历史');
+  });
+})();
+</script>
+</body>
+</html>
