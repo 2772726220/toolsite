@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji表情大全 - 在线表情符号复制工具</title>
+  <meta name="description" content="免费在线 Emoji 表情大全，按类别整理常用表情符号，点击即可复制，支持搜索，写文案发朋友圈必备，浏览器本地使用。" />
+  <meta name="keywords" content="emoji大全,表情符号,表情大全,emoji复制,表情符号大全,颜文字">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😀</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u641c\u7d22\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6309\u5173\u952e\u8bcd\u641c\u7d22\u8868\u60c5\u3002"}},{"@type":"Question","name":"\u6709\u591a\u5c11\u4e2a\u8868\u60c5\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6574\u7406\u4e86\u51e0\u767e\u4e2a\u5e38\u7528\u8868\u60c5\uff0c\u6309\u5206\u7c7b\u5c55\u793a\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u5168\u90e8\u672c\u5730\u5c55\u793a\u3002"}},{"@type":"Question","name":"\u4e0d\u540c\u8bbe\u5907\u663e\u793a\u4e00\u6837\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8868\u60c5\u6837\u5f0f\u53d6\u51b3\u4e8e\u64cd\u4f5c\u7cfb\u7edf\uff0c\u5185\u5bb9\u4e00\u81f4\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>😀 Emoji表情大全</h1>
+    <p>常用 Emoji 表情符号大全与复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="emojiSearch">搜索表情</label>
+  <input type="text" id="emojiSearch" placeholder="如：笑、食物、爱心...">
+</div>
+<div class="result-box" id="emojiResult" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>有哪些分类的 Emoji？</h2><p>涵盖笑脸、手势、动物、食物、旅行、物体、符号等常见分类，点击即复制。</p><h2>怎么复制 Emoji？</h2><p>点击任意表情即可复制到剪贴板，直接粘贴到任何应用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持搜索吗？</summary><p>支持按关键词搜索表情。</p></details><details class="faq-item"><summary>有多少个表情？</summary><p>整理了几百个常用表情，按分类展示。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，全部本地展示。</p></details><details class="faq-item"><summary>不同设备显示一样吗？</summary><p>表情样式取决于操作系统，内容一致。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>Emoji表情大全 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var emojiResult = document.getElementById('emojiResult');
+  var EMOJIS = {
+    '笑脸': ['😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇', '🙂', '😉', '😍', '😘', '😜', '🤪', '🤔', '😴', '🥳', '😎', '🤩', '😢', '😭', '😡', '🤯', '😱', '🤗', '🥰'],
+    '手势': ['👍', '👎', '👏', '🙌', '🤝', '👊', '✌️', '🤞', '👌', '🙏', '💪', '🤙', '👋', '✋', '🖐️', '👆', '👇', '☝️', '👈', '👉'],
+    '动物': ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🐤', '🦆', '🦅', '🐍', '🐢', '🐳', '🐬', '🦋', '🐝', '🐌'],
+    '植物': ['🌹', '🌺', '🌸', '🌼', '🌻', '🌷', '🌵', '🎄', '🌲', '🌳', '🌴', '🍀', '🍁', '🍂', '🌾'],
+    '食物': ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🥑', '🍔', '🍟', '🍕', '🌭', '🍿', '🧂', '🍜', '🍣', '🍦', '🍩', '🍪', '🎂', '🍫', '☕', '🍺', '🥤'],
+    '出行': ['🚗', '🚕', '🚙', '🚌', '🚓', '🚑', '🚒', '🚚', '🚜', '🏎️', '🚲', '🛴', '✈️', '🚀', '🚁', '⛵', '🚢', '🚂', '🚇', '🚊'],
+    '物体': ['⌚', '📱', '💻', '⌨️', '🖥️', '🖨️', '📷', '🎥', '📞', '☎️', '📟', '📠', '📺', '📻', '🔋', '🔌', '💡', '🔦', '🕯️', '🗑️', '🛒', '💰', '💳', '💎', '⚖️', '🔧', '🔨', '🔩', '📌', '✂️'],
+    '符号': ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '💔', '💕', '💞', '💓', '💗', '💖', '✨', '⭐', '🌟', '🔥', '💥', '⚡', '🌈', '☀️', '🌙', '☁️', '❄️', '💧', '🎉', '🎊', '🎈', '🎁', '🏆', '🥇', '✅', '❌', '❗', '❓', '💯', '🚫'],
+    '手势表情': ['😤', '😖', '😣', '😞', '😓', '😩', '😫', '😬', '😳', '😔', '😪', '😷', '🤒', '🤕', '🤢', '🤮', '😵', '🤧', '😎', '🥺']
+  };
+
+  function render(filter) {
+    emojiResult.innerHTML = '';
+    Object.keys(EMOJIS).forEach(function (cat) {
+      var list = EMOJIS[cat];
+      if (filter && !cat.includes(filter) && !list.join('').includes(filter)) return;
+      var block = document.createElement('div');
+      block.style.cssText = 'margin-bottom:14px;';
+      var title = document.createElement('div');
+      title.style.cssText = 'font-weight:600;margin-bottom:6px;';
+      title.textContent = cat + '（' + list.length + '）';
+      block.appendChild(title);
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;';
+      list.forEach(function (e) {
+        var span = document.createElement('span');
+        span.textContent = e;
+        span.style.cssText = 'font-size:26px;cursor:pointer;padding:4px 6px;border-radius:6px;line-height:1;';
+        span.title = e + ' 点击复制';
+        span.addEventListener('click', function () {
+          navigator.clipboard.writeText(e).then(function () { showToast('已复制 ' + e); });
+        });
+        wrap.appendChild(span);
+      });
+      block.appendChild(wrap);
+      emojiResult.appendChild(block);
+    });
+  }
+
+  document.getElementById('emojiSearch').addEventListener('input', function () {
+    render(this.value.trim());
+  });
+
+  render('');
+})();
+</script>
+</body>
+</html>
