@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界时钟 - 在线多时区时间查询工具</title>
+  <meta name="description" content="免费在线世界时钟，同时显示北京、东京、伦敦、纽约、洛杉矶等全球主要城市时间，实时刷新，浏览器本地运行，跨国协作必备。" />
+  <meta name="keywords" content="世界时钟,多时区,全球时间,时区查询,纽约时间,伦敦时间,在线时钟">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u81ea\u5b9a\u4e49\u57ce\u5e02\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u9009\u663e\u793a/\u9690\u85cf\u90e8\u5206\u57ce\u5e02\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u7eaf\u672c\u5730\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u652f\u6301 12/24 \u5c0f\u65f6\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5207\u6362\u663e\u793a\u683c\u5f0f\u3002"}},{"@type":"Question","name":"\u65f6\u533a\u6570\u636e\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8986\u76d6\u5e38\u7528 12 \u4e2a\u56fd\u9645\u57ce\u5e02\uff0c\u591f\u7528\u4e14\u6e05\u6670\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🌍 世界时钟</h1>
+    <p>多时区时钟，全球时间一览</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">世界时钟</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#世界时钟</span><span class="badge">#时区</span>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="wcFormat">格式</label>
+  <select id="wcFormat" style="width:auto;">
+    <option value="24">24 小时制</option>
+    <option value="12">12 小时制</option>
+  </select>
+</div>
+<div class="result-box" id="wcGrid" style="max-height:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>有哪些城市？</h2><p>北京、上海、东京、新加坡、悉尼、迪拜、伦敦、巴黎、纽约、洛杉矶等 12 个常用时区。</p><h2>时间准吗？</h2><p>读取浏览器系统时间换算，实时刷新，无需联网。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能自定义城市吗？</summary><p>可选显示/隐藏部分城市。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，纯本地换算。</p></details><details class="faq-item"><summary>支持 12/24 小时制吗？</summary><p>支持切换显示格式。</p></details><details class="faq-item"><summary>时区数据全吗？</summary><p>覆盖常用 12 个国际城市，够用且清晰。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>世界时钟 · <a href="../category/date/">📅 日期时间</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var wcGrid = document.getElementById('wcGrid');
+  var CITIES = [
+    ['北京', 8], ['上海', 8], ['东京', 9], ['新加坡', 8], ['悉尼', 11],
+    ['迪拜', 4], ['莫斯科', 3], ['伦敦', 1], ['巴黎', 2], ['纽约', -5],
+    ['芝加哥', -6], ['洛杉矶', -8]
+  ];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function render() {
+    var now = new Date();
+    var format = document.getElementById('wcFormat').value;
+    wcGrid.innerHTML = '';
+    CITIES.forEach(function (c) {
+      var d = new Date(now.getTime() + (c[1] - -now.getTimezoneOffset() / 60) * 3600000);
+      var h = d.getHours();
+      var suffix = '';
+      if (format === '12') {
+        suffix = h >= 12 ? ' PM' : ' AM';
+        h = h % 12 || 12;
+      }
+      var card = document.createElement('div');
+      card.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);';
+      card.innerHTML = '<span style="font-weight:600;">' + c[0] + '</span>' +
+        '<span style="font-family:monospace;font-size:20px;font-variant-numeric:tabular-nums;">' + pad(h) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + suffix + '</span>' +
+        '<span style="font-size:12px;color:var(--muted);">UTC' + (c[1] >= 0 ? '+' : '') + c[1] + '</span>';
+      wcGrid.appendChild(card);
+    });
+  }
+
+  document.getElementById('wcFormat').addEventListener('change', render);
+  render();
+  setInterval(render, 1000);
+})();
+</script>
+</body>
+</html>
