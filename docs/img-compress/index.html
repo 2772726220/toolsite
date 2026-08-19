@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线图片压缩 - 免费批量压缩JPG/PNG/WebP图片</title>
+  <meta name="description" content="免费在线图片压缩工具，无需上传服务器，浏览器本地压缩 JPG、PNG、WebP 图片，支持批量处理，清晰度损失小，安全隐私，一键下载。" />
+  <meta name="keywords" content="图片压缩,在线压缩图片,图片压缩工具,JPG压缩,PNG压缩,WebP压缩,免费压缩图片">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗜️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5728\u7ebf\u56fe\u7247\u538b\u7f29\u4f1a\u5f71\u54cd\u56fe\u7247\u8d28\u91cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u901a\u8fc7\u538b\u7f29\u7b97\u6cd5\u51cf\u5c0f\u6587\u4ef6\u4f53\u79ef\u3002\u4f60\u53ef\u4ee5\u624b\u52a8\u8c03\u8282\u538b\u7f29\u8d28\u91cf\u53c2\u6570\uff0c\u5728\u6587\u4ef6\u5927\u5c0f\u548c\u6e05\u6670\u5ea6\u4e4b\u95f4\u627e\u5230\u5e73\u8861\uff0c\u89c6\u89c9\u4e0a\u51e0\u4e4e\u65e0\u5dee\u522b\u3002"}},{"@type":"Question","name":"\u6211\u7684\u56fe\u7247\u4f1a\u4e0a\u4f20\u5230\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u672c\u5de5\u5177\u5b8c\u5168\u5728\u60a8\u7684\u6d4f\u89c8\u5668\u672c\u5730\u8fd0\u884c\uff0c\u56fe\u7247\u4e0d\u4f1a\u4e0a\u4f20\u5230\u4efb\u4f55\u670d\u52a1\u5668\uff0c\u9690\u79c1\u7edd\u5bf9\u5b89\u5168\u3002"}},{"@type":"Question","name":"\u4e00\u6b21\u53ef\u4ee5\u538b\u7f29\u591a\u5c11\u5f20\u56fe\u7247\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u5f20\u6279\u91cf\u538b\u7f29\uff0c\u4e00\u6b21\u6027\u5168\u90e8\u4e0b\u8f7d\u3002\u5efa\u8bae\u6bcf\u6b21\u4e0d\u8d85\u8fc7 20 \u5f20\u4ee5\u4fdd\u8bc1\u6d41\u7545\u4f53\u9a8c\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u56fe\u7247\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 JPG/JPEG\u3001PNG\u3001WebP\u3002PNG \u9009\u62e9 WebP \u8f93\u51fa\u538b\u7f29\u6548\u679c\u6700\u4f73\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🗜️ 图片压缩</h1>
+    <p>免费批量压缩 JPG/PNG/WebP，浏览器本地处理</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="dropzone" id="dropzone">
+  <div class="icon">🖼️</div>
+  <p>拖拽图片到此处，或点击选择文件</p>
+  <p style="font-size:12px;color:#94a3b8;">支持 JPG / PNG / WebP，单张最大 20MB</p>
+  <button class="btn" id="fileBtn" type="button">选择图片</button>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
+</div>
+<div class="controls">
+  <label for="quality">压缩质量</label>
+  <input type="range" id="quality" min="10" max="95" value="70">
+  <span class="quality-value" id="qualityValue">70%</span>
+  <label for="format" style="margin-left:8px;">输出格式</label>
+  <select id="format" style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;">
+    <option value="auto">自动（原格式）</option>
+    <option value="jpeg">JPG</option>
+    <option value="webp">WebP（更小）</option>
+    <option value="png">PNG</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="compressBtn" type="button" disabled>开始压缩</button>
+  <button class="btn btn-secondary" id="downloadAllBtn" type="button" disabled>下载全部</button>
+  <button class="btn btn-secondary" id="clearBtn" type="button" hidden>清空列表</button>
+</div>
+<div class="file-list" id="fileList"></div>
+<div class="stat-bar" id="statBar" hidden>
+  <div class="stat"><div class="num" id="statCount">0</div><div class="label">文件数</div></div>
+  <div class="stat"><div class="num" id="statBefore">0 KB</div><div class="label">压缩前</div></div>
+  <div class="stat"><div class="num" id="statAfter">0 KB</div><div class="label">压缩后</div></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>图片为什么要压缩？</h2><p>高分辨率图片动辄几 MB，上传到公众号、电商平台、聊天软件时常被压缩或直接失败。在线压缩图片可以大幅减小文件体积，让图片加载更快、存储更省、发送更顺畅。</p><h2>压缩后会影响画质吗？</h2><p>本工具采用智能压缩算法，可通过调节压缩质量滑块控制清晰度和文件大小的平衡。默认 70% 质量对人眼几乎无差别，但对上传速度的提升非常明显。PNG 图片建议选择 WebP 输出格式，体积通常可减小 60%-80%。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>在线图片压缩会影响图片质量吗？</summary><p>会通过压缩算法减小文件体积。你可以手动调节压缩质量参数，在文件大小和清晰度之间找到平衡，视觉上几乎无差别。</p></details><details class="faq-item"><summary>我的图片会上传到服务器吗？</summary><p>不会。本工具完全在您的浏览器本地运行，图片不会上传到任何服务器，隐私绝对安全。</p></details><details class="faq-item"><summary>一次可以压缩多少张图片？</summary><p>支持多张批量压缩，一次性全部下载。建议每次不超过 20 张以保证流畅体验。</p></details><details class="faq-item"><summary>支持哪些图片格式？</summary><p>支持 JPG/JPEG、PNG、WebP。PNG 选择 WebP 输出压缩效果最佳。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片压缩 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var fileBtn = document.getElementById('fileBtn');
+  var compressBtn = document.getElementById('compressBtn');
+  var downloadAllBtn = document.getElementById('downloadAllBtn');
+  var clearBtn = document.getElementById('clearBtn');
+  var fileList = document.getElementById('fileList');
+  var qualityRange = document.getElementById('quality');
+  var qualityValue = document.getElementById('qualityValue');
+  var formatSelect = document.getElementById('format');
+  var statCount = document.getElementById('statCount');
+  var statBefore = document.getElementById('statBefore');
+  var statAfter = document.getElementById('statAfter');
+  var files = [];
+
+  qualityRange.addEventListener('input', function () {
+    qualityValue.textContent = qualityRange.value + '%';
+  });
+  fileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault(); dropzone.classList.remove('dragover');
+    addFiles(Array.prototype.slice.call(e.dataTransfer.files));
+  });
+  fileInput.addEventListener('change', function () {
+    addFiles(Array.prototype.slice.call(fileInput.files));
+    fileInput.value = '';
+  });
+
+  function addFiles(incoming) {
+    incoming.forEach(function (file) {
+      if (!file.type.match(/^image\/(jpeg|png|webp)$/)) return;
+      if (file.size > 20 * 1024 * 1024) { showToast('单张图片不能超过 20MB：' + file.name); return; }
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        files.push({ file: file, name: file.name, size: file.size, dataUrl: e.target.result, output: null, outputSize: 0, status: 'ready' });
+        render();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function render() {
+    fileList.innerHTML = '';
+    files.forEach(function (item, idx) {
+      var row = document.createElement('div');
+      row.className = 'file-item';
+      var thumb = document.createElement('img');
+      thumb.className = 'thumb'; thumb.src = item.dataUrl;
+      var info = document.createElement('div');
+      info.className = 'info';
+      var name = document.createElement('div'); name.className = 'name'; name.textContent = item.name;
+      var meta = document.createElement('div'); meta.className = 'meta';
+      meta.textContent = formatSize(item.status === 'done' ? item.outputSize : item.size) + (item.status === 'done' ? ' · 已压缩' : ' · 待压缩');
+      info.appendChild(name); info.appendChild(meta);
+      var right = document.createElement('div');
+      if (item.status === 'working') {
+        var spin = document.createElement('div'); spin.className = 'spinner'; right.appendChild(spin);
+      } else if (item.status === 'done' && item.output) {
+        var saved = document.createElement('span'); saved.className = 'saved';
+        var pct = item.size > 0 ? Math.round((1 - item.outputSize / item.size) * 100) : 0;
+        saved.textContent = (pct > 0 ? '节省 ' + pct + '%' : '同尺寸');
+        right.appendChild(saved);
+      }
+      row.appendChild(thumb); row.appendChild(info); row.appendChild(right);
+      fileList.appendChild(row);
+    });
+    var hasPending = files.some(function (f) { return f.status === 'ready'; });
+    var hasDone = files.some(function (f) { return f.status === 'done' && f.output; });
+    compressBtn.disabled = !hasPending;
+    downloadAllBtn.disabled = !hasDone;
+    clearBtn.hidden = files.length === 0;
+    statCount.textContent = files.length;
+    statBefore.textContent = formatSize(files.reduce(function (s, f) { return s + f.size; }, 0));
+    statAfter.textContent = formatSize(files.reduce(function (s, f) { return s + f.outputSize; }, 0));
+  }
+
+  compressBtn.addEventListener('click', function () {
+    files.forEach(function (item) {
+      if (item.status === 'ready') { item.status = 'working'; render(); compressImage(item); }
+    });
+  });
+
+  function compressImage(item) {
+    var img = new Image();
+    img.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      var outFormat = formatSelect.value;
+      if (outFormat === 'auto') {
+        var orig = item.file.type;
+        outFormat = orig === 'image/png' && item.file.size > 1024 * 1024 ? 'image/webp' : orig;
+      }
+      if (outFormat === 'image/png') {
+        canvas.toBlob(function (blob) { finish(item, blob, 'png'); }, 'image/png');
+        return;
+      }
+      var q = parseInt(qualityRange.value, 10) / 100;
+      canvas.toBlob(function (blob) { finish(item, blob, outFormat === 'image/jpeg' ? 'jpg' : 'webp'); }, outFormat, q);
+    };
+    img.onerror = function () { item.status = 'ready'; showToast('压缩失败：' + item.name); render(); };
+    img.src = item.dataUrl;
+  }
+
+  function finish(item, blob, ext) {
+    item.output = blob;
+    item.outputSize = blob.size;
+    item.status = 'done';
+    var baseName = item.name.replace(/\.[^.]+$/, '');
+    item.outputName = baseName + '_compressed.' + ext;
+    if (blob.size >= item.size) { item.output = null; item.outputSize = item.size; }
+    render();
+  }
+
+  downloadAllBtn.addEventListener('click', function () {
+    files.forEach(function (item) {
+      if (item.status === 'done' && item.output) {
+        window.download(URL.createObjectURL(item.output), item.outputName);
+        setTimeout(function () { URL.revokeObjectURL(item.output); }, 5000);
+      }
+    });
+    showToast('已开始下载压缩图片');
+  });
+
+  clearBtn.addEventListener('click', function () { files = []; render(); });
+})();
+</script>
+</body>
+</html>
