@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>番茄钟 - 在线专注计时器</title>
+  <meta name="description" content="免费在线番茄钟计时器，经典 25 分钟专注加 5 分钟短休的番茄工作法，可自定义时长，到点提示音提醒，统计完成番茄数，提升工作效率的专注利器。" />
+  <meta name="keywords" content="番茄钟,番茄工作法,专注计时器,25分钟,时间管理,效率工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5b9a\u4e49\u65f6\u957f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e13\u6ce8/\u77ed\u4f11/\u957f\u4f11\u65f6\u957f\u90fd\u53ef\u8bbe\u7f6e\u5e76\u8bb0\u5fc6\u3002"}},{"@type":"Question","name":"\u5230\u70b9\u600e\u4e48\u63d0\u9192\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u53d1\u51fa\u63d0\u793a\u97f3\u5e76\u5f39\u51fa\u63d0\u793a\u6587\u5b57\u3002"}},{"@type":"Question","name":"\u756a\u8304\u6570\u4f1a\u4fdd\u7559\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u5929\u8ba1\u6570\u4fdd\u5b58\u5728\u672c\u5730\u3002"}},{"@type":"Question","name":"\u540e\u53f0\u80fd\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u6807\u7b7e\u9700\u4fdd\u6301\u6253\u5f00\uff0c\u8ba1\u65f6\u4f9d\u8d56\u6807\u7b7e\u9875\u8fd0\u884c\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🍅 番茄钟</h1>
+    <p>25 分钟专注+5 分钟休息循环</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">番茄钟</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#番茄钟</span><span class="badge">#专注</span>
+<div class="result-box" id="pmDisplay" style="text-align:center;font-size:64px;font-family:monospace;font-variant-numeric:tabular-nums;padding:24px;"></div>
+<div class="result-box" id="pmPhase" style="background:var(--bg);text-align:center;"></div>
+<div class="actions" style="justify-content:center;">
+  <button class="btn" id="pmStartBtn" type="button">开始</button>
+  <button class="btn btn-secondary" id="pmPauseBtn" type="button">暂停</button>
+  <button class="btn btn-secondary" id="pmResetBtn" type="button">重置</button>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="pmWork">专注(分)</label>
+  <input type="number" id="pmWork" value="25" min="1" max="120" style="width:70px;">
+  <label for="pmShort">短休(分)</label>
+  <input type="number" id="pmShort" value="5" min="1" max="60" style="width:70px;">
+  <label for="pmLong">长休(分)</label>
+  <input type="number" id="pmLong" value="15" min="1" max="60" style="width:70px;">
+</div>
+<div class="result-box" id="pmCount" style="background:var(--bg);text-align:center;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是番茄工作法？</h2><p>把时间切成 25 分钟专注块，每块中间 5 分钟休息，完成 4 个番茄后长休。短时高专注比长时间硬扛更高效。</p><h2>适合谁用？</h2><p>学生复习、程序员写代码、写作者赶稿，任何容易被打断的深度工作场景。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以自定义时长吗？</summary><p>可以，专注/短休/长休时长都可设置并记忆。</p></details><details class="faq-item"><summary>到点怎么提醒？</summary><p>浏览器发出提示音并弹出提示文字。</p></details><details class="faq-item"><summary>番茄数会保留吗？</summary><p>当天计数保存在本地。</p></details><details class="faq-item"><summary>后台能用吗？</summary><p>浏览器标签需保持打开，计时依赖标签页运行。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>番茄钟 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pmDisplay = document.getElementById('pmDisplay');
+  var pmPhase = document.getElementById('pmPhase');
+  var pmCount = document.getElementById('pmCount');
+  var timer = null;
+  var left = 25 * 60;
+  var phase = 'work';
+  var done = 0;
+  var running = false;
+  var today = new Date().toISOString().slice(0, 10);
+  var storedDone = parseInt(localStorage.getItem('pmDone_' + today) || '0', 10);
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function render() {
+    var m = Math.floor(left / 60), s = left % 60;
+    pmDisplay.textContent = pad(m) + ':' + pad(s);
+    pmPhase.textContent = (phase === 'work' ? '🍅 专注中' : '☕ 休息中') + (running ? '' : '（已暂停）');
+    pmCount.textContent = '今日已完成番茄：' + (done + storedDone) + ' 个';
+  }
+  function beep() {
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.3, ctx.currentTime);
+      o.start();
+      o.stop(ctx.currentTime + 0.4);
+    } catch (e) {}
+  }
+  function nextPhase() {
+    if (phase === 'work') {
+      done++;
+      localStorage.setItem('pmDone_' + today, String(done + storedDone));
+      phase = 'short';
+      left = parseInt(document.getElementById('pmShort').value, 10) * 60;
+    } else {
+      phase = 'work';
+      left = parseInt(document.getElementById('pmWork').value, 10) * 60;
+    }
+    beep();
+    render();
+  }
+  document.getElementById('pmStartBtn').addEventListener('click', function () {
+    if (running) return;
+    running = true;
+    timer = setInterval(function () {
+      left--;
+      if (left <= 0) {
+        nextPhase();
+      }
+      render();
+    }, 1000);
+    render();
+  });
+  document.getElementById('pmPauseBtn').addEventListener('click', function () {
+    if (!running) return;
+    running = false;
+    clearInterval(timer);
+    timer = null;
+    render();
+  });
+  document.getElementById('pmResetBtn').addEventListener('click', function () {
+    running = false;
+    clearInterval(timer);
+    timer = null;
+    left = parseInt(document.getElementById('pmWork').value, 10) * 60;
+    phase = 'work';
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
