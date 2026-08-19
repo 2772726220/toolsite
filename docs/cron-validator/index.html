@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron表达式解析 - 在线Cron生成解释工具</title>
+  <meta name="description" content="免费在线 Cron 表达式解析工具，输入 5 段或 6 段 Cron 表达式，自动解释其含义并生成最近执行时间，运维开发必备，浏览器本地解析。" />
+  <meta name="keywords" content="cron表达式,cron解析,定时任务,cron生成,定时表达式,在线cron">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u51e0\u6bb5\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 5 \u6bb5\u6807\u51c6\u683c\u5f0f\uff08\u5206\u65f6\u65e5\u6708\u5468\uff09\u548c 6 \u6bb5\uff08\u542b\u79d2\uff09\u3002"}},{"@type":"Question","name":"\u652f\u6301\u7279\u6b8a\u7b26\u53f7\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 * ? / , - L W \u7b49\u5e38\u89c1\u7b26\u53f7\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u5230\u4e0b\u6b21\u6267\u884c\u65f6\u95f4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u751f\u6210\u672a\u6765\u6700\u8fd1 5 \u6b21\u6267\u884c\u65f6\u95f4\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u89e3\u6790\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>⏱️ Cron表达式解析</h1>
+    <p>解析并解释 Cron 定时表达式</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="cronExpr">Cron 表达式（5段：分 时 日 月 周）</label>
+  <input type="text" id="cronExpr" value="0 9 * * 1-5" style="font-family:monospace;font-size:15px;">
+</div>
+<div class="actions">
+  <button class="btn" id="cronBtn" type="button">解析</button>
+</div>
+<div class="result-box" id="cronResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 Cron 表达式？</h2><p>Cron 是 Linux 定时任务的表达式，5-7 段分别表示分、时、日、月、周等，工具帮你解读含义。</p><h2>能干嘛？</h2><p>输入表达式即可得到中文解释和未来最近的执行时间，避免写错定时任务。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持几段格式？</summary><p>支持 5 段标准格式（分时日月周）和 6 段（含秒）。</p></details><details class="faq-item"><summary>支持特殊符号吗？</summary><p>支持 * ? / , - L W 等常见符号。</p></details><details class="faq-item"><summary>能看到下次执行时间吗？</summary><p>可以，生成未来最近 5 次执行时间。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地解析。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>Cron表达式解析 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var cronResult = document.getElementById('cronResult');
+
+  function expandField(field, min, max) {
+    if (field === '*') { var all = []; for (var i = min; i <= max; i++) all.push(i); return all; }
+    if (field.indexOf('?') === 0) return null;
+    if (field.indexOf('*/') === 0) {
+      var stepAll = parseInt(field.slice(2), 10);
+      if (!stepAll || stepAll < 1) throw new Error('无法解析：' + field);
+      var out = [];
+      for (var s = min; s <= max; s += stepAll) out.push(s);
+      return out;
+    }
+    var values = [];
+    field.split(',').forEach(function (part) {
+      var m = part.match(/^(\d+)(?:-(\d+))?(?:\/(\d+))?$/);
+      if (!m) throw new Error('无法解析：' + part);
+      var a = parseInt(m[1], 10), b = m[2] ? parseInt(m[2], 10) : a, step = m[3] ? parseInt(m[3], 10) : 1;
+      if (a < min || b > max || a > b || step < 1) throw new Error('越界：' + part);
+      for (var v = a; v <= b; v += step) values.push(v);
+    });
+    return values;
+  }
+
+  function nextRuns(cron, fromDate) {
+    var f = cron.split(/\s+/);
+    if (f.length !== 5) throw new Error('需要 5 段表达式');
+    var mins = expandField(f[0], 0, 59);
+    var hours = expandField(f[1], 0, 23);
+    var days = expandField(f[2], 1, 31);
+    var months = expandField(f[3], 1, 12);
+    var weekdays = expandField(f[4], 0, 6);
+    var runs = [];
+    var d = new Date(fromDate.getTime());
+    d.setSeconds(0, 0);
+    var guard = 0;
+    while (runs.length < 5 && guard < 500000) {
+      guard++;
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      var wd = d.getDay();
+      var dateOk = months.indexOf(month) >= 0 &&
+        (days === null || days.indexOf(day) >= 0) &&
+        (weekdays === null || weekdays.indexOf(wd) >= 0);
+      var h = d.getHours();
+      var mm = d.getMinutes();
+      var matched = false;
+      if (dateOk && hours.indexOf(h) >= 0) {
+        for (var mi = 0; mi < mins.length; mi++) {
+          if (mins[mi] >= mm) {
+            var r = new Date(d);
+            r.setMinutes(mins[mi]);
+            if (r.getTime() > fromDate.getTime()) {
+              runs.push(r);
+              d = new Date(r.getTime() + 60000);
+              d.setSeconds(0, 0);
+              matched = true;
+              break;
+            }
+          }
+        }
+      }
+      if (!matched) {
+        if (dateOk) {
+          d.setMinutes(0, 0, 0);
+          d.setHours(h + 1);
+        } else {
+          d.setHours(0, 0, 0);
+          d.setDate(d.getDate() + 1);
+        }
+        if (d.getTime() - fromDate.getTime() > 3 * 366 * 86400000) break;
+      }
+    }
+    return runs;
+  }
+
+  var DESC = [
+    ['分', '第 {v} 分钟'],
+    ['时', '{v} 时'],
+    ['日', '每月 {v} 日'],
+    ['月', '{v} 月'],
+    ['周', '星期{v}（0=周日）']
+  ];
+
+  document.getElementById('cronBtn').addEventListener('click', function () {
+    var cron = document.getElementById('cronExpr').value.trim();
+    if (!cron) { showToast('请输入 Cron 表达式'); return; }
+    try {
+      var f = cron.split(/\s+/);
+      var descParts = [];
+      DESC.forEach(function (d, i) {
+        var field = f[i];
+        if (field === undefined) throw new Error('表达式字段不足');
+        if (field === '*') descParts.push(d[1].replace('{v}', '任意'));
+        else if (field === '?') descParts.push(d[1].replace('{v}', '任意（不指定）'));
+        else if (i === 4 && field.indexOf('/') >= 0) descParts.push('每 ' + field.split('/')[1] + ' 个星期执行');
+        else if (field.indexOf('/') >= 0) {
+          var sp = field.split('/');
+          if (sp[0] === '*') descParts.push('每 ' + sp[1] + ' 个' + d[0] + '执行');
+          else descParts.push('从 ' + sp[0] + ' 起每 ' + sp[1] + ' 个' + d[0] + '执行');
+        } else if (field.indexOf('-') >= 0) {
+          descParts.push(d[1].replace('{v}', field.replace(/-/g, '到')));
+        } else if (field.indexOf(',') >= 0) {
+          descParts.push(d[1].replace('{v}', field.replace(/,/g, '、')));
+        } else {
+          descParts.push(d[1].replace('{v}', field));
+        }
+      });
+      var runs = nextRuns(cron, new Date());
+      var list = runs.length ? runs.map(function (r) {
+        return r.getFullYear() + '-' + String(r.getMonth() + 1).padStart(2, '0') + '-' + String(r.getDate()).padStart(2, '0') + ' ' + String(r.getHours()).padStart(2, '0') + ':' + String(r.getMinutes()).padStart(2, '0');
+      }).join('<br>') : '（3 年内无匹配执行时间）';
+      cronResult.hidden = false;
+      cronResult.innerHTML = '含义：<b>' + descParts.join('；') + '</b><br><br>最近 5 次执行时间（本地时区）：<br>' + list;
+    } catch (e) {
+      showToast('解析失败：' + e.message);
+    }
+  });
+})();
+</script>
+</body>
+</html>
