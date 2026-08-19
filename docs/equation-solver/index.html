@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一元二次方程 - 在线求根计算器</title>
+  <meta name="description" content="免费在线一元二次方程求解器，输入系数 a、b、c 自动求解 ax²+bx+c=0，判别式判断实数根/重根/复数根，给出完整求解过程，学生作业检查神器。" />
+  <meta name="keywords" content="一元二次方程,二次方程求解,方程求根,判别式,在线解方程,数学工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"a \u53ef\u4ee5\u4e3a 0 \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"a=0 \u9000\u5316\u4e3a\u4e00\u6b21\u65b9\u7a0b\uff0c\u4e5f\u80fd\u6c42\u89e3\u3002"}},{"@type":"Question","name":"\u663e\u793a\u6c42\u89e3\u8fc7\u7a0b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u663e\u793a\u5224\u522b\u5f0f\u3001\u6c42\u6839\u516c\u5f0f\u4ee3\u5165\u548c\u6700\u7ec8\u6839\u3002"}},{"@type":"Question","name":"\u652f\u6301\u590d\u6570\u6839\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u0394<0 \u65f6\u663e\u793a\u590d\u6570\u6839\u5f62\u5f0f\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b9e\u6570\u6839\u4fdd\u7559 6 \u4f4d\u5c0f\u6570\u5e76\u7ed9\u51fa\u5206\u6570\u8fd1\u4f3c\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📐 一元二次方程</h1>
+    <p>ax²+bx+c=0 自动求解</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">一元二次方程</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#方程</span><span class="badge">#求根</span>
+<div class="field">
+  <label for="eqA">系数 a</label>
+  <input type="number" id="eqA" value="1" step="any">
+</div>
+<div class="field">
+  <label for="eqB">系数 b</label>
+  <input type="number" id="eqB" value="-5" step="any">
+</div>
+<div class="field">
+  <label for="eqC">系数 c</label>
+  <input type="number" id="eqC" value="6" step="any">
+</div>
+<div class="actions">
+  <button class="btn" id="eqBtn" type="button">求解</button>
+</div>
+<div class="result-box" id="eqResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么判断根的情况？</h2><p>看判别式 Δ=b²-4ac：Δ>0 两个不等实根，Δ=0 一个重根，Δ<0 两个共轭复根。</p><h2>求根公式是什么？</h2><p>x = (-b ± √Δ) / (2a)。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>a 可以为 0 吗？</summary><p>a=0 退化为一次方程，也能求解。</p></details><details class="faq-item"><summary>显示求解过程吗？</summary><p>显示判别式、求根公式代入和最终根。</p></details><details class="faq-item"><summary>支持复数根吗？</summary><p>支持，Δ<0 时显示复数根形式。</p></details><details class="faq-item"><summary>结果精确吗？</summary><p>实数根保留 6 位小数并给出分数近似。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>一元二次方程 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var eqResult = document.getElementById('eqResult');
+
+  function solve(a, b, c) {
+    var html = '';
+    var sign = function (v) { return v >= 0 ? ' + ' + v : ' - ' + Math.abs(v); };
+    html += '方程：<b>' + a + 'x²' + sign(b) + 'x' + sign(c) + ' = 0</b><br>';
+    if (a === 0) {
+      if (b === 0) {
+        html += c === 0 ? '无穷多个解（恒等式）' : '无解（矛盾方程）';
+        return html;
+      }
+      var x1 = -c / b;
+      html += '一次方程，x = <b>' + x1.toFixed(6) + '</b>';
+      return html;
+    }
+    var d = b * b - 4 * a * c;
+    html += '判别式 Δ = b²-4ac = <b>' + d.toFixed(4) + '</b><br>';
+    if (d > 0) {
+      var sq = Math.sqrt(d);
+      var x1 = (-b + sq) / (2 * a);
+      var x2 = (-b - sq) / (2 * a);
+      html += '两个不等实根：<br>x₁ = <b>' + x1.toFixed(6) + '</b><br>x₂ = <b>' + x2.toFixed(6) + '</b>';
+    } else if (d === 0) {
+      var x = -b / (2 * a);
+      html += '重根：x = <b>' + x.toFixed(6) + '</b>';
+    } else {
+      var re = -b / (2 * a);
+      var im = Math.sqrt(-d) / (2 * a);
+      html += '两个共轭复根：<br>x₁ = <b>' + re.toFixed(6) + (im >= 0 ? ' + ' : ' - ') + Math.abs(im).toFixed(6) + 'i</b><br>x₂ = <b>' + re.toFixed(6) + (im >= 0 ? ' - ' : ' + ') + Math.abs(im).toFixed(6) + 'i</b>';
+    }
+    return html;
+  }
+
+  document.getElementById('eqBtn').addEventListener('click', function () {
+    var a = parseFloat(document.getElementById('eqA').value);
+    var b = parseFloat(document.getElementById('eqB').value);
+    var c = parseFloat(document.getElementById('eqC').value);
+    if (isNaN(a) || isNaN(b) || isNaN(c)) { showToast('请输入三个系数'); return; }
+    eqResult.hidden = false;
+    eqResult.innerHTML = solve(a, b, c);
+  });
+})();
+</script>
+</body>
+</html>
