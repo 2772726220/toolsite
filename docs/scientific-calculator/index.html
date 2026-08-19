@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科学计算器 - 在线科学函数计算器</title>
+  <meta name="description" content="免费在线科学计算器，支持加减乘除、开方、幂、对数、三角函数等函数运算，实时计算显示，浏览器本地运行，学生与工程人员必备。" />
+  <meta name="keywords" content="科学计算器,在线计算器,函数计算器,三角函数计算,在线科学计算,计算器工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u952e\u76d8\u8f93\u5165\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u76f4\u63a5\u6253\u5b57\u8f93\u5165\u8868\u8fbe\u5f0f\u3002"}},{"@type":"Question","name":"\u89d2\u5ea6\u5236\u8fd8\u662f\u5f27\u5ea6\u5236\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e09\u89d2\u51fd\u6570\u9ed8\u8ba4\u89d2\u5ea6\u5236\uff0c\u53ef\u5207\u6362\u5f27\u5ea6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u62ec\u53f7\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4efb\u610f\u5d4c\u5957\u62ec\u53f7\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🧮 科学计算器</h1>
+    <p>函数、开方、幂运算全能计算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="scDisplay">表达式</label>
+  <input type="text" id="scDisplay" placeholder="如 sin(30) + sqrt(16) * 2^3">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="scDeg">角度制</label>
+  <input type="checkbox" id="scDeg" checked style="width:18px;height:18px;accent-color:var(--primary);">
+</div>
+<div class="actions">
+  <button class="btn" id="scEvalBtn" type="button">计算</button>
+  <button class="btn btn-secondary" id="scClearBtn" type="button">清空</button>
+</div>
+<div class="result-box" id="scResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>科学计算器能算什么？</h2><p>除了四则运算，还支持平方根、幂、自然对数、三角函数、阶乘等函数，满足学习与工程计算。</p><h2>怎么输入函数？</h2><p>直接输入表达式（如 sin(30)、sqrt(16)、2^10），回车即得结果，支持键盘输入。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持键盘输入吗？</summary><p>支持，可直接打字输入表达式。</p></details><details class="faq-item"><summary>角度制还是弧度制？</summary><p>三角函数默认角度制，可切换弧度。</p></details><details class="faq-item"><summary>支持括号吗？</summary><p>支持任意嵌套括号。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>科学计算器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var scResult = document.getElementById('scResult');
+  var scInput = document.getElementById('scDisplay');
+
+  function evalExpr(expr, deg) {
+    var rad = deg ? Math.PI / 180 : 1;
+    var withFuncs = expr
+      .replace(/sin\(/g, 'Math.sin(' + rad + '*')
+      .replace(/cos\(/g, 'Math.cos(' + rad + '*')
+      .replace(/tan\(/g, 'Math.tan(' + rad + '*')
+      .replace(/sqrt\(/g, 'Math.sqrt(')
+      .replace(/log\(/g, 'Math.log(')
+      .replace(/abs\(/g, 'Math.abs(')
+      .replace(/floor\(/g, 'Math.floor(')
+      .replace(/ceil\(/g, 'Math.ceil(')
+      .replace(/round\(/g, 'Math.round(')
+      .replace(/\^/g, '**')
+      .replace(/(\d+|\))!/g, function (m) {
+        var n = parseFloat(m.replace(/!/g, ''));
+        var r = 1;
+        for (var i = 2; i <= n; i++) r *= i;
+        return r;
+      });
+    withFuncs = withFuncs.replace(/Math\.(sin|cos|tan)\((\d*\.?\d+)\*\*/g, function (m, fn, num) {
+      return 'Math.' + fn + '(' + num + '*';
+    });
+    return Function('"use strict"; return (' + withFuncs + ');')();
+  }
+
+  scInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('scEvalBtn').click();
+  });
+
+  document.getElementById('scEvalBtn').addEventListener('click', function () {
+    var expr = scInput.value.trim();
+    if (!expr) return;
+    try {
+      var val = evalExpr(expr, document.getElementById('scDeg').checked);
+      if (!isFinite(val)) throw new Error('NaN');
+      scResult.hidden = false;
+      scResult.innerHTML = expr + ' = <b style="font-size:20px;">' + (+val.toFixed(10)).toString() + '</b>';
+    } catch (err) {
+      scResult.hidden = false;
+      scResult.innerHTML = '<span style="color:var(--danger)">表达式错误：请检查语法</span>';
+    }
+  });
+
+  document.getElementById('scClearBtn').addEventListener('click', function () {
+    scInput.value = '';
+    scResult.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>
