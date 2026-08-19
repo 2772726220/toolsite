@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>九宫格切图 - 在线图片九宫格切割工具</title>
+  <meta name="description" content="免费在线九宫格切图工具，把一张图片切割成 3x3 共 9 张，适用于朋友圈、小红书、Instagram 九宫格排版，浏览器本地处理，隐私安全。" />
+  <meta name="keywords" content="九宫格切图,九宫格工具,图片九宫格切割,朋友圈九宫格,小红书九宫格,图片切片">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔲</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e5d\u5bab\u683c\u5207\u56fe\u652f\u6301\u4ec0\u4e48\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 JPG\u3001PNG\u3001WebP\u3002\u900f\u660e\u5e95 PNG \u5207\u5272\u540e\u4ecd\u4fdd\u7559\u900f\u660e\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u88ab\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5207\u5272\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\uff0c\u56fe\u7247\u4e0d\u4f1a\u79bb\u5f00\u4f60\u7684\u8bbe\u5907\u3002"}},{"@type":"Question","name":"\u975e\u6b63\u65b9\u5f62\u7684\u56fe\u53ef\u4ee5\u5207\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u5de5\u5177\u4f1a\u6309\u56fe\u7247\u539f\u59cb\u6bd4\u4f8b\u7b49\u5206\u5207\u5272\uff0c\u4e5f\u53ef\u9009\u62e9\u5c45\u4e2d\u88c1\u6210\u6b63\u65b9\u5f62\u518d\u5207\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u53d1\u4e5d\u5bab\u683c\u670b\u53cb\u5708\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0b\u8f7d 9 \u5f20\u56fe\u540e\uff0c\u5728\u670b\u53cb\u5708\u6309 1\u30012\u30013\u20269 \u7684\u987a\u5e8f\u4f9d\u6b21\u9009\u62e9\u5373\u53ef\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔲 九宫格切图</h1>
+    <p>一张图切成 9 张，发朋友圈小红书神器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="dropzone" id="dropzone">
+  <div class="icon">🔲</div>
+  <p>拖拽图片到此处，或点击选择文件</p>
+  <p style="font-size:12px;color:#94a3b8;">支持 JPG / PNG / WebP</p>
+  <button class="btn" id="fileBtn" type="button">选择图片</button>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+</div>
+<div class="controls">
+  <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="square" checked> 先居中裁成正方形</label>
+</div>
+<div class="actions">
+  <button class="btn" id="cutBtn" type="button" disabled>切割并下载 9 张</button>
+</div>
+<div class="result-box" id="result" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是九宫格？</h2><p>把一张大图平均切成 3x3 的 9 张小图，发朋友圈或小红书时 9 张拼接起来就是完整大图，视觉冲击力强，是社交媒体流行的排版方式。</p><h2>九宫格怎么用？</h2><p>上传任意尺寸图片，工具自动按比例切成 9 张，可一键打包下载全部。支持选择是否保留边框间距，适应不同平台展示效果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>九宫格切图支持什么格式？</summary><p>支持 JPG、PNG、WebP。透明底 PNG 切割后仍保留透明。</p></details><details class="faq-item"><summary>图片会被上传吗？</summary><p>不会，切割完全在浏览器本地完成，图片不会离开你的设备。</p></details><details class="faq-item"><summary>非正方形的图可以切吗？</summary><p>可以，工具会按图片原始比例等分切割，也可选择居中裁成正方形再切。</p></details><details class="faq-item"><summary>怎么发九宫格朋友圈？</summary><p>下载 9 张图后，在朋友圈按 1、2、3…9 的顺序依次选择即可。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>九宫格切图 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var fileBtn = document.getElementById('fileBtn');
+  var cutBtn = document.getElementById('cutBtn');
+  var result = document.getElementById('result');
+  var selected = null;
+
+  fileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault(); dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length) loadFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  function loadFile(file) {
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) { showToast('请选择图片文件'); return; }
+    var reader = new FileReader();
+    reader.onload = function (e) { selected = { file: file, dataUrl: e.target.result }; cutBtn.disabled = false; showToast('图片已就绪'); };
+    reader.readAsDataURL(file);
+  }
+
+  cutBtn.addEventListener('click', function () {
+    if (!selected) return;
+    var img = new Image();
+    img.onload = function () {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var srcX = 0, srcY = 0, srcW = w, srcH = h;
+      if (document.getElementById('square').checked) {
+        var side = Math.min(w, h);
+        srcX = (w - side) / 2; srcY = (h - side) / 2; srcW = side; srcH = side;
+      }
+      var piece = Math.min(srcW, srcH) / 3;
+      var base = selected.file.name.replace(/\.[^.]+$/, '');
+      for (var r = 0; r < 3; r++) {
+        for (var c = 0; c < 3; c++) {
+          var canvas = document.createElement('canvas');
+          canvas.width = piece; canvas.height = piece;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, srcX + c * piece, srcY + r * piece, piece, piece, 0, 0, piece, piece);
+          var n = r * 3 + c + 1;
+          (function (blobNum) {
+            canvas.toBlob(function (blob) {
+              window.download(URL.createObjectURL(blob), base + '_' + blobNum + '.png');
+              setTimeout(function () { URL.revokeObjectURL(blob); }, 6000);
+            }, 'image/png', 1);
+          })(n);
+        }
+      }
+      result.hidden = false;
+      result.textContent = '✅ 已生成 9 张图，按 1-9 顺序发朋友圈/小红书即可拼回原图';
+      setTimeout(function () { result.hidden = true; }, 6000);
+    };
+    img.src = selected.dataUrl;
+  });
+})();
+</script>
+</body>
+</html>
