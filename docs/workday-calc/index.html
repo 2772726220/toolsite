@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工作日计算器 - 在线上班天数计算工具</title>
+  <meta name="description" content="免费在线工作日计算器，计算两个日期之间的工作日（去除周六周日），也可计算若干工作日后的日期，浏览器本地计算，考勤排期必备。" />
+  <meta name="keywords" content="工作日计算,上班天数,工作日天数,上班日期,排期计算,在线工作日">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📆</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5305\u542b\u6cd5\u5b9a\u8282\u5047\u65e5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u7840\u7248\u53ea\u6392\u9664\u5468\u672b\uff0c\u6cd5\u5b9a\u8282\u5047\u65e5\u9700\u6309\u56fd\u5bb6\u5b89\u6392\u53e6\u884c\u8c03\u6574\u3002"}},{"@type":"Question","name":"\u652f\u6301\u53cd\u7b97\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8ba1\u7b97\u4ece\u67d0\u5929\u8d77 N \u4e2a\u5de5\u4f5c\u65e5\u540e\u662f\u54ea\u4e00\u5929\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u9996\u5c3e\u65e5\u671f\u7b97\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5305\u542b\u9996\u5c3e\u65e5\u671f\uff0c\u5f00\u59cb\u65e5\u671f\u662f\u5de5\u4f5c\u65e5\u5219\u8ba1\u5165\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📆 工作日计算</h1>
+    <p>计算两日期之间的工作日天数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">工作日计算</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#工作日</span><span class="badge">#计算</span>
+<div class="field">
+  <label for="wdStart">开始日期</label>
+  <input type="date" id="wdStart">
+</div>
+<div class="field">
+  <label for="wdEnd">结束日期</label>
+  <input type="date" id="wdEnd">
+</div>
+<div class="actions">
+  <button class="btn" id="wdBtn" type="button">计算工作日</button>
+</div>
+<div class="result-box" id="wdResult" hidden></div>
+<div class="field" style="margin-top:20px;">
+  <label for="wdFrom">从某天起，加 N 个工作日</label>
+  <input type="date" id="wdFrom">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <input type="number" id="wdDays" value="10" min="1" style="width:80px;">
+  <span style="color:var(--muted);">个工作日</span>
+</div>
+<div class="actions"><button class="btn btn-secondary" id="wdAddBtn" type="button">计算日期</button></div>
+<div class="result-box" id="wdAddResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>工作日怎么算？</h2><p>默认去除周六周日，按周一到周五计为工作日。</p><h2>有什么用？</h2><p>算考勤、算交付周期、排项目计划，或算 N 个工作日后是哪天。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>包含法定节假日吗？</summary><p>基础版只排除周末，法定节假日需按国家安排另行调整。</p></details><details class="faq-item"><summary>支持反算吗？</summary><p>支持，计算从某天起 N 个工作日后是哪一天。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>首尾日期算吗？</summary><p>包含首尾日期，开始日期是工作日则计入。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>工作日计算 · <a href="../category/date/">📅 日期时间</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var wdResult = document.getElementById('wdResult');
+  var wdAddResult = document.getElementById('wdAddResult');
+
+  function isWorkday(d) {
+    var wd = d.getDay();
+    return wd !== 0 && wd !== 6;
+  }
+  function fmt(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+  document.getElementById('wdBtn').addEventListener('click', function () {
+    var s = new Date(document.getElementById('wdStart').value + 'T00:00:00');
+    var e = new Date(document.getElementById('wdEnd').value + 'T00:00:00');
+    if (isNaN(s) || isNaN(e)) { showToast('请选择两个日期'); return; }
+    var total = Math.round((e - s) / 86400000);
+    if (total < 0) { showToast('结束日期不能早于开始日期'); return; }
+    var work = 0;
+    var d = new Date(s);
+    for (var i = 0; i <= total; i++) {
+      if (isWorkday(d)) work++;
+      d.setDate(d.getDate() + 1);
+    }
+    wdResult.hidden = false;
+    wdResult.innerHTML = '从 ' + fmt(s) + ' 到 ' + fmt(e) + '：共 <b>' + (total + 1) + '</b> 天<br>' +
+      '其中工作日：<b style="font-size:22px;">' + work + '</b> 天<br>' +
+      '周末：' + (total + 1 - work) + ' 天（不含法定节假日调整）';
+  });
+
+  document.getElementById('wdAddBtn').addEventListener('click', function () {
+    var base = new Date(document.getElementById('wdFrom').value + 'T00:00:00');
+    var n = parseInt(document.getElementById('wdDays').value, 10);
+    if (isNaN(base)) { showToast('请选择起始日期'); return; }
+    if (isNaN(n) || n < 1 || n > 3650) { showToast('天数需在 1-3650 之间'); return; }
+    var d = new Date(base);
+    var count = 0;
+    var guard = 0;
+    while (count < n && guard < 50000) {
+      guard++;
+      d.setDate(d.getDate() + 1);
+      if (isWorkday(d)) count++;
+    }
+    wdAddResult.hidden = false;
+    wdAddResult.innerHTML = fmt(base) + ' 起 ' + n + ' 个工作日后（不含当日）是：<b style="font-size:22px;">' + fmt(d) + '</b>（星期' + WEEK[d.getDay()] + '）';
+  });
+
+  var today = new Date().toISOString().slice(0, 10);
+  document.getElementById('wdStart').value = today;
+  document.getElementById('wdFrom').value = today;
+  var plus = new Date(Date.now() + 30 * 86400000);
+  document.getElementById('wdEnd').value = plus.toISOString().slice(0, 10);
+})();
+</script>
+</body>
+</html>
