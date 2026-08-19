@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>温度换算 - 在线摄氏华氏开尔文转换器</title>
+  <meta name="description" content="免费在线温度换算工具，支持摄氏度、华氏度、开尔文三档快速互换，可同时显示全部换算结果，精确到小数点后两位，日常与科学使用两相宜。" />
+  <meta name="keywords" content="温度换算,摄氏度转华氏度,华氏度转摄氏度,开尔文换算,温度转换器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌡️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6444\u6c0f\u5ea6\u600e\u4e48\u8f6c\u534e\u6c0f\u5ea6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u534e\u6c0f\u5ea6 = \u6444\u6c0f\u5ea6 \u00d7 9/5 + 32\u3002"}},{"@type":"Question","name":"\u5f00\u5c14\u6587\u548c\u6444\u6c0f\u5ea6\u4ec0\u4e48\u5173\u7cfb\uff1f","acceptedAnswer":{"@type":"Answer","text":"K = \u2103 + 273.15\u3002"}},{"@type":"Question","name":"0 \u6444\u6c0f\u5ea6\u662f\u591a\u5c11\u534e\u6c0f\u5ea6\uff1f","acceptedAnswer":{"@type":"Answer","text":"32 \u534e\u6c0f\u5ea6\u3002"}},{"@type":"Question","name":"\u8f93\u5165\u8d1f\u6e29\u53ef\u4ee5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4efb\u610f\u6570\u503c\u90fd\u652f\u6301\uff0c\u4ec5\u5f00\u5c14\u6587\u4e0d\u5141\u8bb8\u4e3a\u8d1f\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🌡️ 温度换算</h1>
+    <p>摄氏/华氏/开尔文三档互换</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">温度换算</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#温度</span><span class="badge">#换算</span>
+<div class="field">
+  <label for="tcValue">数值</label>
+  <input type="number" id="tcValue" value="25" step="any">
+</div>
+<div class="field">
+  <label for="tcFrom">从</label>
+  <select id="tcFrom">
+    <option value="C">摄氏度 ℃</option>
+    <option value="F">华氏度 ℉</option>
+    <option value="K">开尔文 K</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="tcBtn" type="button">换算</button>
+</div>
+<div class="result-box" id="tcResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要做温度换算？</h2><p>出国旅行看天气预报、烘焙看国外菜谱、实验室记录数据，都会遇到摄氏/华氏/开尔文混用，换算器一键搞定。</p><h2>三种温标有什么区别？</h2><p>摄氏以水的冰点/沸点为 0/100 度，华氏以 32/212 度为冰点/沸点，开尔文是科学绝对温标，0K 为绝对零度。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>摄氏度怎么转华氏度？</summary><p>华氏度 = 摄氏度 × 9/5 + 32。</p></details><details class="faq-item"><summary>开尔文和摄氏度什么关系？</summary><p>K = ℃ + 273.15。</p></details><details class="faq-item"><summary>0 摄氏度是多少华氏度？</summary><p>32 华氏度。</p></details><details class="faq-item"><summary>输入负温可以吗？</summary><p>可以，任意数值都支持，仅开尔文不允许为负。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>温度换算 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var tcResult = document.getElementById('tcResult');
+
+  function toC(v, from) {
+    if (from === 'C') return v;
+    if (from === 'F') return (v - 32) * 5 / 9;
+    return v - 273.15;
+  }
+  function fromC(c, to) {
+    if (to === 'C') return c;
+    if (to === 'F') return c * 9 / 5 + 32;
+    return c + 273.15;
+  }
+
+  document.getElementById('tcBtn').addEventListener('click', function () {
+    var v = parseFloat(document.getElementById('tcValue').value);
+    var from = document.getElementById('tcFrom').value;
+    if (isNaN(v)) { showToast('请输入数值'); return; }
+    if (from === 'K' && v < 0) { showToast('开尔文不能为负'); return; }
+    var c = toC(v, from);
+    var out = [];
+    if (from !== 'C') out.push('摄氏度：<b>' + c.toFixed(2) + ' ℃</b>');
+    if (from !== 'F') out.push('华氏度：<b>' + fromC(c, 'F').toFixed(2) + ' ℉</b>');
+    if (from !== 'K') out.push('开尔文：<b>' + fromC(c, 'K').toFixed(2) + ' K</b>');
+    tcResult.hidden = false;
+    tcResult.innerHTML = out.join('<br>');
+  });
+})();
+</script>
+</body>
+</html>
