@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本对比 - 在线文本差异对比工具</title>
+  <meta name="description" content="免费在线文本对比工具，逐行对比两段文本差异，新增/删除/修改高亮显示，适合代码比对、文章修改前后对比，浏览器本地处理。" />
+  <meta name="keywords" content="文本对比,在线对比,代码对比,文本差异,两文本比较,diff工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🆚</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5bf9\u6bd4\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9010\u884c\u5bf9\u6bd4\uff0c\u53ef\u5feb\u901f\u5b9a\u4f4d\u589e\u5220\u6539\u7684\u884c\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5927\u6587\u672c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u51e0\u5343\u884c\u4e5f\u80fd\u6d41\u7545\u5bf9\u6bd4\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5bf9\u6bd4\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u5230\u7edf\u8ba1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u663e\u793a\u65b0\u589e\u3001\u5220\u9664\u3001\u4fee\u6539\u3001\u76f8\u540c\u7684\u884c\u6570\u7edf\u8ba1\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🆚 文本对比</h1>
+    <p>两段文本逐行对比，高亮差异</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="diffOld">原文</label>
+  <textarea id="diffOld" placeholder="粘贴原文本..."></textarea>
+</div>
+<div class="field">
+  <label for="diffNew">新文本</label>
+  <textarea id="diffNew" placeholder="粘贴新文本..."></textarea>
+</div>
+<div class="actions"><button class="btn" id="diffBtn" type="button">对比</button></div>
+<div class="stat-bar" id="diffStats" hidden>
+  <div class="stat"><div class="num" id="diffAdded">0</div><div class="label">新增</div></div>
+  <div class="stat"><div class="num" id="diffRemoved">0</div><div class="label">删除</div></div>
+  <div class="stat"><div class="num" id="diffChanged">0</div><div class="label">修改</div></div>
+</div>
+<div class="result-box" id="diffResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要文本对比？</h2><p>代码改动前后比对、文章编辑前后对比、配置文件差异排查，逐行高亮差异一目了然。</p><h2>怎么使用？</h2><p>左侧粘贴原文，右侧粘贴新文，自动对比并高亮每行状态（新增/删除/修改/相同）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>对比准确吗？</summary><p>逐行对比，可快速定位增删改的行。</p></details><details class="faq-item"><summary>支持大文本吗？</summary><p>支持，几千行也能流畅对比。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地对比。</p></details><details class="faq-item"><summary>能看到统计吗？</summary><p>显示新增、删除、修改、相同的行数统计。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本对比 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var diffResult = document.getElementById('diffResult');
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  document.getElementById('diffBtn').addEventListener('click', function () {
+    var oldLines = document.getElementById('diffOld').value.split('\n');
+    var newLines = document.getElementById('diffNew').value.split('\n');
+    var oldMap = {};
+    var newCounts = {};
+    oldLines.forEach(function (l, i) {
+      if (!(l in oldMap)) oldMap[l] = [];
+      oldMap[l].push(i);
+    });
+    var matchedOld = {};
+    var matchedNew = {};
+    newLines.forEach(function (l, i) {
+      if (oldMap[l] && oldMap[l].length) {
+        var oi = oldMap[l].shift();
+        matchedOld[oi] = true;
+        matchedNew[i] = true;
+      }
+    });
+    var added = 0, removed = 0, changed = 0;
+    var html = '<div style="font-family:monospace;font-size:13px;white-space:pre;">';
+    var maxLen = Math.max(oldLines.length, newLines.length);
+    for (var i = 0; i < maxLen; i++) {
+      var o = i < oldLines.length ? oldLines[i] : null;
+      var n = i < newLines.length ? newLines[i] : null;
+      var oMatched = o !== null && matchedOld[i];
+      var nMatched = n !== null && matchedNew[i];
+      if (o === null) {
+        html += '<div style="background:#dcfce7;color:#166534;">+ ' + esc(n) + '</div>';
+        added++;
+      } else if (n === null) {
+        html += '<div style="background:#fee2e2;color:#991b1b;">- ' + esc(o) + '</div>';
+        removed++;
+      } else if (oMatched && nMatched) {
+        html += '<div style="color:var(--muted);">  ' + esc(o) + '</div>';
+      } else if (o === n) {
+        html += '<div style="color:var(--muted);">  ' + esc(o) + '</div>';
+      } else {
+        html += '<div style="background:#fef3c7;color:#92400e;">- ' + esc(o) + '</div>';
+        html += '<div style="background:#fef3c7;color:#92400e;">+ ' + esc(n) + '</div>';
+        changed++;
+      }
+    }
+    html += '</div>';
+    diffResult.hidden = false;
+    diffResult.innerHTML = html;
+    document.getElementById('diffAdded').textContent = added;
+    document.getElementById('diffRemoved').textContent = removed;
+    document.getElementById('diffChanged').textContent = changed;
+    document.getElementById('diffStats').hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
