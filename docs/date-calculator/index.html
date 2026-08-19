@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期计算器 - 在线日期差与天数加减工具</title>
+  <meta name="description" content="免费在线日期计算器，计算两个日期相差天数、日期加减 N 天后的结果、指定日期的星期，浏览器本地计算，日常生活与办公必备。" />
+  <meta name="keywords" content="日期计算器,日期差计算,天数计算,日期加减,在线日期计算,倒计时计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u519c\u5386\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6682\u53ea\u652f\u6301\u516c\u5386\u65e5\u671f\u3002"}},{"@type":"Question","name":"\u8de8\u5e74\u8ba1\u7b97\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u51c6\u786e\uff0c\u81ea\u52a8\u6309\u516c\u5386\u95f0\u5e74\u89c4\u5219\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u7b97\u661f\u671f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4efb\u610f\u65e5\u671f\u663e\u793a\u5bf9\u5e94\u661f\u671f\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>📅 日期计算器</h1>
+    <p>日期差、加减天数、星期推算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="dcDate1">第一个日期</label>
+  <input type="date" id="dcDate1">
+</div>
+<div class="field">
+  <label for="dcDate2">第二个日期</label>
+  <input type="date" id="dcDate2">
+</div>
+<div class="actions"><button class="btn" id="dcDiffBtn" type="button">计算日期差</button></div>
+<div class="result-box" id="dcDiffResult" hidden></div>
+<div class="field" style="margin-top:20px;">
+  <label for="dcBase">日期加减</label>
+  <input type="date" id="dcBase">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <input type="number" id="dcDays" value="30" style="width:90px;">
+  <span style="color:var(--muted);">天（负数为往前）</span>
+</div>
+<div class="actions"><button class="btn" id="dcAddBtn" type="button">计算</button></div>
+<div class="result-box" id="dcAddResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要日期计算？</h2><p>算距离考试/活动还有多少天、项目截止日期推算、生日年龄计算，日期工具一键搞定。</p><h2>支持哪些功能？</h2><p>两个日期相差天数、日期加减天数、任意日期对应星期、当天日期快捷输入。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持农历吗？</summary><p>暂只支持公历日期。</p></details><details class="faq-item"><summary>跨年计算准确吗？</summary><p>准确，自动按公历闰年规则计算。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details><details class="faq-item"><summary>可以算星期吗？</summary><p>可以，任意日期显示对应星期。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>日期计算器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dcDiffResult = document.getElementById('dcDiffResult');
+  var dcAddResult = document.getElementById('dcAddResult');
+  var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+  function fmt(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  document.getElementById('dcDiffBtn').addEventListener('click', function () {
+    var d1 = new Date(document.getElementById('dcDate1').value + 'T00:00:00');
+    var d2 = new Date(document.getElementById('dcDate2').value + 'T00:00:00');
+    if (isNaN(d1) || isNaN(d2)) { showToast('请选择两个日期'); return; }
+    var diff = Math.round((d2 - d1) / 86400000);
+    var abs = Math.abs(diff);
+    dcDiffResult.hidden = false;
+    dcDiffResult.innerHTML =
+      '相差：<b>' + abs + '</b> 天（' + (diff >= 0 ? '后' : '前') + '）<br>' +
+      '约 ' + (abs / 30).toFixed(1) + ' 个月 / ' + (abs / 365).toFixed(1) + ' 年<br>' +
+      fmt(d1) + ' 是星期' + WEEK[d1.getDay()] + '<br>' +
+      fmt(d2) + ' 是星期' + WEEK[d2.getDay()];
+  });
+
+  document.getElementById('dcAddBtn').addEventListener('click', function () {
+    var base = new Date(document.getElementById('dcBase').value + 'T00:00:00');
+    var days = parseInt(document.getElementById('dcDays').value, 10);
+    if (isNaN(base) || isNaN(days)) { showToast('请输入日期和天数'); return; }
+    var d = new Date(base);
+    d.setDate(d.getDate() + days);
+    dcAddResult.hidden = false;
+    dcAddResult.innerHTML = fmt(base) + (days >= 0 ? ' 加上 ' : ' 减去 ') + Math.abs(days) + ' 天 = <b>' + fmt(d) + '</b>（星期' + WEEK[d.getDay()] + '）';
+  });
+
+  var today = fmt(new Date());
+  document.getElementById('dcDate1').value = today;
+  document.getElementById('dcBase').value = today;
+})();
+</script>
+</body>
+</html>
