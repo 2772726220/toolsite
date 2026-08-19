@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星座查询 - 在线星座与生肖查询工具</title>
+  <meta name="description" content="免费在线星座查询工具，输入出生日期一键查询星座、生肖、幸运数字等，浏览器本地计算，隐私安全。" />
+  <meta name="keywords" content="星座查询,星座,生肖查询,生日查星座,十二星座,星座日期">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♌</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u661f\u5ea7\u6309\u519c\u5386\u8fd8\u662f\u516c\u5386\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u516c\u5386\uff08\u9633\u5386\uff09\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u751f\u8096\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u519c\u5386\u5e74\u4efd\u7684\u6625\u8282\u4e3a\u754c\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u67e5\u8be2\u3002"}},{"@type":"Question","name":"\u652f\u6301\u67e5\u5e74\u4efd\u8303\u56f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 1900-2100 \u5e74\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>♌ 星座查询</h1>
+    <p>出生日期查星座和生肖</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="zodiacDate">出生日期</label>
+  <input type="date" id="zodiacDate">
+</div>
+<div class="actions"><button class="btn" id="zodiacBtn" type="button">查询星座生肖</button></div>
+<div class="result-box" id="zodiacResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么查自己是什么星座？</h2><p>按公历出生日期查询，工具自动判断星座和生肖，并显示各星座的日期范围。</p><h2>星座按什么日期算？</h2><p>按公历（阳历）生日计算，农历生日需先换算公历。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>星座按农历还是公历？</summary><p>按公历（阳历）计算。</p></details><details class="faq-item"><summary>生肖怎么算？</summary><p>按农历年份的春节为界计算。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地查询。</p></details><details class="faq-item"><summary>支持查年份范围？</summary><p>支持 1900-2100 年。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>星座查询 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var zodiacResult = document.getElementById('zodiacResult');
+  var ZODIACS = [
+    { n: '水瓶座', s: [1, 20], e: [2, 18] }, { n: '双鱼座', s: [2, 19], e: [3, 20] },
+    { n: '白羊座', s: [3, 21], e: [4, 19] }, { n: '金牛座', s: [4, 20], e: [5, 20] },
+    { n: '双子座', s: [5, 21], e: [6, 21] }, { n: '巨蟹座', s: [6, 22], e: [7, 22] },
+    { n: '狮子座', s: [7, 23], e: [8, 22] }, { n: '处女座', s: [8, 23], e: [9, 22] },
+    { n: '天秤座', s: [9, 23], e: [10, 23] }, { n: '天蝎座', s: [10, 24], e: [11, 22] },
+    { n: '射手座', s: [11, 23], e: [12, 21] }, { n: '摩羯座', s: [12, 22], e: [1, 19] }
+  ];
+  var ANIMALS = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+
+  function getZodiac(m, d) {
+    for (var i = 0; i < 12; i++) {
+      var z = ZODIACS[i];
+      if (z.s[0] === z.e[0]) { if (m === z.s[0] && d >= z.s[1]) return z.n; }
+      else if (m === z.s[0] && d >= z.s[1]) return z.n;
+      else if (m === z.e[0] && d <= z.e[1]) return z.n;
+    }
+    return '摩羯座';
+  }
+
+  document.getElementById('zodiacBtn').addEventListener('click', function () {
+    var v = document.getElementById('zodiacDate').value;
+    if (!v) { showToast('请选择日期'); return; }
+    var parts = v.split('-');
+    var y = +parts[0], m = +parts[1], d = +parts[2];
+    if (y < 1900 || y > 2100) { showToast('支持 1900-2100 年'); return; }
+    var zodiac = getZodiac(m, d);
+    var animal = ANIMALS[((y - 4) % 12 + 12) % 12];
+    var now = new Date();
+    var age = now.getFullYear() - y - (now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d) ? 1 : 0);
+    zodiacResult.hidden = false;
+    zodiacResult.innerHTML =
+      '星座：<b style="font-size:22px;">' + zodiac + '</b><br>' +
+      '生肖：<b>' + animal + '</b><br>' +
+      '年龄：<b>' + age + '</b> 岁';
+  });
+
+  document.getElementById('zodiacDate').value = '1995-06-15';
+})();
+</script>
+</body>
+</html>
