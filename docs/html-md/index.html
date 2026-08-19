@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML转Markdown - 在线HTML转MD工具</title>
+  <meta name="description" content="免费在线 HTML 转 Markdown 工具，把网页源码或富文本 HTML 转成 Markdown 文本，保留标题、列表、链接、图片、表格结构，写博客必备。" />
+  <meta name="keywords" content="html转markdown,html转md,网页转markdown,在线转换,富文本转md">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8f6c\u6362\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8986\u76d6\u5e38\u89c1 HTML \u6807\u7b7e\uff0c\u590d\u6742\u5d4c\u5957\u4f1a\u5c3d\u91cf\u4fdd\u7559\u5c42\u7ea7\u7ed3\u6784\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8868\u683c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0cHTML \u8868\u683c\u4f1a\u8f6c\u4e3a Markdown \u8868\u683c\u8bed\u6cd5\u3002"}},{"@type":"Question","name":"\u80fd\u590d\u5236\u7ed3\u679c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e00\u952e\u590d\u5236\u8f6c\u6362\u540e\u7684 Markdown\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔄 HTML转Markdown</h1>
+    <p>网页 HTML 转 Markdown 文本</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="field">
+  <label for="hmInput">HTML 源码</label>
+  <textarea id="hmInput" placeholder='粘贴 HTML，如 <h1>标题</h1><p>正文 <a href="https://x.com">链接</a></p>'></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="hmBtn" type="button">转 Markdown</button>
+  <button class="btn btn-secondary" id="hmCopyBtn" type="button">复制结果</button>
+</div>
+<div class="result-box" id="hmResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要把 HTML 转 Markdown？</h2><p>写博客、迁移文章、整理网页内容时，把 HTML 源码转成简洁的 Markdown 更易编辑和复用。</p><h2>能保留哪些格式？</h2><p>标题、加粗、斜体、链接、图片、列表、引用、代码块、表格等常用结构都会保留。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>转换准确吗？</summary><p>覆盖常见 HTML 标签，复杂嵌套会尽量保留层级结构。</p></details><details class="faq-item"><summary>支持表格吗？</summary><p>支持，HTML 表格会转为 Markdown 表格语法。</p></details><details class="faq-item"><summary>能复制结果吗？</summary><p>可以，一键复制转换后的 Markdown。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>HTML转Markdown · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var hmResult = document.getElementById('hmResult');
+  var lastMd = '';
+
+  function convertHtml(html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    function walk(node, list) {
+      node.childNodes.forEach(function (child) {
+        if (child.nodeType === 3) { list.push({ t: 'text', v: child.nodeValue }); return; }
+        if (child.nodeType !== 1) return;
+        var tag = child.tagName.toLowerCase();
+        var content = [];
+        walk(child, content);
+        var inner = content.map(function (c) { return c.v; }).join('').trim();
+        if (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4' || tag === 'h5' || tag === 'h6') {
+          list.push({ t: 'line', v: '#'.repeat(+tag[1]) + ' ' + inner });
+        } else if (tag === 'strong' || tag === 'b') {
+          if (inner) list.push({ t: 'text', v: '**' + inner + '**' });
+        } else if (tag === 'em' || tag === 'i') {
+          if (inner) list.push({ t: 'text', v: '*' + inner + '*' });
+        } else if (tag === 'code') {
+          list.push({ t: 'text', v: '`' + inner + '`' });
+        } else if (tag === 'a') {
+          var href = child.getAttribute('href');
+          list.push({ t: 'text', v: '[' + inner + '](' + (href || '') + ')' });
+        } else if (tag === 'img') {
+          var alt = child.getAttribute('alt') || '';
+          var src = child.getAttribute('src') || '';
+          list.push({ t: 'line', v: '![' + alt + '](' + src + ')' });
+        } else if (tag === 'ul' || tag === 'ol') {
+          content.forEach(function (c, i) {
+            if (c.t === 'text' && c.v.trim()) {
+              list.push({ t: 'line', v: (tag === 'ol' ? (i + 1) + '. ' : '- ') + c.v });
+            }
+          });
+        } else if (tag === 'li') {
+          list.push({ t: 'text', v: inner });
+        } else if (tag === 'blockquote') {
+          content.forEach(function (c) {
+            if (c.v.trim()) list.push({ t: 'line', v: '> ' + c.v });
+          });
+        } else if (tag === 'pre') {
+          list.push({ t: 'line', v: '```\n' + inner + '\n```' });
+        } else if (tag === 'p') {
+          list.push({ t: 'line', v: inner });
+        } else if (tag === 'br') {
+          list.push({ t: 'line', v: '' });
+        } else if (tag === 'hr') {
+          list.push({ t: 'line', v: '---' });
+        } else if (tag === 'table') {
+          var rows = [];
+          child.querySelectorAll('tr').forEach(function (tr) {
+            var cells = [];
+            tr.querySelectorAll('th,td').forEach(function (td) { cells.push(td.textContent.trim().replace(/\n/g, ' ')); });
+            rows.push(cells);
+          });
+          if (rows.length) {
+            list.push({ t: 'line', v: '| ' + rows[0].join(' | ') + ' |' });
+            list.push({ t: 'line', v: '| ' + rows[0].map(function () { return '---'; }).join(' | ') + ' |' });
+            rows.slice(1).forEach(function (r) {
+              list.push({ t: 'line', v: '| ' + r.join(' | ') + ' |' });
+            });
+          }
+        } else {
+          content.forEach(function (c) { list.push(c); });
+        }
+      });
+    }
+    var out = [];
+    walk(doc.body, out);
+    return out.map(function (c) { return c.v; }).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  document.getElementById('hmBtn').addEventListener('click', function () {
+    var html = document.getElementById('hmInput').value;
+    if (!html.trim()) { showToast('请输入 HTML'); return; }
+    try {
+      lastMd = convertHtml(html);
+      hmResult.hidden = false;
+      hmResult.textContent = lastMd;
+    } catch (e) {
+      showToast('转换失败：' + e.message);
+    }
+  });
+
+  document.getElementById('hmCopyBtn').addEventListener('click', function () {
+    if (!lastMd) { showToast('请先转换'); return; }
+    navigator.clipboard.writeText(lastMd).then(function () { showToast('Markdown 已复制'); });
+  });
+})();
+</script>
+</body>
+</html>
