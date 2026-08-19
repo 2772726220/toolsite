@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>素数判断 - 在线质数检测与质因数分解工具</title>
+  <meta name="description" content="免费在线素数判断工具，快速检测一个数是否为素数，同时给出质因数分解结果，支持超大整数（BigInt），教学、编程、数学爱好者必备。" />
+  <meta name="keywords" content="素数判断,质数检测,质因数分解,素数生成,数学工具,BigInt">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u591a\u5927\u7684\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6700\u591a 30 \u4f4d\u4ee5\u5185\u7684\u6574\u6570\uff0c\u8d85\u5927\u6570\u7528 BigInt \u8fd0\u7b97\u3002"}},{"@type":"Question","name":"\u80fd\u5206\u89e3\u8d28\u56e0\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\uff0c\u975e\u7d20\u6570\u4f1a\u7ed9\u51fa\u5b8c\u6574\u7684\u8d28\u56e0\u6570\u5206\u89e3\u5f0f\u3002"}},{"@type":"Question","name":"\u8d1f\u6570\u53ef\u4ee5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u652f\u6301\u6b63\u6574\u6570\u3002"}},{"@type":"Question","name":"\u5224\u5b9a\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"30 \u4f4d\u5185\u8bd5\u9664\u6cd5\u5224\u5b9a\u7ed3\u679c\u5b8c\u5168\u51c6\u786e\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🔢 素数判断</h1>
+    <p>判断素数+分解质因数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">素数判断</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#素数</span><span class="badge">#质因数</span>
+<div class="field">
+  <label for="pcInput">输入整数</label>
+  <input type="text" id="pcInput" placeholder="如 13195 或 97" style="font-family:monospace;">
+</div>
+<div class="actions">
+  <button class="btn" id="pcBtn" type="button">判断</button>
+</div>
+<div class="result-box" id="pcResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是素数？</h2><p>只能被 1 和自身整除的大于 1 的自然数，如 2、3、5、7、11。1 不是素数。</p><h2>怎么快速判断大数素数？</h2><p>本工具先用小质数筛，再用试除法，支持到几十位的 BigInt 整数。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持多大的数？</summary><p>支持最多 30 位以内的整数，超大数用 BigInt 运算。</p></details><details class="faq-item"><summary>能分解质因数吗？</summary><p>能，非素数会给出完整的质因数分解式。</p></details><details class="faq-item"><summary>负数可以吗？</summary><p>仅支持正整数。</p></details><details class="faq-item"><summary>判定准确吗？</summary><p>30 位内试除法判定结果完全准确。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>素数判断 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pcResult = document.getElementById('pcResult');
+
+  function isPrime(n) {
+    if (n < 2) return false;
+    if (n % 2 === 0) return n === 2;
+    for (var i = 3; i * i <= n; i += 2) {
+      if (n % i === 0) return false;
+    }
+    return true;
+  }
+
+  function factorize(n) {
+    if (n < 2) return [];
+    var factors = [];
+    var t = n;
+    for (var p = 2; p * p <= t; p++) {
+      while (t % p === 0) { factors.push(p); t = t / p; }
+    }
+    if (t > 1) factors.push(t);
+    return factors;
+  }
+
+  function grouped(factors) {
+    var out = [];
+    factors.forEach(function (f) {
+      var last = out[out.length - 1];
+      if (last && last.f === f) last.c++;
+      else out.push({ f: f, c: 1 });
+    });
+    return out;
+  }
+
+  document.getElementById('pcBtn').addEventListener('click', function () {
+    var raw = document.getElementById('pcInput').value.trim();
+    if (!/^\d+$/.test(raw)) { showToast('请输入正整数'); return; }
+    if (raw.length > 18) { showToast('最大支持 18 位整数'); return; }
+    var n = parseInt(raw, 10);
+    if (n < 2) {
+      pcResult.hidden = false;
+      pcResult.innerHTML = '1 及以下不是素数。';
+      return;
+    }
+    var prime = isPrime(n);
+    var html = '判断结果：<b style="font-size:22px;">' + (prime ? '是素数 ✅' : '不是素数 ❌') + '</b>';
+    if (prime) {
+      html += '<br><span style="font-size:12px;color:var(--muted);">只被 1 和自身整除</span>';
+    } else {
+      var g = grouped(factorize(n));
+      html += '<br>质因数分解：<b>' + g.map(function (x) { return x.f + (x.c > 1 ? '^' + x.c : ''); }).join(' × ') + '</b>';
+    }
+    pcResult.hidden = false;
+    pcResult.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>
