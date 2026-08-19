@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>睡眠周期计算 - 在线最佳睡眠时间计算器</title>
+  <meta name="description" content="免费在线睡眠周期计算器，按约 90 分钟一个睡眠周期，帮你算最佳入睡时间或最佳起床时间，在完整周期结束时醒来更清醒，告别起床困难。" />
+  <meta name="keywords" content="睡眠周期计算,最佳睡眠时间,入睡时间计算,起床时间,睡眠质量,90分钟周期">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😴</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u300e\u8ba1\u5212\u5165\u7761\u65f6\u95f4\u300f\u7b97\u51fa\u7406\u60f3\u8d77\u5e8a\u65f6\u523b\uff0c\u6216\u9009\u300e\u8ba1\u5212\u8d77\u5e8a\u65f6\u95f4\u300f\u53cd\u63a8\u5165\u7761\u65f6\u523b\u3002"}},{"@type":"Question","name":"\u5468\u671f\u4e00\u5b9a 90 \u5206\u949f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u56e0\u4eba\u800c\u5f02\u7ea6 80-100 \u5206\u949f\uff0c\u7ed3\u679c\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u80fd\u540c\u65f6\u663e\u793a\u591a\u4e2a\u65b9\u6848\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7ed9\u51fa\u63d0\u524d 3-6 \u4e2a\u5468\u671f\u7684\u6700\u4f18\u65f6\u523b\u5217\u8868\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>😴 睡眠周期计算</h1>
+    <p>按 90 分钟周期算最佳入睡/起床时间</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">睡眠周期计算</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#睡眠</span><span class="badge">#周期</span>
+<div class="field">
+  <label for="slMode">计算方式</label>
+  <select id="slMode">
+    <option value="wake">计划起床时间 → 最佳入睡</option>
+    <option value="sleep">计划入睡时间 → 最佳起床</option>
+  </select>
+</div>
+<div class="field">
+  <label for="slTime">时间</label>
+  <input type="time" id="slTime" value="07:00">
+</div>
+<div class="actions">
+  <button class="btn" id="slBtn" type="button">计算</button>
+</div>
+<div class="result-box" id="slResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是睡眠周期？</h2><p>人睡眠按约 90 分钟一个周期循环，浅睡-深睡-快速眼动。在周期结束时醒来最清醒，中途被闹醒则昏沉。</p><h2>睡多久合适？</h2><p>成人一般 5-6 个周期，即 7.5-9 小时，睡整周期优于睡满钟点。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>怎么用？</summary><p>选『计划入睡时间』算出理想起床时刻，或选『计划起床时间』反推入睡时刻。</p></details><details class="faq-item"><summary>周期一定 90 分钟吗？</summary><p>因人而异约 80-100 分钟，结果仅供参考。</p></details><details class="faq-item"><summary>能同时显示多个方案吗？</summary><p>会给出提前 3-6 个周期的最优时刻列表。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>睡眠周期计算 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var slResult = document.getElementById('slResult');
+  var CYCLE = 90;
+
+  document.getElementById('slBtn').addEventListener('click', function () {
+    var mode = document.getElementById('slMode').value;
+    var t = document.getElementById('slTime').value;
+    if (!t) { showToast('请选择时间'); return; }
+    var parts = t.split(':');
+    var minutes = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    var rows = [];
+    if (mode === 'wake') {
+      // 起床时间固定，往前数整周期得入睡时间
+      for (var c = 3; c <= 6; c++) {
+        var back = minutes - c * CYCLE + 15;
+        while (back < 0) back += 1440;
+        rows.push({ c: c, t: back, desc: '睡 ' + c + ' 个周期（约 ' + (c * 1.5) + ' 小时）' });
+      }
+    } else {
+      for (var d = 3; d <= 6; d++) {
+        var fwd = (minutes + d * CYCLE - 15 + 1440) % 1440;
+        rows.push({ c: d, t: fwd, desc: '睡 ' + d + ' 个周期（约 ' + (d * 1.5) + ' 小时）' });
+      }
+    }
+    function fmt(m) {
+      var h = Math.floor(m / 60) % 24;
+      var mm = m % 60;
+      return String(h).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+    }
+    slResult.hidden = false;
+    var html = mode === 'wake'
+      ? '若 ' + fmt(minutes) + ' 起床，建议入睡时间：'
+      : '若 ' + fmt(minutes) + ' 入睡，建议起床时间：';
+    rows.forEach(function (r) {
+      html += '<br>🌙 ' + fmt(r.t) + ' <span style="font-size:12px;color:var(--muted);">' + r.desc + '</span>';
+    });
+    html += '<br><span style="font-size:12px;color:var(--muted);">入睡约需 15 分钟，以上为躺下时间。</span>';
+    slResult.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>
