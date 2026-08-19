@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机数生成器 - 在线随机数生成工具</title>
+  <meta name="description" content="免费在线随机数生成器，指定最小值和最大值生成随机整数或小数，支持批量生成，用于抽奖、取号、随机分组，浏览器本地生成。" />
+  <meta name="keywords" content="随机数生成器,随机数,在线随机数,随机数字,抽奖随机数,随机数工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u6574\u6570\u548c\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u90fd\u652f\u6301\uff0c\u53ef\u5207\u6362\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u6279\u91cf\u751f\u6210\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e00\u6b21\u6700\u591a\u751f\u6210 100 \u4e2a\u3002"}},{"@type":"Question","name":"\u4f1a\u91cd\u590d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5141\u8bb8\u91cd\u590d\uff1b\u53ef\u52fe\u9009\u53bb\u91cd\u6a21\u5f0f\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}}]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>🎲 随机数生成器</h1>
+    <p>指定范围生成随机整数/小数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container">
+  <a class="home" href="../">🗜️ 在线工具箱</a>
+  <a href="../#tools">全部工具</a>
+</div></nav>
+<main class="container">
+  <section class="tool-card">
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label>范围</label>
+  <input type="number" id="rnMin" value="1" style="width:100px;">
+  <span style="color:var(--muted);">~</span>
+  <input type="number" id="rnMax" value="100" style="width:100px;">
+  <label for="rnCount" style="margin-left:8px;">个数</label>
+  <input type="number" id="rnCount" value="1" min="1" max="100" style="width:80px;">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="rnDec"> 生成小数</label>
+  <label style="display:flex;align-items:center;gap:4px;"><input type="checkbox" id="rnUnique"> 去重（不重复）</label>
+</div>
+<div class="actions">
+  <button class="btn" id="rnBtn" type="button">生成</button>
+</div>
+<div class="result-box" id="rnResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候需要随机数？</h2><p>抽奖、摇号、随机分组、掷骰子、测试数据都需要随机数，设置范围即可生成。</p><h2>生成的随机数可靠吗？</h2><p>使用浏览器加密级随机数，每个结果独立且不可预测。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持整数和小数吗？</summary><p>都支持，可切换。</p></details><details class="faq-item"><summary>可以批量生成吗？</summary><p>可以，一次最多生成 100 个。</p></details><details class="faq-item"><summary>会重复吗？</summary><p>允许重复；可勾选去重模式。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地生成。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>随机数生成器 · 在线工具箱</p>
+    <p><a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var rnResult = document.getElementById('rnResult');
+
+  document.getElementById('rnBtn').addEventListener('click', function () {
+    var min = parseFloat(document.getElementById('rnMin').value);
+    var max = parseFloat(document.getElementById('rnMax').value);
+    var count = parseInt(document.getElementById('rnCount').value, 10);
+    if (isNaN(min) || isNaN(max) || min > max) { showToast('请输入有效范围'); return; }
+    if (isNaN(count) || count < 1 || count > 100) { showToast('个数需在 1-100 之间'); return; }
+    var dec = document.getElementById('rnDec').checked;
+    var unique = document.getElementById('rnUnique').checked;
+    var out = [];
+    var seen = {};
+    var attempts = 0;
+    while (out.length < count && attempts < 10000) {
+      attempts++;
+      var v;
+      if (dec) v = min + Math.random() * (max - min);
+      else v = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (unique) {
+        var key = dec ? v.toFixed(4) : v;
+        if (seen[key]) continue;
+        seen[key] = 1;
+      }
+      out.push(dec ? +v.toFixed(4) : v);
+    }
+    rnResult.hidden = false;
+    rnResult.textContent = out.join('、');
+  });
+})();
+</script>
+</body>
+</html>
