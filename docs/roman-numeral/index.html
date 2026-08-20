@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"2024 \u7684\u7f57\u9a6c\u6570\u5b57\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"MMXXIV\u3002"}},{"@type":"Question","name":"\u80fd\u53cd\u5411\u8f6c\u56de\u963f\u62c9\u4f2f\u6570\u5b57\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\uff0c\u53cc\u5411\u8f6c\u6362\u90fd\u652f\u6301\u3002"}},{"@type":"Question","name":"\u6709\u975e\u6cd5\u7684\u7f57\u9a6c\u6570\u5b57\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u63d0\u793a\u8f93\u5165\u4e0d\u5408\u6cd5\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🏛️ 罗马数字转换</h1>
@@ -51,6 +55,7 @@
     <p>罗马数字转换 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -115,6 +120,24 @@ var rnResult = document.getElementById('rnResult');
       showToast(e.message === 'range' ? '仅支持 1-3999' : '输入不合法');
     }
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
