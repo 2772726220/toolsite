@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌡️</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6444\u6c0f\u5ea6\u600e\u4e48\u8f6c\u534e\u6c0f\u5ea6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u534e\u6c0f\u5ea6 = \u6444\u6c0f\u5ea6 \u00d7 9/5 + 32\u3002"}},{"@type":"Question","name":"\u5f00\u5c14\u6587\u548c\u6444\u6c0f\u5ea6\u4ec0\u4e48\u5173\u7cfb\uff1f","acceptedAnswer":{"@type":"Answer","text":"K = \u2103 + 273.15\u3002"}},{"@type":"Question","name":"0 \u6444\u6c0f\u5ea6\u662f\u591a\u5c11\u534e\u6c0f\u5ea6\uff1f","acceptedAnswer":{"@type":"Answer","text":"32 \u534e\u6c0f\u5ea6\u3002"}},{"@type":"Question","name":"\u8f93\u5165\u8d1f\u6e29\u53ef\u4ee5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4efb\u610f\u6570\u503c\u90fd\u652f\u6301\uff0c\u4ec5\u5f00\u5c14\u6587\u4e0d\u5141\u8bb8\u4e3a\u8d1f\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🌡️ 温度换算</h1>
@@ -52,6 +56,7 @@
     <p>温度换算 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -99,6 +104,24 @@ var tcResult = document.getElementById('tcResult');
     tcResult.hidden = false;
     tcResult.innerHTML = out.join('<br>');
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
