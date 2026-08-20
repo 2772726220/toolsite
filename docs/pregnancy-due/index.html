@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预产期计算器 - 在线孕周/预产期推算工具</title>
+  <meta name="description" content="免费在线预产期计算器，输入末次月经第一天，自动计算预产期（孕 40 周），并显示当前孕周与剩余天数，孕期记录参考必备。" />
+  <meta name="keywords" content="预产期计算,孕周计算,预产期怎么算,末次月经,孕期周数">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤰</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u9884\u4ea7\u671f\u4e00\u5b9a\u4f1a\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4e00\u5b9a\uff0c\u9884\u4ea7\u671f\u662f\u4f30\u7b97\u503c\uff0c\u8db3\u6708\u513f\u5728 37~42 \u5468\u51fa\u751f\u90fd\u5c5e\u6b63\u5e38\u8303\u56f4\u3002"}},{"@type":"Question","name":"\u4e0d\u77e5\u9053\u672b\u6b21\u6708\u7ecf\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u4ee5 B \u8d85\u4f30\u7b97\u7684\u5b55\u5468\u4e3a\u51c6\uff0c\u672c\u5de5\u5177\u4ec5\u63d0\u4f9b\u57fa\u4e8e\u672b\u6b21\u6708\u7ecf\u7684\u53c2\u8003\u63a8\u7b97\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u80fd\u66ff\u4ee3\u533b\u751f\u8bca\u65ad\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\uff0c\u5b55\u671f\u8bf7\u52a1\u5fc5\u9075\u533b\u5631\uff0c\u5de5\u5177\u7ed3\u679c\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u4f1a\u4fdd\u5b58\u6211\u7684\u6570\u636e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u8ba1\u7b97\u90fd\u5728\u672c\u5730\u6d4f\u89c8\u5668\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🤰 预产期/孕周计算</h1>
+    <p>按末次月经算预产期与当前孕周</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">预产期/孕周计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#预产期</span><span class="badge">#孕周</span><span class="badge">#孕期</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>末次月经第一天</label><input type="date" id="pdLmp"></div>
+  <div><label>月经周期（天）</label><input type="number" id="pdCycle" value="28" placeholder="28"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <button class="btn btn-primary" id="pdCalc">计算预产期与孕周</button>
+  <button class="btn btn-secondary" id="pdClear">清空</button>
+</div>
+<div id="pdResult" style="display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>预产期怎么算？</h2><p>医学上以末次月经第一天起算，加 280 天（40 周）为预产期，即月份 -3、日期 +7。实际仅约 5% 的宝宝在预产期当天出生，前后两周都属正常。</p><h2>孕周怎么算？</h2><p>孕周 = 从末次月经第一天到当前日期的天数 ÷ 7，从 0 周开始计算，通常满 37 周即为足月。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>预产期一定会准吗？</summary><p>不一定，预产期是估算值，足月儿在 37~42 周出生都属正常范围。</p></details><details class="faq-item"><summary>不知道末次月经怎么办？</summary><p>建议以 B 超估算的孕周为准，本工具仅提供基于末次月经的参考推算。</p></details><details class="faq-item"><summary>结果能替代医生诊断吗？</summary><p>不能，孕期请务必遵医嘱，工具结果仅供参考。</p></details><details class="faq-item"><summary>会保存我的数据吗？</summary><p>不会，所有计算都在本地浏览器完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>预产期/孕周计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='pregnancy-due';}); _r.unshift('pregnancy-due'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var pdCalc = document.getElementById('pdCalc');
+var pdClear = document.getElementById('pdClear');
+var pdResult = document.getElementById('pdResult');
+
+function addDays(d, days) {
+  var r = new Date(d);
+  r.setDate(r.getDate() + days);
+  return r;
+}
+
+function fmtDate(d) {
+  var y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate();
+  return y + '-' + (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
+}
+
+function row(label, val, extra) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:600;">' + val + '</span></div>';
+}
+
+pdCalc.addEventListener('click', function () {
+  var lmpStr = document.getElementById('pdLmp').value;
+  var cycle = parseInt(document.getElementById('pdCycle').value, 10);
+  if (!lmpStr) { pdResult.innerHTML = '<div class="result-box">请选择末次月经日期</div>'; return; }
+  if (isNaN(cycle) || cycle < 21 || cycle > 45) { pdResult.innerHTML = '<div class="result-box">月经周期需在 21~45 天之间</div>'; return; }
+  var lmp = new Date(lmpStr + 'T00:00:00');
+  if (isNaN(lmp)) { pdResult.innerHTML = '<div class="result-box">日期无效</div>'; return; }
+  var due = addDays(lmp, 280 + (cycle - 28));
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var passedDays = Math.round((today - lmp) / 86400000);
+  var weeks = Math.max(0, Math.floor(passedDays / 7));
+  var days = Math.max(0, passedDays % 7);
+  var daysLeft = Math.max(0, Math.round((due - today) / 86400000));
+  var trimester = passedDays < 98 ? '孕早期（1-13 周）' : passedDays < 196 ? '孕中期（14-27 周）' : '孕晚期（28 周后）';
+  pdResult.innerHTML =
+    row('末次月经 (LMP)', fmtDate(lmp)) +
+    row('预产期（40 周整）', fmtDate(due)) +
+    row('当前孕周', weeks + ' 周 ' + days + ' 天') +
+    row('孕期阶段', trimester) +
+    row('距预产期剩余', daysLeft + ' 天') +
+    row('预计胎儿大小参考', '约 ' + (weeks >= 4 ? (weeks * 25) : weeks * 8) + ' g（估算值）');
+});
+
+pdClear.addEventListener('click', function () {
+  document.getElementById('pdLmp').value = '';
+  pdResult.innerHTML = '';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
