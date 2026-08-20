@@ -119,6 +119,7 @@ var ttsStatus = document.getElementById('ttsStatus');
 
   document.getElementById('ttsPauseBtn').addEventListener('click', function () {
     var s = synth();
+    if (!s) return;
     if (s.speaking) {
       s.pause();
       status('已暂停');
@@ -127,6 +128,7 @@ var ttsStatus = document.getElementById('ttsStatus');
 
   document.getElementById('ttsStopBtn').addEventListener('click', function () {
     var s = synth();
+    if (!s) return;
     s.cancel();
     status('已停止');
   });
