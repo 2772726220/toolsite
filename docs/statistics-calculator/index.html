@@ -8,6 +8,7 @@
   <meta name="keywords" content="统计计算器,均值,中位数,众数,方差,标准差,数据分析">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8f93\u5165\u683c\u5f0f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7a7a\u683c\u3001\u9017\u53f7\u6216\u6362\u884c\u5206\u9694\u5747\u53ef\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u548c\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002"}},{"@type":"Question","name":"\u65b9\u5dee\u7ed9\u603b\u4f53\u8fd8\u662f\u6837\u672c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e24\u8005\u90fd\u7ed9\u51fa\uff0c\u6837\u672c\u7528 n-1 \u4fee\u6b63\u3002"}},{"@type":"Question","name":"\u6700\u591a\u80fd\u8f93\u5165\u591a\u5c11\u4e2a\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u8d85\u8fc7 10000 \u4e2a\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">统计计算器</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">统计计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#统计</span><span class="badge">#均值</span><span class="badge">#方差</span>
@@ -42,10 +44,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>输入格式是什么？</summary><p>空格、逗号或换行分隔均可。</p></details><details class="faq-item"><summary>支持负数和小数吗？</summary><p>支持。</p></details><details class="faq-item"><summary>方差给总体还是样本？</summary><p>两者都给出，样本用 n-1 修正。</p></details><details class="faq-item"><summary>最多能输入多少个数？</summary><p>不超过 10000 个。</p></details></div>
   </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>统计计算器 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+    <p>统计计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -70,6 +75,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='statistics-calculator';}); _r.unshift('statistics-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var stResult = document.getElementById('stResult');
 
   document.getElementById('stBtn').addEventListener('click', function () {
