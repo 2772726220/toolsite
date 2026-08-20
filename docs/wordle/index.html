@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordle猜词游戏 - 在线英文单词猜词游戏</title>
+  <meta name="description" content="免费在线 Wordle 猜词游戏，6 次机会猜中一个 5 字母单词，绿黄灰三色反馈每个字母的正确程度，内置常见单词库，无需联网即玩。" />
+  <meta name="keywords" content="Wordle,猜词游戏,单词游戏,5字母单词,wordle中文">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8bcd\u5e93\u662f\u4ec0\u4e48\u6c34\u5e73\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e 300+ \u5e38\u89c1 5 \u5b57\u6bcd\u82f1\u8bed\u5355\u8bcd\uff0c\u96be\u5ea6\u9002\u4e2d\u3002"}},{"@type":"Question","name":"\u652f\u6301\u81ea\u5b9a\u4e49\u7b54\u6848\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u4ee5\u8f93\u5165\u81ea\u5df1\u7684\u8bcd\u8ba9\u5bf9\u65b9\u731c\uff0c\u68c0\u9a8c\u4e24\u4eba\u7684\u8bcd\u6c47\u91cf\u3002"}},{"@type":"Question","name":"\u7eff\u8272/\u9ec4\u8272/\u7070\u8272\u4ee3\u8868\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7eff=\u5b57\u6bcd\u4e0e\u4f4d\u7f6e\u90fd\u5bf9\uff0c\u9ec4=\u5b57\u6bcd\u5bf9\u4f4d\u7f6e\u9519\uff0c\u7070=\u5355\u8bcd\u4e2d\u4e0d\u542b\u8be5\u5b57\u6bcd\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🟩 Wordle猜词</h1>
+    <p>每天一局的英文猜词游戏</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">Wordle猜词</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Wordle</span><span class="badge">#猜词</span><span class="badge">#单词</span>
+<div id="wlBoard" style="display:grid; gap:6px; margin-bottom:12px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>猜的单词</label><input type="text" id="wlGuess" maxlength="5" placeholder="5 个字母" autocomplete="off"></div>
+  <div><label>模式</label>
+    <select id="wlMode">
+      <option value="random" selected>随机出词</option>
+      <option value="custom">自定义答案</option>
+    </select>
+  </div>
+  <div><label>自定义答案</label><input type="text" id="wlCustom" maxlength="5" placeholder="填 5 字母词"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <button class="btn btn-primary" id="wlGo">提交</button>
+  <button class="btn btn-secondary" id="wlNew">新一局</button>
+</div>
+<div id="wlStatus"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Wordle 怎么玩？</h2><p>每次猜一个 5 字母单词，提交后字母变绿（位置正确）、黄（字母在但位置错）、灰（不在），6 次内猜中即胜。</p><h2>每天只能玩一局吗？</h2><p>本工具不限制次数，随机出词，适合随时练习英语拼写与推理。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>词库是什么水平？</summary><p>内置 300+ 常见 5 字母英语单词，难度适中。</p></details><details class="faq-item"><summary>支持自定义答案吗？</summary><p>支持，可以输入自己的词让对方猜，检验两人的词汇量。</p></details><details class="faq-item"><summary>绿色/黄色/灰色代表什么？</summary><p>绿=字母与位置都对，黄=字母对位置错，灰=单词中不含该字母。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Wordle猜词 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='wordle';}); _r.unshift('wordle'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var WL = ['about', 'above', 'acute', 'admit', 'adobe', 'adopt', 'adult', 'after', 'again', 'agent',
+  'agree', 'ahead', 'album', 'alert', 'alive', 'allow', 'alone', 'along', 'alter', 'among',
+  'anger', 'angle', 'angry', 'apple', 'apply', 'arena', 'argue', 'arise', 'array', 'aside',
+  'asset', 'audio', 'audit', 'avoid', 'award', 'aware', 'badge', 'baker', 'basic', 'beach',
+  'beard', 'begin', 'being', 'bench', 'bible', 'billy', 'birth', 'black', 'blade', 'blame',
+  'blank', 'blast', 'blend', 'bless', 'block', 'blood', 'bloom', 'board', 'boost', 'boots',
+  'brave', 'bread', 'break', 'brick', 'brief', 'bring', 'broad', 'brush', 'build', 'bunch',
+  'burst', 'cable', 'candy', 'cargo', 'carve', 'cause', 'chain', 'chair', 'chalk', 'charm',
+  'chart', 'chase', 'cheap', 'cheat', 'check', 'chess', 'chest', 'chief', 'child', 'chill',
+  'china', 'chose', 'civic', 'claim', 'class', 'clean', 'clear', 'click', 'climb', 'clock',
+  'close', 'cloud', 'coach', 'coast', 'color', 'couch', 'cough', 'could', 'count', 'court',
+  'cover', 'crack', 'craft', 'cream', 'crime', 'cross', 'crowd', 'crown', 'crush', 'curve',
+  'cycle', 'daily', 'dance', 'dared', 'dealt', 'death', 'debut', 'delay', 'delta', 'depth',
+  'decks', 'deter', 'devil', 'diary', 'dimes', 'diner', 'dirty', 'dodge', 'doing', 'doubt',
+  'dozen', 'draft', 'drama', 'drawn', 'dream', 'dress', 'drift', 'drill', 'drink', 'drive',
+  'drove', 'dying', 'eager', 'eagle', 'early', 'earth', 'easel', 'eight', 'elbow', 'elder',
+  'elect', 'elite', 'empty', 'enemy', 'enjoy', 'enter', 'entry', 'equal', 'error', 'event',
+  'every', 'exact', 'exile', 'exist', 'extra', 'fable', 'faced', 'faint', 'fairy', 'faith',
+  'false', 'fancy', 'fatal', 'fault', 'favor', 'feast', 'fence', 'ferry', 'fetch', 'fever',
+  'fiber', 'field', 'fifth', 'fifty', 'fight', 'final', 'first', 'flame', 'flash', 'fleet',
+  'flood', 'floor', 'flour', 'fluid', 'flush', 'focus', 'force', 'forge', 'forth', 'forty',
+  'forum', 'found', 'frame', 'fresh', 'front', 'frost', 'fruit', 'fully', 'funny', 'gauge',
+  'genre', 'ghost', 'giant', 'given', 'glory', 'glove', 'grace', 'grade', 'grain', 'grand',
+  'grant', 'grape', 'grass', 'grave', 'great', 'green', 'grief', 'gross', 'group', 'grove',
+  'grown', 'guard', 'guess', 'guest', 'guide', 'habit', 'happy', 'haste', 'heart', 'heavy',
+  'hello', 'hence', 'horse', 'hotel', 'house', 'human', 'humor', 'hurry', 'ideal', 'image',
+  'imply', 'index', 'infer', 'inner', 'input', 'issue', 'ivory', 'jeans', 'jelly', 'jewel',
+  'joint', 'jolly', 'judge', 'juice', 'kneel', 'knife', 'knock', 'known', 'label', 'labor',
+  'large', 'laser', 'latch', 'later', 'laugh', 'layer', 'learn', 'lease', 'least', 'leave',
+  'legal', 'lemon', 'level', 'lever', 'light', 'limit', 'linen', 'liver', 'lobby', 'local',
+  'lodge', 'logic', 'loose', 'lower', 'lucky', 'lunch', 'lyric', 'major', 'maker', 'march',
+  'marry', 'match', 'maybe', 'mayor', 'meant', 'medal', 'media', 'mercy', 'merge', 'merit',
+  'metal', 'meter', 'midst', 'mimic', 'minor', 'minus', 'model', 'moist', 'money', 'month',
+  'moral', 'motor', 'mount', 'mouse', 'mouth', 'movie', 'music', 'naive', 'naked', 'nanny',
+  'naval', 'needs', 'nerve', 'never', 'newly', 'night', 'ninth', 'noble', 'noise', 'north',
+  'noted', 'novel', 'nurse', 'nylon', 'ocean', 'offer', 'often', 'olive', 'onion', 'onset',
+  'opera', 'orbit', 'order', 'organ', 'other', 'ought', 'ounce', 'outer', 'owner', 'paint',
+  'panel', 'paper', 'party', 'paste', 'patch', 'pause', 'peace', 'pearl', 'peach', 'piano',
+  'piece', 'pilot', 'pitch', 'pivot', 'place', 'plain', 'plane', 'plant', 'plate', 'plaza',
+  'point', 'polar', 'pound', 'power', 'press', 'price', 'pride', 'print', 'prior', 'prize',
+  'probe', 'proof', 'proud', 'prove', 'pulse', 'punch', 'purse', 'queen', 'query', 'quest',
+  'quick', 'quiet', 'quilt', 'quite', 'quote', 'radar', 'radio', 'raise', 'rally', 'ranch',
+  'range', 'rapid', 'ratio', 'reach', 'react', 'ready', 'realm', 'rebel', 'refer', 'relax',
+  'reply', 'reset', 'rhyme', 'ridge', 'rifle', 'right', 'rigid', 'rinse', 'risen', 'risky',
+  'rival', 'river', 'roast', 'robot', 'robin', 'rocky', 'rogue', 'rough', 'round', 'route',
+  'royal', 'rugby', 'ruler', 'rural', 'sadly', 'sauce', 'scale', 'scene', 'scent', 'scope',
+  'score', 'scout', 'scrub', 'sense', 'serve', 'seven', 'shall', 'shame', 'shape', 'share',
+  'shark', 'sharp', 'sheep', 'sheet', 'shelf', 'shell', 'shift', 'shine', 'shirt', 'shock',
+  'shoot', 'shore', 'short', 'shout', 'shrub', 'sight', 'silly', 'since', 'siren', 'sized',
+  'skill', 'skirt', 'skull', 'slash', 'slave', 'sleep', 'slice', 'slide', 'slope', 'smart',
+  'smell', 'smile', 'smoke', 'snack', 'snake', 'solar', 'solid', 'solve', 'sonar', 'sorry',
+  'sound', 'south', 'space', 'spare', 'spark', 'speak', 'spear', 'spell', 'spend', 'spicy',
+  'spine', 'split', 'spoon', 'sport', 'spray', 'squad', 'stack', 'staff', 'stage', 'stair',
+  'stake', 'stamp', 'stand', 'stare', 'start', 'state', 'steam', 'steel', 'steep', 'steer',
+  'stern', 'stick', 'still', 'stock', 'stone', 'stood', 'store', 'storm', 'story', 'stove',
+  'strap', 'straw', 'study', 'stuff', 'style', 'sugar', 'suite', 'sweet', 'swift', 'swing',
+  'sword', 'syrup', 'table', 'taste', 'teach', 'tease', 'teeth', 'tempo', 'thank', 'theft',
+  'theme', 'there', 'thick', 'thief', 'thing', 'think', 'third', 'those', 'three', 'throw',
+  'thumb', 'tiger', 'tight', 'timer', 'title', 'toast', 'today', 'topic', 'torch', 'total',
+  'touch', 'tough', 'tower', 'trace', 'track', 'trade', 'trail', 'train', 'trait', 'trash',
+  'treat', 'trend', 'trial', 'tribe', 'trick', 'tried', 'troop', 'truck', 'truly', 'trunk',
+  'trust', 'truth', 'tulip', 'twice', 'twist', 'ultra', 'uncle', 'under', 'union', 'unite',
+  'unity', 'until', 'upper', 'upset', 'urban', 'usage', 'usual', 'utter', 'vague', 'valid',
+  'value', 'vapor', 'vault', 'venue', 'verse', 'video', 'vigor', 'viral', 'virus', 'vista',
+  'vital', 'vivid', 'vocal', 'voice', 'voter', 'wagon', 'waist', 'waste', 'watch', 'water',
+  'weave', 'wedge', 'weird', 'whale', 'wheat', 'wheel', 'where', 'which', 'while', 'whisk',
+  'whole', 'whose', 'width', 'wired', 'witch', 'woman', 'world', 'worry', 'worse', 'worst',
+  'worth', 'would', 'wound', 'wrist', 'write', 'wrong', 'wrote', 'yacht', 'yield', 'young',
+  'youth', 'zesty', 'zeros', 'zebra'];
+
+var wlBoard = document.getElementById('wlBoard');
+var wlGuess = document.getElementById('wlGuess');
+var wlMode = document.getElementById('wlMode');
+var wlCustom = document.getElementById('wlCustom');
+var wlGo = document.getElementById('wlGo');
+var wlNew = document.getElementById('wlNew');
+var wlStatus = document.getElementById('wlStatus');
+
+var answer = '';
+var guesses = [];
+var maxGuess = 6;
+
+function pickWord() {
+  var w = WL[Math.floor(Math.random() * WL.length)];
+  return w.length === 5 ? w : pickWord();
+}
+
+function strip(w) { return w.length === 5 ? w : w.slice(0, 5); }
+
+function newGame() {
+  answer = wlMode.value === 'custom' && wlCustom.value.length === 5
+    ? wlCustom.value.toLowerCase()
+    : (wlMode.value === 'custom' ? strip(wlCustom.value.toLowerCase()) : pickWord());
+  guesses = [];
+  render();
+  wlStatus.textContent = '';
+  wlGuess.value = '';
+  wlGuess.focus();
+}
+
+function render() {
+  var html = '';
+  for (var i = 0; i < maxGuess; i++) {
+    html += '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">';
+    if (i < guesses.length) {
+      var g = guesses[i];
+      for (var j = 0; j < 5; j++) {
+        html += '<div class="wl-cell" style="background:' + g.colors[j] + ';">' + g.word[j].toUpperCase() + '</div>';
+      }
+    } else {
+      for (var k = 0; k < 5; k++) {
+        html += '<div class="wl-cell wl-empty"></div>';
+      }
+    }
+    html += '</div>';
+  }
+  wlBoard.innerHTML = html;
+}
+
+function evaluate(guess) {
+  var colors = ['#3b3b3b', '#3b3b3b', '#3b3b3b', '#3b3b3b', '#3b3b3b'];
+  var rem = answer.split('');
+  for (var i = 0; i < 5; i++) {
+    if (guess[i] === answer[i]) { colors[i] = '#22c55e'; rem[i] = ''; }
+  }
+  for (var j = 0; j < 5; j++) {
+    if (colors[j] !== '#22c55e') {
+      var idx = rem.indexOf(guess[j]);
+      if (idx >= 0) { colors[j] = '#eab308'; rem[idx] = ''; }
+    }
+  }
+  return colors;
+}
+
+wlGo.addEventListener('click', function () {
+  var word = wlGuess.value.trim().toLowerCase();
+  if (word.length !== 5) { showToast('请输入 5 个字母'); return; }
+  if (guesses.length >= maxGuess) { showToast('机会用完了，点「新一局」'); return; }
+  guesses.push({ word: word, colors: evaluate(word) });
+  render();
+  if (word === answer) {
+    wlStatus.innerHTML = '<div class="stat highlight" style="display:block;">🎉 猜中了！答案是 <b>' + answer.toUpperCase() + '</b>，用了 ' + guesses.length + ' 次。</div>';
+    wlGo.disabled = true;
+    return;
+  }
+  if (guesses.length >= maxGuess) {
+    wlStatus.innerHTML = '<div class="stat" style="display:block;border-color:#ef4444;">很遗憾，答案是 <b>' + answer.toUpperCase() + '</b>。点「新一局」再来。</div>';
+  } else {
+    wlStatus.textContent = '还剩 ' + (maxGuess - guesses.length) + ' 次机会';
+  }
+  wlGuess.value = '';
+  wlGuess.focus();
+});
+
+wlNew.addEventListener('click', function () { wlGo.disabled = false; newGame(); });
+wlGuess.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') wlGo.click();
+});
+wlMode.addEventListener('change', function () {
+  if (wlMode.value === 'custom') { wlCustom.focus(); }
+});
+
+newGame();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
