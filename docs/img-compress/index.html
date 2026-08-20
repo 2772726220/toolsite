@@ -8,6 +8,7 @@
   <meta name="keywords" content="图片压缩,在线压缩图片,图片压缩工具,JPG压缩,PNG压缩,WebP压缩,免费压缩图片">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗜️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5728\u7ebf\u56fe\u7247\u538b\u7f29\u4f1a\u5f71\u54cd\u56fe\u7247\u8d28\u91cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u901a\u8fc7\u538b\u7f29\u7b97\u6cd5\u51cf\u5c0f\u6587\u4ef6\u4f53\u79ef\u3002\u4f60\u53ef\u4ee5\u624b\u52a8\u8c03\u8282\u538b\u7f29\u8d28\u91cf\u53c2\u6570\uff0c\u5728\u6587\u4ef6\u5927\u5c0f\u548c\u6e05\u6670\u5ea6\u4e4b\u95f4\u627e\u5230\u5e73\u8861\uff0c\u89c6\u89c9\u4e0a\u51e0\u4e4e\u65e0\u5dee\u522b\u3002"}},{"@type":"Question","name":"\u6211\u7684\u56fe\u7247\u4f1a\u4e0a\u4f20\u5230\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u672c\u5de5\u5177\u5b8c\u5168\u5728\u60a8\u7684\u6d4f\u89c8\u5668\u672c\u5730\u8fd0\u884c\uff0c\u56fe\u7247\u4e0d\u4f1a\u4e0a\u4f20\u5230\u4efb\u4f55\u670d\u52a1\u5668\uff0c\u9690\u79c1\u7edd\u5bf9\u5b89\u5168\u3002"}},{"@type":"Question","name":"\u4e00\u6b21\u53ef\u4ee5\u538b\u7f29\u591a\u5c11\u5f20\u56fe\u7247\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u5f20\u6279\u91cf\u538b\u7f29\uff0c\u4e00\u6b21\u6027\u5168\u90e8\u4e0b\u8f7d\u3002\u5efa\u8bae\u6bcf\u6b21\u4e0d\u8d85\u8fc7 20 \u5f20\u4ee5\u4fdd\u8bc1\u6d41\u7545\u4f53\u9a8c\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u56fe\u7247\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 JPG/JPEG\u3001PNG\u3001WebP\u3002PNG \u9009\u62e9 WebP \u8f93\u51fa\u538b\u7f29\u6548\u679c\u6700\u4f73\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片压缩</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片压缩</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#压缩</span><span class="badge">#图片处理</span>
@@ -64,10 +66,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>在线图片压缩会影响图片质量吗？</summary><p>会通过压缩算法减小文件体积。你可以手动调节压缩质量参数，在文件大小和清晰度之间找到平衡，视觉上几乎无差别。</p></details><details class="faq-item"><summary>我的图片会上传到服务器吗？</summary><p>不会。本工具完全在您的浏览器本地运行，图片不会上传到任何服务器，隐私绝对安全。</p></details><details class="faq-item"><summary>一次可以压缩多少张图片？</summary><p>支持多张批量压缩，一次性全部下载。建议每次不超过 20 张以保证流畅体验。</p></details><details class="faq-item"><summary>支持哪些图片格式？</summary><p>支持 JPG/JPEG、PNG、WebP。PNG 选择 WebP 输出压缩效果最佳。</p></details></div>
   </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a><a href="../image-watermark/" class="t-card" data-cat="image" data-tags="水印 版权" data-name="图片加水印 给图片加文字水印，保护版权 水印 版权"><div class="t-icon">💧</div><div class="t-name">图片加水印</div><div class="t-desc">给图片加文字水印，保护版权</div><div class="t-tags"><span class="tt">#水印</span><span class="tt">#版权</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>图片压缩 · <a href="../category/image/">🖼️ 图片处理</a> · <a href="../">返回工具箱首页</a></p>
+    <p>图片压缩 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -92,6 +97,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='img-compress';}); _r.unshift('img-compress'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var dropzone = document.getElementById('dropzone');
   var fileInput = document.getElementById('fileInput');
   var fileBtn = document.getElementById('fileBtn');
