@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色混合器 - 在线颜色混合/调色工具</title>
+  <meta name="description" content="免费在线颜色混合工具，选取或输入两种颜色，按比例实时混合生成新颜色，RGB 与十六进制同步显示，取色配色、品牌调色都能用。" />
+  <meta name="keywords" content="颜色混合,调色工具,颜色融合,混合颜色,rgb混合">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6df7\u5408\u6bd4\u4f8b\u662f\u767e\u5206\u6bd4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\uff0c\u6ed1\u5757 0-100% \u8868\u793a\u989c\u8272 1 \u7684\u5360\u6bd4\uff0c\u53e6\u4e00\u7aef\u662f\u989c\u8272 2 \u7684\u5360\u6bd4\u3002"}},{"@type":"Question","name":"\u652f\u6301 HSL \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u6309 RGB \u7ebf\u6027\u6df7\u5408\uff08\u76f4\u89c2\uff09\uff0c\u8f93\u5165\u652f\u6301 hex \u4e0e rgb() \u683c\u5f0f\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u4ee5\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u7ed3\u679c\u533a\u663e\u793a HEX \u4e0e RGB \u4e24\u79cd\u683c\u5f0f\uff0c\u4e00\u952e\u590d\u5236\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u989c\u8272\u8ba1\u7b97\u5728\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎨 颜色混合器</h1>
+    <p>按比例混合两种颜色，实时预览结果</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">颜色混合器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#混色</span><span class="badge">#调色</span><span class="badge">#RGB</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>颜色 1</label><input type="color" id="cmC1" value="#ff6b6b"></div>
+  <div><label>颜色 2</label><input type="color" id="cmC2" value="#4dabf7"></div>
+  <div><label>颜色 1 占比</label><input type="range" id="cmP" min="0" max="100" value="50"><span id="cmPv" style="color:var(--primary);font-weight:700;">50%</span></div>
+</div>
+<div class="mix-stage" id="cmPreview" style="height:90px;border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.4);margin-bottom:12px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+  <div><label>HEX</label><input type="text" id="cmHex" readonly></div>
+  <div><label>RGB</label><input type="text" id="cmRgb" readonly></div>
+</div>
+<button class="btn btn-primary" id="cmCopy" style="margin-top:10px;">📋 复制 HEX</button>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>颜色混合怎么算？</h2><p>按 RGB 通道线性加权：结果 = 颜色1 × 比例 + 颜色2 × (1 - 比例)，是最直观的调色模型。</p><h2>混合结果用于什么？</h2><p>可用于配色方案过渡、品牌色渐变推导、界面 hover 配色等设计场景。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>混合比例是百分比吗？</summary><p>是，滑块 0-100% 表示颜色 1 的占比，另一端是颜色 2 的占比。</p></details><details class="faq-item"><summary>支持 HSL 吗？</summary><p>当前按 RGB 线性混合（直观），输入支持 hex 与 rgb() 格式。</p></details><details class="faq-item"><summary>结果可以复制吗？</summary><p>可以，结果区显示 HEX 与 RGB 两种格式，一键复制。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，颜色计算在本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../text-width/" class="t-card" data-cat="design" data-tags="文字宽度 像素 排版" data-name="文本像素宽度 估算文本在页面上的渲染宽度 文字宽度 像素 排版"><div class="t-icon">📏</div><div class="t-name">文本像素宽度</div><div class="t-desc">估算文本在页面上的渲染宽度</div><div class="t-tags"><span class="tt">#文字宽度</span><span class="tt">#像素</span><span class="tt">#排版</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>颜色混合器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='color-mixer';}); _r.unshift('color-mixer'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cmC1 = document.getElementById('cmC1');
+var cmC2 = document.getElementById('cmC2');
+var cmP = document.getElementById('cmP');
+var cmPv = document.getElementById('cmPv');
+var cmPreview = document.getElementById('cmPreview');
+var cmHex = document.getElementById('cmHex');
+var cmRgb = document.getElementById('cmRgb');
+var cmCopy = document.getElementById('cmCopy');
+
+function hexToRgb(hex) {
+  var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0];
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(function (x) {
+    var h = x.toString(16);
+    return h.length < 2 ? '0' + h : h;
+  }).join('');
+}
+
+function renderMix() {
+  var p = parseInt(cmP.value, 10) / 100;
+  var c1 = hexToRgb(cmC1.value);
+  var c2 = hexToRgb(cmC2.value);
+  var r = Math.round(c1[0] * p + c2[0] * (1 - p));
+  var g = Math.round(c1[1] * p + c2[1] * (1 - p));
+  var b = Math.round(c1[2] * p + c2[2] * (1 - p));
+  var hex = rgbToHex(r, g, b);
+  cmHex.value = hex;
+  cmRgb.value = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  cmPreview.style.background = hex;
+  cmPv.textContent = p * 100 + '%';
+}
+
+[cmC1, cmC2, cmP].forEach(function (el) {
+  el.addEventListener('input', renderMix);
+});
+
+cmCopy.addEventListener('click', function () {
+  if (!cmHex.value) { showToast('请先混合颜色'); return; }
+  try { navigator.clipboard.writeText(cmHex.value); showToast('已复制 ' + cmHex.value); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+
+renderMix();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
