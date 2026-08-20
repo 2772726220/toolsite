@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本行排序 - 在线多行文本排序工具</title>
+  <meta name="description" content="免费在线文本行排序工具，支持按字典序、字符串长度、数字大小升序或降序排序，可同时去重和去除首尾空格，处理名单、日志、列表必备。" />
+  <meta name="keywords" content="文本行排序,多行排序,按长度排序,去重排序,名单排序,日志处理">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔠</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4f1a\u6539\u52a8\u539f\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u4fdd\u7559\u539f\u5185\u5bb9\uff0c\u53ef\u52fe\u9009\u53bb\u91cd\u548c\u4fee\u526a\u7a7a\u767d\u3002"}},{"@type":"Question","name":"\u6392\u5e8f\u89c4\u5219\u6709\u54ea\u4e9b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b57\u5178\u5e8f\u3001\u957f\u5ea6\u3001\u6570\u5b57\uff0c\u5747\u53ef\u5347\u5e8f\u6216\u964d\u5e8f\u3002"}},{"@type":"Question","name":"\u4e2d\u6587\u6392\u5e8f\u53ef\u4ee5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u6309 Unicode \u987a\u5e8f\u3002"}},{"@type":"Question","name":"\u6700\u591a\u591a\u5c11\u884c\uff1f","acceptedAnswer":{"@type":"Answer","text":"10 \u4e07\u884c\u4ee5\u5185\u6d41\u7545\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔠 文本行排序</h1>
+    <p>按字母/长度/数字排序，可去重</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">文本行排序</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#排序</span><span class="badge">#文本行</span>
+<div class="field">
+  <label for="slData">待排序文本（每行一条）</label>
+  <textarea id="slData" placeholder="把要排序的内容每行一条粘贴进来..."></textarea>
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="slBy">排序依据</label>
+  <select id="slBy" style="width:auto;">
+    <option value="lex">字典序</option>
+    <option value="len">字符串长度</option>
+    <option value="num">数字大小</option>
+  </select>
+  <label for="slOrder">方向</label>
+  <select id="slOrder" style="width:auto;">
+    <option value="asc">升序</option>
+    <option value="desc">降序</option>
+  </select>
+  <label style="display:flex;align-items:center;gap:6px;margin:0;">
+    <input type="checkbox" id="slTrim" checked> 去首尾空格
+  </label>
+  <label style="display:flex;align-items:center;gap:6px;margin:0;">
+    <input type="checkbox" id="slDedupe"> 去重
+  </label>
+</div>
+<div class="actions">
+  <button class="btn" id="slBtn" type="button">排序</button>
+  <button class="btn btn-secondary" id="slCopyBtn" type="button">复制结果</button>
+</div>
+<div class="result-box" id="slResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么用？</h2><p>把每行一条的内容粘贴进去，选排序方式和升降序，一键排序，支持复制结果。</p><h2>支持数字排序吗？</h2><p>支持按数字大小排序（如 2、10、100 正确排序而非 10、100、2）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>会改动原文吗？</summary><p>默认保留原内容，可勾选去重和修剪空白。</p></details><details class="faq-item"><summary>排序规则有哪些？</summary><p>字典序、长度、数字，均可升序或降序。</p></details><details class="faq-item"><summary>中文排序可以吗？</summary><p>可以，按 Unicode 顺序。</p></details><details class="faq-item"><summary>最多多少行？</summary><p>10 万行以内流畅处理。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本行排序 · <a href="../category/text/">✍️ 文本工具</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var slResult = document.getElementById('slResult');
+  var slData = document.getElementById('slData');
+
+  document.getElementById('slBtn').addEventListener('click', function () {
+    var lines = slData.value.split('\n');
+    var trim = document.getElementById('slTrim').checked;
+    var dedupe = document.getElementById('slDedupe').checked;
+    var by = document.getElementById('slBy').value;
+    var order = document.getElementById('slOrder').value;
+    lines = lines.map(function (l) { return trim ? l.trim() : l; });
+    if (dedupe) lines = lines.filter(function (l, i, a) { return a.indexOf(l) === i; });
+    if (!lines.length) { showToast('请输入内容'); return; }
+    var cmp;
+    if (by === 'lex') { cmp = function (a, b) { return a.localeCompare(b); }; }
+    else if (by === 'len') { cmp = function (a, b) { return a.length - b.length || a.localeCompare(b); }; }
+    else { cmp = function (a, b) { return (parseFloat(a) || 0) - (parseFloat(b) || 0); }; }
+    lines.sort(cmp);
+    if (order === 'desc') lines.reverse();
+    slResult.hidden = false;
+    slResult.innerHTML = lines.length ? lines.map(function (l) { return '<div>' + l + '</div>'; }).join('') : '';
+    slResult._lines = lines;
+  });
+
+  document.getElementById('slCopyBtn').addEventListener('click', function () {
+    if (!slResult._lines) { showToast('请先排序'); return; }
+    navigator.clipboard.writeText(slResult._lines.join('\n')).then(function () { showToast('已复制 ' + slResult._lines.length + ' 行'); });
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
