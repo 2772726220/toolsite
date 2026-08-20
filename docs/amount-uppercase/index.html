@@ -8,6 +8,7 @@
   <meta name="keywords" content="金额大写,数字转大写,人民币大写,金额转换,大写金额工具">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💴</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u89d2\u3001\u5206\u4f4d\u81ea\u52a8\u5904\u7406\u3002"}},{"@type":"Question","name":"\u683c\u5f0f\u89c4\u8303\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9075\u5faa\u8d22\u52a1\u5e38\u7528\u89c4\u8303\uff0c\u6574\u6570\u8865'\u6574'\u5b57\u3001\u96f6\u4f4d\u6b63\u786e\u5904\u7406\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8d1f\u6570\u524d\u81ea\u52a8\u52a0'\u8d1f'\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">金额大写转换</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">金额大写转换</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#金额</span><span class="badge">#大写</span>
@@ -43,10 +45,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>支持小数吗？</summary><p>支持，角、分位自动处理。</p></details><details class="faq-item"><summary>格式规范吗？</summary><p>遵循财务常用规范，整数补'整'字、零位正确处理。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details><details class="faq-item"><summary>支持负数吗？</summary><p>支持，负数前自动加'负'。</p></details></div>
   </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a><a href="../tax-calculator/" class="t-card" data-cat="finance" data-tags="个税 工资" data-name="个税计算器 工资/年收入个税，累计预扣法 个税 工资"><div class="t-icon">💰</div><div class="t-name">个税计算器</div><div class="t-desc">工资/年收入个税，累计预扣法</div><div class="t-tags"><span class="tt">#个税</span><span class="tt">#工资</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>金额大写转换 · <a href="../category/finance/">💰 财务计算</a> · <a href="../">返回工具箱首页</a></p>
+    <p>金额大写转换 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -71,6 +76,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='amount-uppercase';}); _r.unshift('amount-uppercase'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var amountResult = document.getElementById('amountResult');
   var lastAmount = '';
 
