@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二十四节气查询 - 在线节气日期大全</title>
+  <meta name="description" content="免费在线二十四节气查询工具，展示全年 24 个节气日期、英文名称与含义，支持选择年份，帮助了解农历节气与农事民俗文化。" />
+  <meta name="keywords" content="二十四节气,节气查询,立春,冬至,节气表,农历节气">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8282\u6c14\u6309\u519c\u5386\u8fd8\u662f\u516c\u5386\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8282\u6c14\u662f\u6309\u592a\u9633\u9ec4\u7ecf\u786e\u5b9a\u7684\u516c\u5386\u65e5\u671f\uff0c\u4e0e\u519c\u5386\u6708\u65e5\u65e0\u5173\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u5de5\u5177\u65e5\u671f\u4f1a\u6709 1 \u5929\u8bef\u5dee\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u4f7f\u7528\u7b80\u5316\u5929\u6587\u7b97\u6cd5\u8ba1\u7b97\uff0c\u8bef\u5dee\u4e00\u822c\u4e0d\u8d85\u8fc7 1 \u5929\uff0c\u4f9b\u65e5\u5e38\u53c2\u8003\uff1b\u7cbe\u786e\u5230\u65f6\u523b\u53ef\u67e5\u6743\u5a01\u5929\u6587\u53f0\u6570\u636e\u3002"}},{"@type":"Question","name":"\u6709\u54ea\u4e9b\u5e38\u7528\u8282\u6c14\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7acb\u6625\uff08\u6625\u59cb\uff09\u3001\u6e05\u660e\uff08\u796d\u7956\u8e0f\u9752\uff09\u3001\u590f\u81f3\uff08\u767d\u5929\u6700\u957f\uff09\u3001\u51ac\u81f3\uff08\u767d\u5929\u6700\u77ed\uff09\u3001\u5c0f\u6ee1\u3001\u971c\u964d\u7b49\u6700\u5e38\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌾 二十四节气</h1>
+    <p>查询二十四节气日期与含义</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">二十四节气</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#节气</span><span class="badge">#二十四节气</span><span class="badge">#农历</span>
+<div class="field">
+  <label>年份</label>
+  <select id="stYear"></select>
+</div>
+<div id="stList"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>二十四节气是什么？</h2><p>二十四节气是中国人通过观察太阳周年运动形成的历法知识体系，反映季节、气候与物候变化，2016 年被列入联合国教科文组织非物质文化遗产。</p><h2>节气日期每年一样吗？</h2><p>节气基于太阳黄经计算，公历日期每年相差 1-2 天，一般上半年在 4、6、8 号附近，下半年在 22、23、24 号附近。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>节气按农历还是公历？</summary><p>节气是按太阳黄经确定的公历日期，与农历月日无关。</p></details><details class="faq-item"><summary>为什么工具日期会有 1 天误差？</summary><p>本工具使用简化天文算法计算，误差一般不超过 1 天，供日常参考；精确到时刻可查权威天文台数据。</p></details><details class="faq-item"><summary>有哪些常用节气？</summary><p>立春（春始）、清明（祭祖踏青）、夏至（白天最长）、冬至（白天最短）、小满、霜降等最常用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>二十四节气 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='solar-terms';}); _r.unshift('solar-terms'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var stYear = document.getElementById('stYear');
+var stList = document.getElementById('stList');
+
+var TERMS = [
+  { n: '小寒', e: 'Minor Cold', m: 1, c: 5.4055, mean: '冬季中后期，一年中最寒冷的时节，北方冰天雪地，注意防寒保暖。' },
+  { n: '大寒', e: 'Major Cold', m: 1, c: 20.12, mean: '一年中最后一个节气，天气寒冷到极点，此后阳气渐生，将迎新春。' },
+  { n: '立春', e: 'Start of Spring', m: 2, c: 3.87, mean: '二十四节气之首，春季开始，东风解冻，万物复苏，民俗迎春接福。' },
+  { n: '雨水', e: 'Rain Water', m: 2, c: 18.73, mean: '降水开始增多，冰雪消融，春回大地，农事进入春耕备耕。' },
+  { n: '惊蛰', e: 'Awakening of Insects', m: 3, c: 5.63, mean: '春雷始鸣，惊醒蛰伏的昆虫，气温回升，万物生长加速。' },
+  { n: '春分', e: 'Spring Equinox', m: 3, c: 20.646, mean: '昼夜平分，春季正中，杨柳青青，莺飞草长，适合踏青。' },
+  { n: '清明', e: 'Clear and Bright', m: 4, c: 4.81, mean: '气清景明，草木萌发，是祭祖扫墓与踏青郊游的重要节日。' },
+  { n: '谷雨', e: 'Grain Rain', m: 4, c: 20.1, mean: '雨生百谷，降水增多，正是播种移苗、埯瓜点豆的最佳时节。' },
+  { n: '立夏', e: 'Start of Summer', m: 5, c: 5.52, mean: '夏季开始，气温升高，雷雨增多，万物繁茂，农事进入夏季管理。' },
+  { n: '小满', e: 'Grain Buds', m: 5, c: 21.04, mean: '麦类等夏熟作物籽粒开始灌浆饱满，但还未成熟，小得盈满。' },
+  { n: '芒种', e: 'Grain in Ear', m: 6, c: 5.678, mean: '有芒的麦子快收、有芒的稻子可种，是农事最繁忙的时节。' },
+  { n: '夏至', e: 'Summer Solstice', m: 6, c: 21.37, mean: '一年中白昼最长的一天，阳气至极，此后夜渐长，注意防暑。' },
+  { n: '小暑', e: 'Minor Heat', m: 7, c: 7.108, mean: '天气开始炎热，但还未到最热，进入「三伏天」前后，多雷阵雨。' },
+  { n: '大暑', e: 'Major Heat', m: 7, c: 22.83, mean: '一年中最热的时期，湿热交蒸，注意防暑降温与饮食清淡。' },
+  { n: '立秋', e: 'Start of Autumn', m: 8, c: 7.5, mean: '秋季开始，暑去凉来，禾谷成熟，民俗「贴秋膘」进补。' },
+  { n: '处暑', e: 'End of Heat', m: 8, c: 23.13, mean: '暑气至此而止，昼夜温差加大，秋燥渐显，宜滋阴润燥。' },
+  { n: '白露', e: 'White Dew', m: 9, c: 7.646, mean: '天气转凉，夜间水汽凝结成露，昼夜温差明显，注意添衣。' },
+  { n: '秋分', e: 'Autumn Equinox', m: 9, c: 23.042, mean: '昼夜平分，秋季正中，五谷丰登，也是「中国农民丰收节」。' },
+  { n: '寒露', e: 'Cold Dew', m: 10, c: 8.318, mean: '气温进一步下降，露水更冷，鸿雁南迁，秋意渐浓。' },
+  { n: '霜降', e: "Frost's Descent", m: 10, c: 23.438, mean: '天气渐冷、初霜出现，是秋季最后一个节气，注意防寒防燥。' },
+  { n: '立冬', e: 'Start of Winter', m: 11, c: 7.438, mean: '冬季开始，万物收藏，民间有「立冬补冬」进补的习俗。' },
+  { n: '小雪', e: 'Minor Snow', m: 11, c: 22.36, mean: '气温下降，开始降雪但雪量不大，北方陆续进入冬季。' },
+  { n: '大雪', e: 'Major Snow', m: 12, c: 7.18, mean: '降雪量增大，天气更冷，「瑞雪兆丰年」，注意保暖。' },
+  { n: '冬至', e: 'Winter Solstice', m: 12, c: 21.94, mean: '一年中白昼最短的一天，阴极阳生，民俗吃饺子、汤圆庆团圆。' },
+];
+
+function termDate(year, t) {
+  var y = year % 100;
+  var c = t.m <= 6 ? t.c + 1 : t.c;
+  var d = Math.floor(y * 0.2422 + c) - Math.floor(y / 4);
+  if (d < 1) d += 1;
+  var daysInMonth = new Date(year, t.m, 0).getDate();
+  if (d > daysInMonth) d = daysInMonth;
+  return new Date(year, t.m - 1, d);
+}
+
+function fmt(d) {
+  return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+}
+
+var now = new Date().getFullYear();
+for (var y = now - 2; y <= now + 2; y++) {
+  var o = new Option(y + ' 年', String(y));
+  if (y === now) o.selected = true;
+  stYear.add(o);
+}
+
+function render() {
+  var year = parseInt(stYear.value, 10) || now;
+  var html = '';
+  TERMS.forEach(function (t) {
+    var d = termDate(year, t);
+    html += '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;margin:0;">' +
+      '<div style="min-width:120px;"><span style="font-weight:700;">' + t.n + '</span><div style="font-size:12px;color:var(--muted);">' + t.e + '</div></div>' +
+      '<div style="text-align:right;"><span style="font-weight:600;">' + fmt(d) + '</span><div style="font-size:12px;color:var(--muted);max-width:320px;text-align:right;">' + t.mean + '</div></div></div>';
+  });
+  stList.innerHTML = html;
+}
+
+stYear.addEventListener('change', render);
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
