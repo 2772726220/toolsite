@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /category/
+
+Sitemap: https://2772726220.github.io/toolsite/sitemap.xml
