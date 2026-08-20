@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>比例计算器 - 在线解比例方程a:b=c:d</title>
+  <meta name="description" content="免费在线比例计算器，输入 a:b=c:d 中任意三个值一键解出未知数，支持分子分母整数与小数，图片缩放、配方调整、地图比例、工程换算等场景通用。" />
+  <meta name="keywords" content="比例计算,解比例方程,比值计算,缩放比例,配方比例">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➗</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u7b97\u5206\u6570\u6bd4\u4f8b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u6570\u503c\u652f\u6301\u5c0f\u6570\u4e0e\u6574\u6570\uff1b\u5982\u9700\u5206\u6570\u7ed3\u679c\u53ef\u7528\u5206\u6570\u8ba1\u7b97\u5668\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4f1a\u663e\u793a\u8ba1\u7b97\u8fc7\u7a0b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\uff0c\u5de5\u5177\u7ed9\u51fa\u672a\u77e5\u6570\u516c\u5f0f\u4e0e\u4e2d\u95f4\u8ba1\u7b97\u6b65\u9aa4\uff0c\u65b9\u4fbf\u6838\u5bf9\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>➗ 比例计算</h1>
+    <p>解比例方程 a:b=c:d，缩放/配方/工程换算利器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">比例计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#比例</span><span class="badge">#比值</span><span class="badge">#方程</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>A（已知）</label><input type="number" id="pcA" step="any"></div>
+  <div><label>B（已知）</label><input type="number" id="pcB" step="any"></div>
+  <div><label>C（已知）</label><input type="number" id="pcC" step="any"></div>
+  <div><label>D（留空为未知）</label><input type="number" id="pcD" step="any"></div>
+</div>
+<button class="btn btn-primary" id="pcGo">求解</button>
+<div id="pcResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>比例计算有什么用？</h2><p>图片等比缩放、烘焙配方按人数增减、地图距离换算、混凝土配比等场景都能用 a:b=c:d 解决。</p><h2>怎么解？</h2><p>已知三求一：x = b×c÷a 或 x = a×d÷b，工具自动判断未知数位置并给出分步计算过程。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以算分数比例吗？</summary><p>可以，数值支持小数与整数；如需分数结果可用分数计算器。</p></details><details class="faq-item"><summary>结果会显示计算过程吗？</summary><p>会，工具给出未知数公式与中间计算步骤，方便核对。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>比例计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='proportional-calc';}); _r.unshift('proportional-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var pcA = document.getElementById('pcA');
+var pcB = document.getElementById('pcB');
+var pcC = document.getElementById('pcC');
+var pcD = document.getElementById('pcD');
+var pcGo = document.getElementById('pcGo');
+var pcResult = document.getElementById('pcResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+function solve(a, b, c, d) {
+  // returns {x, step} solving a:b = c:d with the missing one
+  var missing = null;
+  if (a === null) missing = 'a';
+  else if (b === null) missing = 'b';
+  else if (c === null) missing = 'c';
+  else if (d === null) missing = 'd';
+  else return { x: null, step: '四个值都填了，没有未知数' };
+
+  var x;
+  if (missing === 'a') x = b * c / d;
+  else if (missing === 'b') x = a * d / c;
+  else if (missing === 'c') x = a * d / b;
+  else x = b * c / a;
+
+  return { x: x, step: missing };
+}
+
+pcGo.addEventListener('click', function () {
+  var parse = function (el) {
+    var v = el.value.trim();
+    if (v === '') return null;
+    var n = parseFloat(v);
+    return isNaN(n) ? undefined : n;
+  };
+  var a = parse(pcA), b = parse(pcB), c = parse(pcC), d = parse(pcD);
+  if (a === undefined || b === undefined || c === undefined || d === undefined) {
+    pcResult.innerHTML = '<div class="result-box">数值无效，请只留一个空</div>';
+    return;
+  }
+  var missingCount = [a, b, c, d].filter(function (v) { return v === null; }).length;
+  if (missingCount === 0) { pcResult.innerHTML = '<div class="result-box">四个值都填了，没有未知数</div>'; return; }
+  if (missingCount > 1) { pcResult.innerHTML = '<div class="result-box">只能留一个空，请填写其余三个</div>'; return; }
+  if (a === 0 && d === null) { pcResult.innerHTML = '<div class="result-box">A 不能为 0（除数）</div>'; return; }
+  if (c === 0 && b === null) { pcResult.innerHTML = '<div class="result-box">C 不能为 0（除数）</div>'; return; }
+  var res = solve(a, b, c, d);
+  if (res.x === null) { pcResult.innerHTML = '<div class="result-box">' + res.step + '</div>'; return; }
+  var names = { a: 'A', b: 'B', c: 'C', d: 'D' };
+  var expr = {
+    a: 'A = B × C ÷ D = ' + b + ' × ' + c + ' ÷ ' + d,
+    b: 'B = A × D ÷ C = ' + a + ' × ' + d + ' ÷ ' + c,
+    c: 'C = A × D ÷ B = ' + a + ' × ' + d + ' ÷ ' + b,
+    d: 'D = B × C ÷ A = ' + b + ' × ' + c + ' ÷ ' + a
+  };
+  pcResult.innerHTML =
+    row('未知数', names[res.step]) +
+    row('计算过程', expr[res.step]) +
+    row('结果', res.x.toFixed(4) + '（约 ' + res.x.toFixed(2) + '）');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
