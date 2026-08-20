@@ -132,7 +132,7 @@ function scaleFor(ph) {
 brStart.addEventListener('click', function () {
   stopBreath();
   totalRounds = Math.max(1, parseInt(brRounds.value, 10) || 4);
-  var mode = MODES[brMode.value];
+  var mode = MODES[brMode.value] || MODES['478'];
   phase = 0; tick = 0; roundsDone = 0; left = 0;
   var seq = mode.seq;
   var cur = seq[phase];
