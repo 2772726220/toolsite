@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片转字符画 - 在线把图片生成ASCII字符画</title>
+  <meta name="description" content="免费在线图片转 ASCII 字符画工具，把 JPG/PNG/WebP 图片转成黑白字符画，支持自定义字符集、反色与密度，可复制或下载，浏览器本地处理不上传。" />
+  <meta name="keywords" content="图片转字符画,ASCII art,字符画生成器,图片转文字,代码艺术">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5b57\u7b26\u753b\u4f1a\u4fdd\u7559\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u8f93\u51fa\u9ed1\u767d\u5b57\u7b26\u753b\uff1b\u9700\u8981\u5f69\u8272\u8bf7\u642d\u914d\u5176\u4ed6\u5de5\u5177\u5904\u7406\u3002"}},{"@type":"Question","name":"\u751f\u6210\u7684\u5b57\u7b26\u753b\u53ef\u4ee5\u5546\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u5de5\u5177\u5b8c\u5168\u672c\u5730\u751f\u6210\uff0c\u4e0d\u4fdd\u7559\u4efb\u4f55\u7248\u6743\u9650\u5236\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎨 图片转字符画</h1>
+    <p>把图片转换成 ASCII 字符画，可自定义字符集与密度</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片转字符画</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#字符画</span><span class="badge">#ASCII</span><span class="badge">#图片转文字</span>
+<div class="dropzone" id="ascDrop">
+  <div class="icon">🎨</div>
+  <p>点击选择图片，或拖拽图片到此处</p>
+  <input type="file" id="ascFile" accept="image/*" style="display:none;">
+</div>
+<div class="controls">
+  <span>输出宽度（字符）</span>
+  <input type="range" id="ascWidth" min="30" max="160" step="2" value="80">
+  <span class="quality-value" id="ascWidthV">80</span>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+  <div><label>字符集</label>
+    <select id="ascChars">
+      <option value=" .:-=+*#%@">细腻（10级）</option>
+      <option value=" .#">极简（2级）</option>
+      <option value="░░▒▓█">实心块</option>
+    </select>
+  </div>
+  <div><label>选项</label>
+    <label><input type="checkbox" id="ascInvert"> 反色</label>
+  </div>
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="ascGo">生成字符画</button>
+  <button class="btn btn-secondary" id="ascCopy">📋 复制字符画</button>
+</div>
+<textarea id="ascOut" rows="12" readonly placeholder="生成的字符画将显示在这里"></textarea>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是字符画？</h2><p>字符画用不同字符的疏密来模拟灰度，把图片像素的明暗映射到字符上，形成用文本构成的艺术图像，常用于代码注释、终端艺术与博客装饰。</p><h2>怎么控制清晰度？</h2><p>字符密度越高、图片缩小比例越大越清晰；也可以勾选反色获得不同风格。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>字符画会保留颜色吗？</summary><p>默认输出黑白字符画；需要彩色请搭配其他工具处理。</p></details><details class="faq-item"><summary>生成的字符画可以商用吗？</summary><p>可以，工具完全本地生成，不保留任何版权限制。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片转字符画 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-to-ascii';}); _r.unshift('image-to-ascii'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ascDrop = document.getElementById('ascDrop');
+var ascFile = document.getElementById('ascFile');
+var ascWidth = document.getElementById('ascWidth');
+var ascWidthV = document.getElementById('ascWidthV');
+var ascChars = document.getElementById('ascChars');
+var ascInvert = document.getElementById('ascInvert');
+var ascGo = document.getElementById('ascGo');
+var ascCopy = document.getElementById('ascCopy');
+var ascOut = document.getElementById('ascOut');
+
+var ascImg = null;
+
+function lumToChar(v, chars, invert) {
+  var idx = Math.floor(v / 256 * chars.length);
+  if (idx >= chars.length) idx = chars.length - 1;
+  return invert ? chars[chars.length - 1 - idx] : chars[idx];
+}
+
+function imageToAscii(img, outWidth, chars, invert) {
+  var w = img.naturalWidth || img.width;
+  var h = img.naturalHeight || img.height;
+  var ar = h / w;
+  var outH = Math.max(1, Math.round(outWidth * ar * 0.5));
+  var canvas = document.createElement('canvas');
+  canvas.width = outWidth; canvas.height = outH;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, outWidth, outH);
+  var data = ctx.getImageData(0, 0, outWidth, outH).data;
+  var lines = [];
+  for (var y = 0; y < outH; y++) {
+    var line = '';
+    for (var x = 0; x < outWidth; x++) {
+      var i = (y * outWidth + x) * 4;
+      var lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      line += lumToChar(lum, chars, invert);
+    }
+    lines.push(line);
+  }
+  return lines.join('\n');
+}
+
+ascDrop.addEventListener('click', function () { ascFile.click(); });
+ascFile.addEventListener('change', function () {
+  var f = ascFile.files && ascFile.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var img = new Image();
+    img.onload = function () { ascImg = img; ascOut.value = '图片已载入，点击「生成字符画」'; };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+ascDrop.addEventListener('dragover', function (e) { e.preventDefault(); ascDrop.classList.add('dragover'); });
+ascDrop.addEventListener('dragleave', function () { ascDrop.classList.remove('dragover'); });
+ascDrop.addEventListener('drop', function (e) {
+  e.preventDefault();
+  ascDrop.classList.remove('dragover');
+  var f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) {
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var img = new Image();
+      img.onload = function () { ascImg = img; ascOut.value = '图片已载入，点击「生成字符画」'; };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(f);
+  }
+});
+
+ascWidth.addEventListener('input', function () { ascWidthV.textContent = ascWidth.value; });
+
+ascGo.addEventListener('click', function () {
+  if (!ascImg) { showToast('请先选择图片'); return; }
+  var chars = ascChars.value;
+  ascOut.value = imageToAscii(ascImg, parseInt(ascWidth.value, 10), chars, ascInvert.checked);
+  showToast('已生成字符画');
+});
+
+ascCopy.addEventListener('click', function () {
+  if (!ascOut.value) { showToast('请先生成字符画'); return; }
+  try { navigator.clipboard.writeText(ascOut.value); showToast('已复制字符画'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
