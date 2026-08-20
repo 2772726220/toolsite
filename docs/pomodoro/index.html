@@ -8,6 +8,7 @@
   <meta name="keywords" content="番茄钟,番茄工作法,专注计时器,25分钟,时间管理,效率工具">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5b9a\u4e49\u65f6\u957f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e13\u6ce8/\u77ed\u4f11/\u957f\u4f11\u65f6\u957f\u90fd\u53ef\u8bbe\u7f6e\u5e76\u8bb0\u5fc6\u3002"}},{"@type":"Question","name":"\u5230\u70b9\u600e\u4e48\u63d0\u9192\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u53d1\u51fa\u63d0\u793a\u97f3\u5e76\u5f39\u51fa\u63d0\u793a\u6587\u5b57\u3002"}},{"@type":"Question","name":"\u756a\u8304\u6570\u4f1a\u4fdd\u7559\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u5929\u8ba1\u6570\u4fdd\u5b58\u5728\u672c\u5730\u3002"}},{"@type":"Question","name":"\u540e\u53f0\u80fd\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u6807\u7b7e\u9700\u4fdd\u6301\u6253\u5f00\uff0c\u8ba1\u65f6\u4f9d\u8d56\u6807\u7b7e\u9875\u8fd0\u884c\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">番茄钟</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">番茄钟</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#番茄钟</span><span class="badge">#专注</span>
@@ -50,10 +52,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>可以自定义时长吗？</summary><p>可以，专注/短休/长休时长都可设置并记忆。</p></details><details class="faq-item"><summary>到点怎么提醒？</summary><p>浏览器发出提示音并弹出提示文字。</p></details><details class="faq-item"><summary>番茄数会保留吗？</summary><p>当天计数保存在本地。</p></details><details class="faq-item"><summary>后台能用吗？</summary><p>浏览器标签需保持打开，计时依赖标签页运行。</p></details></div>
   </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a><a href="../period-calculator/" class="t-card" data-cat="health" data-tags="经期 排卵期" data-name="经期预测 预测经期/排卵期/安全期 经期 排卵期"><div class="t-icon">🌸</div><div class="t-name">经期预测</div><div class="t-desc">预测经期/排卵期/安全期</div><div class="t-tags"><span class="tt">#经期</span><span class="tt">#排卵期</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>番茄钟 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+    <p>番茄钟 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -78,6 +83,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='pomodoro';}); _r.unshift('pomodoro'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var pmDisplay = document.getElementById('pmDisplay');
   var pmPhase = document.getElementById('pmPhase');
   var pmCount = document.getElementById('pmCount');
