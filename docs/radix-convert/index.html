@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u548c\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6574\u6570\uff08\u542b\u5927\u6570\uff0c\u81ea\u52a8\u6309\u9ad8\u7cbe\u5ea6\u8ba1\u7b97\uff09\uff1b\u5c0f\u6570\u6682\u4e0d\u652f\u6301\u3002"}},{"@type":"Question","name":"\u5341\u516d\u8fdb\u5236\u5b57\u6bcd\u600e\u4e48\u8f93\u5165\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 A-F \u5927\u5199\u6216\u5c0f\u5199\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5927\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8d85\u51fa\u5e38\u89c4\u8303\u56f4\u7684\u8d85\u5927\u6570\u4e5f\u80fd\u6b63\u786e\u6362\u7b97\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🔢 进制转换</h1>
@@ -51,6 +55,7 @@
     <p>进制转换 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -98,6 +103,24 @@ var radixResult = document.getElementById('radixResult');
       '八进制：<b>' + dec.toString(8) + '</b><br>' +
       '十六进制：<b>' + dec.toString(16).toUpperCase() + '</b>';
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
