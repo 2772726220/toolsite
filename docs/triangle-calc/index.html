@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三角形计算器 - 在线求边长角度面积工具</title>
+  <meta name="description" content="免费在线三角形计算器，输入三条边或两边夹一角，自动计算其他边长、角度与面积，支持直角三角形快速求直角边与斜边，浏览器本地计算。" />
+  <meta name="keywords" content="三角形计算,三角形面积,勾股定理,直角三角,三角形角度,三角形边长">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e09\u8fb9\u4e0d\u6ee1\u8db3\u4e09\u89d2\u4e0d\u7b49\u5f0f\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u63d0\u793a\u9519\u8bef\uff0c\u4e09\u89d2\u5f62\u4efb\u610f\u4e24\u8fb9\u4e4b\u548c\u5fc5\u987b\u5927\u4e8e\u7b2c\u4e09\u8fb9\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4fdd\u7559\u51e0\u4f4d\u5c0f\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u4fdd\u7559 4 \u4f4d\u5c0f\u6570\uff0c\u89d2\u5ea6\u5355\u4f4d\u4e3a\u5ea6\uff0c\u53ef\u5207\u6362\u5f27\u5ea6\u3002"}},{"@type":"Question","name":"\u80fd\u6c42\u5916\u63a5\u5706\u534a\u5f84\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u4f1a\u540c\u65f6\u7ed9\u51fa\u5916\u63a5\u5706\u4e0e\u5185\u5207\u5706\u534a\u5f84\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📐 三角形计算</h1>
+    <p>三角形边长/角度/面积一键计算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">三角形计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#三角形</span><span class="badge">#勾股</span><span class="badge">#面积</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模式</label>
+    <select id="trMode">
+      <option value="3sides" selected>已知三边</option>
+      <option value="2s1a">两边夹一角</option>
+      <option value="right">直角三角形</option>
+    </select>
+  </div>
+  <div id="trF1"><label>边 a</label><input type="number" id="trA" value="3" step="any"></div>
+  <div id="trF2"><label>边 b</label><input type="number" id="trB" value="4" step="any"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div id="trF3"><label>边 c</label><input type="number" id="trC" value="5" step="any"></div>
+  <div id="trF4" style="display:none;"><label>夹角（度）</label><input type="number" id="trAng" value="60" step="any"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>角度单位</label>
+    <select id="trUnit">
+      <option value="deg" selected>度</option>
+      <option value="rad">弧度</option>
+    </select>
+  </div>
+  <div><label>小数位</label><input type="number" id="trPrec" value="4" min="0" max="10"></div>
+</div>
+<button class="btn btn-primary" id="trGo">计算</button>
+<div id="trOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>三角形有哪些计算方法？</h2><p>直角三角形用勾股定理与三角函数；任意三角形用余弦定理求角、海伦公式求面积。本工具自动判断并给出全部结果。</p><h2>怎么用这个工具？</h2><p>任选一种模式输入已知量：三条边、两条边与夹角、或直角三角形两条直角边，立即得到完整结果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>三边不满足三角不等式会怎样？</summary><p>会提示错误，三角形任意两边之和必须大于第三边。</p></details><details class="faq-item"><summary>结果保留几位小数？</summary><p>默认保留 4 位小数，角度单位为度，可切换弧度。</p></details><details class="faq-item"><summary>能求外接圆半径吗？</summary><p>支持，会同时给出外接圆与内切圆半径。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>三角形计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='triangle-calc';}); _r.unshift('triangle-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var trMode = document.getElementById('trMode');
+var trA = document.getElementById('trA');
+var trB = document.getElementById('trB');
+var trC = document.getElementById('trC');
+var trAng = document.getElementById('trAng');
+var trF3 = document.getElementById('trF3');
+var trF4 = document.getElementById('trF4');
+var trUnit = document.getElementById('trUnit');
+var trPrec = document.getElementById('trPrec');
+var trGo = document.getElementById('trGo');
+var trOut = document.getElementById('trOut');
+
+function toggleFields() {
+  var mode = trMode.value;
+  trF3.style.display = mode === '3sides' ? '' : 'none';
+  trF4.style.display = mode === '2s1a' ? '' : 'none';
+}
+trMode.addEventListener('change', toggleFields);
+toggleFields();
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
+}
+
+function fmt(x, p) {
+  return Math.round(x * Math.pow(10, p)) / Math.pow(10, p);
+}
+
+function angleOut(rad, p, unit) {
+  if (unit === 'rad') return fmt(rad, p) + ' rad';
+  return fmt(rad * 180 / Math.PI, p) + '°';
+}
+
+function calc() {
+  var p = Math.min(10, Math.max(0, parseInt(trPrec.value, 10) || 4));
+  var unit = trUnit.value;
+  var mode = trMode.value;
+  var a = parseFloat(trA.value);
+  var b = parseFloat(trB.value);
+  var c = parseFloat(trC.value);
+  var ang = parseFloat(trAng.value);
+  var html = '';
+  var sides, A, B, C, area, R, r;
+
+  if (mode === '3sides') {
+    if (!(a > 0 && b > 0 && c > 0)) { trOut.innerHTML = '<div class="result-box">请输入三条边的长度</div>'; return; }
+    if (a + b <= c || a + c <= b || b + c <= a) { trOut.innerHTML = '<div class="result-box" style="color:#dc2626;">无法构成三角形：任意两边之和必须大于第三边</div>'; return; }
+    sides = [a, b, c];
+    A = Math.acos((b * b + c * c - a * a) / (2 * b * c));
+    B = Math.acos((a * a + c * c - b * b) / (2 * a * c));
+    C = Math.acos((a * a + b * b - c * c) / (2 * a * b));
+  } else if (mode === '2s1a') {
+    if (!(a > 0 && b > 0) || isNaN(ang)) { trOut.innerHTML = '<div class="result-box">请输入两条边和夹角</div>'; return; }
+    var rad = ang * Math.PI / 180;
+    c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(rad));
+    sides = [a, b, c];
+    A = Math.acos((b * b + c * c - a * a) / (2 * b * c));
+    B = Math.acos((a * a + c * c - b * b) / (2 * a * c));
+    C = rad;
+  } else {
+    if (!(a > 0 && b > 0)) { trOut.innerHTML = '<div class="result-box">请输入两条直角边</div>'; return; }
+    c = Math.sqrt(a * a + b * b);
+    sides = [a, b, c];
+    A = Math.atan2(b, a);
+    B = Math.PI / 2 - A;
+    C = Math.PI / 2;
+  }
+
+  area = a * b * Math.sin(C) / 2;
+  var s = (a + b + c) / 2;
+  if (mode === '3sides') area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+  R = c / (2 * Math.sin(C));
+  r = area / s;
+  var perim = a + b + c;
+  var degs = [A, B, C].map(function (x) { return x * 180 / Math.PI; });
+  var sum = degs.reduce(function (x, y) { return x + y; }, 0);
+  var kind = a === b && b === c ? '等边三角形'
+    : a === b || a === c || b === c ? '等腰三角形'
+    : degs.some(function (x) { return x > 90; }) ? '钝角三角形'
+    : degs.some(function (x) { return Math.abs(x - 90) < 1e-9; }) ? '直角三角形' : '锐角三角形';
+
+  html += '<div class="stat" style="display:block;padding:12px 14px;margin:0;"><div style="font-size:13px;color:var(--muted);">类型</div><div style="font-size:16px;font-weight:700;">' + kind + '</div></div>';
+  html += row('周长', fmt(perim, p));
+  html += row('面积', fmt(area, p));
+  html += row('角 A（对边 a）', angleOut(A, p, unit));
+  html += row('角 B（对边 b）', angleOut(B, p, unit));
+  html += row('角 C（对边 c）', angleOut(C, p, unit));
+  html += row('角度和', fmt(sum, p) + '°');
+  html += row('外接圆半径 R', fmt(R, p));
+  html += row('内切圆半径 r', fmt(r, p));
+  trOut.innerHTML = html;
+}
+
+trGo.addEventListener('click', calc);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
