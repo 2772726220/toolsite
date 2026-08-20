@@ -8,6 +8,7 @@
   <meta name="keywords" content="待办清单,在线待办,任务清单,todo list,待办事项,每日计划">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e22\u5931\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6570\u636e\u4fdd\u5b58\u5728\u5f53\u524d\u6d4f\u89c8\u5668\u672c\u5730\uff0c\u6e05\u9664\u6d4f\u89c8\u5668\u7f13\u5b58\u4f1a\u4e22\u5931\u3002"}},{"@type":"Question","name":"\u9700\u8981\u6ce8\u518c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u5373\u5f00\u5373\u7528\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5220\u9664\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u5355\u9879\u5220\u9664\u6216\u4e00\u952e\u6e05\u7a7a\u5df2\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5b8c\u5168\u672c\u5730\u4fdd\u5b58\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">待办清单</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">待办清单</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#待办</span><span class="badge">#清单</span>
@@ -46,10 +48,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>数据会丢失吗？</summary><p>数据保存在当前浏览器本地，清除浏览器缓存会丢失。</p></details><details class="faq-item"><summary>需要注册吗？</summary><p>不需要，即开即用。</p></details><details class="faq-item"><summary>支持删除吗？</summary><p>支持，可单项删除或一键清空已完成。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，完全本地保存。</p></details></div>
   </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a><a href="../period-calculator/" class="t-card" data-cat="health" data-tags="经期 排卵期" data-name="经期预测 预测经期/排卵期/安全期 经期 排卵期"><div class="t-icon">🌸</div><div class="t-name">经期预测</div><div class="t-desc">预测经期/排卵期/安全期</div><div class="t-tags"><span class="tt">#经期</span><span class="tt">#排卵期</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>待办清单 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+    <p>待办清单 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -74,6 +79,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='todo-list';}); _r.unshift('todo-list'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var todoInput = document.getElementById('todoInput');
   var todoList = document.getElementById('todoList');
   var STORE_KEY = 'toolsite_todos';
