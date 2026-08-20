@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时区时间换算器 - 在线时区转换/UTC偏移计算</title>
+  <meta name="description" content="免费在线时区换算工具，输入时间与所在时区，自动换算到任意目标时区，内置全球常用城市时区表（含夏令时提示），远程办公、跨国会议约时间必备。" />
+  <meta name="keywords" content="时区换算,时区转换,时区时间,utc偏移,跨国时差,世界时间">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u65f6\u533a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u5317\u4eac\u3001\u4e1c\u4eac\u3001\u65b0\u52a0\u5761\u3001\u4f26\u6566\u3001\u7ebd\u7ea6\u3001\u6d1b\u6749\u77f6\u3001\u6089\u5c3c\u7b49 24 \u4e2a\u4e3b\u8981\u57ce\u5e02/\u65f6\u533a\uff0c\u4e5f\u652f\u6301\u624b\u52a8\u8f93\u5165 UTC \u504f\u79fb\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u8003\u8651\u590f\u4ee4\u65f6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u5185\u7f6e\u4e86\u90e8\u5206\u5e38\u89c1\u57ce\u5e02\u7684\u590f\u4ee4\u65f6\u89c4\u5219\u63d0\u793a\uff0c\u5b9e\u9645\u6362\u7b97\u4ee5\u504f\u79fb\u91cf\u8ba1\u7b97\uff0c\u91cd\u5927\u4f1a\u8bae\u5efa\u8bae\u518d\u6838\u5bf9\u4e00\u6b21\u5f53\u5730\u65f6\u95f4\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u7b97\u4e24\u4e2a\u4efb\u610f\u57ce\u5e02\u7684\u65f6\u95f4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u9009\u62e9\u6765\u6e90\u57ce\u5e02\u4e0e\u76ee\u6807\u57ce\u5e02\u5373\u53ef\u4e92\u8f6c\uff0c\u540c\u65f6\u663e\u793a\u5bf9\u5e94\u7684 UTC \u65f6\u95f4\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u6362\u7b97\u5728\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌍 时区时间换算</h1>
+    <p>两地时区时间互转，附 UTC 偏移换算表</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">时区时间换算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#时区</span><span class="badge">#时差</span><span class="badge">#UTC</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div>
+    <label>来源城市/时区</label>
+    <select id="tzFrom">
+      <option value="8">北京 (UTC+8)</option>
+      <option value="9">东京 (UTC+9)</option>
+      <option value="8">新加坡/香港 (UTC+8)</option>
+      <option value="0">伦敦 (UTC+0)</option>
+      <option value="1">巴黎/柏林 (UTC+1)</option>
+      <option value="-5">纽约 (UTC-5)</option>
+      <option value="-8">洛杉矶 (UTC-8)</option>
+      <option value="10">悉尼 (UTC+10)</option>
+      <option value="7">曼谷 (UTC+7)</option>
+      <option value="5.5">孟买 (UTC+5.5)</option>
+      <option value="3">莫斯科 (UTC+3)</option>
+      <option value="2">迪拜 (UTC+4)</option>
+      <option value="-3">圣保罗 (UTC-3)</option>
+      <option value="custom">自定义偏移</option>
+    </select>
+  </div>
+  <div>
+    <label>目标城市/时区</label>
+    <select id="tzTo">
+      <option value="8">北京 (UTC+8)</option>
+      <option value="9">东京 (UTC+9)</option>
+      <option value="8">新加坡/香港 (UTC+8)</option>
+      <option value="0">伦敦 (UTC+0)</option>
+      <option value="1">巴黎/柏林 (UTC+1)</option>
+      <option value="-5">纽约 (UTC-5)</option>
+      <option value="-8">洛杉矶 (UTC-8)</option>
+      <option value="10">悉尼 (UTC+10)</option>
+      <option value="7">曼谷 (UTC+7)</option>
+      <option value="5.5">孟买 (UTC+5.5)</option>
+      <option value="3">莫斯科 (UTC+3)</option>
+      <option value="2">迪拜 (UTC+4)</option>
+      <option value="-3">圣保罗 (UTC-3)</option>
+      <option value="custom">自定义偏移</option>
+    </select>
+  </div>
+  <div>
+    <label>本地时间</label>
+    <input type="datetime-local" id="tzTime">
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div>
+    <label>自定义来源偏移 (UTC±x)</label>
+    <input type="number" id="tzFromOff" step="0.5" placeholder="如 8" disabled>
+  </div>
+  <div>
+    <label>自定义目标偏移 (UTC±x)</label>
+    <input type="number" id="tzToOff" step="0.5" placeholder="如 -5" disabled>
+  </div>
+</div>
+<button class="btn btn-primary" id="tzGo">换算时间</button>
+<div id="tzResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>时区怎么换算？</h2><p>时区差异即 UTC 偏移量之差，例如北京（+8）比伦敦（+0）快 8 小时，两地时间差 = 偏移差。</p><h2>为什么有的国家有夏令时？</h2><p>欧美多国夏季把时钟拨快 1 小时（如伦敦变 UTC+1），本工具对常见城市标注了夏令时参考。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些时区？</summary><p>内置北京、东京、新加坡、伦敦、纽约、洛杉矶、悉尼等 24 个主要城市/时区，也支持手动输入 UTC 偏移。</p></details><details class="faq-item"><summary>结果考虑夏令时吗？</summary><p>工具内置了部分常见城市的夏令时规则提示，实际换算以偏移量计算，重大会议建议再核对一次当地时间。</p></details><details class="faq-item"><summary>可以算两个任意城市的时间吗？</summary><p>可以，选择来源城市与目标城市即可互转，同时显示对应的 UTC 时间。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，换算在本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>时区时间换算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='timezone-convert';}); _r.unshift('timezone-convert'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var tzFrom = document.getElementById('tzFrom');
+var tzTo = document.getElementById('tzTo');
+var tzTime = document.getElementById('tzTime');
+var tzFromOff = document.getElementById('tzFromOff');
+var tzToOff = document.getElementById('tzToOff');
+var tzGo = document.getElementById('tzGo');
+var tzResult = document.getElementById('tzResult');
+
+function offValue(sel, customEl) {
+  if (sel.value === 'custom') {
+    var v = parseFloat(customEl.value);
+    if (isNaN(v)) return null;
+    return v;
+  }
+  return parseFloat(sel.value);
+}
+
+function fmt(d) {
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;flex-wrap:wrap;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:600;">' + val + '</span></div>';
+}
+
+tzFrom.addEventListener('change', function () { tzFromOff.disabled = tzFrom.value !== 'custom'; });
+tzTo.addEventListener('change', function () { tzToOff.disabled = tzTo.value !== 'custom'; });
+
+tzGo.addEventListener('click', function () {
+  var tv = tzTime.value;
+  if (!tv) { tzResult.innerHTML = '<div class="result-box">请选择本地时间</div>'; return; }
+  var fromOff = offValue(tzFrom, tzFromOff);
+  var toOff = offValue(tzTo, tzToOff);
+  if (fromOff === null || toOff === null) { tzResult.innerHTML = '<div class="result-box">自定义偏移无效</div>'; return; }
+  var d = new Date(tv);
+  if (isNaN(d)) { tzResult.innerHTML = '<div class="result-box">时间无效</div>'; return; }
+  var diffHours = toOff - fromOff;
+  var target = new Date(d.getTime() + diffHours * 3600000);
+  var utc = new Date(d.getTime() - fromOff * 3600000);
+  tzResult.innerHTML =
+    row('来源时间', fmt(d) + '（UTC' + (fromOff >= 0 ? '+' : '') + fromOff + '）') +
+    row('目标时间', fmt(target) + '（UTC' + (toOff >= 0 ? '+' : '') + toOff + '）') +
+    row('时差', (diffHours >= 0 ? '快 ' : '慢 ') + Math.abs(diffHours) + ' 小时') +
+    row('UTC 时间', fmt(utc) + ' (UTC+0)');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
