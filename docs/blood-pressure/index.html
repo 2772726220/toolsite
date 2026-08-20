@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>血压评估工具 - 在线血压标准对照查询</title>
+  <meta name="description" content="免费在线血压健康评估工具，输入收缩压和舒张压，对照中国高血压防治指南评估血压水平，给出健康建议，浏览器本地计算，无任何隐私上传。" />
+  <meta name="keywords" content="血压,血压标准,高血压,低血压,血压评估,健康评估">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5de5\u5177\u80fd\u8bca\u65ad\u9ad8\u8840\u538b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\uff0c\u672c\u5de5\u5177\u4ec5\u6309\u6807\u51c6\u7ed9\u51fa\u53c2\u8003\u5206\u7ea7\uff0c\u786e\u8bca\u9700\u7531\u533b\u751f\u57fa\u4e8e\u591a\u6b21\u6d4b\u91cf\u4e0e\u52a8\u6001\u76d1\u6d4b\u3002"}},{"@type":"Question","name":"\u4ec0\u4e48\u65f6\u95f4\u6d4b\u8840\u538b\u6700\u51c6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u6668\u8d77\u540e 1 \u5c0f\u65f6\u5185\u3001\u670d\u836f\u524d\u3001\u6392\u7a7a\u8180\u80f1\u540e\u9759\u5750\u6d4b\u91cf\uff0c\u665a\u4e0a\u7761\u524d\u53ef\u518d\u6d4b\u4e00\u6b21\u3002"}},{"@type":"Question","name":"\u7535\u5b50\u8840\u538b\u8ba1\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u62e9\u901a\u8fc7\u8ba4\u8bc1\u7684\u4e0a\u81c2\u5f0f\u7535\u5b50\u8840\u538b\u8ba1\uff0c\u6309\u8bf4\u660e\u6b63\u786e\u4f69\u6234\u5373\u53ef\uff0c\u4e0e\u6c5e\u67f1\u5f0f\u8bef\u5dee\u5728\u5141\u8bb8\u8303\u56f4\u5185\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🩺 血压健康评估</h1>
+    <p>对照血压标准，评估血压水平</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">血压健康评估</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#血压</span><span class="badge">#健康</span><span class="badge">#高血压</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>收缩压（高压 mmHg）</label><input type="number" id="bpSys" value="125" min="50" max="250"></div>
+  <div><label>舒张压（低压 mmHg）</label><input type="number" id="bpDia" value="82" min="30" max="150"></div>
+</div>
+<button class="btn btn-primary" id="bpGo">评估血压</button>
+<div id="bpResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+<div class="content-block" style="margin-top:16px;">
+  <h3 style="margin-top:0;">中国高血压防治指南 · 血压水平分级（成人）</h3>
+  <table>
+    <thead><tr><th>分类</th><th>收缩压（mmHg）</th><th>舒张压（mmHg）</th></tr></thead>
+    <tbody>
+      <tr><td>正常血压</td><td>&lt;120</td><td>且 &lt;80</td></tr>
+      <tr><td>正常高值</td><td>120–139</td><td>和/或 80–89</td></tr>
+      <tr><td>1 级高血压</td><td>140–159</td><td>和/或 90–99</td></tr>
+      <tr><td>2 级高血压</td><td>160–179</td><td>和/或 100–109</td></tr>
+      <tr><td>3 级高血压</td><td>≥180</td><td>和/或 ≥110</td></tr>
+    </tbody>
+  </table>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>正常血压标准是多少？</h2><p>正常血压：收缩压 <120 mmHg 且舒张压 <80 mmHg。高血压：收缩压 ≥140 或舒张压 ≥90（多次测量确认）。</p><h2>血压偏高怎么办？</h2><p>先排除测量误差：静坐 5 分钟再测，多次测量取平均值。持续偏高建议就医，同时限盐、控体重、戒烟限酒、规律运动。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>工具能诊断高血压吗？</summary><p>不能，本工具仅按标准给出参考分级，确诊需由医生基于多次测量与动态监测。</p></details><details class="faq-item"><summary>什么时间测血压最准？</summary><p>建议晨起后 1 小时内、服药前、排空膀胱后静坐测量，晚上睡前可再测一次。</p></details><details class="faq-item"><summary>电子血压计准吗？</summary><p>选择通过认证的上臂式电子血压计，按说明正确佩戴即可，与汞柱式误差在允许范围内。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>血压健康评估 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='blood-pressure';}); _r.unshift('blood-pressure'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bpSys = document.getElementById('bpSys');
+var bpDia = document.getElementById('bpDia');
+var bpGo = document.getElementById('bpGo');
+var bpResult = document.getElementById('bpResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+function classify(sys, dia) {
+  if (sys < 120 && dia < 80) return { name: '正常血压', color: '#16a34a', advice: '血压正常，继续保持健康生活方式：均衡饮食、适量运动、戒烟限酒、控制体重。' };
+  if (sys < 140 && dia < 90) return { name: '正常高值', color: '#f59e0b', advice: '血压偏高临界，注意低盐饮食、规律作息，监测血压变化，避免熬夜与久坐。' };
+  if (sys < 160 && dia < 100) return { name: '1 级高血压', color: '#f97316', advice: '轻度高血压，建议低盐低脂饮食、减轻体重、规律运动，尽快咨询医生。' };
+  if (sys < 180 && dia < 110) return { name: '2 级高血压', color: '#dc2626', advice: '中度高血压，请及时就医，遵医嘱用药，同时严格控制饮食与作息。' };
+  return { name: '3 级高血压', color: '#991b1b', advice: '重度高血压，风险较高，请立即就医，不要自行停药或调整药物。' };
+}
+
+function checkLow(sys, dia) {
+  if (sys < 90 || dia < 60) {
+    return '收缩压或舒张压低于正常参考（90/60 mmHg），如伴随头晕、乏力请及时就医。';
+  }
+  return null;
+}
+
+bpGo.addEventListener('click', function () {
+  var sys = parseFloat(bpSys.value);
+  var dia = parseFloat(bpDia.value);
+  if (isNaN(sys) || isNaN(dia) || sys <= 0 || dia <= 0) { bpResult.innerHTML = '<div class="result-box">请输入有效的收缩压和舒张压</div>'; return; }
+  var r = classify(sys, dia);
+  var low = checkLow(sys, dia);
+  var html = row('收缩压 / 舒张压', sys + ' / ' + dia + ' mmHg') +
+    row('血压水平', '<span style="color:' + r.color + ';">' + r.name + '</span>') +
+    row('建议', r.advice);
+  if (low) html += row('低血压提示', low);
+  html += row('测量提示', '一次测量不能确诊，请静坐 5 分钟后再测，多次测量取平均值。');
+  bpResult.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
