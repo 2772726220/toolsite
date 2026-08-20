@@ -8,6 +8,7 @@
   <meta name="keywords" content="含税价计算,增值税计算,不含税价,税额计算,开票计算,价税分离">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u7a0e\u7387\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e 13%\u30019%\u30016%\u30015%\u30013%\u30011% \u53ef\u9009\uff0c\u4e5f\u53ef\u81ea\u5b9a\u4e49\u3002"}},{"@type":"Question","name":"\u80fd\u5012\u63a8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\uff0c\u8f93\u5165\u542b\u7a0e\u4ef7\u53ef\u53cd\u63a8\u4e0d\u542b\u7a0e\u4ef7\u548c\u7a0e\u989d\uff0c\u53cd\u5411\u540c\u6837\u652f\u6301\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u516c\u5f0f\u7cbe\u786e\u8ba1\u7b97\uff0c\u4fdd\u7559\u4e24\u4f4d\u5c0f\u6570\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">含税价计算</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">含税价计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#含税</span><span class="badge">#增值税</span>
@@ -60,10 +62,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>支持哪些税率？</summary><p>内置 13%、9%、6%、5%、3%、1% 可选，也可自定义。</p></details><details class="faq-item"><summary>能倒推吗？</summary><p>能，输入含税价可反推不含税价和税额，反向同样支持。</p></details><details class="faq-item"><summary>结果精确吗？</summary><p>按公式精确计算，保留两位小数。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
   </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../tax-calculator/" class="t-card" data-cat="finance" data-tags="个税 工资" data-name="个税计算器 工资/年收入个税，累计预扣法 个税 工资"><div class="t-icon">💰</div><div class="t-name">个税计算器</div><div class="t-desc">工资/年收入个税，累计预扣法</div><div class="t-tags"><span class="tt">#个税</span><span class="tt">#工资</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>含税价计算 · <a href="../category/finance/">💰 财务计算</a> · <a href="../">返回工具箱首页</a></p>
+    <p>含税价计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -88,6 +93,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='vat-calculator';}); _r.unshift('vat-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var vatResult = document.getElementById('vatResult');
 
   function money(v) { return v.toLocaleString('zh-CN', { maximumFractionDigits: 2 }); }
