@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4efb\u610f\u89d2\u5ea6\u65cb\u8f6c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 90/180/270 \u5ea6\uff0c\u65cb\u8f6c\u540e\u4f1a\u81ea\u9002\u5e94\u753b\u5e03\u5c3a\u5bf8\u3002"}},{"@type":"Question","name":"\u7167\u7247\u4f1a\u81ea\u52a8\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u5904\u7406\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u652f\u6301\u7ffb\u8f6c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6c34\u5e73\u7ffb\u8f6c\u548c\u5782\u76f4\u7ffb\u8f6c\u3002"}},{"@type":"Question","name":"\u65cb\u8f6c\u540e\u80cc\u666f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8d85\u51fa\u533a\u57df\u4ee5\u767d\u8272\u80cc\u666f\u586b\u5145\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🔄 图片旋转</h1>
@@ -56,6 +60,7 @@
     <p>图片旋转 · <a href="../category/image/">🖼️ 图片处理</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -136,6 +141,24 @@ var dropzone = document.getElementById('dropzone');
     };
     img.src = selected.dataUrl;
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
