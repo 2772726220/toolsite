@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕐</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u65f6\u95f4\u6233\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"Unix \u65f6\u95f4\u6233\u6307\u4ece 1970-01-01 00:00:00 UTC \u5230\u6307\u5b9a\u65f6\u95f4\u7ecf\u8fc7\u7684\u79d2\u6570\uff08\u6beb\u79d2\u7ea7\u5219\u4e3a\u6beb\u79d2\u6570\uff09\u3002"}},{"@type":"Question","name":"10 \u4f4d\u548c 13 \u4f4d\u65f6\u95f4\u6233\u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"10 \u4f4d\u662f\u79d2\uff0c13 \u4f4d\u662f\u6beb\u79d2\u300213 \u4f4d\u524d 10 \u4f4d\u5c31\u662f\u79d2\u7ea7\u65f6\u95f4\u6233\uff0c\u5de5\u5177\u81ea\u52a8\u8bc6\u522b\u3002"}},{"@type":"Question","name":"\u663e\u793a\u7684\u662f\u54ea\u4e2a\u65f6\u533a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u9ed8\u8ba4\u663e\u793a\u5317\u4eac\u65f6\u95f4\uff08UTC+8\uff09\uff0c\u5e76\u540c\u65f6\u7ed9\u51fa UTC \u65f6\u95f4\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u6211\u7684\u6570\u636e\u4f1a\u4f20\u5230\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u6362\u7b97\uff0c\u5b89\u5168\u9690\u79c1\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🕐 时间戳转换</h1>
@@ -49,6 +53,7 @@
     <p>时间戳转换 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -113,6 +118,24 @@ var tsInput = document.getElementById('tsInput');
     dateInput.dispatchEvent(new Event('change'));
     showToast('已填入当前时间');
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
