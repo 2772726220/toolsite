@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e09\u89d2\u5f62\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5e95\u00d7\u9ad8\u00f72\uff0c\u4e5f\u53ef\u7528\u4e09\u8fb9\u957f\u6d77\u4f26\u516c\u5f0f\u3002"}},{"@type":"Question","name":"\u5706\u5468\u7387\u53d6\u591a\u5c11\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e \u03c0 \u7cbe\u786e\u8ba1\u7b97\uff0c\u7ed3\u679c\u56db\u820d\u4e94\u5165\u3002"}},{"@type":"Question","name":"\u5355\u4f4d\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u957f\u5ea6\u5355\u4f4d\u7531\u4f60\u8f93\u5165\u51b3\u5b9a\uff0c\u9762\u79ef\u5373\u5bf9\u5e94\u5355\u4f4d\u5e73\u65b9\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>📐 几何计算器</h1>
@@ -63,6 +67,7 @@
     <p>几何计算器 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -118,6 +123,24 @@ var geoResult = document.getElementById('geoResult');
     geoResult.innerHTML = '面积：<b>' + (+area.toFixed(4)) + '</b>（平方单位）' +
       (perim !== null ? '<br>周长：<b>' + (+perim.toFixed(4)) + '</b>' : '<br>周长：需已知三边（用海伦模式）');
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
