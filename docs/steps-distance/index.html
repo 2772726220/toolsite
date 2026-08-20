@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>步数换算 - 在线把步数转成公里和消耗热量</title>
+  <meta name="description" content="免费在线步数换算工具，输入步数与身高/体重，估算对应步行距离（公里/米）与消耗热量（千卡），也可反推目标步数需要的距离，运动打卡必备。" />
+  <meta name="keywords" content="步数换算,步数转公里,走路热量,步距计算,每天步数">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7ed3\u679c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u5e73\u5747\u6b65\u5e45\u4e0e\u4f53\u91cd\u4f30\u7b97\uff0c\u5b9e\u9645\u4e0e\u5730\u5f62\u3001\u901f\u5ea6\u6709\u5173\uff0c\u8bef\u5dee\u7ea6 \u00b110%\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u53cd\u63a8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u8f93\u5165\u76ee\u6807\u516c\u91cc\u6570\u5373\u53ef\u53cd\u63a8\u9700\u8981\u7684\u6b65\u6570\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>👟 步数换算</h1>
+    <p>步数转公里/热量，估算你每天走了多远</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">步数换算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#步数</span><span class="badge">#距离</span><span class="badge">#走路热量</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>身高（cm）</label><input type="number" id="sdH" value="170"></div>
+  <div><label>体重（kg）</label><input type="number" id="sdW" value="65"></div>
+  <div><label>步数</label><input type="number" id="sdSteps" value="10000"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>步幅（m，留空按身高估算）</label><input type="number" id="sdStride" step="0.01" placeholder="0.41-0.7"></div>
+  <div><label>反推：目标公里数</label><input type="number" id="sdKm" step="0.1" placeholder="如 5"></div>
+</div>
+<button class="btn btn-primary" id="sdGo">计算</button>
+<div id="sdResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>一步有多长？</h2><p>普通人步幅约 0.6-0.8 米（约身高的 40%），本工具按身高自动估算步幅，也可手动调整。</p><h2>一万步消耗多少？</h2><p>约 4-6 公里、消耗 250-400 千卡，具体取决于体重与步幅。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>结果准确吗？</summary><p>基于平均步幅与体重估算，实际与地形、速度有关，误差约 ±10%。</p></details><details class="faq-item"><summary>可以反推吗？</summary><p>可以，输入目标公里数即可反推需要的步数。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>步数换算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='steps-distance';}); _r.unshift('steps-distance'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var sdH = document.getElementById('sdH');
+var sdW = document.getElementById('sdW');
+var sdSteps = document.getElementById('sdSteps');
+var sdStride = document.getElementById('sdStride');
+var sdKm = document.getElementById('sdKm');
+var sdGo = document.getElementById('sdGo');
+var sdResult = document.getElementById('sdResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+function strideOf(hCm) { return (hCm / 100) * 0.415; }
+
+sdGo.addEventListener('click', function () {
+  var h = parseFloat(sdH.value);
+  var w = parseFloat(sdW.value);
+  var steps = parseFloat(sdSteps.value);
+  var stride = sdStride.value !== '' ? parseFloat(sdStride.value) : (h ? strideOf(h) : 0.62);
+  if (isNaN(stride) || stride <= 0) { sdResult.innerHTML = '<div class="result-box">请输入有效的身高或步幅</div>'; return; }
+  var kmTarget = sdKm.value !== '' ? parseFloat(sdKm.value) : null;
+  var html = '';
+  if (steps && steps > 0) {
+    var dist = steps * stride / 1000;
+    var kcal = w ? dist * 0.6 * w : 0;
+    html += row('步行距离', dist.toFixed(2) + ' 公里（' + (dist * 1000).toFixed(0) + ' 米）') +
+      row('消耗热量（估算）', kcal ? kcal.toFixed(0) + ' 千卡' : '需填写体重') +
+      row('步幅', stride.toFixed(2) + ' m/步');
+  }
+  if (kmTarget && kmTarget > 0) {
+    var need = Math.round(kmTarget * 1000 / stride);
+    html += row('目标 ' + kmTarget + ' 公里', '需要约 ' + need + ' 步');
+  }
+  if (!html) { sdResult.innerHTML = '<div class="result-box">请填写步数或目标公里数</div>'; return; }
+  sdResult.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
