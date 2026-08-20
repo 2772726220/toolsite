@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP状态码大全 - 在线HTTP状态码速查表</title>
+  <meta name="description" content="免费 HTTP 状态码速查工具，收录 1xx-5xx 全部常用状态码含义与说明，支持搜索过滤，开发者调试接口必备速查表。" />
+  <meta name="keywords" content="HTTP状态码,状态码速查,200,301,404,500,http status code">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"404 \u548c 403 \u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"403 \u8868\u793a\u670d\u52a1\u5668\u7406\u89e3\u8bf7\u6c42\u4f46\u62d2\u7edd\u8bbf\u95ee\uff08\u6743\u9650\u4e0d\u8db3\uff09\uff1b404 \u8868\u793a\u8bf7\u6c42\u7684\u8d44\u6e90\u4e0d\u5b58\u5728\u3002"}},{"@type":"Question","name":"500 \u548c 502 \u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"500 \u662f\u670d\u52a1\u5668\u5185\u90e8\u9519\u8bef\uff08\u4ee3\u7801\u6216\u914d\u7f6e\u95ee\u9898\uff09\uff1b502 \u662f\u7f51\u5173/\u4ee3\u7406\u6536\u5230\u4e86\u4e0a\u6e38\u670d\u52a1\u5668\u7684\u65e0\u6548\u54cd\u5e94\u3002"}},{"@type":"Question","name":"301 \u548c 302 \u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"301 \u662f\u6c38\u4e45\u91cd\u5b9a\u5411\uff0c\u641c\u7d22\u5f15\u64ce\u4f1a\u66f4\u65b0\u7d22\u5f15\uff1b302 \u662f\u4e34\u65f6\u91cd\u5b9a\u5411\uff0cURL \u4e0d\u53d8\u66f4\u3002"}},{"@type":"Question","name":"429 \u662f\u4ec0\u4e48\u9519\u8bef\uff1f","acceptedAnswer":{"@type":"Answer","text":"429 Too Many Requests\uff0c\u8bf7\u6c42\u8fc7\u4e8e\u9891\u7e41\u88ab\u9650\u6d41\uff0c\u901a\u5e38\u914d\u5408 Retry-After \u5934\u4f7f\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌐 HTTP状态码速查</h1>
+    <p>200/301/404/500 等 HTTP 状态码含义速查表</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">HTTP状态码速查</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#HTTP</span><span class="badge">#状态码</span><span class="badge">#速查</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+  <input type="search" id="scSearch" class="search-input" placeholder="🔍 搜索状态码或含义，如 404 / 成功 / 重定向…">
+  <select id="scGroup">
+    <option value="">全部类别（1xx-5xx）</option>
+    <option value="1">1xx 信息提示</option>
+    <option value="2">2xx 成功</option>
+    <option value="3">3xx 重定向</option>
+    <option value="4">4xx 客户端错误</option>
+    <option value="5">5xx 服务器错误</option>
+  </select>
+</div>
+<div id="scList" style="display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>HTTP 状态码有哪几类？</h2><p>HTTP 状态码分为五类：1xx 信息提示、2xx 成功、3xx 重定向、4xx 客户端错误、5xx 服务器错误。掌握常见状态码能帮助你快速定位接口或网页问题。</p><h2>最常见的状态码有哪些？</h2><p>200 成功、301/302 重定向、400 请求错误、401 未认证、403 无权限、404 不存在、429 请求过多、500 服务器内部错误、502 网关错误、503 服务不可用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>404 和 403 有什么区别？</summary><p>403 表示服务器理解请求但拒绝访问（权限不足）；404 表示请求的资源不存在。</p></details><details class="faq-item"><summary>500 和 502 有什么区别？</summary><p>500 是服务器内部错误（代码或配置问题）；502 是网关/代理收到了上游服务器的无效响应。</p></details><details class="faq-item"><summary>301 和 302 有什么区别？</summary><p>301 是永久重定向，搜索引擎会更新索引；302 是临时重定向，URL 不变更。</p></details><details class="faq-item"><summary>429 是什么错误？</summary><p>429 Too Many Requests，请求过于频繁被限流，通常配合 Retry-After 头使用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>HTTP状态码速查 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='http-status-codes';}); _r.unshift('http-status-codes'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var SC = [
+  { c: 100, g: 1, n: 'Continue', d: '继续。服务器已收到请求头，客户端应继续发送请求体。' },
+  { c: 101, g: 1, n: 'Switching Protocols', d: '切换协议。服务器同意切换协议（如升级到 WebSocket）。' },
+  { c: 102, g: 1, n: 'Processing', d: '处理中。WebDAV 请求，服务器正在处理但尚无响应。' },
+  { c: 103, g: 1, n: 'Early Hints', d: '提前提示。服务器在最终响应前先发送部分响应头。' },
+  { c: 200, g: 2, n: 'OK', d: '请求成功。正常返回请求的响应内容。' },
+  { c: 201, g: 2, n: 'Created', d: '已创建。请求成功且服务器创建了新资源。' },
+  { c: 202, g: 2, n: 'Accepted', d: '已接受。请求已接收但尚未处理完成。' },
+  { c: 203, g: 2, n: 'Non-Authoritative Information', d: '非权威信息。返回的元信息来自本地或第三方副本。' },
+  { c: 204, g: 2, n: 'No Content', d: '无内容。请求成功但无内容返回，常用于表单提交。' },
+  { c: 205, g: 2, n: 'Reset Content', d: '重置内容。请求成功，要求客户端重置视图。' },
+  { c: 206, g: 2, n: 'Partial Content', d: '部分内容。返回了 Range 请求指定的部分内容，用于断点续传。' },
+  { c: 207, g: 2, n: 'Multi-Status', d: '多状态。WebDAV 返回多个独立状态码。' },
+  { c: 300, g: 3, n: 'Multiple Choices', d: '多种选择。请求的资源有多个表示，客户端需选择。' },
+  { c: 301, g: 3, n: 'Moved Permanently', d: '永久重定向。资源已永久转移到新 URL，浏览器会更新书签。' },
+  { c: 302, g: 3, n: 'Found', d: '临时重定向。资源临时在别处，URL 不变更。' },
+  { c: 303, g: 3, n: 'See Other', d: '查看其他。应通过 GET 请求 Location 指向的新资源。' },
+  { c: 304, g: 3, n: 'Not Modified', d: '未修改。缓存有效，直接使用本地缓存。' },
+  { c: 305, g: 3, n: 'Use Proxy', d: '使用代理。资源必须通过指定代理访问。' },
+  { c: 307, g: 3, n: 'Temporary Redirect', d: '临时重定向。同 302，但保持请求方法不变。' },
+  { c: 308, g: 3, n: 'Permanent Redirect', d: '永久重定向。同 301，但保持请求方法不变。' },
+  { c: 400, g: 4, n: 'Bad Request', d: '请求错误。语法错误或参数不合法，服务器无法理解。' },
+  { c: 401, g: 4, n: 'Unauthorized', d: '未认证。需要登录或提供有效凭证。' },
+  { c: 402, g: 4, n: 'Payment Required', d: '需要付款。保留状态码，用于未来付费功能。' },
+  { c: 403, g: 4, n: 'Forbidden', d: '禁止访问。服务器理解请求但拒绝执行（权限不足）。' },
+  { c: 404, g: 4, n: 'Not Found', d: '未找到。请求的资源不存在或 URL 错误。' },
+  { c: 405, g: 4, n: 'Method Not Allowed', d: '方法不允许。请求方法（如 POST）不被该资源支持。' },
+  { c: 406, g: 4, n: 'Not Acceptable', d: '不可接受。响应内容不符合客户端 Accept 头要求。' },
+  { c: 407, g: 4, n: 'Proxy Authentication Required', d: '需要代理认证。必须先通过代理服务器认证。' },
+  { c: 408, g: 4, n: 'Request Timeout', d: '请求超时。服务器等待请求超时。' },
+  { c: 409, g: 4, n: 'Conflict', d: '冲突。请求与当前资源状态冲突。' },
+  { c: 410, g: 4, n: 'Gone', d: '资源已永久删除，且不再可用。' },
+  { c: 411, g: 4, n: 'Length Required', d: '需要 Content-Length 请求头。' },
+  { c: 412, g: 4, n: 'Precondition Failed', d: '前置条件失败。请求头中的条件不满足。' },
+  { c: 413, g: 4, n: 'Payload Too Large', d: '请求体过大，服务器拒绝处理。' },
+  { c: 414, g: 4, n: 'URI Too Long', d: 'URL 过长，服务器拒绝处理。' },
+  { c: 415, g: 4, n: 'Unsupported Media Type', d: '不支持的媒体类型。Content-Type 不被支持。' },
+  { c: 416, g: 4, n: 'Range Not Satisfiable', d: '请求的范围无效，无法满足。' },
+  { c: 417, g: 4, n: 'Expectation Failed', d: 'Expect 请求头期望未能满足。' },
+  { c: 418, g: 4, n: "I'm a teapot", d: '我是个茶壶。愚人节彩蛋状态码。' },
+  { c: 421, g: 4, n: 'Misdirected Request', d: '请求被发往无法响应它的服务器。' },
+  { c: 422, g: 4, n: 'Unprocessable Entity', d: '语义错误。请求格式正确但内容无法处理。' },
+  { c: 423, g: 4, n: 'Locked', d: '资源被锁定，无法访问。' },
+  { c: 424, g: 4, n: 'Failed Dependency', d: '依赖失败。前置请求失败导致本请求失败。' },
+  { c: 425, g: 4, n: 'Too Early', d: '请求过于提前，可能重放。' },
+  { c: 426, g: 4, n: 'Upgrade Required', d: '需要升级协议。请切换到 TLS/1.0 或 HTTP/2。' },
+  { c: 428, g: 4, n: 'Precondition Required', d: '需要前置条件。服务器要求使用 If-Match 等条件头。' },
+  { c: 429, g: 4, n: 'Too Many Requests', d: '请求过多。触发限流，通常配合 Retry-After 头。' },
+  { c: 431, g: 4, n: 'Request Header Fields Too Large', d: '请求头字段过大。' },
+  { c: 451, g: 4, n: 'Unavailable For Legal Reasons', d: '因法律原因不可用。' },
+  { c: 500, g: 5, n: 'Internal Server Error', d: '服务器内部错误。代码异常或配置错误。' },
+  { c: 501, g: 5, n: 'Not Implemented', d: '未实现。服务器不支持请求的方法。' },
+  { c: 502, g: 5, n: 'Bad Gateway', d: '网关错误。上游服务器返回了无效响应。' },
+  { c: 503, g: 5, n: 'Service Unavailable', d: '服务不可用。过载或维护中，通常配合 Retry-After。' },
+  { c: 504, g: 5, n: 'Gateway Timeout', d: '网关超时。上游服务器未及时响应。' },
+  { c: 505, g: 5, n: 'HTTP Version Not Supported', d: '不支持的 HTTP 版本。' },
+  { c: 506, g: 5, n: 'Variant Also Negotiates', d: '变体协商错误。' },
+  { c: 507, g: 5, n: 'Insufficient Storage', d: '存储空间不足。WebDAV 服务器无法存储资源。' },
+  { c: 508, g: 5, n: 'Loop Detected', d: '检测到循环。服务器处理请求时陷入死循环。' },
+  { c: 510, g: 5, n: 'Not Extended', d: '需要扩展。需要进一步扩展请求才能满足。' },
+  { c: 511, g: 5, n: 'Network Authentication Required', d: '需要网络认证。需要登录才能访问网络。' }
+];
+
+var scList = document.getElementById('scList');
+var scSearch = document.getElementById('scSearch');
+var scGroup = document.getElementById('scGroup');
+
+function groupName(g) {
+  return { 1: '1xx 信息提示', 2: '2xx 成功', 3: '3xx 重定向', 4: '4xx 客户端错误', 5: '5xx 服务器错误' }[g];
+}
+
+function scColor(g) {
+  return { 1: '#6366f1', 2: '#22c55e', 3: '#f59e0b', 4: '#ef4444', 5: '#8b5cf6' }[g];
+}
+
+function renderSc() {
+  var q = scSearch.value.trim().toLowerCase();
+  var g = scGroup.value;
+  var rows = SC.filter(function (s) {
+    if (g && String(s.g) !== g) return false;
+    if (q && s.n.toLowerCase().indexOf(q) < 0 && String(s.c).indexOf(q) < 0 && s.d.indexOf(q) < 0) return false;
+    return true;
+  });
+  if (!rows.length) { scList.innerHTML = '<div class="result-box">没有匹配的状态码，换个关键词试试～</div>'; return; }
+  scList.innerHTML = rows.map(function (s) {
+    return '<div class="stat" style="display:flex;align-items:center;gap:12px;padding:10px 12px;margin:0;">' +
+      '<span style="font-weight:700;font-size:20px;color:' + scColor(s.g) + ';min-width:52px;">' + s.c + '</span>' +
+      '<div style="flex:1;min-width:0;"><div style="font-weight:600;">' + s.n + ' <span class="badge" style="font-size:11px;margin:0;">' + groupName(s.g) + '</span></div>' +
+      '<div style="font-size:13px;color:var(--muted);margin-top:2px;">' + s.d + '</div></div></div>';
+  }).join('');
+}
+
+scSearch.addEventListener('input', renderSc);
+scGroup.addEventListener('change', renderSc);
+renderSc();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
