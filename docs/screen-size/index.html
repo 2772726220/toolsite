@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>屏幕尺寸检测 - 在线查看浏览器视口分辨率设备信息</title>
+  <meta name="description" content="免费在线屏幕尺寸检测工具，实时显示浏览器视口宽高、屏幕分辨率、设备像素比、操作系统、浏览器版本、UA 等信息，前端调试与兼容性测试必备。" />
+  <meta name="keywords" content="屏幕尺寸检测,浏览器分辨率,视口大小,设备像素比,DPR,UA查看">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4fe1\u606f\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u4fe1\u606f\u90fd\u5728\u672c\u5730\u8bfb\u53d6\u663e\u793a\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5728\u624b\u673a\u4e0a\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u5728\u624b\u673a\u4e0a\u6253\u5f00\u5373\u53ef\u67e5\u770b\u5f53\u524d\u8bbe\u5907\u7684\u89c6\u53e3\u4e0e DPR\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🖥️ 屏幕尺寸检测</h1>
+    <p>检测浏览器视口、分辨率、DPR、系统与浏览器信息</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">屏幕尺寸检测</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#屏幕</span><span class="badge">#分辨率</span><span class="badge">#DPR</span>
+<div class="stat-bar" style="margin-bottom:16px;">
+  <div class="stat"><div class="num" id="ssVw">-</div><div class="label">视口宽高</div></div>
+  <div class="stat"><div class="num" id="ssSc">-</div><div class="label">屏幕分辨率</div></div>
+  <div class="stat"><div class="num" id="ssDpr">-</div><div class="label">设备像素比 DPR</div></div>
+</div>
+<div class="stat-bar" style="margin-bottom:16px;">
+  <div class="stat"><div class="num" id="ssOs">-</div><div class="label">操作系统</div></div>
+  <div class="stat"><div class="num" id="ssBr">-</div><div class="label">浏览器</div></div>
+  <div class="stat"><div class="num" id="ssCol">-</div><div class="label">颜色深度</div></div>
+</div>
+<div>
+  <label>浏览器 UA（User-Agent）</label>
+  <textarea id="ssUa" rows="5" readonly></textarea>
+</div>
+<button class="btn btn-secondary" id="ssCopy">📋 复制 UA</button>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>视口和屏幕分辨率有什么区别？</h2><p>视口是浏览器里网页实际可用的区域，屏幕分辨率是显示器物理像素。移动端两者差异很大，响应式开发以视口为准。</p><h2>设备像素比（DPR）是什么？</h2><p>DPR=物理像素/逻辑像素。iPhone 等高清屏 DPR 为 2-3，同样是 375px 宽，物理像素数多得多。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>信息会上传吗？</summary><p>不会，所有信息都在本地读取显示。</p></details><details class="faq-item"><summary>可以在手机上用吗？</summary><p>可以，在手机上打开即可查看当前设备的视口与 DPR。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>屏幕尺寸检测 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='screen-size';}); _r.unshift('screen-size'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ssVw = document.getElementById('ssVw');
+var ssSc = document.getElementById('ssSc');
+var ssDpr = document.getElementById('ssDpr');
+var ssOs = document.getElementById('ssOs');
+var ssBr = document.getElementById('ssBr');
+var ssCol = document.getElementById('ssCol');
+var ssUa = document.getElementById('ssUa');
+var ssCopy = document.getElementById('ssCopy');
+
+function detectOS(ua) {
+  if (/windows/i.test(ua)) return 'Windows';
+  if (/android/i.test(ua)) return 'Android';
+  if (/iphone|ipad|ipod/i.test(ua)) return 'iOS';
+  if (/mac os x|macintosh/i.test(ua)) return 'macOS';
+  if (/linux/i.test(ua)) return 'Linux';
+  if (/cros/i.test(ua)) return 'ChromeOS';
+  return '未知';
+}
+
+function detectBrowser(ua) {
+  if (/edg\//i.test(ua)) return 'Edge';
+  if (/chrome\//i.test(ua) && !/chromium/i.test(ua)) return 'Chrome';
+  if (/firefox\//i.test(ua)) return 'Firefox';
+  if (/safari\//i.test(ua)) return 'Safari';
+  if (/opera|opr\//i.test(ua)) return 'Opera';
+  if (/wechat|micromessenger/i.test(ua)) return '微信内置浏览器';
+  return '其他浏览器';
+}
+
+function update() {
+  var ua = navigator.userAgent || '';
+  var vw = window.innerWidth || 0;
+  var vh = window.innerHeight || 0;
+  var dpr = window.devicePixelRatio || 1;
+  var sw = screen.width || 0;
+  var sh = screen.height || 0;
+  ssVw.textContent = vw + ' × ' + vh;
+  ssSc.textContent = sw + ' × ' + sh;
+  ssDpr.textContent = dpr + 'x';
+  ssOs.textContent = detectOS(ua);
+  ssBr.textContent = detectBrowser(ua);
+  ssCol.textContent = (screen.colorDepth || '?') + ' bit';
+  ssUa.value = ua;
+}
+
+ssCopy.addEventListener('click', function () {
+  if (!ssUa.value) { showToast('没有可复制的 UA'); return; }
+  try { navigator.clipboard.writeText(ssUa.value); showToast('已复制 UA'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+
+window.addEventListener('resize', update);
+update();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
