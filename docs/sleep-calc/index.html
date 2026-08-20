@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😴</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u300e\u8ba1\u5212\u5165\u7761\u65f6\u95f4\u300f\u7b97\u51fa\u7406\u60f3\u8d77\u5e8a\u65f6\u523b\uff0c\u6216\u9009\u300e\u8ba1\u5212\u8d77\u5e8a\u65f6\u95f4\u300f\u53cd\u63a8\u5165\u7761\u65f6\u523b\u3002"}},{"@type":"Question","name":"\u5468\u671f\u4e00\u5b9a 90 \u5206\u949f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u56e0\u4eba\u800c\u5f02\u7ea6 80-100 \u5206\u949f\uff0c\u7ed3\u679c\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u80fd\u540c\u65f6\u663e\u793a\u591a\u4e2a\u65b9\u6848\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7ed9\u51fa\u63d0\u524d 3-6 \u4e2a\u5468\u671f\u7684\u6700\u4f18\u65f6\u523b\u5217\u8868\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>😴 睡眠周期计算</h1>
@@ -51,6 +55,7 @@
     <p>睡眠周期计算 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -110,6 +115,24 @@ var slResult = document.getElementById('slResult');
     html += '<br><span style="font-size:12px;color:var(--muted);">入睡约需 15 分钟，以上为躺下时间。</span>';
     slResult.innerHTML = html;
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
