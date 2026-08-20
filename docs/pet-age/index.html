@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宠物年龄换算器 - 狗猫年龄转人类年龄计算</title>
+  <meta name="description" content="免费在线宠物年龄换算器，输入狗/猫的实际年龄，换算对应的人类年龄，并给出犬种体型对照与猫龄对照说明，了解你家毛孩子的人生阶段。" />
+  <meta name="keywords" content="宠物年龄,狗年龄换算,猫年龄换算,狗狗几岁,猫咪年龄">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐶</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5c0f\u578b\u72ac\u548c\u5927\u578b\u72ac\u5bff\u547d\u4e00\u6837\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4e00\u6837\uff0c\u5927\u578b\u72ac\u5e73\u5747\u5bff\u547d\u77ed\u4e8e\u5c0f\u578b\u72ac\uff0c\u8001\u5316\u901f\u5ea6\u66f4\u5feb\uff0c\u6362\u7b97\u7cfb\u6570\u4e0d\u540c\u3002"}},{"@type":"Question","name":"\u6362\u7b97\u516c\u5f0f\u662f\u5b98\u65b9\u7684\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u517d\u533b\u754c\u901a\u7528\u7684\u5e74\u9f84\u6362\u7b97\u6a21\u578b\uff0c\u7528\u4e8e\u7406\u89e3\u5ba0\u7269\u5e74\u9f84\u9636\u6bb5\uff0c\u5177\u4f53\u4e2a\u4f53\u5b58\u5728\u5dee\u5f02\u3002"}},{"@type":"Question","name":"\u6211\u7684\u732b 2 \u5c81\u76f8\u5f53\u4e8e\u4eba\u591a\u5c11\u5c81\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ea6 24 \u5c81\u5de6\u53f3\uff0c\u6b63\u5904\u9752\u5e74\u671f\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u8981\u6362\u7b97\u5e74\u9f84\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5e2e\u52a9\u4e3b\u4eba\u5728\u5ba0\u7269\u4e0d\u540c\u5e74\u9f84\u9636\u6bb5\u8c03\u6574\u996e\u98df\u3001\u4f53\u68c0\u4e0e\u62a4\u7406\u8ba1\u5212\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🐶 宠物年龄换算</h1>
+    <p>狗/猫年龄换算人类年龄，附对照表</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">宠物年龄换算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#宠物</span><span class="badge">#狗狗</span><span class="badge">#猫咪</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>宠物类型</label>
+    <select id="paType">
+      <option value="dog-small">狗（小型犬 ≤10kg）</option>
+      <option value="dog-medium">狗（中型犬 11-25kg）</option>
+      <option value="dog-large">狗（大型犬 &gt;25kg）</option>
+      <option value="cat">猫</option>
+    </select>
+  </div>
+  <div><label>宠物年龄（岁）</label><input type="number" id="paAge" value="3" min="0" max="40" placeholder="如 3"></div>
+</div>
+<button class="btn btn-primary" id="paCalc">换算人类年龄</button>
+<div id="paResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>狗的一岁等于人的几岁？</h2><p>传统说法 1 狗年 = 7 人年并不准确。更科学的算法：狗第一年约等于人类 15 岁，第二年约 24 岁，之后每年约 4~5 岁，且大型犬老化更快。</p><h2>猫的一岁等于人的几岁？</h2><p>猫第一年约等于人类 15 岁，第二年约 24 岁，之后每年约等于人类 4 岁，10 岁以上的猫相当于 50 岁以上的人类。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>小型犬和大型犬寿命一样吗？</summary><p>不一样，大型犬平均寿命短于小型犬，老化速度更快，换算系数不同。</p></details><details class="faq-item"><summary>换算公式是官方的吗？</summary><p>基于兽医界通用的年龄换算模型，用于理解宠物年龄阶段，具体个体存在差异。</p></details><details class="faq-item"><summary>我的猫 2 岁相当于人多少岁？</summary><p>约 24 岁左右，正处青年期。</p></details><details class="faq-item"><summary>为什么要换算年龄？</summary><p>帮助主人在宠物不同年龄阶段调整饮食、体检与护理计划。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>宠物年龄换算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='pet-age';}); _r.unshift('pet-age'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var paType = document.getElementById('paType');
+var paAge = document.getElementById('paAge');
+var paCalc = document.getElementById('paCalc');
+var paResult = document.getElementById('paResult');
+
+function dogAge(type, years) {
+  // 基于常见兽医模型：第一年15岁，第二年+9，之后每年+4~5（大型犬老化更快）
+  var perYear = type === 'dog-small' ? 4 : type === 'dog-medium' ? 5 : 6;
+  if (years <= 0) return 0;
+  if (years === 1) return 15;
+  if (years === 2) return 24;
+  return 24 + (years - 2) * perYear;
+}
+
+function catAge(years) {
+  if (years <= 0) return 0;
+  if (years === 1) return 15;
+  if (years === 2) return 24;
+  return 24 + (years - 2) * 4;
+}
+
+function humanStage(h) {
+  if (h < 2) return '婴儿期';
+  if (h < 12) return '儿童期';
+  if (h < 20) return '青少年';
+  if (h < 40) return '青年/壮年';
+  if (h < 60) return '中年';
+  return '老年';
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+paCalc.addEventListener('click', function () {
+  var years = parseFloat(paAge.value);
+  if (isNaN(years) || years < 0 || years > 40) { paResult.innerHTML = '<div class="result-box">请输入 0~40 之间的年龄</div>'; return; }
+  var type = paType.value;
+  var human = type === 'cat' ? catAge(years) : dogAge(type, years);
+  var typeName = { 'dog-small': '小型犬', 'dog-medium': '中型犬', 'dog-large': '大型犬', 'cat': '猫' }[type];
+  paResult.innerHTML =
+    row(typeName + ' ' + (years % 1 === 0 ? years : years.toFixed(1)) + ' 岁', '≈ 人类 ' + human + ' 岁') +
+    row('对应人生阶段', humanStage(human)) +
+    row('相处建议', years <= 1 ? '幼年：注意疫苗与社会化训练' : human < 30 ? '壮年：多陪伴运动，保持体重' : human < 50 ? '中年：关注牙齿与关节健康' : '老年：定期体检，注意饮食软糯');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
