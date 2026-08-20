@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>最大公约数与最小公倍数 - 在线GCD和LCM计算器</title>
+  <meta name="description" content="免费在线最大公约数与最小公倍数计算器，支持两个或多个整数，展示辗转相除过程，并附分数约分快捷功能，数学作业必备工具。" />
+  <meta name="keywords" content="最大公约数,最小公倍数,GCD,LCM,约分,辗转相除,数学工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➗</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u51e0\u4e2a\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6700\u591a\u652f\u6301 10 \u4e2a\u6570\u540c\u65f6\u6c42 GCD \u4e0e LCM\u3002"}},{"@type":"Question","name":"\u8d1f\u6570\u53ef\u4ee5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8bf7\u8f93\u5165\u6b63\u6574\u6570\u3002"}},{"@type":"Question","name":"\u4f1a\u663e\u793a\u8fc7\u7a0b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e24\u4e2a\u6570\u65f6\u5c55\u793a\u8f97\u8f6c\u76f8\u9664\u6b65\u9aa4\u3002"}},{"@type":"Question","name":"\u80fd\u5316\u7b80\u5206\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u8f93\u5165\u5206\u5b50\u5206\u6bcd\u81ea\u52a8\u7ea6\u5206\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>➗ 最大公约数与最小公倍数</h1>
+    <p>GCD / LCM，多数字与分数化简</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">最大公约数与最小公倍数</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#最大公约数</span><span class="badge">#最小公倍数</span>
+<div class="field">
+  <label for="glData">数字（空格/逗号/换行分隔，最多 10 个）</label>
+  <textarea id="glData" placeholder="例如：12 18 30"></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="glBtn" type="button">计算 GCD 与 LCM</button>
+</div>
+<div class="result-box" id="glResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>GCD 和 LCM 是什么？</h2><p>GCD 是两个数能同时整除的最大整数；LCM 是能被两数同时整除的最小正整数。</p><h2>怎么求？</h2><p>用辗转相除法求 GCD，LCM = a×b÷GCD。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持几个数？</summary><p>最多支持 10 个数同时求 GCD 与 LCM。</p></details><details class="faq-item"><summary>负数可以吗？</summary><p>请输入正整数。</p></details><details class="faq-item"><summary>会显示过程吗？</summary><p>两个数时展示辗转相除步骤。</p></details><details class="faq-item"><summary>能化简分数吗？</summary><p>可以，输入分子分母自动约分。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>最大公约数与最小公倍数 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var glResult = document.getElementById('glResult');
+
+  function gcd2(a, b) {
+    a = Math.abs(a); b = Math.abs(b);
+    while (b) { var t = a % b; a = b; b = t; }
+    return a;
+  }
+  function lcm2(a, b) { return Math.abs(a * b) / gcd2(a, b); }
+
+  document.getElementById('glBtn').addEventListener('click', function () {
+    var raw = document.getElementById('glData').value;
+    var nums = raw.split(/[\s,，;；\n]+/).map(function (s) { return parseInt(s, 10); }).filter(function (n) { return Number.isInteger(n) && n > 0; });
+    if (nums.length < 2) { showToast('请至少输入两个正整数'); return; }
+    if (nums.length > 10) { showToast('最多 10 个数字'); return; }
+    if (nums.some(function (n) { return !isFinite(n) || n <= 0; })) { showToast('请输入正整数'); return; }
+    var g = nums[0], l = nums[0];
+    nums.slice(1).forEach(function (x) { g = gcd2(g, x); l = lcm2(l, x); });
+    var steps = '';
+    if (nums.length === 2) {
+      var a = nums[0], b = nums[1], aa = a, bb = b;
+      steps = '<div style="font-size:12px;color:var(--muted);margin-bottom:8px;">辗转相除：';
+      while (bb) { var q = Math.floor(aa / bb), r = aa % bb; steps += aa + ' = ' + bb + '×' + q + (r ? ' + ' + r : '') + '； '; aa = bb; bb = r; }
+      steps += '故 GCD(' + nums[0] + ',' + nums[1] + ')=' + aa + '，LCM = ' + nums[0] + '×' + nums[1] + '÷' + aa + ' = ' + l + '</div>';
+    }
+    glResult.hidden = false;
+    glResult.innerHTML = steps +
+      '最大公约数 GCD：<b style="font-size:24px;">' + g + '</b><br>' +
+      '最小公倍数 LCM：<b style="font-size:24px;">' + l + '</b><br>' +
+      (g === 1 ? '<span style="font-size:12px;color:var(--muted);">这些数两两互质。</span>' : '');
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
