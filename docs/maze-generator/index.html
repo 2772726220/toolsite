@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>迷宫生成器 - 在线随机迷宫生成下载工具</title>
+  <meta name="description" content="免费在线迷宫生成器，用深度优先回溯算法生成完美迷宫（任意两点只有一条路径），可调节行列数，实时预览并下载为 PNG 图片。" />
+  <meta name="keywords" content="迷宫生成,迷宫,随机迷宫,迷宫图片,迷宫下载,DFS迷宫">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u751f\u6210\u591a\u5927\u5c3a\u5bf8\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 5x5 \u5230 60x60\uff0c\u683c\u5b50\u8d8a\u591a\u8ff7\u5bab\u8d8a\u96be\u3002"}},{"@type":"Question","name":"\u8ff7\u5bab\u4fdd\u8bc1\u6709\u89e3\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528 DFS \u56de\u6eaf\u7b97\u6cd5\u751f\u6210\u7684\u662f\u5b8c\u7f8e\u8ff7\u5bab\uff0c\u8d77\u70b9\u5230\u7ec8\u70b9\u5fc5\u7136\u5b58\u5728\u552f\u4e00\u8def\u5f84\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u4e0b\u8f7d\u4e3a PNG \u56fe\u7247\uff0c\u6216\u76f4\u63a5\u622a\u56fe\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌀 迷宫生成器</h1>
+    <p>生成随机迷宫，可下载 PNG 图片</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">迷宫生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#迷宫</span><span class="badge">#生成器</span><span class="badge">#算法</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>行数</label><input type="number" id="mzRows" value="21" min="5" max="60" step="2"></div>
+  <div><label>列数</label><input type="number" id="mzCols" value="21" min="5" max="60" step="2"></div>
+  <div><label>样式</label>
+    <select id="mzStyle">
+      <option value="classic" selected>经典（墙+路）</option>
+      <option value="thin">细线</option>
+      <option value="dots">点阵</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>颜色</label><input type="color" id="mzColor" value="#1e293b"></div>
+  <div><button class="btn btn-primary" id="mzGo" style="width:100%;">🔄 重新生成</button></div>
+</div>
+<div id="mzBox" style="display:flex;justify-content:center;overflow:auto;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-secondary" id="mzDownload">⬇️ 下载 PNG</button>
+  <button class="btn btn-secondary" id="mzPrint">🖨️ 打印</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是完美迷宫？</h2><p>完美迷宫指任意两个格子之间有且仅有一条路径，没有环路，迷宫更考验逻辑而非运气。</p><h2>迷宫怎么用？</h2><p>生成后可下载 PNG 打印给小朋友玩，或用于游戏关卡、活动物料设计。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能生成多大尺寸？</summary><p>支持 5x5 到 60x60，格子越多迷宫越难。</p></details><details class="faq-item"><summary>迷宫保证有解吗？</summary><p>使用 DFS 回溯算法生成的是完美迷宫，起点到终点必然存在唯一路径。</p></details><details class="faq-item"><summary>可以保存吗？</summary><p>可以下载为 PNG 图片，或直接截图。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>迷宫生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='maze-generator';}); _r.unshift('maze-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mzRows = document.getElementById('mzRows');
+var mzCols = document.getElementById('mzCols');
+var mzStyle = document.getElementById('mzStyle');
+var mzColor = document.getElementById('mzColor');
+var mzGo = document.getElementById('mzGo');
+var mzBox = document.getElementById('mzBox');
+var mzDownload = document.getElementById('mzDownload');
+var mzPrint = document.getElementById('mzPrint');
+
+var curCanvas = null;
+
+function genMaze(rows, cols) {
+  // rows, cols should be odd
+  if (rows % 2 === 0) rows++;
+  if (cols % 2 === 0) cols++;
+  var grid = [];
+  for (var r = 0; r < rows; r++) {
+    grid[r] = [];
+    for (var c = 0; c < cols; c++) grid[r][c] = 1; // 1 = wall
+  }
+  var stack = [[1, 1]];
+  grid[1][1] = 0;
+  var dirs = [[0, 2], [0, -2], [2, 0], [-2, 0]];
+  while (stack.length > 0) {
+    var cur = stack[stack.length - 1];
+    var options = [];
+    dirs.forEach(function (d) {
+      var nr = cur[0] + d[0], nc = cur[1] + d[1];
+      if (nr > 0 && nr < rows - 1 && nc > 0 && nc < cols - 1 && grid[nr][nc] === 1) options.push([nr, nc]);
+    });
+    if (options.length === 0) { stack.pop(); continue; }
+    var next = options[Math.floor(Math.random() * options.length)];
+    grid[(cur[0] + next[0]) / 2][(cur[1] + next[1]) / 2] = 0;
+    grid[next[0]][next[1]] = 0;
+    stack.push(next);
+  }
+  // entrance & exit
+  grid[0][1] = 0;
+  grid[rows - 1][cols - 2] = 0;
+  return grid;
+}
+
+function renderMaze() {
+  var rows = Math.max(5, parseInt(mzRows.value, 10) || 21);
+  var cols = Math.max(5, parseInt(mzCols.value, 10) || 21);
+  var style = mzStyle.value;
+  var color = mzColor.value;
+  var grid = genMaze(rows, cols);
+  var cell = style === 'thin' ? 8 : 12;
+  var w = cols * cell, h = rows * cell;
+  var canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, cell, h); // left border
+  for (var r = 0; r < rows; r++) {
+    for (var c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) {
+        if (style === 'dots') { ctx.beginPath(); ctx.arc(c * cell + cell / 2, r * cell + cell / 2, cell * 0.35, 0, Math.PI * 2); ctx.fill(); }
+        else ctx.fillRect(c * cell, r * cell, cell, cell);
+      }
+    }
+  }
+  // entrance/exit marks
+  ctx.fillStyle = '#16a34a';
+  ctx.fillRect(0, 1 * cell, cell, cell);
+  ctx.fillStyle = '#dc2626';
+  ctx.fillRect((cols - 1) * cell, (rows - 2) * cell, cell, cell);
+  canvas.style.cssText = 'max-width:100%;height:auto;border-radius:8px;';
+  mzBox.innerHTML = '';
+  mzBox.appendChild(canvas);
+  curCanvas = canvas;
+}
+
+mzGo.addEventListener('click', renderMaze);
+mzRows.addEventListener('change', renderMaze);
+mzCols.addEventListener('change', renderMaze);
+mzStyle.addEventListener('change', renderMaze);
+mzColor.addEventListener('input', renderMaze);
+
+mzDownload.addEventListener('click', function () {
+  if (!curCanvas) return;
+  try {
+    var a = document.createElement('a');
+    a.href = curCanvas.toDataURL('image/png');
+    a.download = 'maze.png';
+    a.click();
+    showToast('已下载 maze.png');
+  } catch (e) { showToast('下载失败，请截图保存'); }
+});
+
+mzPrint.addEventListener('click', function () {
+  if (!curCanvas) return;
+  try {
+    var win = window.open('', '_blank');
+    if (!win) { showToast('浏览器阻止了弹窗'); return; }
+    win.document.write('<html><head><title>迷宫</title><style>body{display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}img{max-width:100%}</style></head><body>');
+    win.document.write('<img src="' + curCanvas.toDataURL('image/png') + '">');
+    win.document.write('</body></html>');
+    win.document.close();
+    win.focus();
+    win.print();
+  } catch (e) { showToast('打印失败'); }
+});
+
+renderMaze();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
