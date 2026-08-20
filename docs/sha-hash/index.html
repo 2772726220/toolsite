@@ -108,6 +108,7 @@ var shaInput = document.getElementById('shaInput');
   }
 
   document.getElementById('shaBtn').addEventListener('click', function () {
+    if (!window.crypto || !window.crypto.subtle) { showToast('当前环境不支持 WebCrypto，请通过 https:// 访问本站'); return; }
     var algo = document.getElementById('shaAlgo').value;
     var done = function (buf) {
       crypto.subtle.digest(algo, buf).then(function (hash) {
