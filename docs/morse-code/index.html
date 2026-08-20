@@ -8,6 +8,7 @@
   <meta name="keywords" content="摩斯电码,摩斯密码,摩斯密码翻译,电码翻译,摩斯转换,摩斯码">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u5b57\u7b26\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 A-Z\u30010-9 \u53ca\u5e38\u89c1\u6807\u70b9\u3002"}},{"@type":"Question","name":"\u80fd\u64ad\u653e\u5fc3\u8df3\u58f0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u70b9\u51fb\u64ad\u653e\u4ee5\u97f3\u6548\u8282\u594f\u542c\u6469\u65af\u7801\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}},{"@type":"Question","name":"\u95f4\u9694\u89c4\u5219\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b57\u6bcd\u95f4 3 \u4e2a\u95f4\u9694\uff0c\u5355\u8bcd\u95f4 7 \u4e2a\u95f4\u9694\uff0c\u6807\u51c6\u683c\u5f0f\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">摩斯电码</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">摩斯电码</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#摩斯</span><span class="badge">#编码</span>
@@ -43,10 +45,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>支持哪些字符？</summary><p>支持 A-Z、0-9 及常见标点。</p></details><details class="faq-item"><summary>能播放心跳声吗？</summary><p>可以，点击播放以音效节奏听摩斯码。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地转换。</p></details><details class="faq-item"><summary>间隔规则是什么？</summary><p>字母间 3 个间隔，单词间 7 个间隔，标准格式。</p></details></div>
   </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>摩斯电码 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
+    <p>摩斯电码 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -71,6 +76,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='morse-code';}); _r.unshift('morse-code'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var morseResult = document.getElementById('morseResult');
   var MORSE = {
     A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
