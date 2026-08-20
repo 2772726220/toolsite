@@ -32,6 +32,7 @@
 <div class="field">
   <label for="psInput">输入密码</label>
   <input type="password" id="psInput" placeholder="输入要检测的密码" style="font-size:16px;">
+  <button class="btn btn-secondary" id="psGenBtn" style="margin-top:10px;">🔐 生成一个强密码</button>
 </div>
 <div class="result-box" id="psResult" hidden></div>
 <div class="result-box" id="psSuggest" style="background:var(--bg);" hidden></div>
@@ -105,8 +106,14 @@ var psResult = document.getElementById('psResult');
     var pw = '';
     sets.forEach(function (s) { pw += s[0][Math.floor(Math.random() * s[0].length)]; });
     var all = sets.join('').split('');
-    var rnd = new Uint32Array(8);
-    crypto.getRandomValues(rnd);
+    var rnd = [];
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      var buf = new Uint32Array(8);
+      crypto.getRandomValues(buf);
+      rnd = Array.prototype.slice.call(buf);
+    } else {
+      for (var k = 0; k < 8; k++) rnd.push(Math.floor(Math.random() * 4294967296));
+    }
     for (var i = 0; i < 8; i++) pw += all[rnd[i] % all.length];
     pw = pw.split('').sort(function () { return Math.random() - 0.5; }).join('');
     return pw;
