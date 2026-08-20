@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打字测速 - 在线打字速度测试工具</title>
+  <meta name="description" content="免费在线打字测速工具，提供多篇中英文练习文本，实时统计打字速度（WPM）、正确字数与准确率，附带逐字比对，程序员、办公与打字练习必备。" />
+  <meta name="keywords" content="打字测速,打字速度测试,WPM,打字练习,打字准确率,键盘速度">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u63d0\u4f9b\u4e2d\u6587\u4e0e\u82f1\u6587\u4e24\u79cd\u7ec3\u4e60\u6587\u672c\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u901f\u5ea6\u6309\u6bcf 5 \u4e2a\u5b57\u7b26\u8ba1 1 \u8bcd\uff0c\u51c6\u786e\u7387\u6309\u6b63\u786e\u5b57\u7b26\u5360\u6bd4\u3002"}},{"@type":"Question","name":"\u80fd\u91cd\u6d4b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e00\u952e\u6362\u65b0\u6587\u672c\u91cd\u6d4b\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⌨️ 打字测速</h1>
+    <p>测打字速度 WPM 与准确率</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">打字测速</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#打字</span><span class="badge">#测速</span>
+<div class="field">
+  <label for="ttType">练习文本</label>
+  <select id="ttType">
+    <option value="en">英文</option>
+    <option value="zh">中文</option>
+  </select>
+</div>
+<div class="result-box" id="ttTarget" style="max-height:none;line-height:1.9;user-select:none;"></div>
+<textarea id="ttInput" placeholder="点击此处开始输入，输入完成后自动出成绩..." style="min-height:120px;"></textarea>
+<div class="result-box" id="ttStats" style="background:var(--bg);"></div>
+<div class="actions">
+  <button class="btn btn-secondary" id="ttResetBtn" type="button">换一篇重测</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>WPM 是什么？</h2><p>Words Per Minute，每分钟正确输入的有效单词数，是衡量打字速度的通用标准。</p><h2>怎么测？</h2><p>选择练习文本开始输入，统计结束自动给出速度与准确率。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文吗？</summary><p>提供中文与英文两种练习文本。</p></details><details class="faq-item"><summary>结果怎么算？</summary><p>速度按每 5 个字符计 1 词，准确率按正确字符占比。</p></details><details class="faq-item"><summary>能重测吗？</summary><p>一键换新文本重测。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>打字测速 · <a href="../category/fun/">🎮 娱乐游戏</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var ttTarget = document.getElementById('ttTarget');
+  var ttInput = document.getElementById('ttInput');
+  var ttStats = document.getElementById('ttStats');
+  var TEXTS = {
+    en: 'The quick brown fox jumps over the lazy dog. Practice makes perfect, and every expert was once a beginner. Keep typing and your speed will improve day by day. Stay focused and enjoy the journey of learning.',
+    zh: '熟能生巧，每一个打字高手都曾经是初学者。坚持每天练习，速度就会一天天提升。保持专注，享受学习的过程，你会发现自己的进步如此明显。'
+  };
+  var target = '';
+
+  function pickText() {
+    var type = document.getElementById('ttType').value;
+    target = TEXTS[type];
+    ttTarget.innerHTML = target.split('').map(function (c) { return '<span>' + c + '</span>'; }).join('');
+  }
+
+  function score(typed, text) {
+    var correct = 0;
+    var len = Math.min(typed.length, text.length);
+    for (var i = 0; i < len; i++) { if (typed[i] === text[i]) correct++; }
+    var accuracy = typed.length ? correct / typed.length * 100 : 100;
+    return { correct: correct, total: len, accuracy: accuracy };
+  }
+
+  var startTime = null;
+  var finished = false;
+
+  function update() {
+    var typed = ttInput.value;
+    var spans = ttTarget.querySelectorAll('span');
+    var s = score(typed, target);
+    var done = 0;
+    for (var i = 0; i < spans.length; i++) {
+      var char = target[i];
+      var st = 'color:var(--muted);';
+      if (i < typed.length) {
+        if (typed[i] === char) { st = 'color:var(--success);'; done++; }
+        else st = 'color:var(--danger);text-decoration:underline;';
+      }
+      spans[i].style.cssText = st;
+    }
+    if (!finished) {
+      var el = Math.max(0, (Date.now() - startTime) / 1000);
+      var wpm = el > 0 ? (done / 5) / (el / 60) : 0;
+      ttStats.innerHTML = '用时 <b>' + el.toFixed(1) + 's</b>｜正确 <b>' + done + '</b>/' + typed.length +
+        '｜准确率 <b>' + s.accuracy.toFixed(1) + '%</b>｜速度 <b>' + wpm.toFixed(1) + ' WPM</b>';
+      if (typed.length >= target.length) {
+        finished = true;
+        ttStats.innerHTML += '<br>🎉 完成！最终速度 <b>' + wpm.toFixed(1) + ' WPM</b>，准确率 <b>' + s.accuracy.toFixed(1) + '%</b>';
+      }
+    }
+  }
+
+  ttInput.addEventListener('input', function () {
+    if (!startTime) startTime = Date.now();
+    update();
+  });
+  document.getElementById('ttResetBtn').addEventListener('click', function () {
+    startTime = null; finished = false;
+    ttInput.value = '';
+    pickText();
+    update();
+    ttInput.focus();
+  });
+  document.getElementById('ttType').addEventListener('change', function () {
+    document.getElementById('ttResetBtn').click();
+  });
+
+  pickText();
+  update();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
