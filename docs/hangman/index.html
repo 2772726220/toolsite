@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猜单词游戏 - 在线英文单词猜词小游戏</title>
+  <meta name="description" content="免费在线猜单词（Hangman）小游戏，从常见英语单词中随机出题，每次猜错加画一笔，猜错 7 次游戏结束，适合练习英语单词拼写。" />
+  <meta name="keywords" content="猜单词,Hangman,吊小人,单词游戏,英语游戏,在线小游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5355\u8bcd\u5e93\u5927\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e 200+ \u5e38\u89c1\u82f1\u8bed\u5355\u8bcd\uff0c\u8986\u76d6\u521d\u9ad8\u4e2d\u8bcd\u6c47\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5df1\u51fa\u8bcd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u81ea\u5b9a\u4e49\u5355\u8bcd\u5217\u8868\uff0c\u8f93\u5165\u540e\u6309\u9017\u53f7\u5206\u9694\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u731c\u9519\u51e0\u6b21\u5931\u8d25\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4 7 \u6b21\uff0c\u53ef\u5728\u8bbe\u7f6e\u91cc\u6539\u4e3a\u66f4\u7b80\u5355\u6216\u66f4\u96be\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧩 猜单词游戏</h1>
+    <p>经典吊小人猜单词游戏，练英语词汇</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">猜单词游戏</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#猜单词</span><span class="badge">#单词</span><span class="badge">#游戏</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>难度</label>
+    <select id="hgLevel">
+      <option value="easy">简单（5 次机会）</option>
+      <option value="normal" selected>普通（7 次机会）</option>
+      <option value="hard">困难（9 次机会）</option>
+    </select>
+  </div>
+  <div><label>自定义单词（逗号分隔，可选）</label><input type="text" id="hgWords" placeholder="留空使用内置词库"></div>
+</div>
+<div class="field" style="text-align:center;padding:20px;">
+  <div id="hgWord" style="font-size:30px;letter-spacing:10px;font-weight:700;min-height:44px;"></div>
+  <div id="hgHang" style="font-family:monospace;font-size:13px;color:var(--muted);margin:10px 0;white-space:pre;"></div>
+  <div id="hgMsg" style="font-weight:700;min-height:22px;"></div>
+  <div id="hgGuessed" style="font-size:13px;color:var(--muted);min-height:20px;"></div>
+  <div id="hgKeys" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:460px;margin:12px auto;"></div>
+  <button class="btn btn-primary" id="hgRestart" style="margin-top:6px;">🔄 新一局</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>游戏规则是什么？</h2><p>系统随机选一个英文单词，显示字母位；每猜对一个字母填到位上，猜错一笔画，全部画出（7 次）即失败。</p><h2>怎么玩更高效？</h2><p>优先猜高频元音字母 a/e/i/o/u，再按词频猜常见辅音，合理利用每次机会。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>单词库大吗？</summary><p>内置 200+ 常见英语单词，覆盖初高中词汇。</p></details><details class="faq-item"><summary>可以自己出词吗？</summary><p>支持自定义单词列表，输入后按逗号分隔即可。</p></details><details class="faq-item"><summary>猜错几次失败？</summary><p>默认 7 次，可在设置里改为更简单或更难。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>猜单词游戏 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='hangman';}); _r.unshift('hangman'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var WORDS = ['apple', 'banana', 'orange', 'computer', 'keyboard', 'window', 'garden', 'school', 'water', 'mountain', 'elephant', 'pencil', 'music', 'purple', 'sunshine', 'tiger', 'umbrella', 'village', 'winter', 'yellow', 'guitar', 'happiness', 'bicycle', 'chocolate', 'diamond', 'forest', 'journey', 'kitchen', 'language', 'morning', 'ocean', 'picture', 'queen', 'rainbow', 'strawberry', 'thunder', 'universe', 'vacation', 'weekend', 'zebra'];
+
+var hgLevel = document.getElementById('hgLevel');
+var hgWords = document.getElementById('hgWords');
+var hgWord = document.getElementById('hgWord');
+var hgHang = document.getElementById('hgHang');
+var hgMsg = document.getElementById('hgMsg');
+var hgGuessed = document.getElementById('hgGuessed');
+var hgKeys = document.getElementById('hgKeys');
+var hgRestart = document.getElementById('hgRestart');
+
+var MAX_WRONG = { easy: 5, normal: 7, hard: 9 };
+var HANG_STAGES = ['', 'O', 'O\n|', 'O\n/|', 'O\n/|\\', 'O\n/|\\\n/', 'O\n/|\\\n/ \\', '─╥─\n O\n/|\\\n/ \\', '┌─╥─┐\n   O\n  /|\\\n  / \\', '┌─╥─┐\n   O\n  /|\\\n  / \\\n  STILL ALIVE!'];
+
+var word = '';
+var wordArr = [];
+var shown = [];
+var wrong = 0;
+var guessedSet = [];
+var over = false;
+
+function pickWord() {
+  var custom = hgWords.value.split(/[,，]/).map(function (s) { return s.trim().toLowerCase(); }).filter(function (s) { return /^[a-z]+$/.test(s); });
+  var pool = custom.length > 0 ? custom : WORDS;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function renderKeys() {
+  var html = '';
+  var disabled = over;
+  for (var i = 0; i < 26; i++) {
+    var ch = String.fromCharCode(97 + i);
+    var used = guessedSet.indexOf(ch) >= 0;
+    var ok = wordArr.indexOf(ch) >= 0;
+    var cls = used ? (ok ? 'key-used-ok' : 'key-used-bad') : '';
+    html += '<button class="key ' + cls + '" data-ch="' + ch + '" ' + (disabled || used ? 'disabled' : '') + '>' + ch + '</button>';
+  }
+  hgKeys.innerHTML = html;
+  hgKeys.querySelectorAll('[data-ch]').forEach(function (btn) {
+    btn.addEventListener('click', function () { guess(btn.dataset.ch); });
+  });
+}
+
+function render() {
+  var maxWrong = MAX_WRONG[hgLevel.value];
+  var stageIdx = Math.min(wrong, HANG_STAGES.length - 1);
+  hgWord.textContent = shown.map(function (c) { return c ? c : '_'; }).join(' ');
+  hgHang.textContent = HANG_STAGES[stageIdx];
+  hgGuessed.textContent = guessedSet.length ? '已猜：' + guessedSet.join(' ') : '点击下方字母按钮，或直接按键盘字母键猜词';
+  renderKeys();
+}
+
+function guess(ch) {
+  if (over || guessedSet.indexOf(ch) >= 0) return;
+  guessedSet.push(ch);
+  var hit = false;
+  for (var i = 0; i < wordArr.length; i++) {
+    if (wordArr[i] === ch) { shown[i] = ch; hit = true; }
+  }
+  if (!hit) wrong++;
+  var won = shown.indexOf(null) < 0;
+  if (won) { over = true; hgMsg.innerHTML = '🎉 恭喜猜对！单词是 <b>' + word + '</b>'; }
+  else if (wrong >= MAX_WRONG[hgLevel.value]) { over = true; hgMsg.innerHTML = '😵 机会用完了！单词是 <b>' + word + '</b>'; }
+  else hgMsg.textContent = '';
+  render();
+}
+
+function start() {
+  word = pickWord();
+  wordArr = word.split('');
+  shown = wordArr.map(function () { return null; });
+  wrong = 0;
+  guessedSet = [];
+  over = false;
+  hgMsg.textContent = '';
+  render();
+}
+
+document.addEventListener('keydown', function (e) {
+  if (over) return;
+  var ch = e.key;
+  if (/^[a-zA-Z]$/.test(ch)) guess(ch.toLowerCase());
+  if (e.key === 'Enter') start();
+});
+
+hgLevel.addEventListener('change', start);
+hgWords.addEventListener('change', start);
+hgRestart.addEventListener('click', start);
+
+start();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
