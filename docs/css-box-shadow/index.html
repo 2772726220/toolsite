@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS阴影生成器 - 在线box-shadow可视化编辑器</title>
+  <meta name="description" content="免费在线 CSS box-shadow 阴影生成器，通过滑块可视化调整偏移、模糊、扩散、颜色与多层阴影，实时预览，一键复制 CSS 代码，前端开发必备工具。" />
+  <meta name="keywords" content="css阴影,box-shadow生成器,在线css工具,阴影编辑器,css样式生成">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u53ef\u4ee5\u76f4\u63a5\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u590d\u5236\u540e\u76f4\u63a5\u7c98\u8d34\u5230 CSS \u4e2d\u5373\u53ef\uff0c\u517c\u5bb9\u6240\u6709\u73b0\u4ee3\u6d4f\u89c8\u5668\u3002"}},{"@type":"Question","name":"\u652f\u6301 inset \u5185\u9634\u5f71\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u52fe\u9009 inset \u5373\u53ef\u751f\u6210\u5185\u9634\u5f71\u6548\u679c\u3002"}},{"@type":"Question","name":"\u80fd\u9884\u89c8\u771f\u5b9e\u6548\u679c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\uff0c\u9884\u89c8\u6846\u5b9e\u65f6\u6e32\u67d3\u6700\u7ec8\u7684\u9634\u5f71\u6548\u679c\uff0c\u6240\u89c1\u5373\u6240\u5f97\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u4f7f\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u5b8c\u5168\u672c\u5730\u8fd0\u884c\uff0c\u751f\u6210\u8fc7\u7a0b\u4e0d\u4e0a\u4f20\u4efb\u4f55\u6570\u636e\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎛️ CSS阴影生成器</h1>
+    <p>可视化生成 box-shadow，一键复制 CSS 代码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">CSS阴影生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#CSS</span><span class="badge">#阴影</span><span class="badge">#box-shadow</span>
+<div class="shadow-stage" id="shadowStage" style="display:flex;align-items:center;justify-content:center;background:#f1f5f9;border:1px solid var(--border);border-radius:10px;min-height:220px;margin-bottom:16px;">
+  <div class="shadow-box" id="shadowBox" style="width:120px;height:120px;background:#6366f1;border-radius:14px;"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px 20px; margin-bottom:12px;">
+  <label>X 偏移 <input type="range" id="shX" min="-50" max="50" value="4"></label>
+  <label>Y 偏移 <input type="range" id="shY" min="-50" max="50" value="6"></label>
+  <label>模糊半径 <input type="range" id="shBlur" min="0" max="100" value="12"></label>
+  <label>扩散半径 <input type="range" id="shSpread" min="-30" max="50" value="0"></label>
+  <label>不透明度 <input type="range" id="shAlpha" min="0" max="100" value="40"></label>
+  <label>阴影颜色 <input type="color" id="shColor" value="#000000"></label>
+  <label>背景颜色 <input type="color" id="shBg" value="#f1f5f9"></label>
+  <label><input type="checkbox" id="shInset" style="width:auto;"> 内阴影 inset</label>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <button class="btn btn-secondary" id="shAdd">+ 添加一层阴影</button>
+  <button class="btn btn-secondary" id="shRemove">− 移除最后一层</button>
+</div>
+<label>CSS 代码</label>
+<textarea id="shCss" rows="3" readonly style="font-family:monospace;font-size:13px;background:var(--bg);"></textarea>
+<button class="btn btn-primary" id="shCopy" style="margin-top:10px;">📋 复制 CSS</button>
+<div class="stat-bar" id="shLayers" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>box-shadow 参数怎么看？</h2><p>box-shadow: X偏移 Y偏移 模糊 扩散 颜色。X/Y 控制阴影方向，模糊控制柔和度，扩散控制阴影大小，颜色决定阴影色调。</p><h2>怎么做出多层阴影？</h2><p>多个阴影用逗号分隔即可叠加，本生成器支持添加多条阴影，做出描边、霓虹等复杂效果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的代码可以直接用吗？</summary><p>可以，复制后直接粘贴到 CSS 中即可，兼容所有现代浏览器。</p></details><details class="faq-item"><summary>支持 inset 内阴影吗？</summary><p>支持，勾选 inset 即可生成内阴影效果。</p></details><details class="faq-item"><summary>能预览真实效果吗？</summary><p>能，预览框实时渲染最终的阴影效果，所见即所得。</p></details><details class="faq-item"><summary>需要联网使用吗？</summary><p>不需要，完全本地运行，生成过程不上传任何数据。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>CSS阴影生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='css-box-shadow';}); _r.unshift('css-box-shadow'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var shX = document.getElementById('shX'), shY = document.getElementById('shY'), shBlur = document.getElementById('shBlur'),
+  shSpread = document.getElementById('shSpread'), shAlpha = document.getElementById('shAlpha'), shColor = document.getElementById('shColor'),
+  shBg = document.getElementById('shBg'), shInset = document.getElementById('shInset'), shCss = document.getElementById('shCss'),
+  shStage = document.getElementById('shadowStage'), shBox = document.getElementById('shadowBox'), shLayers = document.getElementById('shLayers'),
+  shAdd = document.getElementById('shAdd'), shRemove = document.getElementById('shRemove'), shCopy = document.getElementById('shCopy');
+
+var LAYERS = [0];
+
+function hexToRgba(hex, a) {
+  var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!m) return hex;
+  return 'rgba(' + parseInt(m[1], 16) + ',' + parseInt(m[2], 16) + ',' + parseInt(m[3], 16) + ',' + a + ')';
+}
+
+function buildShadows() {
+  return LAYERS.map(function (i) {
+    var parts = [shX.value + 'px', shY.value + 'px', shBlur.value + 'px', shSpread.value + 'px', hexToRgba(shColor.value, (shAlpha.value / 100).toFixed(2))];
+    return (shInset.checked ? 'inset ' : '') + parts.join(' ');
+  });
+}
+
+function renderShadow() {
+  var shadows = buildShadows();
+  shBox.style.boxShadow = shadows.join(', ');
+  shBox.style.background = shColor.value === '#ffffff' ? '#e2e8f0' : shColor.value;
+  shStage.style.background = shBg.value;
+  shCss.value = 'box-shadow: ' + shadows.join(', ') + ';';
+  shLayers.innerHTML = LAYERS.map(function (i, idx) {
+    return '<button class="chip" style="cursor:pointer;" data-i="' + idx + '">第 ' + (idx + 1) + ' 层</button>';
+  }).join('');
+}
+
+shAdd.addEventListener('click', function () {
+  LAYERS.push(LAYERS.length);
+  renderShadow();
+});
+shRemove.addEventListener('click', function () {
+  if (LAYERS.length > 1) LAYERS.pop();
+  renderShadow();
+});
+shLayers.addEventListener('click', function (e) {
+  if (e.target.dataset.i !== undefined) {
+    var i = parseInt(e.target.dataset.i, 10);
+    if (i >= 0 && i < LAYERS.length) { LAYERS.splice(i, 1); renderShadow(); }
+  }
+});
+[shX, shY, shBlur, shSpread, shAlpha, shColor, shBg, shInset].forEach(function (el) {
+  el.addEventListener('input', renderShadow);
+  el.addEventListener('change', renderShadow);
+});
+shCopy.addEventListener('click', function () {
+  try { navigator.clipboard.writeText(shCss.value); showToast('已复制 box-shadow 代码'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+renderShadow();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
