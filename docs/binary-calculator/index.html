@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二进制计算器 - 在线二进制与位运算计算工具</title>
+  <meta name="description" content="免费在线二进制计算器，支持二进制加减乘除四则运算与 AND/OR/XOR/NOT 位运算，可切换 8/16/32 位，输入即算并给出十进制结果。" />
+  <meta name="keywords" content="二进制计算器,位运算,AND,OR,XOR,二进制加减,进制计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>0️⃣1️⃣</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8f93\u5165\u53ef\u7528\u8865\u7801\u8868\u793a\u8d1f\u6570\uff08\u5982 -1 = \u5168 1\uff09\uff0c\u7ed3\u679c\u6309\u9009\u4e2d\u4f4d\u5bbd\u89e3\u91ca\u3002"}},{"@type":"Question","name":"\u4f4d\u5bbd\u4e0d\u540c\u7ed3\u679c\u4f1a\u4e0d\u540c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\uff0c\u7279\u522b\u662f\u6ea2\u51fa\u4e0e\u7b26\u53f7\u4f4d\u5904\u7406\uff0c\u5efa\u8bae\u6309\u5b9e\u9645\u573a\u666f\u9009\u62e9 8/16/32 \u4f4d\u3002"}},{"@type":"Question","name":"\u80fd\u7b97\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u6309\u6574\u6570\u8fd0\u7b97\uff0c\u652f\u6301\u5341\u8fdb\u5236\u8f93\u5165\u81ea\u52a8\u8f6c\u4e8c\u8fdb\u5236\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>0️⃣1️⃣ 二进制计算器</h1>
+    <p>二进制加减乘除与位运算计算器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">二进制计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#二进制</span><span class="badge">#位运算</span><span class="badge">#进制</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>第一个数（十进制）</label><input type="text" id="bcA" value="60"></div>
+  <div><label>第二个数（十进制）</label><input type="text" id="bcB" value="45"></div>
+  <div><label>位宽</label>
+    <select id="bcBits">
+      <option value="8">8 位</option>
+      <option value="16" selected>16 位</option>
+      <option value="32">32 位</option>
+    </select>
+  </div>
+</div>
+<div class="field">
+  <label>运算</label>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <button class="btn btn-secondary" data-op="add">+ 加法</button>
+    <button class="btn btn-secondary" data-op="sub">− 减法</button>
+    <button class="btn btn-secondary" data-op="mul">× 乘法</button>
+    <button class="btn btn-secondary" data-op="div">÷ 整除</button>
+    <button class="btn btn-secondary" data-op="and">& AND</button>
+    <button class="btn btn-secondary" data-op="or">| OR</button>
+    <button class="btn btn-secondary" data-op="xor">^ XOR</button>
+    <button class="btn btn-secondary" data-op="shl">&lt;&lt; 左移</button>
+    <button class="btn btn-secondary" data-op="shr">&gt;&gt; 右移</button>
+  </div>
+</div>
+<div id="bcResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>二进制怎么计算？</h2><p>二进制是计算机底层表示方式，逢二进一。本工具把输入按二进制解析并计算，结果同时显示二进制与十进制，方便对照。</p><h2>位运算有什么用？</h2><p>位运算常用于底层优化、权限标志、颜色处理等场景，例如 & 取交集、| 取并集、^ 翻转。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持负数吗？</summary><p>支持，输入可用补码表示负数（如 -1 = 全 1），结果按选中位宽解释。</p></details><details class="faq-item"><summary>位宽不同结果会不同吗？</summary><p>会，特别是溢出与符号位处理，建议按实际场景选择 8/16/32 位。</p></details><details class="faq-item"><summary>能算小数吗？</summary><p>本工具按整数运算，支持十进制输入自动转二进制。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>二进制计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='binary-calculator';}); _r.unshift('binary-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bcA = document.getElementById('bcA');
+var bcB = document.getElementById('bcB');
+var bcBits = document.getElementById('bcBits');
+var bcResult = document.getElementById('bcResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;word-break:break-all;text-align:right;">' + val + '</span></div>';
+}
+
+function padBin(n, bits) {
+  var s = (n >>> 0).toString(2);
+  return s.padStart ? s.padStart(bits, '0') : (Array(bits - s.length + 1).join('0') + s);
+}
+
+function toInt(str, bits) {
+  var s = String(str).trim().replace(/_/g, '');
+  if (/^-?\d+$/.test(s)) {
+    var v = parseInt(s, 10);
+    if (s.indexOf('-') === 0) {
+      // interpret as signed value in given bits
+      v = ((v % (1 << (bits - 1))) + (1 << (bits - 1))) % (1 << (bits - 1));
+      if (parseInt(s, 10) < 0) v = (1 << bits) + parseInt(s, 10);
+    }
+    return v >>> 0;
+  }
+  var sign = s.indexOf('-') === 0;
+  if (sign) s = s.slice(1);
+  var m = s.match(/^(0[bB])?([01]+)$/);
+  if (!m) return null;
+  var v = parseInt(m[2], 2);
+  if (sign) v = (1 << bits) - v;
+  return v >>> 0;
+}
+
+function compute(op) {
+  var bits = parseInt(bcBits.value, 10) || 16;
+  var a = toInt(bcA.value, bits);
+  var b = toInt(bcB.value, bits);
+  if (a === null || b === null) { bcResult.innerHTML = '<div class="result-box">请输入十进制整数或二进制数（如 1010 或 0b1010）</div>'; return; }
+  var mask = bits === 32 ? 0xffffffff : (1 << bits) - 1;
+  var r;
+  var name;
+  switch (op) {
+    case 'add': r = a + b; name = a + ' + ' + b; break;
+    case 'sub': r = a - b; name = a + ' − ' + b; break;
+    case 'mul': r = a * b; name = a + ' × ' + b; break;
+    case 'div': r = b === 0 ? null : Math.floor(a / b); name = a + ' ÷ ' + b; break;
+    case 'and': r = a & b; name = a + ' AND ' + b; break;
+    case 'or': r = a | b; name = a + ' OR ' + b; break;
+    case 'xor': r = a ^ b; name = a + ' XOR ' + b; break;
+    case 'shl': r = a << (b % bits); name = a + ' << ' + b; break;
+    case 'shr': r = a >>> (b % bits); name = a + ' >> ' + b; break;
+  }
+  if (r === null) { bcResult.innerHTML = '<div class="result-box">除数不能为 0</div>'; return; }
+  var unsigned = (r & mask) >>> 0;
+  var signed = bits === 32 ? (unsigned | 0) : (unsigned << (32 - bits)) >> (32 - bits);
+  var neg = signed < 0 ? '−' + Math.abs(signed) : String(signed);
+  var twos = bits === 32 ? unsigned : padBin(unsigned, bits);
+  bcResult.innerHTML =
+    row('运算', name) +
+    row('二进制结果（' + bits + ' 位补码）', '<span style="font-family:monospace;">' + twos + '</span>') +
+    row('十进制（无符号）', unsigned) +
+    row('十进制（有符号）', neg);
+}
+
+bcResult.parentElement.querySelectorAll('[data-op]').forEach(function (btn) {
+  btn.addEventListener('click', function () { compute(btn.dataset.op); });
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
