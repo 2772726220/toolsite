@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u63a7\u5236\u6570\u91cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u8c03\u8282\u6bb5\u843d\u6570\u548c\u6bcf\u6bb5\u957f\u5ea6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4e00\u952e\u590d\u5236\u751f\u6210\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}},{"@type":"Question","name":"\u4e2d\u6587\u5047\u6587\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7531\u5e38\u7528\u6c49\u5b57\u968f\u673a\u7ec4\u5408\u7684\u5360\u4f4d\u6bb5\u843d\uff0c\u89c2\u611f\u8d34\u8fd1\u771f\u5b9e\u6392\u7248\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>✍️ 随机文本生成</h1>
@@ -55,6 +59,7 @@
     <p>随机文本生成 · <a href="../category/text/">✍️ 文本工具</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -121,6 +126,24 @@ var liResult = document.getElementById('liResult');
     if (!lastText) { showToast('请先生成'); return; }
     navigator.clipboard.writeText(lastText).then(function () { showToast('已复制'); });
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
