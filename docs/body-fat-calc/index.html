@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>体脂率计算器 - 在线估算体脂率与健康区间</title>
+  <meta name="description" content="免费在线体脂率估算工具，输入性别、年龄、身高、体重，用 Deurenberg 公式（BMI+年龄）快速估算体脂率，并给出健康体脂区间与参考建议，无需体脂秤的日常自查工具。" />
+  <meta name="keywords" content="体脂率计算,体脂计算器,体脂公式,体脂区间,减脂目标">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧍</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4f30\u7b97\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u516c\u5f0f\u5bf9\u591a\u6570\u6210\u5e74\u4eba\u8bef\u5dee\u7ea6 \u00b12-4%\uff0c\u6bd4\u4f53\u91cd\u79e4\u66f4\u63a5\u8fd1\u4e13\u4e1a\u6d4b\u91cf\uff0c\u4f46\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u9700\u8981\u6d4b\u91cf\u5de5\u5177\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ea\u9700\u8eab\u9ad8\u4f53\u91cd\u5373\u53ef\uff0c\u65e0\u9700\u8170\u56f4\u5c3a\u6216\u4f53\u8102\u79e4\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧍 体脂率估算</h1>
+    <p>按年龄性别身高体重估算体脂率，附健康区间</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">体脂率估算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#体脂率</span><span class="badge">#体脂</span><span class="badge">#腰围</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>性别</label>
+    <select id="bfSex"><option value="m">男</option><option value="f">女</option></select>
+  </div>
+  <div><label>年龄（岁）</label><input type="number" id="bfAge" value="30"></div>
+  <div><label>身高（cm）</label><input type="number" id="bfH" value="175"></div>
+  <div><label>体重（kg）</label><input type="number" id="bfW" value="70"></div>
+</div>
+<button class="btn btn-primary" id="bfGo">估算体脂率</button>
+<div id="bfResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>体脂率怎么算？</h2><p>工具采用 Deurenberg 公式：体脂率 = 1.2×BMI + 0.23×年龄 − 5.4 − 10.8×性别系数（男 1、女 0），比单纯看体重更能反映身体成分。</p><h2>健康体脂率是多少？</h2><p>成年男性 8%-20%、女性 18%-28% 属于健康范围；过低或过高都需注意。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>估算准确吗？</summary><p>公式对多数成年人误差约 ±2-4%，比体重秤更接近专业测量，但仅供参考。</p></details><details class="faq-item"><summary>需要测量工具吗？</summary><p>只需身高体重即可，无需腰围尺或体脂秤。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>体脂率估算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='body-fat-calc';}); _r.unshift('body-fat-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bfSex = document.getElementById('bfSex');
+var bfAge = document.getElementById('bfAge');
+var bfH = document.getElementById('bfH');
+var bfW = document.getElementById('bfW');
+var bfGo = document.getElementById('bfGo');
+var bfResult = document.getElementById('bfResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+function bmiOf(hCm, wKg) {
+  var h = hCm / 100;
+  return wKg / (h * h);
+}
+
+function bodyFat(sex, age, hCm, wKg) {
+  var bmi = bmiOf(hCm, wKg);
+  var bf = 1.2 * bmi + 0.23 * age - 5.4 - 10.8 * (sex === 'm' ? 1 : 0);
+  return { bmi: bmi, bf: bf };
+}
+
+bfGo.addEventListener('click', function () {
+  var age = parseFloat(bfAge.value);
+  var h = parseFloat(bfH.value);
+  var w = parseFloat(bfW.value);
+  if (!age || age <= 0 || !h || h <= 0 || !w || w <= 0) { bfResult.innerHTML = '<div class="result-box">请填写有效的年龄、身高、体重</div>'; return; }
+  var r = bodyFat(bfSex.value, age, h, w);
+  var male = bfSex.value === 'm';
+  var healthy = male ? [10, 20] : [18, 28];
+  var tag = r.bf < healthy[0] ? '偏低（偏瘦）' : r.bf > healthy[1] ? '偏高（超重）' : '健康范围';
+  var color = r.bf < healthy[0] ? '#f59e0b' : r.bf > healthy[1] ? '#dc2626' : '#16a34a';
+  bfResult.innerHTML =
+    row('BMI 指数', r.bmi.toFixed(1)) +
+    row('估算体脂率', r.bf.toFixed(1) + '%') +
+    row('健康区间（' + (male ? '男' : '女') + '）', healthy[0] + '%-' + healthy[1] + '%') +
+    row('评价', '<span style="color:' + color + ';">' + tag + '</span>') +
+    row('建议', r.bf > healthy[1] ? '控制热量摄入 + 力量训练增肌减脂' : r.bf < healthy[0] ? '适当增加优质碳水与蛋白质摄入' : '保持当前饮食与训练节奏');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
