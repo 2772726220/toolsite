@@ -271,3 +271,158 @@ label > input[type="checkbox"] { display: inline-block; }
 [data-theme="dark"] .game-cell.lose { background: #7f1d1d; }
 [data-theme="dark"] .game-cell.tie { background: #1e293b; }
 .big-em { font-size: 44px; line-height: 1.2; }
+/* ── 第十一波新组件 ─────────────────────────── */
+.kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; padding: 10px 12px; border: 1px solid var(--border);
+  border-bottom-width: 3px; border-radius: 8px; background: var(--card);
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.12s;
+  user-select: none;
+}
+.kbd:hover { border-color: var(--primary); }
+.kbd.pressed { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateY(2px); }
+[data-theme="dark"] .kbd { background: #0f172a; }
+[data-theme="dark"] .kbd.pressed { background: var(--primary); color: #fff; }
+
+.cal-wrap { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cal-month { border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: var(--card); }
+.cal-mon-title { font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--primary); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-cell {
+  text-align: center; font-size: 12px; padding: 3px 0; border-radius: 4px; color: var(--text);
+}
+.cal-cell.empty { visibility: hidden; }
+.cal-cell.weekend { color: #ef4444; }
+.cal-cell.cal-wd { font-size: 10px; color: var(--muted); font-weight: 600; }
+.cal-cell.today { background: var(--primary); color: #fff; font-weight: 700; }
+[data-theme="dark"] .cal-month { background: #1e293b; }
+
+.shade-row > div:hover { transform: translateY(-2px); }
+.swatch-big {
+  height: 56px; border-radius: 10px; border: 1px solid var(--border);
+  cursor: pointer; transition: transform 0.15s;
+}
+.swatch-big:hover { transform: scale(1.03); }
+
+/* 通用表格（Markdown 预览等） */
+.table-wrap { overflow-x: auto; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap th, .table-wrap td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+.table-wrap th { background: #f1f5f9; font-weight: 600; }
+[data-theme="dark"] .table-wrap th { background: #334155; }
+
+/* 锚点不被吸顶筛选栏遮挡 */
+#toolSections, #recentSection, .cat-section { scroll-margin-top: 120px; }
+
+/* 打印年历 */
+@media print {
+  header, footer, .site-nav, .filter-bar, .theme-toggle, .scroll-top, .copy-link, .ad-slot, .actions, .tool-card { display: none !important; }
+  body { background: #fff; }
+  .tool-card { box-shadow: none; border: none; margin: 0; padding: 0; }
+  .cal-wrap { grid-template-columns: repeat(2, 1fr); }
+  .cal-month { break-inside: avoid; }
+}
+/* 减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+::selection { background: rgba(79, 70, 229, 0.25); }
+@media (max-width: 480px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .cal-wrap { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .filter-bar .chips { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .chip { flex: none; }
+}
+/* ── 第十二波新组件 ─────────────────────────── */
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+.cmd-list { display: grid; gap: 6px; margin-bottom: 16px; }
+.cmd-item {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px;
+}
+.cmd-item code { flex: 1; min-width: 0; font-size: 13px; word-break: break-all; background: #f1f5f9; padding: 4px 8px; border-radius: 6px; }
+.cmd-desc { font-size: 12px; color: var(--muted); min-width: 120px; }
+[data-theme="dark"] .cmd-item code { background: #0f172a; }
+[data-theme="dark"] .cmd-item { background: #1e293b; }
+.mg-grid { display: grid; gap: 10px; margin-top: 8px; }
+.mg-grid[data-n="4"] { grid-template-columns: repeat(4, 1fr); }
+.mg-grid[data-n="6"] { grid-template-columns: repeat(6, 1fr); }
+.mg-card { perspective: 600px; cursor: pointer; aspect-ratio: 1; }
+.mg-inner {
+  position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+  transition: transform 0.25s;
+}
+.mg-card.flipped .mg-inner, .mg-card.matched .mg-inner { transform: rotateY(180deg); }
+.mg-face {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  font-size: 26px; border: 1px solid var(--border); background: var(--card);
+}
+.mg-back { background: linear-gradient(135deg, #4f46e5, #2563eb); color: #fff; font-weight: 700; font-size: 18px; }
+.mg-front { transform: rotateY(180deg); background: #fefce8; }
+.mg-card.matched .mg-front { background: #ecfdf5; border-color: #34d399; }
+[data-theme="dark"] .mg-front { background: #1e293b; }
+[data-theme="dark"] .mg-card.matched .mg-front { background: #064e3b; }
+[data-theme="dark"] .mg-back { background: linear-gradient(135deg, #312e81, #1e3a8a); }
+@media (max-width: 480px) {
+  .cmd-desc { min-width: 100%; }
+  .mg-face { font-size: 20px; }
+}
+/* ── 第十三波新组件 ─────────────────────────── */
+.key {
+  width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); font-weight: 600; cursor: pointer;
+  transition: transform .08s, background .15s;
+}
+.key:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--primary); }
+.key:disabled { opacity: .45; cursor: default; }
+.key-used-ok { background: #dcfce7 !important; color: #15803d !important; border-color: #86efac !important; }
+.key-used-bad { background: #fee2e2 !important; color: #b91c1c !important; border-color: #fca5a5 !important; }
+[data-theme="dark"] .key-used-ok { background: #14532d !important; color: #bbf7d0 !important; }
+[data-theme="dark"] .key-used-bad { background: #7f1d1d !important; color: #fecaca !important; }
+/* ── UI/UX 整体打磨（第十三波）───────────────────── */
+/* 通用表格（正文内直接使用 <table> 也能得到统一样式） */
+.content-block table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+.content-block th, .content-block td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+.content-block th { background: #f1f5f9; font-weight: 600; }
+[data-theme="dark"] .content-block th { background: #334155; }
+.content-block table tr:nth-child(even) td { background: rgba(148, 163, 184, 0.06); }
+img { max-width: 100%; height: auto; }
+/* 数字输入框原生旋钮：弱化并随主题 */
+input[type="number"]::-webkit-inner-spin-button { opacity: 0.35; }
+input[type="number"] { -moz-appearance: textfield; }
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+/* 颜色选择器统一尺寸 */
+input[type="color"] { width: 56px; height: 40px; padding: 2px; border: 1px solid var(--border); border-radius: 8px; background: transparent; cursor: pointer; }
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+input[type="color"]::-webkit-color-swatch { border: none; border-radius: 6px; }
+/* 全局滚动条主题化 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; border: 2px solid var(--bg); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #475569; }
+/* 主题切换平滑过渡 */
+body, .filter-bar { transition: background-color 0.25s ease, color 0.25s ease; }
+/* 卡片进入动画（轻量） */
+.tool-grid .t-card { animation: fadeUp 0.3s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* 单选/复选样式统一 */
+input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
+/* 提示文案辅助色 */
+.hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+/* 分段色块：统计结果强调 */
+.stat.highlight { border-left: 3px solid var(--primary); }
+@media (max-width: 640px) {
+  .content-block th, .content-block td { padding: 6px 8px; font-size: 13px; }
+  .content-block table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+/* ── 第十四波新组件 ─────────────────────────── */
+.wl-cell {
+  aspect-ratio: 1; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #fff; text-transform: uppercase;
+  animation: fadeUp 0.2s ease both;
+}
+.wl-empty { background: var(--card); border: 2px solid var(--border); }
+[data-theme="dark"] .wl-cell { color: #fff; }
+.sq-chip { transition: transform 0.12s; }
+.sq-chip:hover { transform: scale(1.05); }
