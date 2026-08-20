@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>色盲模拟器 - 在线模拟红绿色盲蓝黄色盲视图</title>
+  <meta name="description" content="免费在线色盲模拟工具，上传图片后一键模拟红绿色盲、蓝黄色盲、全色盲视角，帮助设计师检查配色在色盲用户眼中的可读性与对比度，浏览器本地处理。" />
+  <meta name="keywords" content="色盲模拟,色弱,红绿色盲,蓝黄色盲,无障碍配色,WCAG">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👓</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e0a\u4f20\u7684\u56fe\u7247\u4f1a\u6cc4\u9732\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u56fe\u7247\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5904\u7406\u3002"}},{"@type":"Question","name":"\u6a21\u62df\u7ed3\u679c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u901a\u7528\u8272\u89c9\u7f3a\u9677\u6a21\u578b\u7684\u8fd1\u4f3c\u6a21\u62df\uff0c\u53ef\u7528\u4e8e\u8bbe\u8ba1\u53c2\u8003\uff0c\u4e0d\u66ff\u4ee3\u533b\u5b66\u8bca\u65ad\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>👓 色盲模拟</h1>
+    <p>模拟红绿色盲/蓝黄色盲看到的画面，检查配色可读性</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">色盲模拟</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#色盲</span><span class="badge">#模拟</span><span class="badge">#无障碍</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>图片（上传后自动预览原图）</label><input type="file" id="cbFile" accept="image/*"></div>
+  <div><label>模拟类型</label>
+    <select id="cbType">
+      <option value="deut">红绿色盲（绿色弱）</option>
+      <option value="prot">红绿色盲（红色弱）</option>
+      <option value="trit">蓝黄色盲</option>
+      <option value="mono">全色盲（灰度）</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="cbGo">模拟色盲视图</button>
+<div id="cbWrap" style="display:none;margin-top:16px;">
+  <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:14px;">
+    <div><label>原始视图</label><img id="cbOrig" alt="原图" style="width:100%;border-radius:10px;border:1px solid var(--border);"></div>
+    <div><label>色盲模拟视图</label><img id="cbSim" alt="模拟视图" style="width:100%;border-radius:10px;border:1px solid var(--border);"></div>
+  </div>
+  <div class="actions" style="margin-top:14px;">
+    <button class="btn btn-secondary" id="cbDownload">⬇️ 下载模拟图</button>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要模拟色盲？</h2><p>全球约 8% 男性和 0.5% 女性存在色觉缺陷，红绿色盲最常见。做设计时用色盲模拟检查配色，能保证更多用户可读。</p><h2>模拟原理是什么？</h2><p>工具在浏览器本地对图片像素应用色觉缺陷的数学变换矩阵，近似还原不同色盲类型的视觉。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>上传的图片会泄露吗？</summary><p>不会，图片完全在浏览器本地处理。</p></details><details class="faq-item"><summary>模拟结果准确吗？</summary><p>基于通用色觉缺陷模型的近似模拟，可用于设计参考，不替代医学诊断。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>色盲模拟 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='color-blind-sim';}); _r.unshift('color-blind-sim'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var MATRICES = {
+  deut: { r: [0.625, 0.375, 0], g: [0.7, 0.3, 0], b: [0, 0.3, 0.7] },
+  prot: { r: [0.567, 0.433, 0], g: [0.558, 0.442, 0], b: [0, 0.242, 0.758] },
+  trit: { r: [0.95, 0.05, 0], g: [0, 0.433, 0.567], b: [0, 0.475, 0.525] },
+  mono: { r: [0.299, 0.587, 0.114], g: [0.299, 0.587, 0.114], b: [0.299, 0.587, 0.114] }
+};
+
+var cbFile = document.getElementById('cbFile');
+var cbType = document.getElementById('cbType');
+var cbGo = document.getElementById('cbGo');
+var cbWrap = document.getElementById('cbWrap');
+var cbOrig = document.getElementById('cbOrig');
+var cbSim = document.getElementById('cbSim');
+var cbDownload = document.getElementById('cbDownload');
+
+var loadedImg = null;
+
+function applyMatrix(data, type) {
+  var m = MATRICES[type] || MATRICES.deut;
+  for (var i = 0; i < data.length; i += 4) {
+    var r = data[i], g = data[i + 1], b = data[i + 2];
+    data[i] = r * m.r[0] + g * m.r[1] + b * m.r[2];
+    data[i + 1] = r * m.g[0] + g * m.g[1] + b * m.g[2];
+    data[i + 2] = r * m.b[0] + g * m.b[1] + b * m.b[2];
+  }
+  return data;
+}
+
+function simulate(img) {
+  var w = img.naturalWidth || img.width;
+  var h = img.naturalHeight || img.height;
+  var canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, w, h);
+  var imgData = ctx.getImageData(0, 0, w, h);
+  applyMatrix(imgData.data, cbType.value);
+  ctx.putImageData(imgData, 0, 0);
+  return canvas.toDataURL('image/png');
+}
+
+cbFile.addEventListener('change', function () {
+  var f = cbFile.files && cbFile.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var img = new Image();
+    img.onload = function () { loadedImg = img; cbOrig.src = e.target.result; };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+
+cbGo.addEventListener('click', function () {
+  if (!loadedImg) { showToast('请先选择图片'); return; }
+  cbSim.src = simulate(loadedImg);
+  cbWrap.style.display = '';
+  showToast('已生成模拟视图');
+});
+
+cbDownload.addEventListener('click', function () {
+  if (!cbSim.src) { showToast('请先生成模拟视图'); return; }
+  window.download(cbSim.src, 'color-blind-sim.png');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
