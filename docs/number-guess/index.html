@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猜数字游戏 - 在线猜数字小游戏</title>
+  <meta name="description" content="免费在线猜数字小游戏，系统随机生成 1-100 的数字，输入你的猜测会提示大了或小了，统计猜中次数与用时，锻炼逻辑思维。" />
+  <meta name="keywords" content="猜数字,猜数游戏,数字游戏,大了小了,逻辑游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u5b57\u8303\u56f4\u591a\u5927\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4 1-100\uff0c\u53ef\u5728\u8bbe\u7f6e\u91cc\u6539\u4e3a 1-1000 \u589e\u52a0\u96be\u5ea6\u3002"}},{"@type":"Question","name":"\u8bb0\u5f55\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u5728\u672c\u5c40\u663e\u793a\u6b21\u6570\u4e0e\u7528\u65f6\uff0c\u53ef\u6311\u6218\u81ea\u5df1\u7684\u6700\u597d\u6210\u7ee9\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u53cc\u4eba\u73a9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u81ea\u5b9a\u4e49\u9690\u85cf\u6570\u5b57\uff0c\u8ba9\u5bf9\u65b9\u6765\u731c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎯 猜数字</h1>
+    <p>猜 1-100 隐藏数字，看几次猜中</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">猜数字</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#猜数字</span><span class="badge">#游戏</span><span class="badge">#逻辑</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>范围上限</label>
+    <select id="ngMax">
+      <option value="100" selected>1-100</option>
+      <option value="1000">1-1000</option>
+      <option value="50">1-50</option>
+    </select>
+  </div>
+  <div><label>自定义数字（留空随机）</label><input type="number" id="ngCustom"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>猜的数字</label><input type="number" id="ngGuess" min="1"></div>
+  <div style="display:flex;align-items:flex-end;gap:8px;">
+    <button class="btn btn-primary" id="ngGo" style="flex:1;">猜！</button>
+    <button class="btn btn-secondary" id="ngReset">重开</button>
+  </div>
+</div>
+<div class="stat highlight" id="ngStatus" style="display:block;">点击「猜！」开始，或先「重开」</div>
+<div id="ngHist" style="margin-top:10px; display:grid; gap:6px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>游戏规则是什么？</h2><p>随机一个 1-100 的整数，每次猜完提示大了/小了，用二分法最快约 7 次必中。</p><h2>怎么赢？</h2><p>先猜 50，再根据提示折半调整，每次排除一半范围，这就是二分查找。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数字范围多大？</summary><p>默认 1-100，可在设置里改为 1-1000 增加难度。</p></details><details class="faq-item"><summary>记录会保存吗？</summary><p>仅在本局显示次数与用时，可挑战自己的最好成绩。</p></details><details class="faq-item"><summary>可以双人玩吗？</summary><p>支持自定义隐藏数字，让对方来猜。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>猜数字 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='number-guess';}); _r.unshift('number-guess'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ngMax = document.getElementById('ngMax');
+var ngCustom = document.getElementById('ngCustom');
+var ngGuess = document.getElementById('ngGuess');
+var ngGo = document.getElementById('ngGo');
+var ngReset = document.getElementById('ngReset');
+var ngStatus = document.getElementById('ngStatus');
+var ngHist = document.getElementById('ngHist');
+
+var target = null;
+var attempts = 0;
+var startTime = 0;
+
+function newGame() {
+  var max = parseInt(ngMax.value, 10) || 100;
+  var custom = parseInt(ngCustom.value, 10);
+  target = (custom >= 1 && custom <= max) ? custom : Math.floor(Math.random() * max) + 1;
+  attempts = 0;
+  startTime = Date.now();
+  ngStatus.className = 'stat highlight';
+  ngStatus.style.display = 'block';
+  ngStatus.textContent = '已开始！范围 1-' + max + '，请输入你的猜测（最多建议 ' + Math.ceil(Math.log2(max)) + ' 次必中）。';
+  ngHist.innerHTML = '';
+  ngGuess.value = '';
+  ngGuess.focus();
+}
+
+function addHist(text, cls) {
+  ngHist.innerHTML = '<div class="stat" style="padding:8px 12px;margin:0;' + (cls ? 'border-color:' + cls + ';' : '') + '">' + text + '</div>' + ngHist.innerHTML;
+}
+
+ngGo.addEventListener('click', function () {
+  if (target === null) { newGame(); return; }
+  var v = parseInt(ngGuess.value, 10);
+  if (isNaN(v)) { showToast('请输入数字'); return; }
+  var max = parseInt(ngMax.value, 10) || 100;
+  if (v < 1 || v > max) { showToast('范围是 1-' + max); return; }
+  attempts++;
+  if (v === target) {
+    var sec = Math.round((Date.now() - startTime) / 1000);
+    addHist('第 ' + attempts + ' 次猜 ' + v + ' ✔ 猜中！', '#22c55e');
+    ngStatus.textContent = '🎉 恭喜！用了 ' + attempts + ' 次、' + sec + ' 秒猜中 ' + target + '。';
+    ngStatus.className = 'stat highlight';
+    target = null;
+  } else {
+    var dir = v < target ? '太小了 ↑' : '太大了 ↓';
+    addHist('第 ' + attempts + ' 次猜 ' + v + ' → ' + dir, v < target ? '#3b82f6' : '#ef4444');
+    ngStatus.textContent = v < target ? '太小了！继续往上猜（还剩范围上界不限）' : '太大了！继续往下猜';
+  }
+  ngGuess.value = '';
+  ngGuess.focus();
+});
+
+ngReset.addEventListener('click', newGame);
+ngGuess.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') ngGo.click();
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
