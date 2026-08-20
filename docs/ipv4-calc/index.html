@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP地址子网计算器 - 在线子网掩码/网络地址计算</title>
+  <meta name="description" content="免费在线 IP 子网计算器，输入 IP 地址与子网掩码，一键计算网络地址、广播地址、可用主机范围与数量，支持掩码长度换算，网络工程师与运维必备。" />
+  <meta name="keywords" content="IP计算,子网计算,子网掩码,网络地址,广播地址,ipv4,子网划分">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"/24 \u5b50\u7f51\u6709\u591a\u5c11\u4e2a\u53ef\u7528 IP\uff1f","acceptedAnswer":{"@type":"Answer","text":"/24 \u6709 256 \u4e2a\u5730\u5740\uff0c\u51cf\u53bb\u7f51\u7edc\u5730\u5740\u548c\u5e7f\u64ad\u5730\u5740\uff0c\u53ef\u7528\u4e3b\u673a\u6570\u4e3a 254 \u4e2a\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u8f93\u5165\u63a9\u7801\u957f\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u76f4\u63a5\u8f93\u5165\u63a9\u7801\u957f\u5ea6\u5982 24\u300126\u300130\uff0c\u4f1a\u81ea\u52a8\u6362\u7b97\u6210\u70b9\u5206\u5341\u8fdb\u5236\u63a9\u7801\u3002"}},{"@type":"Question","name":"\u4ec0\u4e48\u662f CIDR\uff1f","acceptedAnswer":{"@type":"Answer","text":"CIDR\uff08\u65e0\u7c7b\u522b\u57df\u95f4\u8def\u7531\uff09\u7528 /\u957f\u5ea6 \u8868\u793a\u5b50\u7f51\uff0c\u5982 192.168.1.0/24\uff0c\u662f\u5b50\u7f51\u5212\u5206\u7684\u6807\u51c6\u5199\u6cd5\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u9760\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8ba1\u7b97\u57fa\u4e8e\u6807\u51c6\u4f4d\u8fd0\u7b97\uff0c\u7f51\u7edc\u5730\u5740\u3001\u5e7f\u64ad\u5730\u5740\u3001\u53ef\u7528\u8303\u56f4\u5747\u7cbe\u786e\u65e0\u8bef\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌐 IP/子网计算器</h1>
+    <p>IPv4 地址与子网掩码换算，算网络/广播/可用主机</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">IP/子网计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#IP</span><span class="badge">#子网</span><span class="badge">#掩码</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div>
+    <label>IP 地址</label>
+    <input type="text" id="ipInput" placeholder="192.168.1.100" value="192.168.1.100">
+  </div>
+  <div>
+    <label>子网掩码或 CIDR 长度</label>
+    <input type="text" id="maskInput" placeholder="255.255.255.0 或 24" value="24">
+  </div>
+</div>
+<button class="btn btn-primary" id="ipCalc">计算子网信息</button>
+<div id="ipResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是子网掩码？</h2><p>子网掩码用于区分 IP 地址中的网络部分和主机部分。例如 255.255.255.0 表示前 24 位为网络位，后 8 位为主机位，即 /24 子网。</p><h2>网络地址和广播地址怎么算？</h2><p>网络地址是主机位全 0，广播地址是主机位全 1。两者都不能分配给主机使用，实际可用主机数 = 2^n - 2（n 为主机位数）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>/24 子网有多少个可用 IP？</summary><p>/24 有 256 个地址，减去网络地址和广播地址，可用主机数为 254 个。</p></details><details class="faq-item"><summary>可以输入掩码长度吗？</summary><p>可以，直接输入掩码长度如 24、26、30，会自动换算成点分十进制掩码。</p></details><details class="faq-item"><summary>什么是 CIDR？</summary><p>CIDR（无类别域间路由）用 /长度 表示子网，如 192.168.1.0/24，是子网划分的标准写法。</p></details><details class="faq-item"><summary>结果可靠吗？</summary><p>计算基于标准位运算，网络地址、广播地址、可用范围均精确无误。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>IP/子网计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='ipv4-calc';}); _r.unshift('ipv4-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+function ipToInt(ip) {
+  var p = ip.split('.').map(Number);
+  if (p.length !== 4 || p.some(function (x) { return isNaN(x) || x < 0 || x > 255; })) return null;
+  return ((p[0] << 24) | (p[1] << 16) | (p[2] << 8) | p[3]) >>> 0;
+}
+function intToIp(n) {
+  return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.');
+}
+function maskToPrefix(m) {
+  var n = ipToInt(m);
+  if (n === null) return -1;
+  var ones = 0;
+  for (var i = 31; i >= 0; i--) { if ((n >>> i) & 1) ones++; else break; }
+  if (ones === 32) return 32;
+  for (var i = 31 - ones; i >= 0; i--) { if ((n >>> i) & 1) return -1; }
+  return ones;
+}
+function prefixToMask(p) {
+  var n = 0;
+  for (var i = 31; i >= 0; i--) { if (i >= 32 - p) n |= 1 << i; }
+  return n >>> 0;
+}
+
+var ipCalcBtn = document.getElementById('ipCalc');
+var ipResult = document.getElementById('ipResult');
+
+function row(label, val, extra) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:600;word-break:break-all;">' + val + '</span></div>';
+}
+
+ipCalcBtn.addEventListener('click', function () {
+  var ipStr = document.getElementById('ipInput').value.trim();
+  var maskStr = document.getElementById('maskInput').value.trim();
+  var ip = ipToInt(ipStr);
+  if (ip === null) { ipResult.innerHTML = '<div class="result-box">请输入合法的 IPv4 地址</div>'; return; }
+  var prefix = -1, mask = 0;
+  if (/^\d+$/.test(maskStr)) {
+    prefix = parseInt(maskStr, 10);
+    if (prefix < 0 || prefix > 32) { ipResult.innerHTML = '<div class="result-box">掩码长度需在 0~32 之间</div>'; return; }
+    mask = prefixToMask(prefix);
+  } else {
+    mask = ipToInt(maskStr);
+    if (mask === null) { ipResult.innerHTML = '<div class="result-box">请输入合法的子网掩码或掩码长度</div>'; return; }
+    prefix = maskToPrefix(mask);
+    if (prefix < 0) { ipResult.innerHTML = '<div class="result-box">无效的子网掩码（掩码位不连续）</div>'; return; }
+  }
+  var network = (ip & mask) >>> 0;
+  var broadcast = (network | (~mask)) >>> 0;
+  var wildcard = (~mask) >>> 0;
+  var hosts = prefix === 32 ? 1 : prefix === 31 ? 2 : Math.pow(2, 32 - prefix) - 2;
+  var first = prefix === 32 ? network : prefix === 31 ? network : network + 1;
+  var last = prefix === 32 ? network : prefix === 31 ? broadcast : broadcast - 1;
+  ipResult.innerHTML =
+    row('IP 地址', ipStr) +
+    row('子网掩码', intToIp(mask) + ' / ' + prefix) +
+    row('网络地址', intToIp(network)) +
+    row('广播地址', intToIp(broadcast)) +
+    row('可用主机范围', prefix >= 31 ? intToIp(first) + ' ~ ' + intToIp(last) : intToIp(first) + ' ~ ' + intToIp(last)) +
+    row('可用主机数量', String(hosts)) +
+    row('反掩码 (Wildcard)', intToIp(wildcard));
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
