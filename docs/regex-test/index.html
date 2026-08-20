@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6211\u7684\u5185\u5bb9\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6b63\u5219\u5339\u914d\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u6267\u884c\u3002"}},{"@type":"Question","name":"\u5339\u914d\u7ed3\u679c\u600e\u4e48\u67e5\u770b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6587\u672c\u4e2d\u7684\u547d\u4e2d\u90e8\u5206\u4f1a\u9ad8\u4eae\uff0c\u4e0b\u65b9\u5217\u8868\u4f1a\u9010\u4e00\u5217\u51fa\u6bcf\u4e2a\u5339\u914d\u7684\u5b8c\u6574\u5185\u5bb9\u3001\u8d77\u59cb\u4f4d\u7f6e\u548c\u957f\u5ea6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5206\u7ec4\u6355\u83b7\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u5339\u914d\u5217\u8868\u4f1a\u663e\u793a\u6355\u83b7\u7ec4\u5185\u5bb9\uff0c\u65b9\u4fbf\u63d0\u53d6\u90e8\u5206\u4fe1\u606f\u3002"}},{"@type":"Question","name":"\u6b63\u5219\u5199\u9519\u4e86\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u4f1a\u63d0\u793a\u8bed\u6cd5\u9519\u8bef\u4f4d\u7f6e\uff0c\u4e0d\u5f71\u54cd\u7ee7\u7eed\u7f16\u8f91\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🧩 正则测试</h1>
@@ -51,6 +55,7 @@
     <p>正则测试 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -127,6 +132,24 @@ var patternInput = document.getElementById('pattern');
   });
   testText.value = '联系方式：13812345678\n备用：15800001111\n不是手机号：12345';
   test();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
