@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>税后工资计算器 - 在线五险一金个税算到手工资</title>
+  <meta name="description" content="免费在线税后工资计算器，输入税前工资与缴费基数，自动计算五险一金、个人所得税与税后到手工资，支持专项附加扣除，结果清晰可对照。" />
+  <meta name="keywords" content="税后工资,工资计算器,到手工资,个税计算,五险一金,薪资计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8ba1\u7b97\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u73b0\u884c\u793e\u4fdd\u8d39\u7387\u4e0e\u4e2a\u7a0e\u8d77\u5f81\u70b9 5000 \u5143/\u6708\u8ba1\u7b97\uff0c\u5404\u5730\u8d39\u7387\u7565\u6709\u5dee\u5f02\uff0c\u7ed3\u679c\u4f9b\u53c2\u8003\uff0c\u4ee5\u7a0e\u52a1\u4e0e\u793e\u4fdd\u5b98\u65b9\u4e3a\u51c6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e13\u9879\u9644\u52a0\u6263\u9664\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u586b\u5199\u6bcf\u6708\u4e13\u9879\u9644\u52a0\u6263\u9664\u91d1\u989d\uff0c\u5982\u623f\u8d37 1000 \u5143\u3001\u8d61\u517b\u8001\u4eba 2000 \u5143\u7b49\u3002"}},{"@type":"Question","name":"\u516c\u79ef\u91d1\u6bd4\u4f8b\u600e\u4e48\u9009\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u4f60\u6240\u5728\u57ce\u5e02\u89c4\u5b9a\uff0c\u4e00\u822c 5%-12%\uff0c\u672c\u5de5\u5177\u9ed8\u8ba4 12% \u53ef\u81ea\u884c\u8c03\u6574\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💼 税后工资计算</h1>
+    <p>算清五险一金和个税，看税后到手</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">税后工资计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#税后工资</span><span class="badge">#到手工资</span><span class="badge">#个税</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>税前月薪（元）</label><input type="number" id="saGross" value="15000" min="0"></div>
+  <div><label>社保基数（元/月）</label><input type="number" id="saBase" value="15000" min="0"></div>
+  <div><label>公积金比例（%）</label>
+    <select id="saFund">
+      <option value="5">5%</option>
+      <option value="7">7%</option>
+      <option value="8">8%</option>
+      <option value="10">10%</option>
+      <option value="12" selected>12%</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>专项附加扣除（元/月）</label><input type="number" id="saDed" value="0" min="0" step="100"></div>
+  <div><label>缴纳社保公积金</label>
+    <select id="saEnabled">
+      <option value="1" selected>缴纳</option>
+      <option value="0">不缴纳（只看个税）</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="saGo">计算到手工资</button>
+<div id="saResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>税后工资怎么算？</h2><p>税后 = 税前 - 五险一金个人部分 - 个人所得税。个税按累计预扣法计算，专项附加扣除（房贷、赡养老人等）会减少应纳税额。</p><h2>为什么要用工资计算器？</h2><p>面试谈薪、跳槽比较、年度规划都需要知道实际到手多少，本工具帮你看清税前与税后的差距。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>计算准确吗？</summary><p>按现行社保费率与个税起征点 5000 元/月计算，各地费率略有差异，结果供参考，以税务与社保官方为准。</p></details><details class="faq-item"><summary>支持专项附加扣除吗？</summary><p>支持，可填写每月专项附加扣除金额，如房贷 1000 元、赡养老人 2000 元等。</p></details><details class="faq-item"><summary>公积金比例怎么选？</summary><p>按你所在城市规定，一般 5%-12%，本工具默认 12% 可自行调整。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>税后工资计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='salary-calc';}); _r.unshift('salary-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var saGross = document.getElementById('saGross');
+var saBase = document.getElementById('saBase');
+var saFund = document.getElementById('saFund');
+var saDed = document.getElementById('saDed');
+var saEnabled = document.getElementById('saEnabled');
+var saGo = document.getElementById('saGo');
+var saResult = document.getElementById('saResult');
+
+function row(label, val, extra) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+function socialPart(base, fundPct) {
+  var pension = base * 0.08;
+  var medical = base * 0.02;
+  var unemp = base * 0.005;
+  var fund = base * fundPct / 100;
+  return { pension: pension, medical: medical, unemp: unemp, fund: fund, total: pension + medical + unemp + fund };
+}
+
+function incomeTax(taxable) {
+  if (taxable <= 0) return 0;
+  var rate, quick;
+  if (taxable <= 3000) { rate = 0.03; quick = 0; }
+  else if (taxable <= 12000) { rate = 0.10; quick = 210; }
+  else if (taxable <= 25000) { rate = 0.20; quick = 1410; }
+  else if (taxable <= 35000) { rate = 0.25; quick = 2660; }
+  else if (taxable <= 55000) { rate = 0.30; quick = 4410; }
+  else if (taxable <= 80000) { rate = 0.35; quick = 7160; }
+  else { rate = 0.45; quick = 15160; }
+  return taxable * rate - quick;
+}
+
+function calc(gross, base, fundPct, ded, enabled) {
+  var s = enabled === '1' ? socialPart(base, fundPct) : { pension: 0, medical: 0, unemp: 0, fund: 0, total: 0 };
+  var taxableMonthly = gross - s.pension - s.medical - s.unemp - s.fund - ded - 5000;
+  var tax = incomeTax(taxableMonthly);
+  var net = gross - s.total - tax;
+  var yearTaxable = taxableMonthly;
+  var annualTax = incomeTax(taxableMonthly) * 12;
+  return { s: s, tax: tax, net: net, taxable: taxableMonthly, annual: annualTax };
+}
+
+saGo.addEventListener('click', function () {
+  var gross = parseFloat(saGross.value);
+  var base = parseFloat(saBase.value);
+  var fundPct = parseFloat(saFund.value);
+  var ded = parseFloat(saDed.value) || 0;
+  if (!gross || gross <= 0) { saResult.innerHTML = '<div class="result-box">请输入有效的税前工资</div>'; return; }
+  if (!base || base <= 0) base = gross;
+  if (isNaN(ded) || ded < 0) ded = 0;
+  var r = calc(gross, base, fundPct, ded, saEnabled.value);
+  var html = '';
+  if (saEnabled.value === '1') {
+    html += row('养老保险（个人 8%）', r.s.pension.toFixed(2)) +
+      row('医疗保险（个人 2%）', r.s.medical.toFixed(2)) +
+      row('失业保险（个人 0.5%）', r.s.unemp.toFixed(2)) +
+      row('住房公积金（个人 ' + fundPct + '%）', r.s.fund.toFixed(2)) +
+      row('五险一金合计', r.s.total.toFixed(2));
+  }
+  html += row('应纳税所得额（月）', r.taxable <= 0 ? '0（未达起征点）' : r.taxable.toFixed(2)) +
+    row('个人所得税（月）', r.tax.toFixed(2)) +
+    row('税后到手工资', '<span style="color:#16a34a;font-size:18px;">' + r.net.toFixed(2) + ' 元</span>') +
+    row('税率档位', r.taxable > 0 ? (r.taxable > 80000 ? '45%' : r.taxable > 55000 ? '35%' : r.taxable > 35000 ? '30%' : r.taxable > 25000 ? '25%' : r.taxable > 12000 ? '20%' : r.taxable > 3000 ? '10%' : '3%') : '—') +
+    row('全年到手（估算）', (r.net * 12).toFixed(2));
+  saResult.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
