@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字转中文大写 - 在线金额大写转换工具</title>
+  <meta name="description" content="免费在线数字转中文大写工具，把小写数字或金额自动转换为中文大写（壹贰叁…拾佰仟万…），支持万元和分位，适合报销、合同、发票场景。" />
+  <meta name="keywords" content="数字转大写,金额大写,中文大写,大写数字,人民币大写,发票大写">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💴</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8d1f\u6570\u4f1a\u5728\u524d\u9762\u52a0\u300c\u8d1f\u300d\u5b57\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u8f6c\u4e0d\u662f\u91d1\u989d\u7684\u6570\u5b57\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u7eaf\u6574\u6570\u4f1a\u6309\u8bfb\u6570\u8f6c\u6362\uff0c\u4f8b\u5982 2024 \u2192 \u8d30\u4edf\u96f6\u8d30\u62fe\u8086\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u6309\u300c\u89d2\u300d\u300c\u5206\u300d\u300c\u5398\u300d\u5904\u7406\uff0c\u8d85\u8fc7\u4e24\u4f4d\u5c0f\u6570\u4f1a\u63d0\u793a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💴 数字转中文大写</h1>
+    <p>小写数字/金额一键转中文大写</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">数字转中文大写</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#中文大写</span><span class="badge">#金额</span><span class="badge">#数字转大写</span>
+<div class="field">
+  <label>输入数字或金额</label>
+  <input type="text" id="cuIn" value="1234567.89" placeholder="如 12345.67 或 2024">
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模式</label>
+    <select id="cuMode">
+      <option value="money">金额大写（含元角分）</option>
+      <option value="plain">纯数字读法</option>
+    </select>
+  </div>
+  <div><label>整元加「整」</label>
+    <label><input type="checkbox" id="cuZheng" checked> 是（如 壹佰元整）</label>
+  </div>
+</div>
+<button class="btn btn-primary" id="cuGo">转换</button>
+<textarea id="cuOut" rows="4" readonly style="margin-top:12px;font-size:15px;"></textarea>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-secondary" id="cuCopy">📋 复制</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么要用中文大写金额？</h2><p>财务票据、合同、报销中必须使用中文大写防止篡改，例如 1234.5 元应写为「壹仟贰佰叁拾肆元伍角」。</p><h2>转换规则是什么？</h2><p>按国家票据规范：整数部分用 零壹贰叁肆伍陆柒捌玖，数位用 拾佰仟万亿，小数部分角分，末尾整。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持负数吗？</summary><p>支持，负数会在前面加「负」字。</p></details><details class="faq-item"><summary>可以转不是金额的数字吗？</summary><p>可以，纯整数会按读数转换，例如 2024 → 贰仟零贰拾肆。</p></details><details class="faq-item"><summary>支持小数吗？</summary><p>支持，按「角」「分」「厘」处理，超过两位小数会提示。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>数字转中文大写 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='chinese-uppercase';}); _r.unshift('chinese-uppercase'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cuIn = document.getElementById('cuIn');
+var cuMode = document.getElementById('cuMode');
+var cuZheng = document.getElementById('cuZheng');
+var cuGo = document.getElementById('cuGo');
+var cuOut = document.getElementById('cuOut');
+var cuCopy = document.getElementById('cuCopy');
+
+var NUM = '零壹贰叁肆伍陆柒捌玖';
+var UNIT = ['', '拾', '佰', '仟'];
+var BIG = ['', '万', '亿', '万亿'];
+
+function intUpper(str) {
+  if (str === '0') return '零';
+  var s = String(str);
+  var groups = [];
+  while (s.length > 0) { groups.unshift(s.slice(-4)); s = s.slice(0, -4); }
+  var gLen = groups.length;
+  var out = '';
+  groups.forEach(function (g, gi) {
+    var part = groupUpper(g);
+    if (part) out += part + BIG[gLen - 1 - gi];
+    var next = groups[gi + 1];
+    if (next !== undefined && !/^0+$/.test(next) && next[0] === '0') out += '零';
+  });
+  out = out.replace(/零{2,}/g, '零').replace(/零+$/, '');
+  return out || '零';
+}
+
+function groupUpper(g) {
+  g = String(g);
+  var out = '';
+  var len = g.length;
+  for (var i = 0; i < len; i++) {
+    var d = parseInt(g[i], 10);
+    var u = len - 1 - i;
+    if (d === 0) {
+      if (out && out.slice(-1) !== '零' && i < len - 1 && parseInt(g[i + 1], 10) !== 0) out += '零';
+    } else {
+      out += NUM[d] + UNIT[u];
+    }
+  }
+  return out;
+}
+
+function upperMoney(str) {
+  var neg = str.indexOf('-') === 0;
+  var s = str.replace(/^-/, '');
+  var parts = s.split('.');
+  var intPart = parts[0] || '0';
+  var dec = parts[1] ? parts[1].slice(0, 2) : '';
+  var intStr = intUpper(intPart);
+  var out = (neg ? '负' : '') + intStr + '元';
+  if (dec) {
+    var j = parseInt(dec[0] || '0', 10);
+    var f = parseInt(dec[1] || '0', 10);
+    if (j > 0) out += NUM[j] + '角';
+    if (f > 0) out += NUM[f] + '分';
+    if (j === 0 && f === 0) out += '整';
+  } else {
+    if (cuZheng.checked) out += '整';
+  }
+  return out;
+}
+
+cuGo.addEventListener('click', function () {
+  var raw = cuIn.value.trim();
+  if (!raw || !/^-?\d+(\.\d+)?$/.test(raw)) { cuOut.value = '请输入有效数字（如 12345.67）'; return; }
+  if (cuMode.value === 'money') {
+    var v = parseFloat(raw);
+    if (v > 9999999999999999) { cuOut.value = '数值过大（最大 9999 万亿）'; return; }
+    cuOut.value = upperMoney(raw);
+  } else {
+    var neg = raw.indexOf('-') === 0;
+    var s = raw.replace(/^-/, '');
+    var parts = s.split('.');
+    var intStr = intUpper(parts[0]);
+    var out = (neg ? '负' : '') + intStr;
+    if (parts[1]) {
+      var d = parts[1].slice(0, 2);
+      out += '点';
+      for (var i = 0; i < d.length; i++) out += NUM[parseInt(d[i], 10)];
+      if (parts[1].length > 2) out += '（小数过多，仅保留两位）';
+    }
+    cuOut.value = out;
+  }
+});
+
+cuCopy.addEventListener('click', function () {
+  if (!cuOut.value) { showToast('请先转换'); return; }
+  try { navigator.clipboard.writeText(cuOut.value); showToast('已复制'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
