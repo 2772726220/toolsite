@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手机号处理 - 在线格式化脱敏与运营商识别工具</title>
+  <meta name="description" content="免费在线手机号处理工具，检测 11 位手机号合法性，自动格式化 3-4-4 显示，中间四位脱敏，识别移动/联通/电信运营商，通讯录整理必备。" />
+  <meta name="keywords" content="手机号格式化,手机号脱敏,手机号识别,运营商识别,手机号校验,通讯录整理">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u53f7\u6bb5\uff1f","acceptedAnswer":{"@type":"Answer","text":"13-19 \u5f00\u5934\u7684 11 \u4f4d\u53f7\u7801\uff0c\u4e3b\u6d41\u53f7\u6bb5\u5747\u53ef\u8bc6\u522b\u3002"}},{"@type":"Question","name":"\u8bc6\u522b\u8fd0\u8425\u5546\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u5de5\u4fe1\u90e8\u53f7\u6bb5\u89c4\u5219\u8bc6\u522b\u79fb\u52a8/\u8054\u901a/\u7535\u4fe1/\u5e7f\u7535\u3002"}},{"@type":"Question","name":"\u80fd\u6279\u91cf\u5904\u7406\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u884c\u6279\u91cf\u5904\u7406\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u672c\u5730\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📱 手机号处理</h1>
+    <p>11 位手机号格式化/脱敏/运营商识别</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">手机号处理</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#手机号</span><span class="badge">#脱敏</span>
+<div class="field">
+  <label for="pfData">手机号（每行一个，可含备注）</label>
+  <textarea id="pfData" placeholder="例如：&#10;13800138000&#10;15912345678 张三"></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="pfBtn" type="button">处理</button>
+</div>
+<div class="result-box" id="pfResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>有什么用？</h2><p>整理通讯录时统一号码格式、导出前脱敏保护隐私、识别号码归属运营商。</p><h2>脱敏是什么？</h2><p>把中间四位替换为星号，如 138****0000，保护隐私。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些号段？</summary><p>13-19 开头的 11 位号码，主流号段均可识别。</p></details><details class="faq-item"><summary>识别运营商准吗？</summary><p>按工信部号段规则识别移动/联通/电信/广电。</p></details><details class="faq-item"><summary>能批量处理吗？</summary><p>支持多行批量处理。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，全部本地处理。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>手机号处理 · <a href="../category/text/">✍️ 文本工具</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pfResult = document.getElementById('pfResult');
+
+  function operator(prefix) {
+    var mob = ['134', '135', '136', '137', '138', '139', '147', '148', '150', '151', '152', '157', '158', '159', '172', '178', '182', '183', '184', '187', '188', '195', '198'];
+    var uni = ['130', '131', '132', '145', '146', '155', '156', '166', '167', '171', '175', '176', '185', '186', '196'];
+    var tel = ['133', '149', '153', '173', '174', '177', '180', '181', '189', '190', '191', '193', '199'];
+    if (mob.indexOf(prefix) >= 0) return '中国移动';
+    if (uni.indexOf(prefix) >= 0) return '中国联通';
+    if (tel.indexOf(prefix) >= 0) return '中国电信';
+    if (prefix === '192') return '中国广电';
+    return '未知';
+  }
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  document.getElementById('pfBtn').addEventListener('click', function () {
+    var lines = document.getElementById('pfData').value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (!lines.length) { showToast('请输入手机号'); return; }
+    var rows = '', valid = 0, total = 0;
+    lines.forEach(function (line) {
+      var m = line.match(/(1[3-9]\d{9})/);
+      if (!m) {
+        rows += '<tr><td colspan="4" style="padding:4px 10px;color:var(--danger);">' + esc(line) + ' — 未找到有效手机号</td></tr>';
+        return;
+      }
+      total++;
+      var phone = m[1];
+      var remark = line.replace(phone, '').trim();
+      var fmt = phone.slice(0, 3) + ' ' + phone.slice(3, 7) + ' ' + phone.slice(7);
+      var masked = phone.slice(0, 3) + '****' + phone.slice(7);
+      valid++;
+      rows += '<tr><td style="padding:4px 10px;font-family:monospace;">' + phone + '</td>' +
+        '<td style="padding:4px 10px;font-family:monospace;">' + fmt + '</td>' +
+        '<td style="padding:4px 10px;font-family:monospace;">' + masked + '</td>' +
+        '<td style="padding:4px 10px;">' + operator(phone.slice(0, 3)) + (remark ? ' <span style="color:var(--muted);">' + esc(remark) + '</span>' : '') + '</td></tr>';
+    });
+    pfResult.hidden = false;
+    pfResult.innerHTML = '有效号码 <b>' + valid + '/' + total + '</b> 个<br>' +
+      '<table style="border-collapse:collapse;width:100%;font-size:13px;margin-top:8px;">' +
+      '<tr><th style="text-align:left;padding:4px 10px;">原始</th><th style="text-align:left;padding:4px 10px;">格式化</th><th style="text-align:left;padding:4px 10px;">脱敏</th><th style="text-align:left;padding:4px 10px;">运营商</th></tr>' +
+      rows + '</table>';
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
