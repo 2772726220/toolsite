@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标准体重计算器 - 在线标准体重/健康体重范围</title>
+  <meta name="description" content="免费在线标准体重计算器，输入身高与性别，自动计算 BMI 健康体重范围，并给出世界卫生组织、Broca、Devine 等多种标准体重公式结果，科学管理体重。" />
+  <meta name="keywords" content="标准体重,理想体重,健康体重,BMI体重范围,体重计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e0d\u540c\u516c\u5f0f\u7ed3\u679c\u4e0d\u4e00\u6837\uff0c\u4fe1\u54ea\u4e2a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5404\u516c\u5f0f\u9002\u7528\u4eba\u7fa4\u4e0d\u540c\uff0cBMI \u533a\u95f4\u6700\u901a\u7528\uff1b\u5176\u4f59\u516c\u5f0f\u53ef\u4f5c\u4e3a\u53c2\u8003\uff0c\u8eab\u4f53\u6210\u5206\u5dee\u5f02\uff08\u808c\u8089\u91cf\uff09\u4e5f\u4f1a\u5f71\u54cd\u7ed3\u679c\u3002"}},{"@type":"Question","name":"BMI \u5bf9\u808c\u8089\u53d1\u8fbe\u7684\u4eba\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u592a\u51c6\uff0c\u808c\u8089\u91cf\u5927\u4f1a\u8ba9 BMI \u504f\u9ad8\uff0c\u4f46\u672a\u5fc5\u80a5\u80d6\uff0c\u5efa\u8bae\u7ed3\u5408\u4f53\u8102\u7387\u5224\u65ad\u3002"}},{"@type":"Question","name":"\u6807\u51c6\u4f53\u91cd\u662f\u8d8a\u63a5\u8fd1\u8d8a\u597d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ea\u8981\u843d\u5728\u5065\u5eb7\u533a\u95f4\u5185\u4e14\u8eab\u4f53\u72b6\u6001\u826f\u597d\u5373\u53ef\uff0c\u4e0d\u5fc5\u523b\u610f\u8ffd\u6c42\u67d0\u4e2a\u7cbe\u786e\u6570\u5b57\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6240\u6709\u8ba1\u7b97\u5728\u672c\u5730\u5b8c\u6210\uff0c\u4e0d\u7559\u5b58\u4efb\u4f55\u4e2a\u4eba\u4fe1\u606f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⚖️ 标准体重计算</h1>
+    <p>身高体重算标准体重范围与多种公式</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">标准体重计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#标准体重</span><span class="badge">#理想体重</span><span class="badge">#BMI</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>身高 (cm)</label><input type="number" id="iwHeight" placeholder="如 170" value="170"></div>
+  <div><label>性别</label>
+    <select id="iwSex"><option value="male">男</option><option value="female">女</option></select>
+  </div>
+  <div><label>当前体重 (kg，可选)</label><input type="number" id="iwWeight" placeholder="如 65"></div>
+</div>
+<button class="btn btn-primary" id="iwCalc">计算标准体重</button>
+<div id="iwResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>标准体重怎么算？</h2><p>常用公式：Broca 标准体重 = (身高cm - 100)；WHO 建议以 BMI 18.5~24 对应的体重区间作为健康范围，即身高(m)² × 18.5 ~ 身高(m)² × 24。</p><h2>BMI 多少算正常？</h2><p>中国标准：18.5~23.9 为正常，24~27.9 为超重，28 及以上为肥胖，低于 18.5 为偏瘦。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>不同公式结果不一样，信哪个？</summary><p>各公式适用人群不同，BMI 区间最通用；其余公式可作为参考，身体成分差异（肌肉量）也会影响结果。</p></details><details class="faq-item"><summary>BMI 对肌肉发达的人准吗？</summary><p>不太准，肌肉量大会让 BMI 偏高，但未必肥胖，建议结合体脂率判断。</p></details><details class="faq-item"><summary>标准体重是越接近越好吗？</summary><p>只要落在健康区间内且身体状态良好即可，不必刻意追求某个精确数字。</p></details><details class="faq-item"><summary>结果会保存吗？</summary><p>不会，所有计算在本地完成，不留存任何个人信息。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>标准体重计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='ideal-weight';}); _r.unshift('ideal-weight'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var iwHeight = document.getElementById('iwHeight');
+var iwSex = document.getElementById('iwSex');
+var iwWeight = document.getElementById('iwWeight');
+var iwCalc = document.getElementById('iwCalc');
+var iwResult = document.getElementById('iwResult');
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;">' + val + '</span></div>';
+}
+
+iwCalc.addEventListener('click', function () {
+  var h = parseFloat(iwHeight.value);
+  if (!h || h <= 0 || h > 250) { iwResult.innerHTML = '<div class="result-box">请输入有效身高（cm）</div>'; return; }
+  var sex = iwSex.value;
+  var m = h / 100;
+  var lowBmi = 18.5 * m * m, highBmi = 23.9 * m * m, bmi24 = 24 * m * m, bmi28 = 28 * m * m;
+  var broca = h - 100;
+  var brocaAdj = sex === 'male' ? h - 105 : h - 107.5;
+  var devine = sex === 'male' ? 50 + 0.9 * (h - 152.4) : 45.5 + 0.9 * (h - 152.4);
+  var html =
+    row('BMI 健康体重范围', lowBmi.toFixed(1) + ' ~ ' + highBmi.toFixed(1) + ' kg') +
+    row('中国标准（18.5-23.9）', '偏瘦 < ' + lowBmi.toFixed(1) + ' ｜ 正常 ' + lowBmi.toFixed(1) + '~' + bmi24.toFixed(1) + ' ｜ 超重 ' + bmi24.toFixed(1) + '~' + bmi28.toFixed(1) + ' ｜ 肥胖 ≥ ' + bmi28.toFixed(1)) +
+    row('WHO 标准体重（身高-100）', broca.toFixed(1) + ' kg') +
+    row('Broca 改良公式', brocaAdj.toFixed(1) + ' kg') +
+    row('Devine 公式（常用于剂量计算）', devine.toFixed(1) + ' kg');
+  var w = parseFloat(iwWeight.value);
+  if (w && w > 0) {
+    var bmi = w / (m * m);
+    var cat = bmi < 18.5 ? '偏瘦' : bmi < 24 ? '正常' : bmi < 28 ? '超重' : '肥胖';
+    var emoji = bmi < 18.5 ? '😟' : bmi < 24 ? '😊' : bmi < 28 ? '😐' : '😣';
+    html += row('你的 BMI（' + w + 'kg）', bmi.toFixed(1) + '（' + cat + ' ' + emoji + '）');
+  }
+  iwResult.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
