@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心率区间计算器 - 在线计算最大心率和训练心率区间</title>
+  <meta name="description" content="免费在线心率区间计算器，用 220-年龄 计算最大心率，并自动划分恢复、燃脂、有氧、无氧、极限五大训练区间，跑步、骑行等耐力运动科学训练必备。" />
+  <meta name="keywords" content="心率区间,最大心率,燃脂心率,有氧区间,训练心率,220减年龄">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6700\u5927\u5fc3\u7387\u516c\u5f0f\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"220-\u5e74\u9f84 \u662f\u901a\u7528\u4f30\u7b97\u516c\u5f0f\uff0c\u4e2a\u4f53\u5dee\u5f02\u7ea6 \u00b110\uff0c\u9ad8\u5f3a\u5ea6\u8bad\u7ec3\u5efa\u8bae\u4e13\u4e1a\u6d4b\u8bd5\u3002"}},{"@type":"Question","name":"\u65b0\u624b\u5e94\u8be5\u7ec3\u54ea\u4e2a\u533a\u95f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u5148\u4ee5\u6709\u6c27\u533a\u95f4\uff0870%-80%\uff09\u4e3a\u4e3b\uff0c\u6253\u597d\u5fc3\u80ba\u57fa\u7840\u518d\u9010\u6b65\u63d0\u5347\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>❤️ 心率区间</h1>
+    <p>计算最大心率与五大训练心率区间，科学运动</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">心率区间</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#心率</span><span class="badge">#燃脂</span><span class="badge">#运动</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>年龄（岁）</label><input type="number" id="hrAge" value="30"></div>
+  <div><label>静息心率（可选，bpm）</label><input type="number" id="hrRest" placeholder="如 60"></div>
+</div>
+<button class="btn btn-primary" id="hrGo">计算心率区间</button>
+<div id="hrResult" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是心率区间？</h2><p>按最大心率的百分比划分的五个训练强度区间：恢复、燃脂、有氧耐力、无氧阈、极限。不同目标对应不同区间。</p><h2>燃脂心率是多少？</h2><p>燃脂区间约在最大心率的 60%-70%，此时身体以脂肪为主要供能来源。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>最大心率公式准吗？</summary><p>220-年龄 是通用估算公式，个体差异约 ±10，高强度训练建议专业测试。</p></details><details class="faq-item"><summary>新手应该练哪个区间？</summary><p>建议先以有氧区间（70%-80%）为主，打好心肺基础再逐步提升。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>心率区间 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='heart-rate-zones';}); _r.unshift('heart-rate-zones'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var hrAge = document.getElementById('hrAge');
+var hrRest = document.getElementById('hrRest');
+var hrGo = document.getElementById('hrGo');
+var hrResult = document.getElementById('hrResult');
+
+var ZONES = [
+  { name: '恢复区', pct: [50, 60], color: '#94a3b8', note: '热身 / 放松' },
+  { name: '燃脂区', pct: [60, 70], color: '#22c55e', note: '脂肪供能为主' },
+  { name: '有氧耐力区', pct: [70, 80], color: '#3b82f6', note: '提升心肺耐力' },
+  { name: '无氧阈区', pct: [80, 90], color: '#f59e0b', note: '乳酸阈值训练' },
+  { name: '极限区', pct: [90, 100], color: '#ef4444', note: '短时冲刺' }
+];
+
+function maxHr(age) { return 220 - age; }
+
+function zones(age) {
+  var m = maxHr(age);
+  return ZONES.map(function (z) {
+    return {
+      name: z.name, note: z.note, color: z.color,
+      lo: Math.round(m * z.pct[0] / 100), hi: Math.round(m * z.pct[1] / 100),
+      loP: z.pct[0], hiP: z.pct[1]
+    };
+  });
+}
+
+function row(label, val, color) {
+  var col = color ? ' style="color:' + color + ';"' : '';
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span' + col + ' style="font-weight:700;">' + val + '</span></div>';
+}
+
+hrGo.addEventListener('click', function () {
+  var age = parseFloat(hrAge.value);
+  if (!age || age <= 0) { hrResult.innerHTML = '<div class="result-box">请输入有效年龄</div>'; return; }
+  var rest = parseFloat(hrRest.value);
+  var m = maxHr(age);
+  var html = row('最大心率', m + ' bpm（220-' + age + '）') +
+    row('心率储备 HRR' + (rest && rest > 0 ? '' : '（未填静息心率）'), rest && rest > 0 ? (m - rest) + ' bpm' : '-');
+  zones(age).forEach(function (z) {
+    html += row(z.name + '（' + z.loP + '%-' + z.hiP + '%）' + ' · ' + z.note, z.lo + ' – ' + z.hi + ' bpm', z.color);
+  });
+  if (rest && rest > 0) {
+    html += row('Karvonen 法示例（60% 区间下限）', Math.round(rest + (m - rest) * 0.6) + ' bpm');
+  }
+  hrResult.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
