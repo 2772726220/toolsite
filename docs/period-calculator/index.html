@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>经期预测 - 在线生理周期与排卵期计算器</title>
+  <meta name="description" content="免费在线经期预测计算器，输入上次经期开始日期、周期与经期天数，自动预测未来数月经期、排卵日、易孕期与安全期，科学备孕或避孕参考。" />
+  <meta name="keywords" content="经期预测,生理周期计算,排卵期计算,安全期,备孕,经期记录">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u4f60\u586b\u5199\u7684\u5468\u671f\u4e0e\u7ecf\u671f\u505a\u63a8\u7b97\uff0c\u4e2a\u4f53\u5dee\u5f02\u5927\uff0c\u4ec5\u4f5c\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u80fd\u9884\u6d4b\u51e0\u4e2a\u6708\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u9884\u6d4b\u672a\u6765 3 \u4e2a\u6708\u3002"}},{"@type":"Question","name":"\u5b89\u5168\u671f\u5b89\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b89\u5168\u671f\u907f\u5b55\u5931\u8d25\u7387\u8f83\u9ad8\uff0c\u4e0d\u4f5c\u4e3a\u53ef\u9760\u907f\u5b55\u624b\u6bb5\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌸 经期预测</h1>
+    <p>预测经期/排卵期/安全期</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">经期预测</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#经期</span><span class="badge">#排卵期</span>
+<div class="field">
+  <label for="pdStart">上次经期开始日期</label>
+  <input type="date" id="pdStart">
+</div>
+<div class="controls" style="border-top:none;margin-top:0;padding-top:0;">
+  <label for="pdCycle">周期（天）</label>
+  <input type="number" id="pdCycle" value="28" min="15" max="60" style="width:80px;">
+  <label for="pdLen">经期（天）</label>
+  <input type="number" id="pdLen" value="5" min="1" max="10" style="width:80px;">
+</div>
+<div class="actions">
+  <button class="btn" id="pdBtn" type="button">预测</button>
+</div>
+<div class="result-box" id="pdResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>排卵期怎么算？</h2><p>排卵日通常在下次经期前 14 天，其前后各 3 天为易孕期。</p><h2>周期不规律怎么办？</h2><p>工具结果基于平均周期估算，仅供参考，实际请以身体信号为准。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>准确吗？</summary><p>基于你填写的周期与经期做推算，个体差异大，仅作参考。</p></details><details class="faq-item"><summary>能预测几个月？</summary><p>默认预测未来 3 个月。</p></details><details class="faq-item"><summary>安全期安全吗？</summary><p>安全期避孕失败率较高，不作为可靠避孕手段。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>经期预测 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pdResult = document.getElementById('pdResult');
+  var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+  function fmt(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+
+  document.getElementById('pdBtn').addEventListener('click', function () {
+    var val = document.getElementById('pdStart').value;
+    var cycle = parseInt(document.getElementById('pdCycle').value, 10);
+    var len = parseInt(document.getElementById('pdLen').value, 10);
+    if (!val) { showToast('请选择上次经期开始日期'); return; }
+    if (isNaN(cycle) || cycle < 15 || cycle > 60) { showToast('周期需在 15-60 天'); return; }
+    if (isNaN(len) || len < 1 || len > 10) { showToast('经期需在 1-10 天'); return; }
+    var last = new Date(val + 'T00:00:00');
+    if (isNaN(last)) { showToast('日期无效'); return; }
+
+    var rows = '';
+    var periods = [];
+    for (var i = 1; i <= 3; i++) {
+      var start = addDays(last, i * cycle);
+      var end = addDays(start, len - 1);
+      periods.push(start);
+      var ovu = addDays(start, -14);
+      var fwStart = addDays(ovu, -3), fwEnd = addDays(ovu, 3);
+      var daysLeft = daysBetween(new Date(), start);
+      rows += '<tr><td style="padding:6px 10px;">' + fmt(start) + '（周' + WEEK[start.getDay()] + '）</td>' +
+        '<td style="padding:6px 10px;">' + fmt(end) + '</td>' +
+        '<td style="padding:6px 10px;">' + fmt(ovu) + '</td>' +
+        '<td style="padding:6px 10px;">' + fmt(fwStart) + ' ~ ' + fmt(fwEnd) + '</td>' +
+        '<td style="padding:6px 10px;">' + (daysLeft >= 0 ? daysLeft + ' 天后' : '已过 ' + (-daysLeft) + ' 天') + '</td></tr>';
+    }
+
+    var nextPeriod = addDays(last, cycle);
+    var fertileStart = addDays(addDays(nextPeriod, -14), -3);
+    var fertileEnd = addDays(addDays(nextPeriod, -14), 3);
+    var afterEnd = addDays(last, len);
+
+    pdResult.hidden = false;
+    pdResult.innerHTML =
+      '上次经期：' + fmt(last) + '（周' + WEEK[last.getDay()] + '）～' + fmt(addDays(last, len - 1)) + '<br><br>' +
+      '<b>下一次经期预计：' + fmt(nextPeriod) + '</b><br>' +
+      '排卵日约在 <b style="color:var(--primary);">' + fmt(addDays(nextPeriod, -14)) + '</b>，易孕期 <b style="color:var(--danger);">' + fmt(fertileStart) + ' ~ ' + fmt(fertileEnd) + '</b>' +
+      '<br>经期结束后相对安全期：<b>' + fmt(addDays(afterEnd, 1)) + ' ~ ' + fmt(addDays(fertileStart, -1)) + '</b><br><br>' +
+      '<table style="border-collapse:collapse;width:100%;font-size:13px;">' +
+      '<tr><th style="text-align:left;padding:6px 10px;">未来经期</th><th style="text-align:left;padding:6px 10px;">结束</th><th style="text-align:left;padding:6px 10px;">排卵日</th><th style="text-align:left;padding:6px 10px;">易孕期</th><th style="text-align:left;padding:6px 10px;">距今</th></tr>' +
+      rows + '</table>' +
+      '<span style="font-size:12px;color:var(--muted);">结果基于平均周期估算，个体差异大，仅作参考。</span>';
+  });
+
+  var d = new Date();
+  var start = new Date(d.getFullYear(), d.getMonth(), 1);
+  var daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  start.setDate(1);
+  if (d.getDate() < 15) {
+    var prev = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+    prev.setDate(Math.min(15, new Date(d.getFullYear(), d.getMonth(), 0).getDate()));
+    start = prev;
+  }
+  document.getElementById('pdStart').value = fmt(start);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
