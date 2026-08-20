@@ -8,6 +8,7 @@
   <meta name="keywords" content="骰子,掷骰子,抛硬币,随机抽签,在线骰子,随机选择工具">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u968f\u673a\u7b97\u6cd5\u516c\u5e73\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u6d4f\u89c8\u5668\u52a0\u5bc6\u968f\u673a\u6e90\uff0c\u7ed3\u679c\u4e0d\u53ef\u9884\u6d4b\u3002"}},{"@type":"Question","name":"\u652f\u6301\u81ea\u5b9a\u4e49\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u81ea\u5b9a\u4e49\u9ab0\u5b50\u9762\u6570\u548c\u968f\u673a\u6570\u8303\u56f4\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u751f\u6210\u3002"}},{"@type":"Question","name":"\u6709\u52a8\u753b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6709\u63b7\u9ab0\u52a8\u753b\uff0c\u70b9\u51fb\u5373\u53ef\u89c2\u770b\u7ed3\u679c\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">骰子抽签</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">骰子抽签</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#骰子</span><span class="badge">#随机</span>
@@ -47,10 +49,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>随机算法公平吗？</summary><p>使用浏览器加密随机源，结果不可预测。</p></details><details class="faq-item"><summary>支持自定义吗？</summary><p>支持自定义骰子面数和随机数范围。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地生成。</p></details><details class="faq-item"><summary>有动画吗？</summary><p>有掷骰动画，点击即可观看结果。</p></details></div>
   </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a><a href="../pet-age/" class="t-card" data-cat="fun" data-tags="宠物 狗狗 猫咪" data-name="宠物年龄换算 狗/猫年龄换算人类年龄，附对照表 宠物 狗狗 猫咪"><div class="t-icon">🐶</div><div class="t-name">宠物年龄换算</div><div class="t-desc">狗/猫年龄换算人类年龄，附对照表</div><div class="t-tags"><span class="tt">#宠物</span><span class="tt">#狗狗</span><span class="tt">#猫咪</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>骰子抽签 · <a href="../category/fun/">🎮 娱乐游戏</a> · <a href="../">返回工具箱首页</a></p>
+    <p>骰子抽签 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -75,6 +80,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='dice-roller';}); _r.unshift('dice-roller'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var drResult = document.getElementById('drResult');
   var drHistory = document.getElementById('drHistory');
   var history = [];
