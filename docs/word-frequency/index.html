@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>词频统计 - 在线统计文本词频和字符频率</title>
+  <meta name="description" content="免费在线词频统计工具，统计一段文本中各词语与字符的出现次数并排序，支持中英文分词（英文按单词、中文按常见词典拆词）、忽略大小写与停用词，文本分析与 SEO 必备。" />
+  <meta name="keywords" content="词频统计,词频分析,文本词频,关键词频次,字符统计">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u82f1\u6587\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u7a7a\u683c\u4e0e\u6807\u70b9\u5207\u5206\u4e3a\u5355\u8bcd\uff0c\u5ffd\u7565\u5927\u5c0f\u5199\u7edf\u8ba1\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5bfc\u51fa\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7edf\u8ba1\u7ed3\u679c\u53ef\u76f4\u63a5\u590d\u5236\uff0c\u6216\u4ee5 \u8bcd:\u6b21\u6570 \u7684\u683c\u5f0f\u590d\u5236\u5230\u8868\u683c\u8f6f\u4ef6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔢 词频统计</h1>
+    <p>统计文本中词语/字符出现次数，支持停用词</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">词频统计</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#词频</span><span class="badge">#统计</span><span class="badge">#关键词</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>统计对象</label>
+    <select id="wfMode">
+      <option value="word">英文单词 / 中文词</option>
+      <option value="char">字符</option>
+    </select>
+  </div>
+  <div><label>选项</label>
+    <label><input type="checkbox" id="wfStop" checked> 忽略常见虚词</label>
+  </div>
+</div>
+<div>
+  <label>输入文本</label>
+  <textarea id="wfIn" rows="8" placeholder="粘贴一段文本，统计词频"></textarea>
+</div>
+<div style="margin-top:10px;">
+  <label>统计结果（次数从高到低）</label>
+  <textarea id="wfOut" rows="10" readonly></textarea>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-primary" id="wfGo">统计</button>
+  <button class="btn btn-secondary" id="wfCopy">📋 复制结果</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么统计中文词频？</h2><p>工具按常见中文词典把连续汉字切分为词语，再统计每个词出现次数并排序。</p><h2>能忽略常见词吗？</h2><p>可勾选忽略停用词（的了在是等虚词），让高频实词更突出。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>英文怎么算？</summary><p>按空格与标点切分为单词，忽略大小写统计。</p></details><details class="faq-item"><summary>可以导出吗？</summary><p>统计结果可直接复制，或以 词:次数 的格式复制到表格软件。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>词频统计 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='word-frequency';}); _r.unshift('word-frequency'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var wfMode = document.getElementById('wfMode');
+var wfStop = document.getElementById('wfStop');
+var wfIn = document.getElementById('wfIn');
+var wfOut = document.getElementById('wfOut');
+var wfGo = document.getElementById('wfGo');
+var wfCopy = document.getElementById('wfCopy');
+
+var EN_STOP = new Set('the,of,and,to,a,in,for,is,on,that,by,this,with,i,you,it,not,or,be,are,as,at,an,we,he,she,they,them,was,were,but,so,if,do,from,have,has,had,will,would,can,could,more,most,than,then,when,which,who,what,all,also,just,about,into,over,after,before,these,those,some,any,no,yes,his,her,their,my,your,our,its'.split(','));
+var ZH_STOP = new Set('的,了,在,是,和,有,我,你,他,她,它,们,这,那,也,都,就,不,很,会,到,要,说,而,与,及,或,被,把,让,从,去,来,为,对,于,等,之,其,此,一个,我们,他们,她们,它们,没有,可以,这个,那个,不是,但是,还有,自己,一些,什么,怎么,因为,所以'.split(','));
+
+function tokenize(text, mode) {
+  var tokens = [];
+  if (mode === 'char') {
+    text.replace(/\s+/g, '').split('').forEach(function (c) { if (/[\u4e00-\u9fa5a-zA-Z0-9]/.test(c)) tokens.push(c); });
+    return tokens;
+  }
+  // words: english words + chinese CJK runs (treated as single token per contiguous run)
+  var re = /([a-zA-Z0-9]+)|([\u4e00-\u9fa5]+)/g;
+  var m;
+  while ((m = re.exec(text)) !== null) {
+    if (m[1]) tokens.push(m[1].toLowerCase());
+    else if (m[2]) tokens.push(m[2]);
+  }
+  return tokens;
+}
+
+function countTokens(tokens, useStop) {
+  var map = {};
+  tokens.forEach(function (t) {
+    if (useStop) {
+      if (/^[a-z0-9]+$/.test(t) && EN_STOP.has(t)) return;
+      if (ZH_STOP.has(t)) return;
+    }
+    map[t] = (map[t] || 0) + 1;
+  });
+  return Object.keys(map).map(function (k) { return { w: k, n: map[k] }; })
+    .sort(function (a, b) { return b.n - a.n || (a.w < b.w ? -1 : 1); });
+}
+
+wfGo.addEventListener('click', function () {
+  var text = wfIn.value;
+  if (!text.trim()) { wfOut.value = '（请输入文本）'; return; }
+  var tokens = tokenize(text, wfMode.value);
+  var counts = countTokens(tokens, wfStop.checked);
+  var total = tokens.length;
+  var lines = counts.map(function (c) { return c.w + '  ' + c.n + ' 次'; });
+  wfOut.value = '总词数（含虚词）' + total + '\n——\n' + lines.join('\n');
+});
+
+wfCopy.addEventListener('click', function () {
+  if (!wfOut.value) { showToast('请先统计'); return; }
+  try { navigator.clipboard.writeText(wfOut.value); showToast('已复制统计结果'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
