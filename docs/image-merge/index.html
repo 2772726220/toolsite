@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片拼接 - 在线图片合并拼长图工具</title>
+  <meta name="description" content="免费在线图片拼接工具，把多张 JPG/PNG/WebP 图片按横向或纵向拼接成一张长图，支持调整间距与对齐方式，浏览器本地处理，不上传服务器。" />
+  <meta name="keywords" content="图片拼接,图片合并,拼长图,长图拼接,照片拼接,横向拼接,纵向拼接">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6700\u591a\u80fd\u62fc\u51e0\u5f20\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u4e00\u6b21\u4e0d\u8d85\u8fc7 10 \u5f20\uff0c\u6570\u91cf\u8d8a\u591a\u8f93\u51fa\u56fe\u7247\u8d8a\u5927\uff0c\u6d4f\u89c8\u5668\u5185\u5b58\u5360\u7528\u4e5f\u8d8a\u9ad8\u3002"}},{"@type":"Question","name":"\u652f\u6301\u900f\u660e\u80cc\u666f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0cPNG \u900f\u660e\u901a\u9053\u4f1a\u4fdd\u7559\uff0c\u62fc\u5230\u5e95\u56fe\u900f\u660e\u65f6\u4e0d\u4f1a\u586b\u767d\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u62fc\u63a5\uff0c\u9690\u79c1\u5b89\u5168\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧩 图片拼接</h1>
+    <p>多张图横向/纵向拼成一张长图</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片拼接</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#拼接</span><span class="badge">#合并</span><span class="badge">#长图</span>
+<div class="field">
+  <label>添加图片（可多选，按顺序拼接）</label>
+  <input type="file" id="mgFile" accept="image/*" multiple>
+</div>
+<div id="mgList"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0;">
+  <div><label>方向</label>
+    <select id="mgDir">
+      <option value="vertical">纵向（竖长图）</option>
+      <option value="horizontal">横向（横长图）</option>
+    </select>
+  </div>
+  <div><label>间距（px）</label><input type="number" id="mgGap" value="0" min="0" max="50"></div>
+  <div><label>对齐</label>
+    <select id="mgAlign">
+      <option value="start">左/上对齐</option>
+      <option value="center" selected>居中</option>
+      <option value="end">右/下对齐</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="mgGo">拼接并预览</button>
+<div id="mgOut" style="margin-top:14px; display:flex; justify-content:center; overflow:auto;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-secondary" id="mgSavePng">⬇️ 下载 PNG</button>
+  <button class="btn btn-secondary" id="mgSaveJpg">⬇️ 下载 JPG</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么用在线图片拼接？</h2><p>做截图汇总、聊天记录长图、证件扫描件合页、九宫格变长图等场景，本地拼接最快最安全，不需要安装软件。</p><h2>拼接会压缩画质吗？</h2><p>输出为无损 PNG 或高质量 JPG，画质不损失，所有处理都在浏览器本地完成。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>最多能拼几张？</summary><p>建议一次不超过 10 张，数量越多输出图片越大，浏览器内存占用也越高。</p></details><details class="faq-item"><summary>支持透明背景吗？</summary><p>支持，PNG 透明通道会保留，拼到底图透明时不会填白。</p></details><details class="faq-item"><summary>图片会上传吗？</summary><p>不会，全部在浏览器本地拼接，隐私安全。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片拼接 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-merge';}); _r.unshift('image-merge'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mgFile = document.getElementById('mgFile');
+var mgList = document.getElementById('mgList');
+var mgDir = document.getElementById('mgDir');
+var mgGap = document.getElementById('mgGap');
+var mgAlign = document.getElementById('mgAlign');
+var mgGo = document.getElementById('mgGo');
+var mgOut = document.getElementById('mgOut');
+var mgSavePng = document.getElementById('mgSavePng');
+var mgSaveJpg = document.getElementById('mgSaveJpg');
+
+var images = [];
+
+function renderList() {
+  mgList.innerHTML = images.map(function (img, i) {
+    return '<div class="file-item" style="display:flex;align-items:center;gap:12px;">' +
+      '<span style="font-weight:600;">' + (i + 1) + '.</span>' +
+      '<span class="name" style="flex:1;font-size:13px;">' + img.name + '（' + img.w + '×' + img.h + '）</span>' +
+      '<button class="btn btn-secondary btn-sm" data-del="' + i + '">移除</button></div>';
+  }).join('');
+  mgList.querySelectorAll('[data-del]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      images.splice(parseInt(btn.dataset.del, 10), 1);
+      renderList();
+    });
+  });
+}
+
+mgFile.addEventListener('change', function () {
+  if (!mgFile.files || !mgFile.files.length) return;
+  var files = Array.prototype.slice.call(mgFile.files);
+  files.forEach(function (f) {
+    var reader = new FileReader();
+    reader.onload = (function (name) {
+      return function (e) {
+        var img = new Image();
+        img.onload = function () {
+          images.push({ name: name, el: img, w: img.naturalWidth, h: img.naturalHeight });
+          renderList();
+          showToast('已添加 ' + name);
+        };
+        img.src = e.target.result;
+      };
+    })(f.name);
+    reader.readAsDataURL(f);
+  });
+  mgFile.value = '';
+});
+
+function merge() {
+  if (images.length === 0) { showToast('请先添加至少 1 张图片'); return; }
+  var dir = mgDir.value;
+  var gap = Math.max(0, parseInt(mgGap.value, 10) || 0);
+  var align = mgAlign.value;
+  var maxW = Math.max.apply(null, images.map(function (i) { return i.w; }));
+  var totalH = images.reduce(function (s, i) { return s + i.h; }, 0) + gap * (images.length - 1);
+  var canvas = document.createElement('canvas');
+  if (dir === 'vertical') { canvas.width = maxW; canvas.height = totalH; }
+  else { canvas.width = images.reduce(function (s, i) { return s + i.w; }, 0) + gap * (images.length - 1); canvas.height = Math.max.apply(null, images.map(function (i) { return i.h; })); }
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  var pos = 0;
+  images.forEach(function (img) {
+    if (dir === 'vertical') {
+      var x = align === 'start' ? 0 : align === 'end' ? maxW - img.w : (maxW - img.w) / 2;
+      ctx.drawImage(img.el, x, pos);
+      pos += img.h + gap;
+    } else {
+      var y = align === 'start' ? 0 : align === 'end' ? canvas.height - img.h : (canvas.height - img.h) / 2;
+      ctx.drawImage(img.el, pos, y);
+      pos += img.w + gap;
+    }
+  });
+  return canvas;
+}
+
+mgGo.addEventListener('click', function () {
+  var canvas = merge();
+  if (!canvas) return;
+  var img = document.createElement('img');
+  img.src = canvas.toDataURL('image/png');
+  img.style.cssText = 'max-width:100%;height:auto;border-radius:8px;';
+  mgOut.innerHTML = '';
+  mgOut.appendChild(img);
+});
+
+function save(type) {
+  var canvas = merge();
+  if (!canvas) return;
+  try {
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL(type === 'jpg' ? 'image/jpeg' : 'image/png');
+    a.download = 'merged.' + (type === 'jpg' ? 'jpg' : 'png');
+    a.click();
+    showToast('已下载 merged.' + (type === 'jpg' ? 'jpg' : 'png'));
+  } catch (e) { showToast('下载失败，请截图保存'); }
+}
+
+mgSavePng.addEventListener('click', function () { save('png'); });
+mgSaveJpg.addEventListener('click', function () { save('jpg'); });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
