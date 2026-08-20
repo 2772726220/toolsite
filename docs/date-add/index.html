@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期加减计算 - 在线日期推算工具</title>
+  <meta name="description" content="免费在线日期加减工具，给任意日期加或减天数、周、月、年，立即得到结果日期与星期几，也可计算两个日期之间的间隔，浏览器本地计算。" />
+  <meta name="keywords" content="日期加减,日期计算,日期推算,加减天数,日期工具,算日子">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➕</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u52a0\u4e00\u4e2a\u6708\u4f1a\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u81ea\u7136\u6708\u8fdb\u4f4d\uff0c\u4f8b\u5982 1 \u6708 31 \u65e5\u52a0 1 \u4e2a\u6708\u5f97 2 \u6708 28/29 \u65e5\uff08\u53d6\u5f53\u6708\u6700\u540e\u4e00\u5929\uff09\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u7684\u52a0\u51cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8f93\u5165\u8d1f\u5929\u6570\u5373\u4e3a\u5f80\u524d\u63a8\u3002"}},{"@type":"Question","name":"\u80fd\u7b97\u5230\u73b0\u5728\u7684\u95f4\u9694\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u7528\u300c\u4eca\u5929\u300d\u4f5c\u4e3a\u57fa\u51c6\u4e00\u952e\u8ba1\u7b97\u4e0e\u4eca\u5929\u76f8\u5dee\u591a\u5c11\u5929\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>➕ 日期加减</h1>
+    <p>日期加/减天数月数年，推算结果</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">日期加减</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#日期加减</span><span class="badge">#推算</span><span class="badge">#天数</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>起始日期</label><input type="date" id="daBase"></div>
+  <div><label>或选「今天」</label><button class="btn btn-secondary" id="daToday" style="width:100%;">使用今天</button></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:12px;">
+  <div><label>天</label><input type="number" id="daD" value="0"></div>
+  <div><label>周</label><input type="number" id="daW" value="0"></div>
+  <div><label>月</label><input type="number" id="daM" value="0"></div>
+  <div><label>年</label><input type="number" id="daY" value="0"></div>
+</div>
+<button class="btn btn-primary" id="daGo">计算</button>
+<div id="daResult" style="margin-top:12px; display:grid; gap:8px;"></div>
+<div class="field" style="margin-top:14px;">
+  <label>两个日期之间的间隔</label>
+  <div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px;">
+    <input type="date" id="daA">
+    <input type="date" id="daB">
+    <button class="btn btn-secondary" id="daDiff">算间隔</button>
+  </div>
+  <div id="daDiffOut" style="margin-top:8px;"></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么时候用日期加减？</h2><p>算截止日期、倒排工期、推算纪念日、孕期/入职日等，加减天数月年一步到位。</p><h2>计算准确吗？</h2><p>按公历日历计算，正确处理闰年与大小月，跨月跨年自动进位。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>加一个月会怎么算？</summary><p>按自然月进位，例如 1 月 31 日加 1 个月得 2 月 28/29 日（取当月最后一天）。</p></details><details class="faq-item"><summary>支持负的加减吗？</summary><p>支持，输入负天数即为往前推。</p></details><details class="faq-item"><summary>能算到现在的间隔吗？</summary><p>支持用「今天」作为基准一键计算与今天相差多少天。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>日期加减 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='date-add';}); _r.unshift('date-add'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var daBase = document.getElementById('daBase');
+var daToday = document.getElementById('daToday');
+var daD = document.getElementById('daD');
+var daW = document.getElementById('daW');
+var daM = document.getElementById('daM');
+var daY = document.getElementById('daY');
+var daGo = document.getElementById('daGo');
+var daResult = document.getElementById('daResult');
+var daA = document.getElementById('daA');
+var daB = document.getElementById('daB');
+var daDiff = document.getElementById('daDiff');
+var daDiffOut = document.getElementById('daDiffOut');
+
+function fmtDate(d) {
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+
+function parseBase() {
+  var v = daBase.value;
+  if (!v) { showToast('请先选择日期'); return null; }
+  var p = v.split('-');
+  return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+}
+
+function addMonths(d, n) {
+  var r = new Date(d.getTime());
+  var day = r.getDate();
+  r.setDate(1);
+  r.setMonth(r.getMonth() + n);
+  var last = new Date(r.getFullYear(), r.getMonth() + 1, 0).getDate();
+  r.setDate(Math.min(day, last));
+  return r;
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
+}
+
+daToday.addEventListener('click', function () {
+  var t = new Date();
+  daBase.value = fmtDate(t);
+});
+
+daGo.addEventListener('click', function () {
+  var base = parseBase();
+  if (!base) return;
+  var d = addMonths(base, parseInt(daM.value, 10) || 0);
+  d = addMonths(d, (parseInt(daY.value, 10) || 0) * 12);
+  d.setDate(d.getDate() + (parseInt(daD.value, 10) || 0) + (parseInt(daW.value, 10) || 0) * 7);
+  var week = ['日', '一', '二', '三', '四', '五', '六'][d.getDay()];
+  var diff = Math.round((d - base) / 86400000);
+  daResult.innerHTML =
+    row('计算结果', fmtDate(d)) +
+    row('星期' + week, '') +
+    row('与基准相差', (diff >= 0 ? '+' : '') + diff + ' 天');
+  showToast('结果：' + fmtDate(d));
+});
+
+daDiff.addEventListener('click', function () {
+  if (!daA.value || !daB.value) { showToast('请选择两个日期'); return; }
+  var p1 = daA.value.split('-');
+  var p2 = daB.value.split('-');
+  var a = new Date(p1[0], p1[1] - 1, p1[2]);
+  var b = new Date(p2[0], p2[1] - 1, p2[2]);
+  var days = Math.round((b - a) / 86400000);
+  var weeks = Math.floor(Math.abs(days) / 7);
+  var rem = Math.abs(days) % 7;
+  daDiffOut.innerHTML = row('相隔', Math.abs(days) + ' 天（约 ' + weeks + ' 周 ' + rem + ' 天' + (days < 0 ? '，后者更早' : '') + '）');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
