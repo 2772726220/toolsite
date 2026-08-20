@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML表格生成器 - 在线生成表格代码工具</title>
+  <meta name="description" content="免费在线 HTML 表格生成器，设置行数、列数、表头、边框样式，实时预览并一键复制生成代码，也可把粘贴的 CSV/Tab 文本转成表格。" />
+  <meta name="keywords" content="HTML表格,表格生成器,table生成,CSV转表格,表格代码">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u6837\u5f0f\u517c\u5bb9\u90ae\u4ef6\u5ba2\u6237\u7aef\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u8f93\u51fa\u5185\u8054\u6837\u5f0f\u7684\u57fa\u7840\u8868\u683c\uff0c\u517c\u5bb9\u5927\u591a\u6570\u90ae\u4ef6\u5ba2\u6237\u7aef\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5408\u5e76\u5355\u5143\u683c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u7840\u7248\u652f\u6301\u8868\u5934 colspan \u8bbe\u7f6e\uff0c\u590d\u6742\u5408\u5e76\u5efa\u8bae\u624b\u52a8\u8c03\u6574\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5bfc\u51fa CSV \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u628a\u8868\u683c\u5185\u5bb9\u5bfc\u51fa\u4e3a CSV \u6587\u4ef6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔠 HTML表格生成器</h1>
+    <p>可视化生成 HTML 表格代码，复制即用</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">HTML表格生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#表格</span><span class="badge">#HTML</span><span class="badge">#生成器</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>行</label><input type="number" id="htRows" value="3" min="1" max="20"></div>
+  <div><label>列</label><input type="number" id="htCols" value="4" min="1" max="20"></div>
+  <div><label>表头</label>
+    <select id="htHead"><option value="1" selected>有表头行</option><option value="0">无表头</option></select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>边框样式</label>
+    <select id="htBorder">
+      <option value="1" selected>完整边框</option>
+      <option value="0">仅横线</option>
+      <option value="2">简洁无边框</option>
+    </select>
+  </div>
+  <div><label>表头颜色</label><input type="color" id="htColor" value="#f1f5f9"></div>
+  <div><label>合并首列表头</label>
+    <label><input type="checkbox" id="htColspan" checked> colspan=2</label>
+  </div>
+</div>
+<button class="btn btn-primary" id="htGo">生成表格</button>
+<div id="htPreview" style="margin-top:12px;overflow:auto;"></div>
+<textarea id="htCode" rows="10" readonly style="margin-top:12px;font-family:monospace;font-size:12px;"></textarea>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-secondary" id="htCopy">📋 复制代码</button>
+  <button class="btn btn-secondary" id="htCsv">⬇️ 导出 CSV</button>
+  <button class="btn btn-secondary" id="htFromText">📄 从文本生成</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>表格代码怎么用？</h2><p>生成的 table 代码可直接粘贴到网页、Markdown 编辑器（HTML 模式）或邮件 HTML 中，样式内联兼容性好。</p><h2>支持从 Excel 粘贴吗？</h2><p>支持，从 Excel 复制的内容粘贴进输入框，自动按 Tab 换行解析成表格。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的样式兼容邮件客户端吗？</summary><p>默认输出内联样式的基础表格，兼容大多数邮件客户端。</p></details><details class="faq-item"><summary>支持合并单元格吗？</summary><p>基础版支持表头 colspan 设置，复杂合并建议手动调整。</p></details><details class="faq-item"><summary>可以导出 CSV 吗？</summary><p>可以把表格内容导出为 CSV 文件。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>HTML表格生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='html-table';}); _r.unshift('html-table'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var htRows = document.getElementById('htRows');
+var htCols = document.getElementById('htCols');
+var htHead = document.getElementById('htHead');
+var htBorder = document.getElementById('htBorder');
+var htColor = document.getElementById('htColor');
+var htColspan = document.getElementById('htColspan');
+var htGo = document.getElementById('htGo');
+var htPreview = document.getElementById('htPreview');
+var htCode = document.getElementById('htCode');
+var htCopy = document.getElementById('htCopy');
+var htCsv = document.getElementById('htCsv');
+var htFromText = document.getElementById('htFromText');
+
+var curData = [];
+
+function escHtml(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function borderCss() {
+  switch (htBorder.value) {
+    case '0': return 'border-bottom:1px solid #e2e8f0;padding:6px 10px;';
+    case '2': return 'padding:6px 10px;';
+    default: return 'border:1px solid #cbd5e1;padding:6px 10px;';
+  }
+}
+
+function genHtml() {
+  var rows = Math.max(1, parseInt(htRows.value, 10) || 1);
+  var cols = Math.max(1, parseInt(htCols.value, 10) || 1);
+  var withHead = htHead.value === '1';
+  var bg = htColor.value;
+  var thBg = 'background:' + bg + ';';
+  var cs = htColspan.checked ? 2 : 1;
+  var html = '<table style="border-collapse:collapse;font-size:14px;">';
+  if (withHead) {
+    html += '<thead><tr>';
+    for (var c = 0; c < cols; c++) {
+      var span = c === 0 ? cs : 1;
+      var text = c === 0 && cs === 2 ? '标题' : '表头' + (c + 1);
+      html += '<th colspan="' + span + '" style="' + borderCss() + thBg + 'font-weight:600;">' + escHtml(text) + '</th>';
+    }
+    html += '</tr></thead>';
+    rows -= 1;
+  }
+  html += '<tbody>';
+  var startRow = withHead ? 1 : 0;
+  for (var r = 0; r < rows; r++) {
+    html += '<tr>';
+    for (var c2 = 0; c2 < cols; c2++) {
+      html += '<td style="' + borderCss() + '">行' + (r + startRow + 1) + '列' + (c2 + 1) + '</td>';
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+function gen() {
+  var rows = Math.max(1, parseInt(htRows.value, 10) || 1);
+  var cols = Math.max(1, parseInt(htCols.value, 10) || 1);
+  var withHead = htHead.value === '1';
+  curData = [];
+  for (var r = 0; r < rows; r++) {
+    var row = [];
+    for (var c = 0; c < cols; c++) row.push(withHead && r === 0 ? (c === 0 ? '标题' : '表头' + (c + 1)) : '行' + (r + 1) + '列' + (c + 1));
+    curData.push(row);
+  }
+  htPreview.innerHTML = genHtml();
+  htCode.value = genHtml();
+}
+
+htGo.addEventListener('click', gen);
+htRows.addEventListener('change', gen);
+htCols.addEventListener('change', gen);
+htHead.addEventListener('change', gen);
+htBorder.addEventListener('change', gen);
+htColor.addEventListener('input', gen);
+htColspan.addEventListener('change', gen);
+
+htCopy.addEventListener('click', function () {
+  try { navigator.clipboard.writeText(htCode.value); showToast('已复制表格代码'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+
+htCsv.addEventListener('click', function () {
+  try {
+    var csv = curData.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'table.csv';
+    a.click();
+    showToast('已导出 table.csv');
+  } catch (e) { showToast('导出失败'); }
+});
+
+htFromText.addEventListener('click', function () {
+  var text = prompt('粘贴表格文本（Excel/CSV 复制，Tab 或逗号分隔）：');
+  if (text == null) return;
+  var data = text.split('\n').map(function (l) {
+    return l.replace(/\r$/, '').split(/\t|,/);
+  }).filter(function (r) { return r.length > 0 && r.some(function (c) { return c.trim() !== ''; }); });
+  if (data.length === 0) { showToast('没有可用的数据'); return; }
+  var cols = Math.max.apply(null, data.map(function (r) { return r.length; }));
+  curData = data;
+  var bg = htColor.value;
+  var html = '<table style="border-collapse:collapse;font-size:14px;">';
+  data.forEach(function (row, ri) {
+    html += '<tr>';
+    for (var c = 0; c < cols; c++) {
+      var style = borderCss() + (ri === 0 ? 'background:' + bg + ';font-weight:600;' : '');
+      html += '<td style="' + style + '">' + escHtml(row[c] == null ? '' : row[c].trim()) + '</td>';
+    }
+    html += '</tr>';
+  });
+  html += '</table>';
+  htPreview.innerHTML = html;
+  htCode.value = html;
+});
+
+gen();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
