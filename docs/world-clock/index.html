@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u81ea\u5b9a\u4e49\u57ce\u5e02\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u9009\u663e\u793a/\u9690\u85cf\u90e8\u5206\u57ce\u5e02\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u7eaf\u672c\u5730\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u652f\u6301 12/24 \u5c0f\u65f6\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5207\u6362\u663e\u793a\u683c\u5f0f\u3002"}},{"@type":"Question","name":"\u65f6\u533a\u6570\u636e\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8986\u76d6\u5e38\u7528 12 \u4e2a\u56fd\u9645\u57ce\u5e02\uff0c\u591f\u7528\u4e14\u6e05\u6670\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🌍 世界时钟</h1>
@@ -44,6 +48,7 @@
     <p>世界时钟 · <a href="../category/date/">📅 日期时间</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -98,6 +103,24 @@ var wcGrid = document.getElementById('wcGrid');
   document.getElementById('wcFormat').addEventListener('change', render);
   render();
   setInterval(render, 1000);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
