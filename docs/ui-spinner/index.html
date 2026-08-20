@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>加载动画生成器 - 在线CSS Spinner加载动画工具</title>
+  <meta name="description" content="免费在线加载动画（Spinner）生成器，可视化调节大小、颜色、速度、样式，实时预览并一键复制 CSS 代码，浏览器本地生成。" />
+  <meta name="keywords" content="加载动画,Spinner,loading,加载中动画,CSS动画,生成器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u52a8\u753b\u6709\u517c\u5bb9\u6027\u95ee\u9898\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u4e86 CSS transform + animation\uff0c\u517c\u5bb9\u73b0\u4ee3\u6d4f\u89c8\u5668\uff08Chrome\u3001Firefox\u3001Safari\u3001Edge\uff09\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5546\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u751f\u6210\u7684\u4ee3\u7801\u5b8c\u5168\u7531\u4f60\u638c\u63a7\uff0c\u53ef\u81ea\u7531\u4f7f\u7528\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u6837\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5706\u73af\u3001\u53cc\u73af\u3001\u6e10\u53d8\u70b9\u3001\u65b9\u70b9\u3001\u6ce2\u6d6a\u7b49 6 \u79cd\u5e38\u89c1\u6837\u5f0f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌀 加载动画生成器</h1>
+    <p>生成 CSS 加载 Spinner 动画，复制即用</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">加载动画生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#加载动画</span><span class="badge">#Spinner</span><span class="badge">#CSS</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>样式</label>
+    <select id="spStyle">
+      <option value="ring" selected>经典圆环</option>
+      <option value="ring2">双圆环</option>
+      <option value="dots">渐变圆点</option>
+      <option value="square">方点弹跳</option>
+      <option value="wave">波浪点</option>
+      <option value="bars">进度条</option>
+    </select>
+  </div>
+  <div><label>大小（px）</label><input type="number" id="spSize" value="48" min="16" max="160"></div>
+  <div><label>颜色</label><input type="color" id="spColor" value="#2563eb"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>速度（秒/圈）</label><input type="number" id="spSpeed" value="1" min="0.2" max="5" step="0.1"></div>
+  <div><label>粗细（px）</label><input type="number" id="spWidth" value="4" min="1" max="16"></div>
+  <div><label>背景色</label><input type="color" id="spBg" value="#f8fafc"></div>
+</div>
+<div class="field" style="display:flex;align-items:center;gap:12px;justify-content:center;padding:24px;border-radius:14px;border:1px dashed var(--border);">
+  <div id="spPreview"></div>
+</div>
+<textarea id="spCode" rows="7" readonly style="margin-top:12px;font-family:monospace;font-size:12px;"></textarea>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+  <button class="btn btn-primary" id="spCopyCss">📋 复制代码</button>
+  <button class="btn btn-secondary" id="spDownload">⬇️ 下载 .html</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 Spinner？</h2><p>Spinner 是页面加载时常见的旋转指示器，告诉用户内容正在加载。本工具生成纯 CSS 实现，无需图片和 JS。</p><h2>怎么使用生成的代码？</h2><p>复制 HTML 和 CSS 到你的项目中即可，动画完全由 CSS 驱动，无依赖。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>动画有兼容性问题吗？</summary><p>使用了 CSS transform + animation，兼容现代浏览器（Chrome、Firefox、Safari、Edge）。</p></details><details class="faq-item"><summary>可以商用吗？</summary><p>生成的代码完全由你掌控，可自由使用。</p></details><details class="faq-item"><summary>支持哪些样式？</summary><p>支持圆环、双环、渐变点、方点、波浪等 6 种常见样式。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>加载动画生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='ui-spinner';}); _r.unshift('ui-spinner'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var spStyle = document.getElementById('spStyle');
+var spSize = document.getElementById('spSize');
+var spColor = document.getElementById('spColor');
+var spSpeed = document.getElementById('spSpeed');
+var spWidth = document.getElementById('spWidth');
+var spBg = document.getElementById('spBg');
+var spPreview = document.getElementById('spPreview');
+var spCode = document.getElementById('spCode');
+var spCopyCss = document.getElementById('spCopyCss');
+var spDownload = document.getElementById('spDownload');
+
+var cid = 'spl';
+
+function css() {
+  var size = parseInt(spSize.value, 10) || 48;
+  var w = parseInt(spWidth.value, 10) || 4;
+  var speed = parseFloat(spSpeed.value) || 1;
+  var c = spColor.value, bg = spBg.value;
+  switch (spStyle.value) {
+    case 'ring':
+      return '#' + cid + ' {\n  width: ' + size + 'px; height: ' + size + 'px;\n  border: ' + w + 'px solid ' + bg + ';\n  border-top-color: ' + c + ';\n  border-radius: 50%;\n  animation: ' + cid + 'spin ' + speed + 's linear infinite;\n}\n@keyframes ' + cid + 'spin {\n  to { transform: rotate(360deg); }\n}';
+    case 'ring2':
+      return '#' + cid + ' {\n  width: ' + size + 'px; height: ' + size + 'px;\n  border: ' + w + 'px solid ' + bg + ';\n  border-top-color: ' + c + ';\n  border-bottom-color: ' + c + ';\n  border-radius: 50%;\n  animation: ' + cid + 'spin ' + speed + 's linear infinite;\n}\n@keyframes ' + cid + 'spin {\n  to { transform: rotate(360deg); }\n}';
+    case 'dots':
+      return '#' + cid + ' {\n  display: inline-flex; gap: 6px;\n}\n#' + cid + ' span {\n  width: ' + Math.max(8, Math.round(size / 6)) + 'px; height: ' + Math.max(8, Math.round(size / 6)) + 'px;\n  border-radius: 50%; background: ' + c + ';\n  animation: ' + cid + 'blink ' + speed + 's ease-in-out infinite;\n}\n#' + cid + ' span:nth-child(2) { animation-delay: .2s; }\n#' + cid + ' span:nth-child(3) { animation-delay: .4s; }\n@keyframes ' + cid + 'blink { 0%,100% { opacity: .2; transform: scale(.8); } 50% { opacity: 1; transform: scale(1); } }';
+    case 'square':
+      return '#' + cid + ' {\n  display: inline-flex; gap: 4px;\n}\n#' + cid + ' span {\n  width: ' + Math.max(6, Math.round(size / 6)) + 'px; height: ' + Math.max(6, Math.round(size / 6)) + 'px;\n  background: ' + c + ';\n  animation: ' + cid + 'jump ' + speed + 's ease-in-out infinite;\n}\n#' + cid + ' span:nth-child(2) { animation-delay: .15s; }\n#' + cid + ' span:nth-child(3) { animation-delay: .3s; }\n@keyframes ' + cid + 'jump { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }';
+    case 'wave':
+      return '#' + cid + ' {\n  display: inline-flex; align-items: center; gap: 5px;\n}\n#' + cid + ' span {\n  width: ' + Math.max(4, Math.round(size / 10)) + 'px; height: ' + Math.round(size / 2) + 'px;\n  background: ' + c + ';\n  border-radius: 4px;\n  animation: ' + cid + 'wave ' + speed + 's ease-in-out infinite;\n}\n#' + cid + ' span:nth-child(2) { animation-delay: .1s; }\n#' + cid + ' span:nth-child(3) { animation-delay: .2s; }\n#' + cid + ' span:nth-child(4) { animation-delay: .3s; }\n#' + cid + ' span:nth-child(5) { animation-delay: .4s; }\n@keyframes ' + cid + 'wave { 0%,100% { transform: scaleY(.4); } 50% { transform: scaleY(1); } }';
+    case 'bars':
+      return '#' + cid + ' {\n  width: ' + Math.round(size * 1.2) + 'px; height: ' + Math.max(6, Math.round(size / 5)) + 'px;\n  border: 1px solid ' + bg + ';\n  border-radius: 999px; overflow: hidden; background: ' + bg + ';\n}\n#' + cid + '::before {\n  content: ""; display: block; width: 50%; height: 100%;\n  background: ' + c + '; border-radius: 999px;\n  animation: ' + cid + 'bar ' + speed + 's ease-in-out infinite;\n}\n@keyframes ' + cid + 'bar { 0% { margin-left: -50%; } 100% { margin-left: 100%; } }';
+  }
+  return '';
+}
+
+function markup() {
+  switch (spStyle.value) {
+    case 'dots': case 'square':
+      return '<div id="' + cid + '"><span></span><span></span><span></span></div>';
+    case 'wave':
+      return '<div id="' + cid + '"><span></span><span></span><span></span><span></span><span></span></div>';
+    case 'bars': return '<div id="' + cid + '"></div>';
+    default: return '<div id="' + cid + '"></div>';
+  }
+}
+
+function render() {
+  var style = spStyle.value;
+  spPreview.innerHTML = markup();
+  var styleEl = document.createElement('style');
+  styleEl.textContent = css();
+  spPreview.appendChild(styleEl);
+  var full = '<style>\n' + css() + '\n</style>\n' + markup();
+  spCode.value = full;
+}
+
+function applyEvents() {
+  spStyle.addEventListener('change', render);
+  spSize.addEventListener('input', render);
+  spColor.addEventListener('input', render);
+  spSpeed.addEventListener('input', render);
+  spWidth.addEventListener('input', render);
+  spBg.addEventListener('input', render);
+  spCopyCss.addEventListener('click', function () {
+    try { navigator.clipboard.writeText(spCode.value); showToast('已复制代码'); }
+    catch (e) { showToast('复制失败，请手动复制'); }
+  });
+  spDownload.addEventListener('click', function () {
+    try {
+      var blob = new Blob(['<html><head><meta charset="utf-8"><style>body{display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}</style></head><body>' + spCode.value + '</body></html>'], { type: 'text/html' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'spinner.html';
+      a.click();
+      showToast('已下载 spinner.html');
+    } catch (e) { showToast('下载失败，请复制代码'); }
+  });
+}
+
+applyEvents();
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
