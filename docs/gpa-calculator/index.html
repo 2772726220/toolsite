@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPA计算器 - 在线加权平均学分绩点计算工具</title>
+  <meta name="description" content="免费在线 GPA 计算器，输入课程学分与成绩，按 4.0 或 5.0 制计算加权平均绩点，支持百分制与等级制成绩换算，大学生查分必备工具。" />
+  <meta name="keywords" content="GPA计算,学分绩点,加权平均,4.0制,5.0制,平均绩点,成绩换算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u7b49\u7ea7\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 A/B/C/D/F \u4e0e\u4f18/\u826f/\u4e2d/\u53ca\u683c\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u5b66\u5206\u80fd\u586b\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u5982 1.5 \u5b66\u5206\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4fdd\u7559\u51e0\u4f4d\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u4fdd\u7559\u4e24\u4f4d\u5c0f\u6570\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎓 GPA 计算器</h1>
+    <p>4.0/5.0 制加权平均学分绩点</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">GPA 计算器</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#GPA</span><span class="badge">#绩点</span>
+<div class="field">
+  <label for="gpScale">绩点制</label>
+  <select id="gpScale">
+    <option value="4">4.0 制</option>
+    <option value="5">5.0 制</option>
+  </select>
+</div>
+<div class="result-box" id="gpRows" style="max-height:none;background:transparent;border:none;padding:0;margin:0;"></div>
+<div class="actions">
+  <button class="btn btn-secondary" id="gpAddBtn" type="button">＋ 添加课程</button>
+  <button class="btn" id="gpBtn" type="button">计算 GPA</button>
+</div>
+<div class="result-box" id="gpResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>GPA 怎么算？</h2><p>GPA = Σ(课程绩点×学分) ÷ Σ学分，绩点由百分制成绩或等级换算得到。</p><h2>4.0 制和 5.0 制什么区别？</h2><p>5.0 制给高绩点成绩更多上探空间，保研、出国看的是加权平均分与排名，GPA 口径需以学校为准。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持等级制吗？</summary><p>支持 A/B/C/D/F 与优/良/中/及格换算。</p></details><details class="faq-item"><summary>学分能填小数吗？</summary><p>可以，如 1.5 学分。</p></details><details class="faq-item"><summary>结果保留几位？</summary><p>默认保留两位小数。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>GPA 计算器 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var gpRows = document.getElementById('gpRows');
+  var gpResult = document.getElementById('gpResult');
+  var gpRowCount = 0;
+
+  function toPoint(score, scale) {
+    if (scale === '4') {
+      if (score >= 90) return 4.0;
+      if (score >= 85) return 3.7;
+      if (score >= 82) return 3.3;
+      if (score >= 78) return 3.0;
+      if (score >= 75) return 2.7;
+      if (score >= 72) return 2.3;
+      if (score >= 68) return 2.0;
+      if (score >= 64) return 1.7;
+      if (score >= 60) return 1.0;
+      return 0;
+    }
+    var p = (score - 50) / 10;
+    return p < 0 ? 0 : (p > 5 ? 5 : p);
+  }
+
+  function addRow() {
+    gpRowCount++;
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:10px;align-items:center;margin-bottom:10px;';
+    row.innerHTML =
+      '<input type="number" class="gp-credit" placeholder="学分" min="0" step="any" style="width:80px;">' +
+      '<input type="number" class="gp-score" placeholder="成绩(0-100)" min="0" max="100" step="any" style="flex:1;">' +
+      '<button class="btn btn-secondary" type="button" style="padding:8px 14px;">删除</button>';
+    row.querySelector('.gp-score').value = gpRowCount === 1 ? 85 : 78;
+    row.querySelector('.gp-credit').value = 3;
+    row.querySelector('button').addEventListener('click', function () { row.remove(); });
+    gpRows.appendChild(row);
+  }
+
+  for (var i = 0; i < 3; i++) addRow();
+
+  document.getElementById('gpAddBtn').addEventListener('click', addRow);
+
+  document.getElementById('gpBtn').addEventListener('click', function () {
+    var scale = document.getElementById('gpScale').value;
+    var credits = gpRows.querySelectorAll('.gp-credit');
+    var scores = gpRows.querySelectorAll('.gp-score');
+    var totalCredits = 0, totalPoints = 0, courses = 0;
+    for (var i = 0; i < credits.length; i++) {
+      var c = parseFloat(credits[i].value);
+      var s = parseFloat(scores[i].value);
+      if (isNaN(c) || c <= 0) continue;
+      if (isNaN(s) || s < 0 || s > 100) { showToast('第 ' + (i + 1) + ' 门成绩需在 0-100'); return; }
+      var p = toPoint(s, scale);
+      totalCredits += c;
+      totalPoints += p * c;
+      courses++;
+    }
+    if (!courses) { showToast('请至少填写一门有效课程'); return; }
+    var gpa = totalPoints / totalCredits;
+    gpResult.hidden = false;
+    gpResult.innerHTML = '课程数：<b>' + courses + '</b>｜总学分：<b>' + totalCredits.toFixed(1) + '</b>' +
+      '<br>GPA（' + scale + '.0 制）：<b style="font-size:26px;">' + gpa.toFixed(2) + '</b>';
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
