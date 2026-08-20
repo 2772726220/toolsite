@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u547d\u4ee4\u53ef\u9760\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6574\u7406\u81ea\u5b98\u65b9\u6587\u6863\u7684\u5e38\u7528\u547d\u4ee4\uff0c\u9644\u6ce8\u91ca\u8bf4\u660e\u3002"}},{"@type":"Question","name":"\u80fd\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6bcf\u6761\u547d\u4ee4\u53ef\u4e00\u952e\u590d\u5236\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u672c\u5730\u67e5\u770b\u3002"}},{"@type":"Question","name":"\u9002\u5408\u65b0\u624b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9002\u5408\uff0c\u6309\u573a\u666f\u5206\u7c7b\u5e76\u6709\u4e2d\u6587\u6ce8\u91ca\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🌿 Git命令速查</h1>
@@ -37,6 +41,7 @@
     <p>Git命令速查 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -151,6 +156,24 @@ var gitResult = document.getElementById('gitResult');
     });
     gitResult.appendChild(block);
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
