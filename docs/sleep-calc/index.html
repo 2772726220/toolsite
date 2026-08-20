@@ -8,6 +8,7 @@
   <meta name="keywords" content="睡眠周期计算,最佳睡眠时间,入睡时间计算,起床时间,睡眠质量,90分钟周期">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😴</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u300e\u8ba1\u5212\u5165\u7761\u65f6\u95f4\u300f\u7b97\u51fa\u7406\u60f3\u8d77\u5e8a\u65f6\u523b\uff0c\u6216\u9009\u300e\u8ba1\u5212\u8d77\u5e8a\u65f6\u95f4\u300f\u53cd\u63a8\u5165\u7761\u65f6\u523b\u3002"}},{"@type":"Question","name":"\u5468\u671f\u4e00\u5b9a 90 \u5206\u949f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u56e0\u4eba\u800c\u5f02\u7ea6 80-100 \u5206\u949f\uff0c\u7ed3\u679c\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u80fd\u540c\u65f6\u663e\u793a\u591a\u4e2a\u65b9\u6848\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7ed9\u51fa\u63d0\u524d 3-6 \u4e2a\u5468\u671f\u7684\u6700\u4f18\u65f6\u523b\u5217\u8868\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">睡眠周期计算</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">睡眠周期计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#睡眠</span><span class="badge">#周期</span>
@@ -49,10 +51,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>怎么用？</summary><p>选『计划入睡时间』算出理想起床时刻，或选『计划起床时间』反推入睡时刻。</p></details><details class="faq-item"><summary>周期一定 90 分钟吗？</summary><p>因人而异约 80-100 分钟，结果仅供参考。</p></details><details class="faq-item"><summary>能同时显示多个方案吗？</summary><p>会给出提前 3-6 个周期的最优时刻列表。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
   </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a><a href="../period-calculator/" class="t-card" data-cat="health" data-tags="经期 排卵期" data-name="经期预测 预测经期/排卵期/安全期 经期 排卵期"><div class="t-icon">🌸</div><div class="t-name">经期预测</div><div class="t-desc">预测经期/排卵期/安全期</div><div class="t-tags"><span class="tt">#经期</span><span class="tt">#排卵期</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>睡眠周期计算 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+    <p>睡眠周期计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -77,6 +82,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='sleep-calc';}); _r.unshift('sleep-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var slResult = document.getElementById('slResult');
   var CYCLE = 90;
 
