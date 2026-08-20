@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>石头剪刀布 - 在线猜拳小游戏</title>
+  <meta name="description" content="免费在线石头剪刀布小游戏，选择石头、剪刀、布与电脑对战，五局三胜制，自动判定输赢并统计战绩，摸鱼解压的小游戏。" />
+  <meta name="keywords" content="石头剪刀布,猜拳,剪刀石头布,小游戏,在线游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u51e0\u5c40\u5b9a\u80dc\u8d1f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u4e94\u5c40\u4e09\u80dc\u5236\uff0c\u4e5f\u53ef\u81ea\u5b9a\u5c40\u6570\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u53cc\u4eba\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u4e3a\u5355\u4eba\u5bf9\u7535\u8111\u6a21\u5f0f\uff0c\u53ef\u4e24\u4eba\u5404\u81ea\u51fa\u62f3\u540e\u770b\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u6218\u7ee9\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u5728\u672c\u5730\u8bb0\u5f55\u672c\u6b21\u4f1a\u8bdd\u7684\u6218\u7ee9\uff0c\u5237\u65b0\u540e\u6e05\u96f6\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u6e38\u620f\u5b8c\u5168\u672c\u5730\u8fd0\u884c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>✊ 石头剪刀布</h1>
+    <p>和电脑对战，五局三胜制小游戏</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">石头剪刀布</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#猜拳</span><span class="badge">#小游戏</span><span class="badge">#对战</span>
+<div class="game-grid" id="rpsBtns" style="margin-bottom:16px;">
+  <div class="game-cell" data-move="rock">✊<span class="g-icon" style="font-size:40px;display:block;">✊</span>石头</div>
+  <div class="game-cell" data-move="scissors">✌️<span class="g-icon" style="font-size:40px;display:block;">✌️</span>剪刀</div>
+  <div class="game-cell" data-move="paper">🖐️<span class="g-icon" style="font-size:40px;display:block;">🖐️</span>布</div>
+</div>
+<div id="rpsBattle" style="text-align:center;margin-bottom:14px;">
+  <div class="big-em" id="rpsOut">🤖 电脑：？</div>
+  <div id="rpsMsg" style="font-size:16px;color:var(--muted);margin-top:8px;">点击上方出拳</div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>目标胜局数</label><input type="number" id="rpsTarget" value="3" min="1" max="10"></div>
+  <div><button class="btn btn-secondary" id="rpsReset">🔄 重新开局</button></div>
+</div>
+<div class="stat-bar">
+  <div class="stat"><div class="num" id="rpsYou">0</div><div class="label">你</div></div>
+  <div class="stat"><div class="num" id="rpsCom">0</div><div class="label">电脑</div></div>
+  <div class="stat"><div class="num" id="rpsTie">0</div><div class="label">平局</div></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么玩？</h2><p>点击石头✊、剪刀✌️、布🖐️其中一种，电脑随机出拳，按石头赢剪刀、剪刀赢布、布赢石头的规则判定胜负。</p><h2>有技巧吗？</h2><p>纯随机对局没有必胜策略，但心理学研究表明，新手潜意识更倾向于先出石头。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>几局定胜负？</summary><p>默认五局三胜制，也可自定局数。</p></details><details class="faq-item"><summary>可以双人吗？</summary><p>当前为单人对电脑模式，可两人各自出拳后看结果。</p></details><details class="faq-item"><summary>战绩会保存吗？</summary><p>仅在本地记录本次会话的战绩，刷新后清零。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，游戏完全本地运行。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>石头剪刀布 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='rock-paper-scissors';}); _r.unshift('rock-paper-scissors'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var MOVES = { rock: '✊', scissors: '✌️', paper: '🖐️' };
+var NAMES = { rock: '石头', scissors: '剪刀', paper: '布' };
+
+var rpsBtns = document.getElementById('rpsBtns');
+var rpsOut = document.getElementById('rpsOut');
+var rpsMsg = document.getElementById('rpsMsg');
+var rpsTarget = document.getElementById('rpsTarget');
+var rpsReset = document.getElementById('rpsReset');
+var rpsYou = document.getElementById('rpsYou');
+var rpsCom = document.getElementById('rpsCom');
+var rpsTie = document.getElementById('rpsTie');
+
+var score = { you: 0, com: 0, tie: 0 };
+var target = 3;
+
+function judge(a, b) {
+  if (a === b) return 0;
+  if ((a === 'rock' && b === 'scissors') || (a === 'scissors' && b === 'paper') || (a === 'paper' && b === 'rock')) return 1;
+  return -1;
+}
+
+function botMove() {
+  var keys = Object.keys(MOVES);
+  return keys[Math.floor(Math.random() * keys.length)];
+}
+
+function updateScore() {
+  rpsYou.textContent = score.you;
+  rpsCom.textContent = score.com;
+  rpsTie.textContent = score.tie;
+}
+
+function play(move) {
+  var bm = botMove();
+  var res = judge(move, bm);
+  var msg = '';
+  var color = '';
+  if (res === 0) { score.tie++; msg = '平局！'; color = '#94a3b8'; }
+  else if (res === 1) { score.you++; msg = '你赢了 🎉'; color = '#22c55e'; }
+  else { score.com++; msg = '电脑赢了 😅'; color = '#ef4444'; }
+  rpsOut.textContent = '🤖 电脑：' + MOVES[bm] + ' ' + NAMES[bm] + ' ｜ 你：' + MOVES[move] + ' ' + NAMES[move];
+  rpsMsg.textContent = msg;
+  rpsMsg.style.color = color;
+  updateScore();
+  if (score.you >= target || score.com >= target) {
+    var win = score.you >= target;
+    rpsMsg.textContent = (win ? '🎉 恭喜你先到 ' : '💻 电脑先到 ') + target + ' 局' + (win ? '，获得胜利！' : '，再试试吧！');
+    rpsMsg.style.color = win ? '#22c55e' : '#ef4444';
+  }
+}
+
+rpsBtns.addEventListener('click', function (e) {
+  var cell = e.target.closest ? e.target.closest('[data-move]') : null;
+  if (cell && cell.dataset.move) play(cell.dataset.move);
+});
+
+rpsReset.addEventListener('click', function () {
+  score = { you: 0, com: 0, tie: 0 };
+  target = Math.max(1, Math.min(10, parseInt(rpsTarget.value, 10) || 3));
+  updateScore();
+  rpsOut.textContent = '🤖 电脑：？';
+  rpsMsg.textContent = '点击上方出拳';
+  rpsMsg.style.color = '';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
