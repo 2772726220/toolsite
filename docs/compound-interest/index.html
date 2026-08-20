@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u6309\u6708\u5b9a\u6295\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u8f93\u5165\u6bcf\u6708\u5b9a\u6295\u91d1\u989d\u6309\u6708\u672b\u590d\u5229\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u80fd\u7b97\u591a\u5c11\u5e74\uff1f","acceptedAnswer":{"@type":"Answer","text":"1-50 \u5e74\u5747\u53ef\uff0c\u5e76\u7ed9\u51fa\u9010\u5e74\u589e\u957f\u8868\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u590d\u5229\u516c\u5f0f\u9010\u671f\u8ba1\u7b97\uff0c\u7cbe\u786e\u5230\u5206\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u7eaf\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>📈 复利计算器</h1>
@@ -57,6 +61,7 @@
     <p>复利计算器 · <a href="../category/finance/">💰 财务计算</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -116,6 +121,24 @@ var ciResult = document.getElementById('ciResult');
     ciTable.hidden = false;
     ciTable.innerHTML = html + '</table>';
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
