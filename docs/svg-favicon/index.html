@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG图标生成器 - 在线制作SVG图标/favicon</title>
+  <meta name="description" content="免费在线 SVG 图标生成器，输入文字、选择颜色和背景，实时生成 SVG favicon 图标，支持圆角、边框、渐变，一键复制代码或下载文件。" />
+  <meta name="keywords" content="SVG图标,favicon生成,SVG生成器,网站图标,icon制作">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u56fe\u6807\u662f\u77e2\u91cf\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\u7684\uff0cSVG \u662f\u77e2\u91cf\u683c\u5f0f\uff0c\u653e\u5927\u4e0d\u5931\u771f\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u7528\u751f\u6210\u7684\u4ee3\u7801\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u590d\u5236 SVG \u4ee3\u7801\u5d4c\u5165 HTML\uff0c\u6216\u4f7f\u7528 data URI \u4f5c\u4e3a favicon\uff1a<link rel=\"icon\" href=\"data:image/svg+xml,...\">\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u6587\u5b57\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u6587\u5b57\u76f4\u63a5\u6e32\u67d3\u4e3a\u56fe\u5f62\uff0c\u4e0d\u4f9d\u8d56\u5916\u90e8\u5b57\u4f53\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💠 SVG图标生成</h1>
+    <p>输入文字/颜色生成 SVG 图标或 favicon</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">SVG图标生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#SVG</span><span class="badge">#图标</span><span class="badge">#favicon</span>
+<div class="field">
+  <label>图标文字（1-2 个字符）</label>
+  <input type="text" id="fvText" value="🔧" maxlength="2" style="font-size:24px;">
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>背景颜色</label><input type="color" id="fvBg" value="#2563eb"></div>
+  <div><label>文字颜色</label><input type="color" id="fvFg" value="#ffffff"></div>
+  <div><label>背景形状</label>
+    <select id="fvShape"><option value="round">圆角方形</option><option value="circle">圆形</option><option value="square">方形</option></select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>圆角</label><input type="range" id="fvRadius" min="0" max="50" value="22"></div>
+  <div><label>文字大小</label><input type="range" id="fvSize" min="20" max="90" value="58"></div>
+  <div><label>边框</label>
+    <select id="fvBorder"><option value="0">无</option><option value="4">细</option><option value="8">粗</option></select>
+  </div>
+</div>
+<div class="field" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+  <div id="fvPreview" style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;"></div>
+  <div>
+    <button class="btn btn-primary" id="fvCopy">📋 复制 SVG 代码</button>
+    <button class="btn btn-secondary" id="fvCopyLink">🔗 复制 data URI</button>
+    <button class="btn btn-secondary" id="fvDownload">⬇️ 下载 .svg</button>
+  </div>
+</div>
+<textarea id="fvCode" rows="6" readonly style="margin-top:12px;font-family:monospace;font-size:12px;"></textarea>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么用 SVG 做 favicon？</h2><p>SVG 是矢量格式，任意分辨率都清晰，文件极小，现代浏览器都支持。也可以嵌入 HTML 的 data URI 中使用。</p><h2>SVG favicon 兼容性如何？</h2><p>Chrome、Firefox、Edge、Safari 等现代浏览器均支持 SVG favicon。老版本 IE 不支持，可同时提供 ICO 备用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的图标是矢量吗？</summary><p>是的，SVG 是矢量格式，放大不失真。</p></details><details class="faq-item"><summary>怎么用生成的代码？</summary><p>复制 SVG 代码嵌入 HTML，或使用 data URI 作为 favicon：<link rel="icon" href="data:image/svg+xml,...">。</p></details><details class="faq-item"><summary>支持中文文字吗？</summary><p>支持，文字直接渲染为图形，不依赖外部字体。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>SVG图标生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='svg-favicon';}); _r.unshift('svg-favicon'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var fvText = document.getElementById('fvText');
+var fvBg = document.getElementById('fvBg');
+var fvFg = document.getElementById('fvFg');
+var fvShape = document.getElementById('fvShape');
+var fvRadius = document.getElementById('fvRadius');
+var fvSize = document.getElementById('fvSize');
+var fvBorder = document.getElementById('fvBorder');
+var fvPreview = document.getElementById('fvPreview');
+var fvCode = document.getElementById('fvCode');
+var fvCopy = document.getElementById('fvCopy');
+var fvCopyLink = document.getElementById('fvCopyLink');
+var fvDownload = document.getElementById('fvDownload');
+
+function escXml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function svg() {
+  var txt = escXml(fvText.value || '？');
+  var bg = fvBg.value, fg = fvFg.value;
+  var shape = fvShape.value;
+  var r = Math.min(50, Math.round(parseInt(fvRadius.value, 10) || 22));
+  var fs = Math.round(parseInt(fvSize.value, 10) || 58);
+  var border = parseInt(fvBorder.value, 10) || 0;
+  var rect = '';
+  if (shape === 'round') rect = '<rect width="100" height="100" rx="' + r + '" fill="' + bg + '"/>';
+  else if (shape === 'circle') rect = '<circle cx="50" cy="50" r="50" fill="' + bg + '"/>';
+  else rect = '<rect width="100" height="100" fill="' + bg + '"/>';
+  if (border > 0) {
+    var bx = 6, bw = 100 - 2 * bx;
+    if (shape === 'circle') rect += '<circle cx="50" cy="50" r="' + (50 - bx) + '" fill="none" stroke="' + bg + '" stroke-width="' + border + '"/>';
+    else rect += '<rect x="' + bx + '" y="' + bx + '" width="' + bw + '" height="' + bw + '" fill="none" stroke="' + bg + '" stroke-width="' + border + '"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' + rect + '<text x="50" y="50" dy="0.36em" text-anchor="middle" font-size="' + fs + '" fill="' + fg + '" font-family="sans-serif" font-weight="600">' + txt + '</text></svg>';
+}
+
+function render() {
+  var s = svg();
+  fvPreview.innerHTML = s;
+  fvCode.value = s;
+  fvPreview.style.background = fvShape.value === 'circle' ? 'transparent' : fvBg.value;
+  fvPreview.style.borderRadius = fvShape.value === 'circle' ? '50%' : '12px';
+}
+
+function copyText(t) {
+  try { navigator.clipboard.writeText(t); showToast('已复制'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+}
+
+fvText.addEventListener('input', render);
+fvBg.addEventListener('input', render);
+fvFg.addEventListener('input', render);
+fvShape.addEventListener('change', render);
+fvRadius.addEventListener('input', render);
+fvSize.addEventListener('input', render);
+fvBorder.addEventListener('change', render);
+fvCopy.addEventListener('click', function () { copyText(fvCode.value); });
+fvCopyLink.addEventListener('click', function () {
+  var uri = 'data:image/svg+xml,' + encodeURIComponent(fvCode.value);
+  copyText(uri);
+});
+fvDownload.addEventListener('click', function () {
+  try {
+    var blob = new Blob([fvCode.value], { type: 'image/svg+xml' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'favicon.svg';
+    a.click();
+    showToast('已下载 favicon.svg');
+  } catch (e) { showToast('下载失败，请复制代码'); }
+});
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
