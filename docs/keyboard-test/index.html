@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>键盘测试 - 在线检测键盘按键是否正常</title>
+  <meta name="description" content="免费在线键盘测试工具，按下按键实时高亮显示，检测按键是否触发 keydown/keyup，帮助排查键盘失灵、卡键、连击等问题，也适合外设验收与打字练习。" />
+  <meta name="keywords" content="键盘测试,按键测试,检测键盘失灵,键盘卡键,外设测试">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6d4b\u8bd5\u7ed3\u679c\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u4f1a\u62a5\u544a\u64cd\u4f5c\u7cfb\u7edf\u6536\u5230\u7684\u6309\u952e\u4e8b\u4ef6\uff0c\u53ef\u7528\u4e8e\u6392\u67e5\u7269\u7406\u952e\u76d8\u4e0e\u9a71\u52a8\u95ee\u9898\u3002"}},{"@type":"Question","name":"\u6309\u4e86\u6ca1\u53cd\u5e94\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5148\u786e\u8ba4\u8f93\u5165\u6cd5\u662f\u5426\u62a2\u5360\u6309\u952e\uff0c\u518d\u68c0\u67e5\u8be5\u952e\u662f\u5426\u4e3a\u7ec4\u5408\u952e\u6216 Fn \u5c42\u5207\u6362\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⌨️ 键盘测试</h1>
+    <p>按键测试工具，检测键盘按键是否正常触发</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">键盘测试</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#键盘</span><span class="badge">#按键</span><span class="badge">#测试</span>
+<div class="result-box" id="kbOut" style="text-align:center;font-size:16px;min-height:60px;display:flex;align-items:center;justify-content:center;">按下任意按键开始测试</div>
+<div class="kb-grid" id="kbGrid" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;">
+  <span class="kbd" data-code="Shift">Shift</span>
+  <span class="kbd" data-code="Control">Ctrl</span>
+  <span class="kbd" data-code="Alt">Alt</span>
+  <span class="kbd" data-code="Meta">Meta/⌘</span>
+  <span class="kbd" data-code="CapsLock">CapsLock</span>
+  <span class="kbd" data-code="Enter">Enter</span>
+  <span class="kbd" data-code="Backspace">Backspace</span>
+  <span class="kbd" data-code="Tab">Tab</span>
+  <span class="kbd" data-code="Space">Space</span>
+  <span class="kbd" data-code="Escape">Esc</span>
+  <span class="kbd" data-code="ArrowUp">↑</span>
+  <span class="kbd" data-code="ArrowDown">↓</span>
+  <span class="kbd" data-code="ArrowLeft">←</span>
+  <span class="kbd" data-code="ArrowRight">→</span>
+</div>
+<p style="font-size:12px;color:var(--muted);margin-top:12px;">提示：字符键会实时显示在结果区；修饰键按住时高亮，松开恢复。测试需聚焦本页面。</p>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么测键盘？</h2><p>在文本框或页面任意位置按下任意按键，对应按键会高亮显示，松开后恢复，若某键无反应即为失灵。</p><h2>能测组合键吗？</h2><p>支持 Shift/Ctrl/Alt 等修饰键，按住时会高亮并显示组合结果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>测试结果准吗？</summary><p>浏览器会报告操作系统收到的按键事件，可用于排查物理键盘与驱动问题。</p></details><details class="faq-item"><summary>按了没反应怎么办？</summary><p>先确认输入法是否抢占按键，再检查该键是否为组合键或 Fn 层切换。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>键盘测试 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='keyboard-test';}); _r.unshift('keyboard-test'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var kbOut = document.getElementById('kbOut');
+var kbGrid = document.getElementById('kbGrid');
+var kbdEls = {};
+kbGrid.querySelectorAll('.kbd').forEach(function (el) { kbdEls[el.dataset.code] = el; });
+
+function setKey(code, pressed) {
+  var el = kbdEls[code];
+  if (el) {
+    if (pressed) el.classList.add('pressed');
+    else el.classList.remove('pressed');
+  }
+}
+
+function describe(e) {
+  if (e.key && e.key !== 'Unidentified') {
+    if (e.key === ' ') return '空格键（Space）';
+    if (e.key.length === 1) return '字符键：' + e.key;
+    return '按键：' + e.key;
+  }
+  return '按键 code=' + e.code;
+}
+
+function onKeyDown(e) {
+  kbOut.textContent = describe(e);
+  setKey(e.code, true);
+  e.preventDefault();
+}
+
+function onKeyUp(e) {
+  setKey(e.code, false);
+}
+
+document.addEventListener('keydown', onKeyDown);
+document.addEventListener('keyup', onKeyUp);
+
+kbGrid.querySelectorAll('.kbd').forEach(function (el) {
+  el.addEventListener('click', function () {
+    var code = el.dataset.code;
+    el.classList.add('pressed');
+    setTimeout(function () { el.classList.remove('pressed'); }, 120);
+    kbOut.textContent = '点击模拟按下：' + code;
+  });
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
