@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>色阶生成器 - 在线生成颜色明暗色阶和互补色</title>
+  <meta name="description" content="免费在线色阶生成器，输入任意颜色自动生成 10 级明暗色阶（tint/shade）、互补色、相似色，实时预览并一键复制色值，UI 设计与前端配色必备。" />
+  <meta name="keywords" content="色阶生成,颜色明暗,色调生成,tint shade,互补色,UI配色">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u590d\u5236\u67d0\u4e2a\u8272\u9636\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u70b9\u51fb\u4efb\u610f\u8272\u5757\u5373\u53ef\u590d\u5236\u5bf9\u5e94 HEX \u8272\u503c\u3002"}},{"@type":"Question","name":"\u4f1a\u4fdd\u7559\u6211\u7684\u8f93\u5165\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u989c\u8272\u53ea\u4fdd\u5b58\u5728\u5f53\u524d\u9875\u9762\uff0c\u5237\u65b0\u540e\u91cd\u7f6e\uff0c\u4e0d\u4f1a\u4e0a\u4f20\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌈 色阶生成</h1>
+    <p>一键生成颜色的明暗色阶与互补色，UI 调色必备</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">色阶生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#色阶</span><span class="badge">#明暗</span><span class="badge">#配色</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+  <div><label>起始颜色</label><input type="color" id="csColor" value="#4f46e5"></div>
+  <div><label>色阶数量</label><input type="range" id="csCount" min="6" max="14" step="1" value="10"><span id="csCountV" style="color:var(--primary);font-weight:700;">10</span></div>
+</div>
+<div id="csShades" class="shade-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>互补色</label><div id="csComp" class="swatch-big"></div></div>
+  <div><label>浅色背景建议</label><div id="csLight" class="swatch-big"></div></div>
+  <div><label>深色背景建议</label><div id="csDark" class="swatch-big"></div></div>
+</div>
+<div class="result-box" id="csMsg" style="text-align:center;">点击色块复制色值</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是色阶？</h2><p>把一种颜色向白色混合得到浅色（tint），向黑色混合得到深色（shade），中间的连续变化就是色阶，UI 设计中常用来做 hover 状态、进度条等。</p><h2>互补色怎么用？</h2><p>互补色是色轮上相对的颜色（如蓝↔橙），用于强调和对比。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以复制某个色阶吗？</summary><p>点击任意色块即可复制对应 HEX 色值。</p></details><details class="faq-item"><summary>会保留我的输入吗？</summary><p>颜色只保存在当前页面，刷新后重置，不会上传。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>色阶生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='color-shades';}); _r.unshift('color-shades'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var csColor = document.getElementById('csColor');
+var csCount = document.getElementById('csCount');
+var csCountV = document.getElementById('csCountV');
+var csShades = document.getElementById('csShades');
+var csComp = document.getElementById('csComp');
+var csLight = document.getElementById('csLight');
+var csDark = document.getElementById('csDark');
+var csMsg = document.getElementById('csMsg');
+
+function hexToRgb(hex) {
+  var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0];
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [Math.round(r), Math.round(g), Math.round(b)].map(function (x) {
+    var h = Math.max(0, Math.min(255, x)).toString(16);
+    return h.length < 2 ? '0' + h : h;
+  }).join('');
+}
+
+function mix(a, b, t) {
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+}
+
+function hexShades(hex, n) {
+  var base = hexToRgb(hex);
+  var white = [255, 255, 255];
+  var black = [0, 0, 0];
+  var mid = (n - 1) / 2;
+  var out = [];
+  for (var i = 0; i < n; i++) {
+    var rgb;
+    if (i < mid) rgb = mix(white, base, i / mid);
+    else if (i === mid) rgb = base.slice();
+    else rgb = mix(base, black, (i - mid) / mid);
+    out.push(rgbToHex(rgb[0], rgb[1], rgb[2]));
+  }
+  return out;
+}
+
+function complement(hex) {
+  var c = hexToRgb(hex);
+  return rgbToHex(255 - c[0], 255 - c[1], 255 - c[2]);
+}
+
+function renderAll() {
+  var n = parseInt(csCount.value, 10);
+  csCountV.textContent = n;
+  var hex = csColor.value;
+  var shades = hexShades(hex, n);
+  csShades.innerHTML = '';
+  shades.forEach(function (s, i) {
+    var box = document.createElement('div');
+    box.style.cssText = 'width:36px;height:56px;border-radius:8px;background:' + s + ';border:1px solid var(--border);cursor:pointer;position:relative;';
+    box.title = s;
+    box.addEventListener('click', function () { copyHex(s); });
+    var val = document.createElement('div');
+    val.textContent = s;
+    val.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);bottom:-20px;font-size:9px;color:var(--muted);white-space:nowrap;';
+    box.appendChild(val);
+    csShades.appendChild(box);
+  });
+  csComp.style.background = complement(hex);
+  csComp.title = complement(hex);
+  csLight.style.background = '#ffffff';
+  csLight.title = '#ffffff';
+  csDark.style.background = '#0f172a';
+  csDark.title = '#0f172a';
+}
+
+function copyHex(h) {
+  try { navigator.clipboard.writeText(h); csMsg.textContent = '已复制 ' + h; }
+  catch (e) { csMsg.textContent = h; }
+}
+
+csColor.addEventListener('input', renderAll);
+csCount.addEventListener('input', renderAll);
+csComp.addEventListener('click', function () { copyHex(complement(csColor.value)); });
+csLight.addEventListener('click', function () { copyHex('#ffffff'); });
+csDark.addEventListener('click', function () { copyHex('#0f172a'); });
+
+renderAll();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
