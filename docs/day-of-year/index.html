@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今年第几天 - 在线日期第几天与剩余天数计算器</title>
+  <meta name="description" content="免费在线日期工具，快速计算指定日期是一年中的第几天、距离年底还剩几天、是第几周、星期几，平闰年自动判断，时间规划与节日倒计时必备。" />
+  <meta name="keywords" content="今年第几天,一年第几天,剩余天数,第几周,星期几,闰年判断">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📆</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5e73\u5e74\u95f0\u5e74\u600e\u4e48\u5224\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u80fd\u88ab 4 \u6574\u9664\u4e14\u4e0d\u80fd\u88ab 100 \u6574\u9664\uff0c\u6216\u80fd\u88ab 400 \u6574\u9664\u5373\u4e3a\u95f0\u5e74\u3002"}},{"@type":"Question","name":"\u80fd\u7b97\u4eca\u5929\u662f\u7b2c\u51e0\u5929\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u663e\u793a\u4eca\u5929\uff0c\u4e5f\u53ef\u4efb\u610f\u9009\u65e5\u671f\u3002"}},{"@type":"Question","name":"\u663e\u793a\u5468\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u663e\u793a ISO \u5468\u6570\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📆 今年第几天</h1>
+    <p>一年中的第几天/剩余天数/星期</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">今年第几天</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#第几天</span><span class="badge">#剩余天数</span>
+<div class="field">
+  <label for="dyDate">日期</label>
+  <input type="date" id="dyDate">
+</div>
+<div class="actions">
+  <button class="btn" id="dyBtn" type="button">计算</button>
+</div>
+<div class="result-box" id="dyResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么算？</h2><p>选定日期后自动累加当年天数并计算剩余天数，闰年 366 天自动判断。</p><h2>有用场景？</h2><p>项目进度规划、纪念日倒计时、备考天数计算。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>平年闰年怎么判？</summary><p>能被 4 整除且不能被 100 整除，或能被 400 整除即为闰年。</p></details><details class="faq-item"><summary>能算今天是第几天吗？</summary><p>默认显示今天，也可任意选日期。</p></details><details class="faq-item"><summary>显示周数吗？</summary><p>显示 ISO 周数。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>今年第几天 · <a href="../category/date/">📅 日期时间</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var dyResult = document.getElementById('dyResult');
+
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+  var WEEK = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+  document.getElementById('dyBtn').addEventListener('click', function () {
+    var val = document.getElementById('dyDate').value;
+    if (!val) { showToast('请选择日期'); return; }
+    var d = new Date(val + 'T00:00:00');
+    var y = d.getFullYear();
+    var start = new Date(y, 0, 1);
+    var daysInYear = isLeap(y) ? 366 : 365;
+    var dayOfYear = Math.round((d - start) / 86400000) + 1;
+    var remain = daysInYear - dayOfYear;
+    var isoWeek = Math.ceil(((d - new Date(d.getFullYear(), 0, 1)) / 86400000 + new Date(d.getFullYear(), 0, 1).getDay() + 1) / 7);
+    dyResult.hidden = false;
+    dyResult.innerHTML =
+      y + ' 年是<b style="color:var(--primary);">' + (isLeap(y) ? '闰年' : '平年') + '</b>（共 ' + daysInYear + ' 天）<br>' +
+      '这是今年第：<b style="font-size:26px;">' + dayOfYear + '</b> 天<br>' +
+      '距离年底还剩：<b>' + remain + '</b> 天<br>' +
+      '今天：<b>' + WEEK[d.getDay()] + '</b>（ISO 第 ' + isoWeek + ' 周）<br>' +
+      '今年已过：<b>' + (dayOfYear / daysInYear * 100).toFixed(1) + '%</b>';
+  });
+
+  document.getElementById('dyDate').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('dyBtn').click();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
