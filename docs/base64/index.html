@@ -8,6 +8,7 @@
   <meta name="keywords" content="Base64,Base64编码,Base64解码,Base64转换,在线Base64,base64加密">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Base64 \u80fd\u52a0\u5bc6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\uff0cBase64 \u53ea\u662f\u7f16\u7801\uff0c\u53ef\u9006\u4e14\u65e0\u5bc6\u94a5\uff0c\u4e0d\u7528\u4e8e\u4fdd\u5bc6\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u6309 UTF-8 \u7f16\u7801\uff0c\u4e2d\u6587\u6b63\u5e38\u7f16\u7801\u89e3\u7801\u4e0d\u4e71\u7801\u3002"}},{"@type":"Question","name":"URL Safe \u6a21\u5f0f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5c06 +\u3001/\u3001= \u6362\u6210 URL \u5b89\u5168\u5b57\u7b26\uff0c\u7528\u4e8e\u5728 URL \u53c2\u6570\u4e2d\u4f20\u8f93 Base64 \u6570\u636e\u3002"}},{"@type":"Question","name":"\u6587\u4ef6\u600e\u4e48\u8f6c Base64\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u62e9\u6587\u4ef6\u540e\u81ea\u52a8\u8f6c\u6210 Base64 \u6587\u672c\uff0c\u5e38\u7528\u4e8e\u5c06\u5c0f\u56fe\u7247\u76f4\u63a5\u5d4c\u5165 HTML/CSS \u4e2d\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">Base64编解码</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">Base64编解码</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#Base64</span><span class="badge">#编码</span>
@@ -49,10 +51,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>Base64 能加密吗？</summary><p>不能，Base64 只是编码，可逆且无密钥，不用于保密。</p></details><details class="faq-item"><summary>支持中文吗？</summary><p>支持，按 UTF-8 编码，中文正常编码解码不乱码。</p></details><details class="faq-item"><summary>URL Safe 模式是什么？</summary><p>将 +、/、= 换成 URL 安全字符，用于在 URL 参数中传输 Base64 数据。</p></details><details class="faq-item"><summary>文件怎么转 Base64？</summary><p>选择文件后自动转成 Base64 文本，常用于将小图片直接嵌入 HTML/CSS 中。</p></details></div>
   </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a><a href="../radix-convert/" class="t-card" data-cat="dev" data-tags="进制 转换" data-name="进制转换 2/8/10/16 进制一键互转 进制 转换"><div class="t-icon">🔢</div><div class="t-name">进制转换</div><div class="t-desc">2/8/10/16 进制一键互转</div><div class="t-tags"><span class="tt">#进制</span><span class="tt">#转换</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>Base64编解码 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
+    <p>Base64编解码 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -77,6 +82,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='base64';}); _r.unshift('base64'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var b64Input = document.getElementById('b64Input');
   var b64Result = document.getElementById('b64Result');
   var urlsafe = false;
