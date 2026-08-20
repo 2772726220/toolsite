@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数列生成器 - 在线数列生成计算工具</title>
+  <meta name="description" content="免费在线数列生成器，快速生成等差数列、等比数列、斐波那契数列与平方/立方数列，自定义项数与首项公差，实时显示并复制，数学学习好帮手。" />
+  <meta name="keywords" content="数列生成,等差数列,等比数列,斐波那契,数列计算,数列求和">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u6c42\u548c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u663e\u793a\u524d n \u9879\u548c\uff0c\u7b49\u5dee\u4e0e\u7b49\u6bd4\u6570\u5217\u6709\u516c\u5f0f\u7cbe\u786e\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u6700\u591a\u751f\u6210\u591a\u5c11\u9879\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u6700\u591a 200 \u9879\uff0c\u6570\u5b57\u8fc7\u5927\u65f6\u81ea\u52a8\u8f6c\u4e3a\u79d1\u5b66\u8ba1\u6570\u6cd5\u663e\u793a\u3002"}},{"@type":"Question","name":"\u7b49\u6bd4\u6570\u5217\u516c\u6bd4\u53ef\u4ee5\u662f\u8d1f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u6b63\u8d1f\u4ea4\u66ff\u6570\u5217\u540c\u6837\u652f\u6301\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔢 数列生成器</h1>
+    <p>等差/等比/斐波那契等数列生成</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">数列生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#数列</span><span class="badge">#等差</span><span class="badge">#斐波那契</span>
+<div class="tool-grid" style="grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:12px;">
+  <div><label>类型</label>
+    <select id="sqType">
+      <option value="arith" selected>等差数列</option>
+      <option value="geom">等比数列</option>
+      <option value="fib">斐波那契</option>
+      <option value="square">平方数</option>
+      <option value="cube">立方数</option>
+    </select>
+  </div>
+  <div><label>首项</label><input type="number" id="sqFirst" value="1"></div>
+  <div><label>项数</label><input type="number" id="sqN" value="10" min="1" max="200"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>公差 / 公比</label><input type="number" id="sqStep" value="2"></div>
+  <div><label>起始下标（0/1）</label>
+    <select id="sqIdx">
+      <option value="0">0 开始</option>
+      <option value="1" selected>1 开始</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="sqGo">生成</button>
+<div id="sqOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是等差数列？</h2><p>相邻两项之差恒定的数列，如 2,4,6,8…，本工具可自定义首项与公差生成任意长度。</p><h2>斐波那契数列是什么？</h2><p>从第三项起每项等于前两项之和：0,1,1,2,3,5,8…，在自然界与算法中广泛出现。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持求和吗？</summary><p>支持显示前 n 项和，等差与等比数列有公式精确计算。</p></details><details class="faq-item"><summary>最多生成多少项？</summary><p>默认最多 200 项，数字过大时自动转为科学计数法显示。</p></details><details class="faq-item"><summary>等比数列公比可以是负数吗？</summary><p>可以，正负交替数列同样支持。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>数列生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='sequence-generator';}); _r.unshift('sequence-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var sqType = document.getElementById('sqType');
+var sqFirst = document.getElementById('sqFirst');
+var sqN = document.getElementById('sqN');
+var sqStep = document.getElementById('sqStep');
+var sqIdx = document.getElementById('sqIdx');
+var sqGo = document.getElementById('sqGo');
+var sqOut = document.getElementById('sqOut');
+
+function fmtNum(n) {
+  if (Math.abs(n) >= 1e15) return n.toExponential(6);
+  if (Number.isInteger(n)) return String(n);
+  return String(Math.round(n * 1e10) / 1e10);
+}
+
+function gen() {
+  var type = sqType.value;
+  var n = Math.min(200, Math.max(1, parseInt(sqN.value, 10) || 10));
+  var first = parseFloat(sqFirst.value) || 0;
+  var step = parseFloat(sqStep.value) || 1;
+  var idxBase = parseInt(sqIdx.value, 10) || 0;
+  var seq = [];
+  if (type === 'arith') {
+    for (var i = 0; i < n; i++) seq.push(first + step * i);
+  } else if (type === 'geom') {
+    for (var j = 0; j < n; j++) seq.push(first * Math.pow(step, j));
+  } else if (type === 'fib') {
+    var a = Math.floor(first), b = Math.floor(first + (step || 1));
+    for (var k = 0; k < n; k++) {
+      seq.push(a);
+      var t = a + b; a = b; b = t;
+    }
+  } else if (type === 'square') {
+    for (var q = 0; q < n; q++) seq.push(Math.pow(first + q, 2));
+  } else if (type === 'cube') {
+    for (var c = 0; c < n; c++) seq.push(Math.pow(first + c, 3));
+  }
+  var sum = seq.reduce(function (s, x) { return s + x; }, 0);
+  var items = seq.map(function (x, i) {
+    return '<span class="sq-chip" style="display:inline-block;padding:5px 10px;margin:4px;border-radius:8px;border:1px solid var(--border);font-family:monospace;font-size:13px;">a' + (idxBase + i) + '=' + fmtNum(x) + '</span>';
+  }).join('');
+  var title = { arith: '等差数列', geom: '等比数列', fib: '斐波那契数列', square: '平方数列', cube: '立方数列' }[type];
+  sqOut.innerHTML =
+    '<div class="stat" style="display:block;padding:12px 14px;margin:0;"><div style="font-size:13px;color:var(--muted);margin-bottom:8px;">' + title + ' · 前 ' + n + ' 项 · 和 = ' + fmtNum(sum) + '</div><div>' + items + '</div></div>';
+}
+
+sqGo.addEventListener('click', gen);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
