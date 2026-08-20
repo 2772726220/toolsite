@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u6587\u548c\u6807\u70b9\u4fdd\u6301\u4e0d\u53d8\uff0c\u53ea\u5904\u7406\u82f1\u6587\u5b57\u6bcd\u3002"}},{"@type":"Question","name":"\u4ec0\u4e48\u662f ROT13\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f4d\u79fb 13 \u7684\u51ef\u6492\u5bc6\u7801\uff0c\u52a0\u5bc6\u4e24\u6b21\u5373\u8fd8\u539f\u3002"}},{"@type":"Question","name":"\u80fd\u66b4\u529b\u7834\u89e3\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4e00\u952e\u5c1d\u8bd5\u6240\u6709 25 \u79cd\u4f4d\u79fb\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u5904\u7406\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🔐 凯撒加密</h1>
@@ -50,6 +54,7 @@
     <p>凯撒加密 · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -103,6 +108,24 @@ var caResult = document.getElementById('caResult');
     caResult.hidden = false;
     caResult.textContent = shift(text, 13);
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
