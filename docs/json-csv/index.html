@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5b57\u6bb5\u4f1a\u7f3a\u5931\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u81ea\u52a8\u5408\u5e76\u6240\u6709\u5bf9\u8c61\u7684\u5b57\u6bb5\u4f5c\u4e3a\u8868\u5934\uff0c\u7f3a\u5931\u5b57\u6bb5\u7559\u7a7a\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e0b\u8f7d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u4e00\u952e\u4e0b\u8f7d .csv \u6587\u4ef6\uff0c\u53ef\u7528 Excel \u76f4\u63a5\u6253\u5f00\u3002"}},{"@type":"Question","name":"\u6709\u4e2d\u6587\u5217\u540d\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u76f4\u63a5\u4fdd\u7559\uff0cUTF-8 BOM \u7f16\u7801\u907f\u514d Excel \u4e2d\u6587\u4e71\u7801\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8f6c\u6362\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🗂️ JSON转CSV</h1>
@@ -45,6 +49,7 @@
     <p>JSON转CSV · <a href="../category/dev/">💻 开发编码</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -111,6 +116,24 @@ var jcResult = document.getElementById('jcResult');
     if (!lastCsv) { showToast('请先转换'); return; }
     window.download(new Blob([lastCsv], { type: 'text/csv;charset=utf-8' }), 'data.csv');
   });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
