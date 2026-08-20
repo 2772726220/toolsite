@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>减脂热量缺口计算 - 在线减脂热量计划工具</title>
+  <meta name="description" content="免费在线减脂热量计算器，基于基础代谢与活动量算出每日消耗，设定热量缺口后给出每日摄入建议与预估减脂速度（每周/每月可减体重），健康科学减脂。" />
+  <meta name="keywords" content="热量缺口,减脂,卡路里计算,减脂计划,TDEE,热量摄入">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u548c BMR/TDEE \u6709\u4ec0\u4e48\u5173\u7cfb\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5148\u6309\u6027\u522b\u5e74\u9f84\u8eab\u9ad8\u4f53\u91cd\u7b97\u57fa\u7840\u4ee3\u8c22 BMR\uff0c\u4e58\u6d3b\u52a8\u7cfb\u6570\u5f97\u6bcf\u65e5\u6d88\u8017 TDEE\uff0c\u518d\u51cf\u53bb\u7f3a\u53e3\u5c31\u662f\u5efa\u8bae\u6444\u5165\u3002"}},{"@type":"Question","name":"\u80fd\u540c\u65f6\u589e\u808c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7f3a\u53e3\u4e0d\u5b9c\u8d85\u8fc7 500 \u5343\u5361\uff0c\u5e76\u4fdd\u8bc1\u86cb\u767d\u8d28\u6444\u5165\u4e0e\u529b\u91cf\u8bad\u7ec3\uff0c\u53ef\u5c3d\u91cf\u4fdd\u7559\u808c\u8089\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u4ee5\u4f5c\u4e3a\u5904\u65b9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u4f9b\u5065\u5eb7\u53c2\u8003\uff0c\u7279\u6b8a\u4eba\u7fa4\uff08\u5b55\u54fa\u671f\u3001\u6162\u6027\u75c5\uff09\u8bf7\u54a8\u8be2\u533b\u751f\u6216\u8425\u517b\u5e08\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔥 减脂热量缺口</h1>
+    <p>算每日热量缺口与减脂速度</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">减脂热量缺口</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#热量缺口</span><span class="badge">#减脂</span><span class="badge">#卡路里</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>性别</label>
+    <select id="cdSex">
+      <option value="m" selected>男</option>
+      <option value="f">女</option>
+    </select>
+  </div>
+  <div><label>年龄</label><input type="number" id="cdAge" value="30" min="10" max="100"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>身高（cm）</label><input type="number" id="cdH" value="175" min="50" max="250"></div>
+  <div><label>体重（kg）</label><input type="number" id="cdW" value="70" min="20" max="400" step="any"></div>
+  <div><label>活动水平</label>
+    <select id="cdAct">
+      <option value="1.2">久坐</option>
+      <option value="1.375" selected>轻度</option>
+      <option value="1.55">中度</option>
+      <option value="1.725">高度</option>
+      <option value="1.9">极高</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>目标缺口（千卡/天）</label><input type="number" id="cdDef" value="400" min="100" max="1500"></div>
+  <div><label>目标减脂（kg）</label><input type="number" id="cdGoal" value="5" min="0" step="any"></div>
+</div>
+<button class="btn btn-primary" id="cdGo">计算</button>
+<div id="cdOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是热量缺口？</h2><p>摄入热量低于消耗热量即产生缺口，身体会消耗脂肪补足。每减少约 7700 千卡约减 1 公斤脂肪。</p><h2>怎么设定缺口才健康？</h2><p>建议缺口控制在每日消耗的 10%-20%，女性一般 300-500 千卡，男性 400-700 千卡，过快节食会流失肌肉。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>和 BMR/TDEE 有什么关系？</summary><p>先按性别年龄身高体重算基础代谢 BMR，乘活动系数得每日消耗 TDEE，再减去缺口就是建议摄入。</p></details><details class="faq-item"><summary>能同时增肌吗？</summary><p>缺口不宜超过 500 千卡，并保证蛋白质摄入与力量训练，可尽量保留肌肉。</p></details><details class="faq-item"><summary>结果可以作为处方吗？</summary><p>仅供健康参考，特殊人群（孕哺期、慢性病）请咨询医生或营养师。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>减脂热量缺口 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='calorie-deficit';}); _r.unshift('calorie-deficit'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cdSex = document.getElementById('cdSex');
+var cdAge = document.getElementById('cdAge');
+var cdH = document.getElementById('cdH');
+var cdW = document.getElementById('cdW');
+var cdAct = document.getElementById('cdAct');
+var cdDef = document.getElementById('cdDef');
+var cdGoal = document.getElementById('cdGoal');
+var cdGo = document.getElementById('cdGo');
+var cdOut = document.getElementById('cdOut');
+
+function fmt(x) {
+  return Math.round(x).toLocaleString('zh-CN');
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
+}
+
+function calc() {
+  var sex = cdSex.value;
+  var age = parseInt(cdAge.value, 10);
+  var h = parseFloat(cdH.value);
+  var w = parseFloat(cdW.value);
+  var act = parseFloat(cdAct.value) || 1.375;
+  var deficit = parseFloat(cdDef.value);
+  var goal = parseFloat(cdGoal.value);
+  if (!(h > 0 && w > 0) || isNaN(age) || !(deficit > 0)) { cdOut.innerHTML = '<div class="result-box">请输入有效数值</div>'; return; }
+  // Mifflin-St Jeor
+  var bmr = sex === 'm' ? 10 * w + 6.25 * h - 5 * age + 5 : 10 * w + 6.25 * h - 5 * age - 161;
+  var tdee = bmr * act;
+  var intake = tdee - deficit;
+  var perWeek = deficit * 7 / 7700;
+  var perMonth = perWeek * 4.33;
+  var weeks = goal > 0 ? goal / perWeek : 0;
+  var html = '';
+  html += row('基础代谢 BMR', fmt(bmr) + ' 千卡/天');
+  html += row('每日消耗 TDEE', fmt(tdee) + ' 千卡/天');
+  html += row('建议每日摄入', fmt(intake) + ' 千卡/天（缺口 ' + fmt(deficit) + ' 千卡）');
+  html += row('预估每周减重', perWeek.toFixed(2) + ' kg');
+  html += row('预估每月减重', perMonth.toFixed(2) + ' kg');
+  html += row('完成 ' + goal + ' kg 目标', '约 ' + Math.round(weeks) + ' 周（' + (weeks / 4.33).toFixed(1) + ' 个月）');
+  var warn = '';
+  if (intake < bmr * 0.8) warn = '警告：摄入过低，可能流失肌肉，建议提高摄入并配合运动。';
+  else if (deficit / tdee > 0.2) warn = '提示：缺口超过日消耗 20%，建议控制在 10%-20% 更可持续。';
+  html += '<div class="result-box" style="margin-top:6px;">' + (warn || '健康减脂：保持蛋白质摄入（体重 kg × 1.6-2.0 克），配合力量训练与充足睡眠。') + '</div>';
+  cdOut.innerHTML = html;
+}
+
+cdGo.addEventListener('click', calc);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
