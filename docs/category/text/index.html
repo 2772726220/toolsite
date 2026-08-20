@@ -7,12 +7,14 @@
   <meta name="description" content="免费在线文本工具工具大全：字数统计、转换、对比、去重等文本处理小工具。共 14 款，浏览器本地运行，不上传、不收费。" />
   <meta name="robots" content="noindex, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
 </script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
 </header>
 <nav class="site-nav"><div class="container">
   <a class="home" href="../">🗜️ 在线工具箱</a>
-  <a href="../#tools">全部工具</a>
+  <a href="../#toolSections">全部工具</a>
 </div></nav>
 <main class="container">
   <section class="content-block" style="margin-top:36px;">
@@ -36,11 +38,14 @@
   <section class="content-block">
     <h2>文本工具工具介绍</h2>
     <p>字数统计、转换、对比、去重等文本处理小工具。本页收录的每款工具都无需安装、无需注册，直接打开即用，全部处理过程都在浏览器本地完成，不涉及任何隐私上传。</p>
-    <p>如果这里没有你需要的工具，欢迎回到<a href="../">在线工具箱首页</a>查看全部 96 款工具。</p>
+    <p>如果这里没有你需要的工具，欢迎回到<a href="../">在线工具箱首页</a>查看全部 120 款工具。</p>
   </section>
 </main>
 <footer>
-  <div class="container"><p>文本工具工具 · <a href="../">在线工具箱</a></p></div>
+  <div class="container">
+    <p>文本工具工具 · <a href="../">在线工具箱</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+  </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <script>
