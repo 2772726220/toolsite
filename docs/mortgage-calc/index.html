@@ -8,6 +8,7 @@
   <meta name="keywords" content="房贷计算器,月供计算,等额本息,等额本金,房贷利息,贷款计算器">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
@@ -15,6 +16,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5546\u8d37\u516c\u79ef\u91d1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5229\u7387\u53ef\u81ea\u5b9a\u4e49\uff0c\u8f93\u5165\u4efb\u610f\u5e74\u5229\u7387\u5373\u53ef\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u5230\u660e\u7ec6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u67e5\u770b\u9010\u6708\u8fd8\u6b3e\u660e\u7ec6\uff0c\u542b\u672c\u91d1\u548c\u5229\u606f\u62c6\u5206\u3002"}},{"@type":"Question","name":"\u652f\u6301\u63d0\u524d\u8fd8\u6b3e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u7840\u7248\u6682\u4e0d\u542b\u63d0\u524d\u8fd8\u6b3e\uff0c\u540e\u7eed\u53ef\u52a0\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
 </head>
 <body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -23,7 +25,7 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">房贷计算器</span></div></nav>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">房贷计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
 <main class="container">
   <section class="tool-card">
 <span class="badge">#房贷</span><span class="badge">#月供</span>
@@ -60,10 +62,13 @@
     <h2>常见问题</h2>
     <div class="faq"><details class="faq-item"><summary>支持商贷公积金吗？</summary><p>利率可自定义，输入任意年利率即可计算。</p></details><details class="faq-item"><summary>能看到明细吗？</summary><p>可查看逐月还款明细，含本金和利息拆分。</p></details><details class="faq-item"><summary>支持提前还款吗？</summary><p>基础版暂不含提前还款，后续可加。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details></div>
   </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a><a href="../tax-calculator/" class="t-card" data-cat="finance" data-tags="个税 工资" data-name="个税计算器 工资/年收入个税，累计预扣法 个税 工资"><div class="t-icon">💰</div><div class="t-name">个税计算器</div><div class="t-desc">工资/年收入个税，累计预扣法</div><div class="t-tags"><span class="tt">#个税</span><span class="tt">#工资</span></div></a></div></section>
 </main>
 <footer>
   <div class="container">
-    <p>房贷计算器 · <a href="../category/finance/">💰 财务计算</a> · <a href="../">返回工具箱首页</a></p>
+    <p>房贷计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
@@ -88,6 +93,13 @@
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='mortgage-calc';}); _r.unshift('mortgage-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var mcDetail = document.getElementById('mcDetail');
 
   function fmt(n) {
