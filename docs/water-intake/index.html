@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日饮水量计算 - 在线喝水提醒目标计算器</title>
+  <meta name="description" content="免费在线每日饮水量计算器，按体重和运动强度估算每日饮水目标，显示按杯/按瓶的换算建议，健康喝水、科学补水，健身跑步必备工具。" />
+  <meta name="keywords" content="每日饮水量,喝水计算,饮水目标,喝水量,补水计算,健康饮水">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8ba1\u7b97\u516c\u5f0f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u7840\u91cf=\u4f53\u91cd\u00d735ml\uff0c\u8fd0\u52a8\u6309\u5f3a\u5ea6\u6bcf 30 \u5206\u949f\u8ffd\u52a0 300-600ml\u3002"}},{"@type":"Question","name":"\u6309\u676f/\u6309\u74f6\u663e\u793a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u6362\u7b97\u6210 250ml \u4e00\u676f\u548c 500ml \u4e00\u74f6\u7684\u8fd1\u4f3c\u503c\u3002"}},{"@type":"Question","name":"\u8981\u4e00\u6b21\u559d\u5b8c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u5206\u591a\u6b21\u5747\u5300\u996e\u7528\uff0c\u5c11\u91cf\u591a\u6b21\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u672c\u5730\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💧 每日饮水量</h1>
+    <p>按体重/运动量算每日喝水目标</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">每日饮水量</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#饮水</span><span class="badge">#喝水</span>
+<div class="field">
+  <label for="wiWeight">体重（kg）</label>
+  <input type="number" id="wiWeight" value="60" min="1" step="any">
+</div>
+<div class="field">
+  <label for="wiActivity">日常活动</label>
+  <select id="wiActivity">
+    <option value="30">久坐为主（30 ml/kg）</option>
+    <option value="35">一般活动（35 ml/kg）</option>
+    <option value="40">运动/体力劳动（40 ml/kg）</option>
+  </select>
+</div>
+<div class="field">
+  <label for="wiExercise">当日运动时长（分钟，可留空）</label>
+  <input type="number" id="wiExercise" value="0" min="0" step="any">
+</div>
+<div class="actions">
+  <button class="btn" id="wiBtn" type="button">计算</button>
+</div>
+<div class="result-box" id="wiResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>每天该喝多少水？</h2><p>一般成人建议体重(kg)×30~40ml，运动每 30 分钟再加约 500ml，天气炎热可适当增加。</p><h2>喝水有哪些好处？</h2><p>维持代谢、帮助消化、调节体温、缓解疲劳，运动后补水尤为重要。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>计算公式是什么？</summary><p>基础量=体重×35ml，运动按强度每 30 分钟追加 300-600ml。</p></details><details class="faq-item"><summary>按杯/按瓶显示吗？</summary><p>会换算成 250ml 一杯和 500ml 一瓶的近似值。</p></details><details class="faq-item"><summary>要一次喝完吗？</summary><p>建议分多次均匀饮用，少量多次。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，本地计算。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>每日饮水量 · <a href="../category/health/">🏥 健康生活</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var wiResult = document.getElementById('wiResult');
+
+  document.getElementById('wiBtn').addEventListener('click', function () {
+    var weight = parseFloat(document.getElementById('wiWeight').value);
+    var act = parseFloat(document.getElementById('wiActivity').value);
+    var ex = parseFloat(document.getElementById('wiExercise').value) || 0;
+    if (isNaN(weight) || weight <= 0 || weight > 300) { showToast('请输入合理体重（kg）'); return; }
+    if (ex < 0) { showToast('运动时长不能为负'); return; }
+    var base = weight * act;
+    var extra = Math.floor(ex / 30) * 400;
+    var total = base + extra;
+    wiResult.hidden = false;
+    wiResult.innerHTML =
+      '基础饮水量：<b>' + Math.round(base) + ' ml</b>（体重 ' + weight + ' kg × ' + act + ' ml/kg）<br>' +
+      (ex > 0 ? '运动补水：<b>+' + extra + ' ml</b>（约 ' + Math.floor(ex / 30) + ' 个 30 分钟，每个 +400ml）<br>' : '') +
+      '每日建议总量：<b style="font-size:26px;">' + Math.round(total) + ' ml</b>' +
+      '<br>≈ <b>' + (total / 250).toFixed(1) + '</b> 杯（250ml）｜<b>' + (total / 500).toFixed(1) + '</b> 瓶（500ml）' +
+      '<br><span style="font-size:12px;color:var(--muted);">建议少量多次饮用，运动前后注意及时补水。</span>';
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
