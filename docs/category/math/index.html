@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>计算数学工具大全 - 免费在线计算数学工具</title>
-  <meta name="description" content="免费在线计算数学工具大全：计算器、方程、几何、单位换算等数学计算工具。共 11 款，浏览器本地运行，不上传、不收费。" />
+  <meta name="description" content="免费在线计算数学工具大全：计算器、方程、几何、单位换算等数学计算工具。共 16 款，浏览器本地运行，不上传、不收费。" />
   <meta name="robots" content="noindex, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🧮 计算数学工具</h1>
     <p>计算器、方程、几何、单位换算等数学计算工具。</p>
-    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">📚 11 款</span></div>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">📚 16 款</span></div>
   </div>
 </header>
 <nav class="site-nav"><div class="container">
@@ -25,18 +29,41 @@
   <section class="content-block" style="margin-top:36px;">
     <h2 style="margin-top:0;">计算数学工具一览</h2>
     <div class="tool-grid" id="tools">
-<a href="unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div></a><a href="random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div></a><a href="scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div></a><a href="pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div></a><a href="basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div></a><a href="percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div></a><a href="geometry-calc/" class="t-card" data-cat="math" data-tags="几何 面积 周长" data-name="几何计算器 三角形、圆、矩形面积周长计算 几何 面积 周长"><div class="t-icon">📐</div><div class="t-name">几何计算器</div><div class="t-desc">三角形、圆、矩形面积周长计算</div></a><a href="temperature-convert/" class="t-card" data-cat="math" data-tags="温度 换算" data-name="温度换算 摄氏/华氏/开尔文三档互换 温度 换算"><div class="t-icon">🌡️</div><div class="t-name">温度换算</div><div class="t-desc">摄氏/华氏/开尔文三档互换</div></a><a href="prime-check/" class="t-card" data-cat="math" data-tags="素数 质因数" data-name="素数判断 判断素数+分解质因数 素数 质因数"><div class="t-icon">🔢</div><div class="t-name">素数判断</div><div class="t-desc">判断素数+分解质因数</div></a><a href="roman-numeral/" class="t-card" data-cat="math" data-tags="罗马数字 转换" data-name="罗马数字转换 阿拉伯数字 ↔ 罗马数字 罗马数字 转换"><div class="t-icon">🏛️</div><div class="t-name">罗马数字转换</div><div class="t-desc">阿拉伯数字 ↔ 罗马数字</div></a><a href="equation-solver/" class="t-card" data-cat="math" data-tags="方程 求根" data-name="一元二次方程 ax²+bx+c=0 自动求解 方程 求根"><div class="t-icon">📐</div><div class="t-name">一元二次方程</div><div class="t-desc">ax²+bx+c=0 自动求解</div></a>
+<a href="unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a><a href="geometry-calc/" class="t-card" data-cat="math" data-tags="几何 面积 周长" data-name="几何计算器 三角形、圆、矩形面积周长计算 几何 面积 周长"><div class="t-icon">📐</div><div class="t-name">几何计算器</div><div class="t-desc">三角形、圆、矩形面积周长计算</div><div class="t-tags"><span class="tt">#几何</span><span class="tt">#面积</span><span class="tt">#周长</span></div></a><a href="temperature-convert/" class="t-card" data-cat="math" data-tags="温度 换算" data-name="温度换算 摄氏/华氏/开尔文三档互换 温度 换算"><div class="t-icon">🌡️</div><div class="t-name">温度换算</div><div class="t-desc">摄氏/华氏/开尔文三档互换</div><div class="t-tags"><span class="tt">#温度</span><span class="tt">#换算</span></div></a><a href="prime-check/" class="t-card" data-cat="math" data-tags="素数 质因数" data-name="素数判断 判断素数+分解质因数 素数 质因数"><div class="t-icon">🔢</div><div class="t-name">素数判断</div><div class="t-desc">判断素数+分解质因数</div><div class="t-tags"><span class="tt">#素数</span><span class="tt">#质因数</span></div></a><a href="roman-numeral/" class="t-card" data-cat="math" data-tags="罗马数字 转换" data-name="罗马数字转换 阿拉伯数字 ↔ 罗马数字 罗马数字 转换"><div class="t-icon">🏛️</div><div class="t-name">罗马数字转换</div><div class="t-desc">阿拉伯数字 ↔ 罗马数字</div><div class="t-tags"><span class="tt">#罗马数字</span><span class="tt">#转换</span></div></a><a href="equation-solver/" class="t-card" data-cat="math" data-tags="方程 求根" data-name="一元二次方程 ax²+bx+c=0 自动求解 方程 求根"><div class="t-icon">📐</div><div class="t-name">一元二次方程</div><div class="t-desc">ax²+bx+c=0 自动求解</div><div class="t-tags"><span class="tt">#方程</span><span class="tt">#求根</span></div></a><a href="fraction-calc/" class="t-card" data-cat="math" data-tags="分数 计算 约分" data-name="分数计算器 分数加减乘除、约分、带分数转换 分数 计算 约分"><div class="t-icon">🧮</div><div class="t-name">分数计算器</div><div class="t-desc">分数加减乘除、约分、带分数转换</div><div class="t-tags"><span class="tt">#分数</span><span class="tt">#计算</span><span class="tt">#约分</span></div></a><a href="statistics-calculator/" class="t-card" data-cat="math" data-tags="统计 均值 方差" data-name="统计计算器 均值/中位数/众数/方差/标准差一键算 统计 均值 方差"><div class="t-icon">📊</div><div class="t-name">统计计算器</div><div class="t-desc">均值/中位数/众数/方差/标准差一键算</div><div class="t-tags"><span class="tt">#统计</span><span class="tt">#均值</span><span class="tt">#方差</span></div></a><a href="permutation-combination/" class="t-card" data-cat="math" data-tags="排列 组合 阶乘" data-name="排列组合计算 排列数 P 与组合数 C，支持大数 排列 组合 阶乘"><div class="t-icon">🔗</div><div class="t-name">排列组合计算</div><div class="t-desc">排列数 P 与组合数 C，支持大数</div><div class="t-tags"><span class="tt">#排列</span><span class="tt">#组合</span><span class="tt">#阶乘</span></div></a><a href="gcd-lcm/" class="t-card" data-cat="math" data-tags="最大公约数 最小公倍数" data-name="最大公约数与最小公倍数 GCD / LCM，多数字与分数化简 最大公约数 最小公倍数"><div class="t-icon">➗</div><div class="t-name">最大公约数与最小公倍数</div><div class="t-desc">GCD / LCM，多数字与分数化简</div><div class="t-tags"><span class="tt">#最大公约数</span><span class="tt">#最小公倍数</span></div></a><a href="gpa-calculator/" class="t-card" data-cat="math" data-tags="GPA 绩点" data-name="GPA 计算器 4.0/5.0 制加权平均学分绩点 GPA 绩点"><div class="t-icon">🎓</div><div class="t-name">GPA 计算器</div><div class="t-desc">4.0/5.0 制加权平均学分绩点</div><div class="t-tags"><span class="tt">#GPA</span><span class="tt">#绩点</span></div></a>
     </div>
   </section>
   <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
   <section class="content-block">
     <h2>计算数学工具介绍</h2>
     <p>计算器、方程、几何、单位换算等数学计算工具。本页收录的每款工具都无需安装、无需注册，直接打开即用，全部处理过程都在浏览器本地完成，不涉及任何隐私上传。</p>
-    <p>如果这里没有你需要的工具，欢迎回到<a href="../">在线工具箱首页</a>查看全部 84 款工具。</p>
+    <p>如果这里没有你需要的工具，欢迎回到<a href="../">在线工具箱首页</a>查看全部 96 款工具。</p>
   </section>
 </main>
 <footer>
   <div class="container"><p>计算数学工具 · <a href="../">在线工具箱</a></p></div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<script>
+(function () {
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
 </body>
 </html>
