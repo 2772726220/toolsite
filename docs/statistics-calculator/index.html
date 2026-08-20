@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>统计计算器 - 在线均值中位数方差标准差计算器</title>
+  <meta name="description" content="免费在线统计计算器，输入一组数字，自动计算总数、均值、中位数、众数、极差、总体/样本方差与标准差、最小值最大值，统计分析与作业检查必备。" />
+  <meta name="keywords" content="统计计算器,均值,中位数,众数,方差,标准差,数据分析">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8f93\u5165\u683c\u5f0f\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7a7a\u683c\u3001\u9017\u53f7\u6216\u6362\u884c\u5206\u9694\u5747\u53ef\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8d1f\u6570\u548c\u5c0f\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002"}},{"@type":"Question","name":"\u65b9\u5dee\u7ed9\u603b\u4f53\u8fd8\u662f\u6837\u672c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e24\u8005\u90fd\u7ed9\u51fa\uff0c\u6837\u672c\u7528 n-1 \u4fee\u6b63\u3002"}},{"@type":"Question","name":"\u6700\u591a\u80fd\u8f93\u5165\u591a\u5c11\u4e2a\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u8d85\u8fc7 10000 \u4e2a\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📊 统计计算器</h1>
+    <p>均值/中位数/众数/方差/标准差一键算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">统计计算器</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#统计</span><span class="badge">#均值</span><span class="badge">#方差</span>
+<div class="field">
+  <label for="stData">数据（空格/逗号/换行分隔）</label>
+  <textarea id="stData" placeholder="例如：12 15 15 20 22 22 22 30"></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="stBtn" type="button">计算</button>
+</div>
+<div class="result-box" id="stResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>方差和标准差什么区别？</h2><p>方差是离差平方的平均，标准差是方差的平方根，与数据同量纲、更直观。样本方差分母用 n-1。</p><h2>中位数怎么算？</h2><p>数据排序后取中间值；偶数个时取中间两个的平均。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>输入格式是什么？</summary><p>空格、逗号或换行分隔均可。</p></details><details class="faq-item"><summary>支持负数和小数吗？</summary><p>支持。</p></details><details class="faq-item"><summary>方差给总体还是样本？</summary><p>两者都给出，样本用 n-1 修正。</p></details><details class="faq-item"><summary>最多能输入多少个数？</summary><p>不超过 10000 个。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>统计计算器 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var stResult = document.getElementById('stResult');
+
+  document.getElementById('stBtn').addEventListener('click', function () {
+    var raw = document.getElementById('stData').value;
+    var nums = raw.split(/[\s,，;；\n]+/).map(function (s) { return parseFloat(s); }).filter(function (n) { return !isNaN(n); });
+    if (!nums.length) { showToast('请输入至少一个数字'); return; }
+    if (nums.length > 10000) { showToast('最多 10000 个数据'); return; }
+    var n = nums.length;
+    var sum = nums.reduce(function (a, b) { return a + b; }, 0);
+    var mean = sum / n;
+    var min = Math.min.apply(null, nums);
+    var max = Math.max.apply(null, nums);
+    var sorted = nums.slice().sort(function (a, b) { return a - b; });
+    var mid = Math.floor(n / 2);
+    var median = n % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    var modeMap = {};
+    var maxCount = 0;
+    nums.forEach(function (x) { modeMap[x] = (modeMap[x] || 0) + 1; if (modeMap[x] > maxCount) maxCount = modeMap[x]; });
+    var modes = maxCount > 1 ? Object.keys(modeMap).filter(function (k) { return modeMap[k] === maxCount; }).map(Number).sort(function (a, b) { return a - b; }) : [];
+    var sq = 0;
+    nums.forEach(function (x) { var d = x - mean; sq += d * d; });
+    var varPop = sq / n;
+    var varSample = n > 1 ? sq / (n - 1) : NaN;
+    stResult.hidden = false;
+    var f = function (v, d) { return v === undefined ? '-' : (d === undefined ? v.toFixed(4) : v.toFixed(d)); };
+    stResult.innerHTML =
+      '<table style="border-collapse:collapse;width:100%;font-size:14px;">' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">样本数</td><td style="padding:6px 12px;"><b>' + n + '</b></td><td style="padding:6px 12px;color:var(--muted);">总和</td><td style="padding:6px 12px;"><b>' + f(sum) + '</b></td></tr>' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">平均值</td><td style="padding:6px 12px;"><b>' + f(mean) + '</b></td><td style="padding:6px 12px;color:var(--muted);">中位数</td><td style="padding:6px 12px;"><b>' + f(median) + '</b></td></tr>' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">众数</td><td style="padding:6px 12px;"><b>' + (modes.length ? modes.join(', ') : '无（所有数均只出现一次）') + '</b></td><td style="padding:6px 12px;color:var(--muted);">极差</td><td style="padding:6px 12px;"><b>' + f(max - min) + '</b></td></tr>' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">最小值</td><td style="padding:6px 12px;"><b>' + f(min) + '</b></td><td style="padding:6px 12px;color:var(--muted);">最大值</td><td style="padding:6px 12px;"><b>' + f(max) + '</b></td></tr>' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">总体方差</td><td style="padding:6px 12px;"><b>' + f(varPop) + '</b></td><td style="padding:6px 12px;color:var(--muted);">样本方差(n-1)</td><td style="padding:6px 12px;"><b>' + (isNaN(varSample) ? '-' : f(varSample)) + '</b></td></tr>' +
+      '<tr><td style="padding:6px 12px;color:var(--muted);">总体标准差</td><td style="padding:6px 12px;"><b>' + f(Math.sqrt(varPop)) + '</b></td><td style="padding:6px 12px;color:var(--muted);">样本标准差</td><td style="padding:6px 12px;"><b>' + (isNaN(varSample) ? '-' : f(Math.sqrt(varSample))) + '</b></td></tr>' +
+      '</table>';
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
