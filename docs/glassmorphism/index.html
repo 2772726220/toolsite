@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毛玻璃生成器 - 在线玻璃拟态Glassmorphism CSS工具</title>
+  <meta name="description" content="免费在线毛玻璃（Glassmorphism）效果生成器，可视化调节模糊、透明度、边框、圆角，实时预览并一键复制 CSS 代码，浏览器本地生成。" />
+  <meta name="keywords" content="毛玻璃,Glassmorphism,玻璃拟态,CSS效果,毛玻璃卡片,背景模糊">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u517c\u5bb9\u6027\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u4e86 backdrop-filter\uff0c\u73b0\u4ee3 Chrome\u3001Edge\u3001Safari \u652f\u6301\uff0cFirefox 103+ \u652f\u6301\uff0c\u65e7\u6d4f\u89c8\u5668\u4f1a\u9000\u5316\u4e3a\u534a\u900f\u660e\u4e0d\u6a21\u7cca\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5546\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u751f\u6210\u7684\u4ee3\u7801\u5b8c\u5168\u5c5e\u4e8e\u4f60\uff0c\u53ef\u81ea\u7531\u4f7f\u7528\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u6ca1\u6709\u6a21\u7cca\u6548\u679c\uff1f","acceptedAnswer":{"@type":"Answer","text":"backdrop-filter \u9700\u8981\u6709\u80cc\u666f\u5185\u5bb9\u5728\u5143\u7d20\u540e\u9762\uff0c\u8bf7\u786e\u4fdd\u5bb9\u5668\u80cc\u666f\u662f\u56fe\u7247\u6216\u6e10\u53d8\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧊 毛玻璃生成器</h1>
+    <p>生成玻璃拟态 CSS 卡片，复制即用</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">毛玻璃生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#毛玻璃</span><span class="badge">#玻璃拟态</span><span class="badge">#CSS</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模糊（px）</label><input type="range" id="gmBlur" min="0" max="40" value="12"></div>
+  <div><label>透明度</label><input type="range" id="gmAlpha" min="5" max="100" value="35"></div>
+  <div><label>圆角（px）</label><input type="range" id="gmRadius" min="0" max="40" value="16"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>背景色</label><input type="color" id="gmBg" value="#ffffff"></div>
+  <div><label>玻璃底色</label><input type="color" id="gmTint" value="#ffffff"></div>
+  <div><label>边框（px）</label><input type="range" id="gmBorder" min="0" max="3" value="1"></div>
+</div>
+<div id="gmStage" style="position:relative;padding:48px 20px;border-radius:16px;overflow:hidden;min-height:200px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);">
+  <div style="position:absolute;width:120px;height:120px;border-radius:24px;background:linear-gradient(135deg,#f472b6,#a78bfa);top:30px;left:18%;opacity:.8;transform:rotate(-12deg);"></div>
+  <div style="position:absolute;width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#34d399);bottom:28px;right:20%;opacity:.8;"></div>
+  <div id="gmCard" style="position:relative;z-index:1;width:min(320px,86%);padding:28px;border-radius:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+    <div style="font-size:18px;font-weight:700;margin-bottom:6px;">玻璃拟态卡片</div>
+    <div style="font-size:13px;opacity:.75;line-height:1.6;">半透明背景 + 背景模糊 + 细边框，就是 Glassmorphism。复制右侧 CSS 用到你的项目里。</div>
+  </div>
+</div>
+<textarea id="gmCode" rows="9" readonly style="margin-top:12px;font-family:monospace;font-size:12px;"></textarea>
+<button class="btn btn-primary" id="gmCopy" style="margin-top:10px;">📋 复制 CSS</button>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 Glassmorphism？</h2><p>玻璃拟态是近年流行的 UI 风格：半透明背景 + 背景模糊 + 细边框 + 柔和阴影，让元素像磨砂玻璃一样通透又有层次。</p><h2>怎么用生成的 CSS？</h2><p>复制给出的卡片样式应用到你的 div 即可，背景需要放一张渐变或图片才有磨砂效果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>兼容性如何？</summary><p>使用了 backdrop-filter，现代 Chrome、Edge、Safari 支持，Firefox 103+ 支持，旧浏览器会退化为半透明不模糊。</p></details><details class="faq-item"><summary>可以商用吗？</summary><p>生成的代码完全属于你，可自由使用。</p></details><details class="faq-item"><summary>为什么没有模糊效果？</summary><p>backdrop-filter 需要有背景内容在元素后面，请确保容器背景是图片或渐变。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>毛玻璃生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='glassmorphism';}); _r.unshift('glassmorphism'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var gmBlur = document.getElementById('gmBlur');
+var gmAlpha = document.getElementById('gmAlpha');
+var gmRadius = document.getElementById('gmRadius');
+var gmBg = document.getElementById('gmBg');
+var gmTint = document.getElementById('gmTint');
+var gmBorder = document.getElementById('gmBorder');
+var gmStage = document.getElementById('gmStage');
+var gmCard = document.getElementById('gmCard');
+var gmCode = document.getElementById('gmCode');
+var gmCopy = document.getElementById('gmCopy');
+
+function css() {
+  var blur = parseInt(gmBlur.value, 10) || 0;
+  var alpha = Math.round((parseInt(gmAlpha.value, 10) || 35) / 100 * 255).toString(16).padStart(2, '0');
+  var radius = parseInt(gmRadius.value, 10) || 0;
+  var tint = gmTint.value;
+  var border = parseInt(gmBorder.value, 10) || 0;
+  return '/* 毛玻璃卡片 */\n.glass-card {\n  background: ' + tint + alpha + ';\n  backdrop-filter: blur(' + blur + 'px);\n  -webkit-backdrop-filter: blur(' + blur + 'px);\n  border-radius: ' + radius + 'px;\n  border: ' + border + 'px solid rgba(255, 255, 255, 0.35);\n  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);\n}';
+}
+
+function render() {
+  gmStage.style.background = 'linear-gradient(135deg, ' + gmBg.value + ', ' + gmBg.value + ')';
+  gmCard.style.background = gmTint.value + Math.round((parseInt(gmAlpha.value, 10) || 35) / 100 * 255).toString(16).padStart(2, '0');
+  gmCard.style.backdropFilter = 'blur(' + (parseInt(gmBlur.value, 10) || 0) + 'px)';
+  gmCard.style.webkitBackdropFilter = gmCard.style.backdropFilter;
+  gmCard.style.borderRadius = (parseInt(gmRadius.value, 10) || 0) + 'px';
+  gmCard.style.border = (parseInt(gmBorder.value, 10) || 0) + 'px solid rgba(255,255,255,0.35)';
+  gmCode.value = css();
+}
+
+gmBlur.addEventListener('input', render);
+gmAlpha.addEventListener('input', render);
+gmRadius.addEventListener('input', render);
+gmBg.addEventListener('input', render);
+gmTint.addEventListener('input', render);
+gmBorder.addEventListener('input', render);
+gmCopy.addEventListener('click', function () {
+  try { navigator.clipboard.writeText(gmCode.value); showToast('已复制 CSS'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
