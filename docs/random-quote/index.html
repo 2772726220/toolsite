@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>名言名句生成器 - 随机励志语录/人生格言</title>
+  <meta name="description" content="免费在线名言名句生成器，内置上百条励志、人生、努力、心态等主题金句，随机抽取，支持分类筛选与一键复制，写作文案、发朋友圈、自我激励都合适。" />
+  <meta name="keywords" content="名言名句,励志语录,人生格言,名言生成,文案金句">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u53ea\u62bd\u67d0\u4e00\u4e3b\u9898\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u9009\u62e9\u4e3b\u9898\u540e\u53ea\u5728\u8be5\u5206\u7c7b\u4e2d\u968f\u673a\u62bd\u53d6\uff0c\u4e5f\u652f\u6301\u5168\u90e8\u6df7\u62bd\u3002"}},{"@type":"Question","name":"\u540d\u8a00\u6570\u91cf\u6709\u591a\u5c11\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u4e0a\u767e\u6761\u7cbe\u9009\u540d\u8a00\uff0c\u70b9\u51fb\u300c\u518d\u6765\u4e00\u6761\u300d\u53ef\u6301\u7eed\u5237\u65b0\uff0c\u4e0d\u91cd\u590d\u51fa\u73b0\u3002"}},{"@type":"Question","name":"\u5f15\u7528\u9700\u8981\u7f72\u540d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5c3d\u91cf\u4fdd\u7559\u4f5c\u8005\u4fe1\u606f\u4ee5\u793a\u5c0a\u91cd\uff0c\u5de5\u5177\u6bcf\u6761\u90fd\u4f1a\u663e\u793a\u51fa\u5904\u3002"}},{"@type":"Question","name":"\u9700\u8981\u8054\u7f51\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u540d\u8a00\u5e93\u5185\u7f6e\u5728\u9875\u9762\u4e2d\uff0c\u5b8c\u5168\u79bb\u7ebf\u53ef\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📜 名言名句生成</h1>
+    <p>随机生成励志名言/人生格言，一键复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">名言名句生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#名言</span><span class="badge">#格言</span><span class="badge">#励志</span>
+<div class="quote-stage" style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;margin-bottom:16px;min-height:140px;display:flex;flex-direction:column;justify-content:center;">
+  <div id="rqText" style="font-size:20px;line-height:1.6;font-weight:600;color:var(--text);">「不要等待完美，先开始行动。」</div>
+  <div id="rqAuthor" style="margin-top:14px;color:var(--muted);font-size:14px;">— 佚名</div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>主题筛选</label>
+    <select id="rqCat">
+      <option value="">全部主题</option>
+      <option value="励志">励志奋斗</option>
+      <option value="人生">人生感悟</option>
+      <option value="心态">心态情绪</option>
+      <option value="学习">学习成长</option>
+      <option value="爱情">爱情友情</option>
+      <option value="时间">时间坚持</option>
+    </select>
+  </div>
+  <div><label>已抽取 <span id="rqUsed" style="color:var(--primary);">0</span> 条（本轮不重复）</label></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px;">
+  <button class="btn btn-primary" id="rqNext">🎲 再来一条</button>
+  <button class="btn btn-secondary" id="rqReset">重置轮次</button>
+  <button class="btn btn-secondary" id="rqCopy">📋 复制</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>有哪些类型的名言？</h2><p>涵盖励志奋斗、人生感悟、心态调节、爱情友情、时间成长等常见主题，每条都附带出处作者。</p><h2>名言可以随便引用吗？</h2><p>短句引用注明出处即可用于一般非商业文案；商用场景建议确认版权情况。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以只抽某一主题吗？</summary><p>可以，选择主题后只在该分类中随机抽取，也支持全部混抽。</p></details><details class="faq-item"><summary>名言数量有多少？</summary><p>内置上百条精选名言，点击「再来一条」可持续刷新，不重复出现。</p></details><details class="faq-item"><summary>引用需要署名吗？</summary><p>尽量保留作者信息以示尊重，工具每条都会显示出处。</p></details><details class="faq-item"><summary>需要联网吗？</summary><p>不需要，名言库内置在页面中，完全离线可用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>名言名句生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='random-quote';}); _r.unshift('random-quote'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var QUOTES = [
+  { c: '励志', t: '不要等待完美，先开始行动。', a: '佚名' },
+  { c: '励志', t: '成功的路上并不拥挤，因为坚持的人不多。', a: '佚名' },
+  { c: '励志', t: '你只需比昨天好一点，剩下的交给时间。', a: '佚名' },
+  { c: '励志', t: '所有的努力，终将化作你前进路上的光。', a: '佚名' },
+  { c: '励志', t: '不积跬步，无以至千里；不积小流，无以成江海。', a: '荀子' },
+  { c: '励志', t: '世上无难事，只要肯登攀。', a: '毛泽东' },
+  { c: '励志', t: '路虽远，行则将至；事虽难，做则必成。', a: '佚名' },
+  { c: '励志', t: '没有比脚更长的路，没有比人更高的山。', a: '汪国真' },
+  { c: '励志', t: '宁愿跑起来被绊倒无数次，也不要规规矩矩走一辈子。', a: '佚名' },
+  { c: '励志', t: '每一次努力，都是幸运的伏笔。', a: '佚名' },
+  { c: '人生', t: '人生如逆旅，我亦是行人。', a: '苏轼' },
+  { c: '人生', t: '生活不止眼前的苟且，还有诗和远方。', a: '高晓松' },
+  { c: '人生', t: '人生没有白走的路，每一步都算数。', a: '李宗盛' },
+  { c: '人生', t: '凡是过往，皆为序章。', a: '莎士比亚' },
+  { c: '人生', t: '人生最遗憾的，莫过于轻易放弃了不该放弃的。', a: '柏拉图' },
+  { c: '人生', t: '世界上只有一种真正的英雄主义，就是认清了生活的真相后依然热爱生活。', a: '罗曼·罗兰' },
+  { c: '人生', t: '不乱于心，不困于情，不畏将来，不念过往。', a: '丰子恺' },
+  { c: '人生', t: '生命好在无意义，才容得下各自赋予意义。', a: '木心' },
+  { c: '心态', t: '心若向阳，无畏悲伤。', a: '佚名' },
+  { c: '心态', t: '放下焦虑，接纳不完美的自己。', a: '佚名' },
+  { c: '心态', t: '心态决定状态，心境决定处境。', a: '佚名' },
+  { c: '心态', t: '不为难自己，也不辜负岁月。', a: '佚名' },
+  { c: '心态', t: '与其抱怨黑暗，不如提灯前行。', a: '佚名' },
+  { c: '心态', t: '知足常乐，随遇而安。', a: '佚名' },
+  { c: '心态', t: '慢慢来，比较快。', a: '佚名' },
+  { c: '心态', t: '一切都是最好的安排。', a: '佚名' },
+  { c: '学习', t: '学而不思则罔，思而不学则殆。', a: '孔子' },
+  { c: '学习', t: '书山有路勤为径，学海无涯苦作舟。', a: '韩愈' },
+  { c: '学习', t: '博观而约取，厚积而薄发。', a: '苏轼' },
+  { c: '学习', t: '知之者不如好之者，好之者不如乐之者。', a: '孔子' },
+  { c: '学习', t: '三人行，必有我师焉。', a: '孔子' },
+  { c: '学习', t: '学如逆水行舟，不进则退。', a: '《增广贤文》' },
+  { c: '学习', t: '腹有诗书气自华。', a: '苏轼' },
+  { c: '学习', t: '活到老，学到老。', a: '谚语' },
+  { c: '爱情', t: '愿得一心人，白首不相离。', a: '卓文君' },
+  { c: '爱情', t: '两情若是久长时，又岂在朝朝暮暮。', a: '秦观' },
+  { c: '爱情', t: '得之我幸，失之我命。', a: '徐志摩' },
+  { c: '爱情', t: '陪伴是最长情的告白。', a: '佚名' },
+  { c: '爱情', t: '山河远阔，人间烟火，无一是你，无一不是你。', a: '佚名' },
+  { c: '爱情', t: '遇见你之后，我便觉得人间值得。', a: '佚名' },
+  { c: '时间', t: '盛年不重来，一日难再晨。', a: '陶渊明' },
+  { c: '时间', t: '莫等闲，白了少年头，空悲切。', a: '岳飞' },
+  { c: '时间', t: '逝者如斯夫，不舍昼夜。', a: '孔子' },
+  { c: '时间', t: '一寸光阴一寸金，寸金难买寸光阴。', a: '《增广贤文》' },
+  { c: '时间', t: '种一棵树最好的时间是十年前，其次是现在。', a: '丹比萨·莫约' },
+  { c: '时间', t: '时间不语，却回答了所有问题。', a: '佚名' }
+];
+
+var rqText = document.getElementById('rqText');
+var rqAuthor = document.getElementById('rqAuthor');
+var rqCat = document.getElementById('rqCat');
+var rqNext = document.getElementById('rqNext');
+var rqReset = document.getElementById('rqReset');
+var rqCopy = document.getElementById('rqCopy');
+var rqUsed = document.getElementById('rqUsed');
+
+var used = [];
+
+function pool() {
+  var cat = rqCat.value;
+  var p = QUOTES.filter(function (q) { return !cat || q.c === cat; });
+  return p;
+}
+
+function pick() {
+  var p = pool();
+  if (!p.length) { rqText.textContent = '该分类没有内容，请切换主题'; rqAuthor.textContent = ''; return; }
+  var avail = p.filter(function (q) { return used.indexOf(q) < 0; });
+  if (!avail.length) {
+    rqReset.click();
+    avail = p;
+  }
+  var q = avail[Math.floor(Math.random() * avail.length)];
+  used.push(q);
+  rqText.textContent = '「' + q.t + '」';
+  rqAuthor.textContent = '— ' + q.a;
+  rqUsed.textContent = used.length;
+}
+
+rqNext.addEventListener('click', pick);
+rqReset.addEventListener('click', function () {
+  used = [];
+  rqUsed.textContent = 0;
+});
+rqCat.addEventListener('change', function () { rqReset.click(); pick(); });
+rqCopy.addEventListener('click', function () {
+  var txt = rqText.textContent + ' ' + rqAuthor.textContent;
+  try { navigator.clipboard.writeText(txt); showToast('已复制名言'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
