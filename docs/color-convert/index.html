@@ -9,9 +9,13 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
   <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"HEX \u989c\u8272\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"HEX \u7528 6 \u4f4d\u5341\u516d\u8fdb\u5236\u8868\u793a\u989c\u8272\uff0c\u5982 #ff0000 \u662f\u7ea2\u8272\uff0c\u4e24\u4f4d\u4e00\u7ec4\u5206\u522b\u4ee3\u8868\u7ea2\u7eff\u84dd\u3002"}},{"@type":"Question","name":"\u8f6c\u6362\u540e\u7684\u989c\u8272\u4f1a\u53d8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5404\u683c\u5f0f\u53ea\u662f\u540c\u4e00\u989c\u8272\u7684\u4e0d\u540c\u8868\u8fbe\u65b9\u5f0f\uff0c\u8f6c\u6362\u7ed3\u679c\u7cbe\u786e\u4e00\u81f4\u3002"}},{"@type":"Question","name":"\u652f\u6301\u900f\u660e\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0cHEX 8 \u4f4d\uff08#rrggbbaa\uff09\u548c rgba() \u5747\u80fd\u8f6c\u6362\u5e76\u4fdd\u7559\u900f\u660e\u5ea6\u3002"}},{"@type":"Question","name":"\u6709\u4ec0\u4e48\u7528\u9014\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5199 CSS\u3001\u505a\u8bbe\u8ba1\u7a3f\u53d6\u8272\u3001\u5c0f\u7a0b\u5e8f\u6837\u5f0f\u5f00\u53d1\u7b49\u573a\u666f\u90fd\u9700\u8981\u5728\u4e0d\u540c\u989c\u8272\u683c\u5f0f\u95f4\u5207\u6362\u3002"}}]}</script>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
     <h1>🎨 颜色转换器</h1>
@@ -44,6 +48,7 @@
     <p>颜色转换器 · <a href="../category/design/">🎨 颜色设计</a> · <a href="../">返回工具箱首页</a></p>
   </div>
 </footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
 <div class="toast" id="toast"></div>
 <script>
 (function() {
@@ -175,6 +180,24 @@ var colorInput = document.getElementById('colorInput');
       '<br>HSLA：<b>' + res.hsla + '</b>';
   });
   colorInput.dispatchEvent(new Event('input'));
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
 })();
 </script>
 </body>
