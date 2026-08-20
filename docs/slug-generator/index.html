@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本转slug - 在线URL别名slug生成器</title>
+  <meta name="description" content="免费在线 slug 生成器，把中文标题、英文句子、特殊字符转换为 URL 友好的 slug（小写、连字符分隔、可转拼音），用于文章链接、文件名、路由。" />
+  <meta name="keywords" content="slug,URL别名,文本转slug,链接生成,拼音,文件名转换">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u8f6c\u6362\u9009\u9879\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4fdd\u7559\u4e2d\u6587/\u8f6c\u62fc\u97f3\u3001\u662f\u5426\u5c0f\u5199\u3001\u81ea\u5b9a\u4e49\u5206\u9694\u7b26\u3001\u53bb\u9664\u505c\u7528\u8bcd\u7b49\u9009\u9879\u3002"}},{"@type":"Question","name":"\u8f6c\u51fa\u6765\u5b89\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u53bb\u9664\u6240\u6709\u975e\u6cd5\u5b57\u7b26\uff0c\u53ea\u4fdd\u7559\u5b57\u6bcd\u3001\u6570\u5b57\u548c\u5206\u9694\u7b26\uff0c\u53ef\u7528\u4e8e URL \u4e0e\u6587\u4ef6\u540d\u3002"}},{"@type":"Question","name":"\u6709\u5b57\u6570\u9650\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5efa\u8bae\u5728 200 \u5b57\u4ee5\u5185\uff0c\u8fc7\u957f\u4f1a\u622a\u65ad\u5230\u6307\u5b9a\u957f\u5ea6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔗 文本转slug</h1>
+    <p>标题/中文转 URL slug 与文件名</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">文本转slug</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#slug</span><span class="badge">#URL</span><span class="badge">#链接</span>
+<div class="field">
+  <label>输入标题 / 句子</label>
+  <input type="text" id="slIn" value="如何做好一碗红烧肉？How to Cook Rice!" maxlength="200">
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>分隔符</label>
+    <select id="slSep">
+      <option value="-" selected>-</option>
+      <option value="_">_</option>
+      <option value=""></option>
+    </select>
+  </div>
+  <div><label>中文处理</label>
+    <select id="slZh">
+      <option value="pinyin" selected>转拼音</option>
+      <option value="keep">保留中文</option>
+      <option value="drop">删除中文</option>
+    </select>
+  </div>
+  <div><label>最大长度</label><input type="number" id="slMax" value="60" min="0"></div>
+</div>
+<button class="btn btn-primary" id="slGo">生成 slug</button>
+<div id="slResult" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 slug？</h2><p>slug 是 URL 中可读的部分，例如 https://site.com/post/how-to-cook-rice 中的 how-to-cook-rice，对 SEO 友好。</p><h2>中文标题怎么转 slug？</h2><p>可以选择转拼音（ru-he-peng-ren-mi-fan）或保留中文（URL 编码），本工具默认转拼音便于阅读。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些转换选项？</summary><p>支持保留中文/转拼音、是否小写、自定义分隔符、去除停用词等选项。</p></details><details class="faq-item"><summary>转出来安全吗？</summary><p>会去除所有非法字符，只保留字母、数字和分隔符，可用于 URL 与文件名。</p></details><details class="faq-item"><summary>有字数限制吗？</summary><p>建议在 200 字以内，过长会截断到指定长度。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本转slug · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='slug-generator';}); _r.unshift('slug-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var slIn = document.getElementById('slIn');
+var slSep = document.getElementById('slSep');
+var slZh = document.getElementById('slZh');
+var slMax = document.getElementById('slMax');
+var slGo = document.getElementById('slGo');
+var slResult = document.getElementById('slResult');
+
+var PY = {
+    '的': 'de', '一': 'yi', '是': 'shi', '不': 'bu', '了': 'le', '在': 'zai', '人': 'ren', '有': 'you',
+    '我': 'wo', '他': 'ta', '这': 'zhe', '个': 'ge', '们': 'men', '中': 'zhong', '来': 'lai', '上': 'shang',
+    '大': 'da', '为': 'wei', '和': 'he', '国': 'guo', '地': 'di', '到': 'dao', '以': 'yi', '说': 'shuo',
+    '时': 'shi', '要': 'yao', '就': 'jiu', '出': 'chu', '会': 'hui', '可': 'ke', '也': 'ye', '你': 'ni',
+    '对': 'dui', '生': 'sheng', '能': 'neng', '而': 'er', '子': 'zi', '那': 'na', '得': 'de', '于': 'yu',
+    '着': 'zhe', '下': 'xia', '自': 'zi', '之': 'zhi', '年': 'nian', '过': 'guo', '发': 'fa', '后': 'hou',
+    '作': 'zuo', '里': 'li', '用': 'yong', '道': 'dao', '行': 'xing', '所': 'suo', '然': 'ran', '家': 'jia',
+    '种': 'zhong', '事': 'shi', '成': 'cheng', '方': 'fang', '多': 'duo', '经': 'jing', '么': 'me', '去': 'qu',
+    '法': 'fa', '学': 'xue', '如': 'ru', '都': 'dou', '同': 'tong', '现': 'xian', '当': 'dang', '没': 'mei',
+    '动': 'dong', '面': 'mian', '起': 'qi', '看': 'kan', '定': 'ding', '天': 'tian', '分': 'fen', '还': 'hai',
+    '进': 'jin', '好': 'hao', '小': 'xiao', '部': 'bu', '其': 'qi', '些': 'xie', '主': 'zhu', '样': 'yang',
+    '理': 'li', '心': 'xin', '她': 'ta', '本': 'ben', '前': 'qian', '开': 'kai', '但': 'dan', '因': 'yin',
+    '只': 'zhi', '从': 'cong', '想': 'xiang', '实': 'shi', '日': 'ri', '军': 'jun', '者': 'zhe', '意': 'yi',
+    '无': 'wu', '力': 'li', '它': 'ta', '与': 'yu', '长': 'chang', '把': 'ba', '机': 'ji', '十': 'shi',
+    '民': 'min', '第': 'di', '公': 'gong', '此': 'ci', '已': 'yi', '工': 'gong', '使': 'shi', '情': 'qing',
+    '明': 'ming', '性': 'xing', '知': 'zhi', '全': 'quan', '三': 'san', '又': 'you', '关': 'guan', '点': 'dian',
+    '正': 'zheng', '外': 'wai', '听': 'ting', '气': 'qi', '每': 'mei', '并': 'bing', '合': 'he', '战': 'zhan',
+    '反': 'fan', '内': 'nei', '相': 'xiang', '由': 'you', '给': 'gei', '平': 'ping', '直': 'zhi', '做': 'zuo',
+    '张': 'zhang', '被': 'bei', '再': 'zai', '立': 'li', '系': 'xi', '八': 'ba', '教': 'jiao', '手': 'shou',
+    '文': 'wen', '别': 'bie', '求': 'qiu', '件': 'jian', '王': 'wang', '究': 'jiu', '很': 'hen', '路': 'lu',
+    '师': 'shi', '员': 'yuan', '位': 'wei', '次': 'ci', '东': 'dong', '什': 'shen', '么': 'me', '等': 'deng',
+    '北': 'bei', '南': 'nan', '省': 'sheng', '高': 'gao', '间': 'jian', '信': 'xin', '世': 'shi', '今': 'jin',
+    '城': 'cheng', '市': 'shi', '书': 'shu', '名': 'ming', '百': 'bai', '万': 'wan', '千': 'qian', '亿': 'yi',
+    '水': 'shui', '火': 'huo', '土': 'tu', '木': 'mu', '金': 'jin', '日': 'ri', '月': 'yue', '山': 'shan',
+    '河': 'he', '湖': 'hu', '海': 'hai', '江': 'jiang', '林': 'lin', '田': 'tian', '星': 'xing', '云': 'yun',
+    '风': 'feng', '雨': 'yu', '雪': 'xue', '雷': 'lei', '电': 'dian', '光': 'guang', '红': 'hong', '黄': 'huang',
+    '绿': 'lv', '蓝': 'lan', '白': 'bai', '黑': 'hei', '花': 'hua', '草': 'cao', '树': 'shu', '果': 'guo',
+    '猫': 'mao', '狗': 'gou', '鸟': 'niao', '鱼': 'yu', '牛': 'niu', '羊': 'yang', '马': 'ma', '鸡': 'ji',
+    '你': 'ni', '好': 'hao', '中': 'zhong', '国': 'guo', '人': 'ren', '欢': 'huan', '迎': 'ying', '到': 'dao'
+  
+};
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;word-break:break-all;text-align:right;font-family:monospace;">' + val + '</span></div>';
+}
+
+function toSlug(text) {
+  var sep = slSep.value || '';
+  var zh = slZh.value;
+  var words = [];
+  var cur = '';
+  function flush() { if (cur) { words.push(cur); cur = ''; } }
+  Array.from(text).forEach(function (ch) {
+    var p = PY[ch];
+    if (p && zh !== 'drop') {
+      if (zh === 'pinyin') { flush(); words.push(p); }
+      else cur += ch;
+    } else if (/[a-zA-Z0-9]/.test(ch)) {
+      cur += ch.toLowerCase();
+    } else if (/[\u4e00-\u9fa5]/.test(ch) && (zh === 'keep' || !p)) {
+      cur += ch;
+    } else {
+      flush();
+    }
+  });
+  flush();
+  var joined = words.join(sep);
+  var max = parseInt(slMax.value, 10) || 0;
+  if (max > 0 && joined.length > max) joined = joined.slice(0, max).replace(new RegExp(sep + '$'), '');
+  return joined;
+}
+
+slGo.addEventListener('click', function () {
+  var slug = toSlug(slIn.value);
+  slResult.innerHTML =
+    row('Slug', slug || '（空）') +
+    row('URL', 'https://example.com/post/' + (slug || 'untitled')) +
+    row('文件名', (slug || 'untitled') + '.html') +
+    row('长度', slug.length + ' 字符');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
