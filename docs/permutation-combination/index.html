@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>排列组合计算 - 在线排列数与组合数计算器</title>
+  <meta name="description" content="免费在线排列组合计算器，计算排列数 A(n,r) 与组合数 C(n,r)，支持大数精确计算，给出公式与展开过程，排列组合与概率统计学习必备。" />
+  <meta name="keywords" content="排列组合,排列数,组合数,计算器,阶乘,A(n,r),C(n,r)">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u591a\u5927\u7684\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7528 BigInt \u7cbe\u786e\u8ba1\u7b97\uff0c\u652f\u6301\u5230\u4e0a\u5343\u7684 n\uff0c\u8d85\u5927\u7ed3\u679c\u4e5f\u7cbe\u786e\u663e\u793a\u3002"}},{"@type":"Question","name":"r \u5927\u4e8e n \u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u63d0\u793a\u8f93\u5165\u4e0d\u5408\u6cd5\uff0c\u8981\u6c42 r\u2264n\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u592a\u5927\u600e\u4e48\u663e\u793a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7528\u79d1\u5b66\u8ba1\u6570\u6cd5\u8fd1\u4f3c\u663e\u793a\u5e76\u7ed9\u51fa\u7cbe\u786e\u6574\u6570\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u8ba1\u7b97\u8fc7\u7a0b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7ed9\u51fa\u516c\u5f0f\u4ee3\u5165\u8fc7\u7a0b\u3002"}}]}</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔗 排列组合计算</h1>
+    <p>排列数 P 与组合数 C，支持大数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">排列组合计算</span></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#排列</span><span class="badge">#组合</span><span class="badge">#阶乘</span>
+<div class="field">
+  <label for="pcN">n（总数）</label>
+  <input type="number" id="pcN" value="10" min="1">
+</div>
+<div class="field">
+  <label for="pcR">r（选取个数）</label>
+  <input type="number" id="pcR" value="3" min="1">
+</div>
+<div class="actions">
+  <button class="btn" id="pcBtn" type="button">计算</button>
+</div>
+<div class="result-box" id="pcResult" hidden></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>排列和组合什么区别？</h2><p>排列讲究顺序，组合不讲究顺序。例如选 2 人排队是排列，选 2 人开会是组合。</p><h2>怎么算？</h2><p>排列 A(n,r)=n!/(n-r)!，组合 C(n,r)=n!/(r!(n-r)!)。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持多大的数？</summary><p>用 BigInt 精确计算，支持到上千的 n，超大结果也精确显示。</p></details><details class="faq-item"><summary>r 大于 n 怎么办？</summary><p>会提示输入不合法，要求 r≤n。</p></details><details class="faq-item"><summary>结果太大怎么显示？</summary><p>用科学计数法近似显示并给出精确整数。</p></details><details class="faq-item"><summary>能看计算过程吗？</summary><p>会给出公式代入过程。</p></details></div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>排列组合计算 · <a href="../category/math/">🧮 计算数学</a> · <a href="../">返回工具箱首页</a></p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+var pcResult = document.getElementById('pcResult');
+
+  function factBig(n) {
+    var r = 1n;
+    for (var i = 2n; i <= n; i++) r *= i;
+    return r;
+  }
+  function fmtBig(b) {
+    var s = b.toString();
+    if (s.length <= 15) return s;
+    var sig = s.slice(0, 5);
+    return sig.slice(0, 4) + '.' + sig[4] + ' × 10^' + (s.length - 1);
+  }
+
+  document.getElementById('pcBtn').addEventListener('click', function () {
+    var n = parseInt(document.getElementById('pcN').value, 10);
+    var r = parseInt(document.getElementById('pcR').value, 10);
+    if (isNaN(n) || n < 1 || n > 2000) { showToast('n 需在 1-2000 之间'); return; }
+    if (isNaN(r) || r < 1) { showToast('请输入 r'); return; }
+    if (r > n) { showToast('r 不能大于 n'); return; }
+    var N = BigInt(n), R = BigInt(r);
+    var perm = factBig(N) / factBig(N - R);
+    var comb = factBig(N) / (factBig(R) * factBig(N - R));
+    pcResult.hidden = false;
+    pcResult.innerHTML =
+      '排列数 A(' + n + ', ' + r + ') = n!/(n−r)! = <b style="font-size:22px;">' + fmtBig(perm) + '</b>' +
+      (perm.toString().length > 15 ? '<br><span style="font-size:11px;color:var(--muted);">精确值：' + perm + '</span>' : '') +
+      '<br><br>组合数 C(' + n + ', ' + r + ') = n!/(r!(n−r)!) = <b style="font-size:22px;">' + fmtBig(comb) + '</b>' +
+      (comb.toString().length > 15 ? '<br><span style="font-size:11px;color:var(--muted);">精确值：' + comb + '</span>' : '');
+  });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
