@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片模糊 - 在线高斯模糊打码图片工具</title>
+  <meta name="description" content="免费在线图片模糊工具，浏览器本地对 JPG/PNG/WebP 图片做高斯模糊处理，可调节模糊强度，适合给图片局部打码或添加背景虚化效果，不上传隐私安全。" />
+  <meta name="keywords" content="图片模糊,高斯模糊,图片打码,在线模糊图片,马赛克效果">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌫️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6211\u7684\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u56fe\u7247\u53ea\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5904\u7406\uff0c\u4e0d\u4f1a\u4e0a\u4f20\u5230\u4efb\u4f55\u670d\u52a1\u5668\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 JPG/JPEG\u3001PNG\u3001WebP\uff0c\u8f93\u51fa\u683c\u5f0f\u9ed8\u8ba4\u4e0e\u539f\u56fe\u4e00\u81f4\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u53ea\u6a21\u7cca\u5c40\u90e8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u4e3a\u6574\u56fe\u6a21\u7cca\uff0c\u5c40\u90e8\u6253\u7801\u8bf7\u5148\u7528\u88c1\u526a\u5de5\u5177\u5207\u51fa\u533a\u57df\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌫️ 图片模糊</h1>
+    <p>高斯模糊打码图片，可调节强度，浏览器本地处理</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片模糊</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#模糊</span><span class="badge">#高斯</span><span class="badge">#打码</span>
+<div class="dropzone" id="blurDrop">
+  <div class="icon">🌫️</div>
+  <p>点击选择图片，或拖拽图片到此处（JPG/PNG/WebP）</p>
+  <input type="file" id="blurFile" accept="image/*" style="display:none;">
+</div>
+<div class="controls" id="blurControls" style="display:none;">
+  <span>模糊强度</span>
+  <input type="range" id="blurRadius" min="1" max="20" step="1" value="6">
+  <span class="quality-value" id="blurRadiusV">6</span>
+</div>
+<div id="blurPreviewWrap" style="margin-top:16px;display:none;">
+  <img id="blurPreview" alt="模糊预览" style="max-width:100%;border-radius:10px;border:1px solid var(--border);">
+</div>
+<div class="actions" id="blurActions" style="display:none;">
+  <button class="btn btn-primary" id="blurDownload">⬇️ 下载模糊图片</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>图片模糊有什么用？</h2><p>可以用来给照片背景做虚化突出主体，或者模糊掉人脸、车牌等敏感信息。比马赛克更自然，常被用作头像背景。</p><h2>模糊强度怎么选？</h2><p>强度数值越大越模糊。做背景虚化用 4-8 即可，用于遮挡敏感信息建议 10 以上。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>我的图片会上传吗？</summary><p>不会。图片只在浏览器本地处理，不会上传到任何服务器。</p></details><details class="faq-item"><summary>支持哪些格式？</summary><p>支持 JPG/JPEG、PNG、WebP，输出格式默认与原图一致。</p></details><details class="faq-item"><summary>可以只模糊局部吗？</summary><p>本工具为整图模糊，局部打码请先用裁剪工具切出区域。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片模糊 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-blur';}); _r.unshift('image-blur'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var blurDrop = document.getElementById('blurDrop');
+var blurFile = document.getElementById('blurFile');
+var blurControls = document.getElementById('blurControls');
+var blurRadius = document.getElementById('blurRadius');
+var blurRadiusV = document.getElementById('blurRadiusV');
+var blurPreviewWrap = document.getElementById('blurPreviewWrap');
+var blurPreview = document.getElementById('blurPreview');
+var blurActions = document.getElementById('blurActions');
+var blurDownload = document.getElementById('blurDownload');
+
+var curImg = null;
+var curCanvas = null;
+var curCtx = null;
+
+function processBlur() {
+  if (!curImg) return;
+  var r = parseFloat(blurRadius.value) || 6;
+  var w = curImg.naturalWidth || curImg.width;
+  var h = curImg.naturalHeight || curImg.height;
+  if (!curCanvas) {
+    curCanvas = document.createElement('canvas');
+    curCtx = curCanvas.getContext('2d');
+  }
+  curCanvas.width = w;
+  curCanvas.height = h;
+  curCtx.filter = 'blur(' + r + 'px)';
+  curCtx.drawImage(curImg, 0, 0, w, h);
+  blurPreview.src = curCanvas.toDataURL('image/png');
+  return curCanvas;
+}
+
+function renderFromImage(img) {
+  curImg = img;
+  blurControls.style.display = '';
+  blurPreviewWrap.style.display = '';
+  blurActions.style.display = '';
+  processBlur();
+}
+
+blurDrop.addEventListener('click', function () { blurFile.click(); });
+blurFile.addEventListener('change', function () {
+  var f = blurFile.files && blurFile.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var img = new Image();
+    img.onload = function () { renderFromImage(img); };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+
+blurDrop.addEventListener('dragover', function (e) { e.preventDefault(); blurDrop.classList.add('dragover'); });
+blurDrop.addEventListener('dragleave', function () { blurDrop.classList.remove('dragover'); });
+blurDrop.addEventListener('drop', function (e) {
+  e.preventDefault();
+  blurDrop.classList.remove('dragover');
+  var f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) {
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var img = new Image();
+      img.onload = function () { renderFromImage(img); };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(f);
+  }
+});
+
+blurRadius.addEventListener('input', function () {
+  blurRadiusV.textContent = blurRadius.value;
+  if (curImg) processBlur();
+});
+
+blurDownload.addEventListener('click', function () {
+  if (!curCanvas) { showToast('请先选择图片'); return; }
+  window.download(curCanvas.toDataURL('image/png'), 'blurred-image.png');
+  showToast('已生成模糊图片');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
