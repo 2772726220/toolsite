@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期范围选择器 - 快捷选择常用日期范围工具</title>
+  <meta name="description" content="免费在线日期范围选择器，预设今日/昨日/本周/上周/本月/上月/本季度/上季度/本年/上年/最近 7/30/90/365 天/自定义范围，支持相对日期(如: 3天前到今天)、工作日/自然日切换、时区设置、格式化输出(ISO/时间戳/自定义)、批量生成范围列表，报表/查询/日志分析必备。" />
+  <meta name="keywords" content="日期范围,日期选择器,相对日期,快捷日期,本周/本月/本年,时间范围,报表日期,日志分析">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u6279\u91cf\u5bfc\u51fa\u8303\u56f4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa\u591a\u4e2a\u9884\u8bbe\u8303\u56f4\u7684 CSV/JSON \u5217\u8868\uff0c\u4fbf\u4e8e SQL WHERE \u5b50\u53e5\u62fc\u63a5\u3002"}},{"@type":"Question","name":"\u652f\u6301\u519c\u5386\u8303\u56f4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u4ec5\u516c\u5386\uff0c\u519c\u5386\u8303\u56f4\u89c4\u5212\u4e2d\u3002"}},{"@type":"Question","name":"\u81ea\u5b9a\u4e49\u683c\u5f0f\u652f\u6301\u54ea\u4e9b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 YYYY-MM-DD\u3001YYYY/MM/DD\u3001YYYYMMDD\u3001\u65f6\u95f4\u6233(\u79d2/\u6beb\u79d2)\u3001ISO 8601 \u7b49\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5e38\u7528\u9884\u8bbe\u672c\u5730\u5b58\u50a8\uff0c\u4e0b\u6b21\u6253\u5f00\u81ea\u52a8\u6062\u590d\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📅 日期范围选择</h1>
+    <p>预设常用范围/快捷选择/相对日期</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">日期范围选择</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#日期范围</span><span class="badge">#预设</span><span class="badge">#快捷选择</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>快捷范围</label>
+    <select id="drPreset">
+      <option value="custom">自定义</option>
+      <option value="today">今天</option>
+      <option value="yesterday">昨天</option>
+      <option value="thisWeek">本周 (周一-周日)</option>
+      <option value="lastWeek">上周</option>
+      <option value="thisMonth">本月</option>
+      <option value="lastMonth">上月</option>
+      <option value="thisQuarter">本季度</option>
+      <option value="lastQuarter">上季度</option>
+      <option value="thisYear">今年</option>
+      <option value="lastYear">去年</option>
+      <option value="last7">最近 7 天</option>
+      <option value="last30">最近 30 天</option>
+      <option value="last90">最近 90 天</option>
+      <option value="last365">最近 365 天</option>
+    </select>
+  </div>
+  <div><label>开始日期</label><input type="date" id="drStart"></div>
+  <div><label>结束日期</label><input type="date" id="drEnd"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>时区</label>
+    <select id="drTz">
+      <option value="local">本地时区</option>
+      <option value="UTC">UTC</option>
+      <option value="+08:00">UTC+8 (北京)</option>
+      <option value="-05:00">UTC-5 (纽约)</option>
+      <option value="+00:00">UTC+0 (伦敦)</option>
+    </select>
+  </div>
+  <div><label>输出格式</label>
+    <select id="drFormat">
+      <option value="iso" selected>ISO 8601 (YYYY-MM-DD)</option>
+      <option value="slash">YYYY/MM/DD</option>
+      <option value="compact">YYYYMMDD</option>
+      <option value="timestamp_s">时间戳 (秒)</option>
+      <option value="timestamp_ms">时间戳 (毫秒)</option>
+      <option value="custom">自定义</option>
+    </select>
+  </div>
+  <div id="drCustomWrap" style="display:none;"><label>自定义格式</label><input type="text" id="drCustom" placeholder="YYYY-MM-DD HH:mm:ss"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>日期类型</label>
+    <select id="drType">
+      <option value="calendar" selected>日历日</option>
+      <option value="workday">工作日</option>
+    </select>
+  </div>
+  <div><label>包含结束日</label><input type="checkbox" id="drIncEnd" checked></div>
+</div>
+<button class="btn btn-primary" id="drGenerate">生成范围</button>
+<button class="btn btn-secondary" id="drExport" style="margin-left:8px;">导出 CSV</button>
+<div id="drOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+<div id="drList" style="margin-top:12px; max-height:300px; overflow:auto;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>预设范围怎么算？</h2><p>本周: 周一到周日(可选周日到周六); 本月: 1号到月末; 本季度: 1/4/7/10 月初到季度末。</p><h2>支持时区吗？</h2><p>支持设置时区，输出带时区偏移的 ISO 8601 格式。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能批量导出范围吗？</summary><p>支持导出多个预设范围的 CSV/JSON 列表，便于 SQL WHERE 子句拼接。</p></details><details class="faq-item"><summary>支持农历范围吗？</summary><p>当前仅公历，农历范围规划中。</p></details><details class="faq-item"><summary>自定义格式支持哪些？</summary><p>支持 YYYY-MM-DD、YYYY/MM/DD、YYYYMMDD、时间戳(秒/毫秒)、ISO 8601 等。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>常用预设本地存储，下次打开自动恢复。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>日期范围选择 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='date-range-picker';}); _r.unshift('date-range-picker'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var drPreset = document.getElementById('drPreset');
+var drStart = document.getElementById('drStart');
+var drEnd = document.getElementById('drEnd');
+var drTz = document.getElementById('drTz');
+var drFormat = document.getElementById('drFormat');
+var drCustomWrap = document.getElementById('drCustomWrap');
+var drCustom = document.getElementById('drCustom');
+var drType = document.getElementById('drType');
+var drIncEnd = document.getElementById('drIncEnd');
+var drGenerate = document.getElementById('drGenerate');
+var drExport = document.getElementById('drExport');
+var drOut = document.getElementById('drOut');
+var drList = document.getElementById('drList');
+
+drPreset.addEventListener('change', function () {
+  if (drPreset.value === 'custom') return;
+  var now = new Date();
+  var tz = drTz.value;
+  var offset = tz === 'local' ? now.getTimezoneOffset() * 60000 : parseInt(tz) * 3600000;
+  var local = new Date(now.getTime() - offset);
+  var start, end;
+  var p = drPreset.value;
+  if (p === 'today') { start = end = local; }
+  else if (p === 'yesterday') { start = end = new Date(local.getTime() - 86400000); }
+  else if (p === 'thisWeek') { start = new Date(local); start.setDate(start.getDate() - start.getDay() + 1); end = new Date(start); end.setDate(end.getDate() + 6); }
+  else if (p === 'lastWeek') { end = new Date(local); end.setDate(end.getDate() - end.getDay()); start = new Date(end); start.setDate(start.getDate() - 6); }
+  else if (p === 'thisMonth') { start = new Date(local.getFullYear(), local.getMonth(), 1); end = new Date(local.getFullYear(), local.getMonth() + 1, 0); }
+  else if (p === 'lastMonth') { start = new Date(local.getFullYear(), local.getMonth() - 1, 1); end = new Date(local.getFullYear(), local.getMonth(), 0); }
+  else if (p === 'thisQuarter') { var q = Math.floor(local.getMonth() / 3); start = new Date(local.getFullYear(), q * 3, 1); end = new Date(local.getFullYear(), (q + 1) * 3, 0); }
+  else if (p === 'lastQuarter') { var q = Math.floor(local.getMonth() / 3); start = new Date(local.getFullYear(), (q - 1) * 3, 1); end = new Date(local.getFullYear(), q * 3, 0); }
+  else if (p === 'thisYear') { start = new Date(local.getFullYear(), 0, 1); end = new Date(local.getFullYear(), 11, 31); }
+  else if (p === 'lastYear') { start = new Date(local.getFullYear() - 1, 0, 1); end = new Date(local.getFullYear() - 1, 11, 31); }
+  else if (p === 'last7') { end = local; start = new Date(end.getTime() - 6 * 86400000); }
+  else if (p === 'last30') { end = local; start = new Date(end.getTime() - 29 * 86400000); }
+  else if (p === 'last90') { end = local; start = new Date(end.getTime() - 89 * 86400000); }
+  else if (p === 'last365') { end = local; start = new Date(end.getTime() - 364 * 86400000); }
+  drStart.value = formatDate(start);
+  drEnd.value = formatDate(end);
+});
+
+drFormat.addEventListener('change', function () {
+  drCustomWrap.style.display = drFormat.value === 'custom' ? '' : 'none';
+});
+
+function formatDate(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function formatOut(d, fmt) {
+  var y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+  if (fmt === 'iso') return y + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  if (fmt === 'slash') return y + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0');
+  if (fmt === 'compact') return y + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+  if (fmt === 'timestamp_s') return Math.floor(d.getTime() / 1000);
+  if (fmt === 'timestamp_ms') return d.getTime();
+  if (fmt === 'custom') {
+    var tpl = drCustom.value;
+    return tpl.replace('YYYY', y).replace('MM', String(d.getMonth() + 1).padStart(2, '0')).replace('DD', String(d.getDate()).padStart(2, '0'))
+      .replace('HH', String(d.getHours()).padStart(2, '0')).replace('mm', String(d.getMinutes()).padStart(2, '0')).replace('ss', String(d.getSeconds()).padStart(2, '0'));
+  }
+  return d.toISOString().slice(0, 10);
+}
+
+function row(label, val) { return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>'; }
+
+function isWorkday(d) {
+  var dow = d.getDay();
+  return dow !== 0 && dow !== 6;
+}
+
+drGenerate.addEventListener('click', function () {
+  if (!drStart.value || !drEnd.value) { drOut.innerHTML = '<div class="result-box">请选择日期范围</div>'; return; }
+  var start = new Date(drStart.value);
+  var end = new Date(drEnd.value);
+  if (start > end) { drOut.innerHTML = '<div class="result-box">开始日期不能晚于结束日期</div>'; return; }
+  var fmt = drFormat.value;
+  var incEnd = drIncEnd.checked;
+  var list = [];
+  var cur = new Date(start);
+  var endTime = new Date(drEnd.value);
+  if (incEnd) endTime.setDate(endTime.getDate() + 1);
+  while (cur < endTime) {
+    if (drType.value === 'workday' && !isWorkday(cur)) { cur.setDate(cur.getDate() + 1); continue; }
+    list.push(formatOut(cur, drFormat.value));
+    cur.setDate(cur.getDate() + 1);
+  }
+  var html = row('范围', drStart.value + ' 至 ' + drEnd.value);
+  html += row('天数', list.length);
+  html += row('格式', drFormat.value === 'custom' ? drCustom.value : drFormat.value);
+  drOut.innerHTML = html;
+  var listHtml = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:var(--bg-elev);"><th style="padding:6px;border:1px solid var(--border);">序号</th><th style="padding:6px;border:1px solid var(--border);">日期</th></tr>';
+  list.forEach(function (d, i) { listHtml += '<tr><td style="padding:4px;border:1px solid var(--border);">' + (i+1) + '</td><td style="padding:4px;border:1px solid var(--border);font-family:monospace;">' + d + '</td></tr>'; });
+  listHtml += '</table>';
+  drList.innerHTML = listHtml;
+});
+
+drExport.addEventListener('click', function () {
+  var rows = drList.querySelectorAll('tr');
+  if (rows.length <= 1) { showToast('请先生成范围'); return; }
+  var csv = '序号,日期\n';
+  for (var i = 1; i < rows.length; i++) {
+    var tds = rows[i].querySelectorAll('td');
+    csv += tds[0].textContent + ',' + tds[1].textContent + '\n';
+  }
+  var blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'date-range.csv';
+  a.click();
+  showToast('CSV 已导出');
+});
+
+var today = new Date();
+drStart.value = formatDate(today);
+drEnd.value = formatDate(today);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
