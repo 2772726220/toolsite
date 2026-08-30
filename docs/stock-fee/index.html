@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股票手续费计算 - 在线A股交易费用计算器</title>
+  <meta name="description" content="免费在线股票交易手续费计算器，输入买卖价格与股数，自动计算佣金（含最低5元）、印花税、过户费等全部费用与盈亏，费率可自定义，股民记账必备。" />
+  <meta name="keywords" content="股票手续费,交易费用,佣金,印花税,过户费,股票盈亏,手续费计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6700\u4f4e\u4f63\u91d1\u662f5\u5143\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u591a\u6570\u5238\u5546\u8bbe\u6709\u5355\u7b14\u6700\u4f4e 5 \u5143\u4f63\u91d1\uff0c\u5c0f\u5355\u4ea4\u6613\u65f6\u5360\u6bd4\u660e\u663e\uff0c\u5de5\u5177\u5df2\u5904\u7406\u3002"}},{"@type":"Question","name":"\u5370\u82b1\u7a0e\u662f\u5355\u8fb9\u8fd8\u662f\u53cc\u8fb9\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5370\u82b1\u7a0e\u4ec5\u5356\u51fa\u65f6\u6536\u53d6\uff0c\u5f53\u524d\u4e3a\u6210\u4ea4\u91d1\u989d\u7684 0.05%\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u7528\u4e8e\u57fa\u91d1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u91d1\u7533\u8d2d\u8d39\u7387\u4e0d\u540c\uff0c\u672c\u5de5\u5177\u9762\u5411\u80a1\u7968\u4ea4\u6613\uff0c\u573a\u5916\u57fa\u91d1\u8bf7\u4f7f\u7528\u8d39\u7387\u53e6\u884c\u6d4b\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📈 股票手续费计算</h1>
+    <p>佣金/印花税/过户费一键算清</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">股票手续费计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#股票</span><span class="badge">#手续费</span><span class="badge">#佣金</span>
+<div class="tool-grid" style="grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:12px;">
+  <div><label>买入价（元）</label><input type="number" id="sfBuy" value="10.00" min="0" step="any"></div>
+  <div><label>卖出价（元）</label><input type="number" id="sfSell" value="10.50" min="0" step="any"></div>
+  <div><label>股数</label><input type="number" id="sfShares" value="1000" min="1"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>佣金率 %</label><input type="number" id="sfComm" value="0.025" step="any"></div>
+  <div><label>最低佣金（元）</label><input type="number" id="sfCommMin" value="5" min="0" step="any"></div>
+  <div><label>印花税率 %</label><input type="number" id="sfStamp" value="0.05" step="any"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>过户费率 %</label><input type="number" id="sfTrans" value="0.001" step="any"></div>
+  <div><label>沪深</label>
+    <select id="sfMarket">
+      <option value="sh" selected>沪市</option>
+      <option value="sz">深市</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="sfGo">计算</button>
+<div id="sfOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>A股交易有哪些费用？</h2><p>佣金（双边，约万2.5，最低5元）、印花税（仅卖出，0.05%）、过户费（双边0.001%）。本工具按此自动计算。</p><h2>佣金怎么谈？</h2><p>普通账户默认万2.5-万3，可与券商协商调低到万1-万1.5，本工具费率可自定义测算。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>最低佣金是5元吗？</summary><p>多数券商设有单笔最低 5 元佣金，小单交易时占比明显，工具已处理。</p></details><details class="faq-item"><summary>印花税是单边还是双边？</summary><p>印花税仅卖出时收取，当前为成交金额的 0.05%。</p></details><details class="faq-item"><summary>可以用于基金吗？</summary><p>基金申购费率不同，本工具面向股票交易，场外基金请使用费率另行测算。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>股票手续费计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='stock-fee';}); _r.unshift('stock-fee'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var sfBuy = document.getElementById('sfBuy');
+var sfSell = document.getElementById('sfSell');
+var sfShares = document.getElementById('sfShares');
+var sfComm = document.getElementById('sfComm');
+var sfCommMin = document.getElementById('sfCommMin');
+var sfStamp = document.getElementById('sfStamp');
+var sfTrans = document.getElementById('sfTrans');
+var sfMarket = document.getElementById('sfMarket');
+var sfGo = document.getElementById('sfGo');
+var sfOut = document.getElementById('sfOut');
+
+function fmt(x) { return x.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
+}
+
+function calc() {
+  var buy = parseFloat(sfBuy.value), sell = parseFloat(sfSell.value);
+  var shares = parseInt(sfShares.value, 10);
+  var commRate = (parseFloat(sfComm.value) || 0) / 100;
+  var commMin = parseFloat(sfCommMin.value) || 0;
+  var stampRate = (parseFloat(sfStamp.value) || 0) / 100;
+  var transRate = (parseFloat(sfTrans.value) || 0) / 100;
+  if (!(buy > 0 && sell > 0 && shares > 0)) { sfOut.innerHTML = '<div class="result-box">请输入有效数值</div>'; return; }
+  var buyAmt = buy * shares, sellAmt = sell * shares;
+  var buyComm = Math.max(buyAmt * commRate, commMin);
+  var sellComm = Math.max(sellAmt * commRate, commMin);
+  var stamp = sellAmt * stampRate;
+  var transBuy = buyAmt * transRate;
+  var transSell = sellAmt * transRate;
+  var total = buyComm + sellComm + stamp + transBuy + transSell;
+  var profit = sellAmt - buyAmt - total;
+  var html = '';
+  html += row('买入金额', '¥' + fmt(buyAmt));
+  html += row('卖出金额', '¥' + fmt(sellAmt));
+  html += row('买入佣金', '¥' + fmt(buyComm));
+  html += row('卖出佣金', '¥' + fmt(sellComm));
+  html += row('印花税（卖出）', '¥' + fmt(stamp));
+  html += row('过户费（双边）', '¥' + fmt(transBuy + transSell));
+  html += row('交易费用合计', '¥' + fmt(total));
+  html += row('本次交易净盈亏', (profit >= 0 ? '+' : '') + '¥' + fmt(profit));
+  html += row('费用占比（相对卖出额）', fmt(total / sellAmt * 100) + '%');
+  html += '<div class="result-box" style="margin-top:6px;">费率可自定义测算。实际费率以券商为准，佣金不足最低值按最低佣金收取。</div>';
+  sfOut.innerHTML = html;
+}
+
+sfGo.addEventListener('click', calc);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
