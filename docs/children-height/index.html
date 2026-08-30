@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>遗传身高预测 - 在线儿童身高预测工具</title>
+  <meta name="description" content="免费在线遗传身高预测工具，根据父母身高、孩子性别与年龄，用经典身高预测公式估算孩子成年身高范围，附发育期追高建议，家长科学参考。" />
+  <meta name="keywords" content="身高预测,遗传身高,儿童身高,身高公式,父母身高,长高">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧒</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7ed3\u679c\u4e00\u5b9a\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ea\u662f\u7edf\u8ba1\u5b66\u4f30\u7b97\uff0c\u4e2a\u4f53\u5dee\u5f02\u8f83\u5927\uff0c\u00b15cm \u5c5e\u6b63\u5e38\u6ce2\u52a8\u3002"}},{"@type":"Question","name":"\u5b69\u5b50\u5e74\u9f84\u9700\u8981\u586b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u586b\u5199\u540e\u53ef\u6309\u5f53\u524d\u8eab\u9ad8\u4e0e\u767e\u5206\u4f4d\u66f2\u7ebf\u63d0\u793a\u53d1\u80b2\u72b6\u51b5\uff0c\u7eaf\u9884\u6d4b\u53ef\u4e0d\u586b\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u5e2e\u5b69\u5b50\u957f\u9ad8\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4fdd\u8bc1\u7761\u7720\uff08\u751f\u957f\u6fc0\u7d20\u591c\u95f4\u5206\u6ccc\uff09\u3001\u5747\u8861\u8425\u517b\uff08\u86cb\u767d\u8d28/\u9499/\u7ef4\u751f\u7d20D\uff09\u3001\u89c4\u5f8b\u7eb5\u5411\u8fd0\u52a8\uff08\u8df3\u7ef3\u3001\u7bee\u7403\uff09\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧒 遗传身高预测</h1>
+    <p>按父母身高预测孩子成年身高</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">遗传身高预测</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#身高</span><span class="badge">#遗传</span><span class="badge">#预测</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>父亲身高（cm）</label><input type="number" id="chF" value="175" min="130" max="230"></div>
+  <div><label>母亲身高（cm）</label><input type="number" id="chM" value="163" min="130" max="230"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>孩子性别</label>
+    <select id="chSex">
+      <option value="m" selected>男</option>
+      <option value="f">女</option>
+    </select>
+  </div>
+  <div><label>当前年龄（岁）</label><input type="number" id="chAge" value="" min="0" max="18"></div>
+  <div><label>当前身高（cm，可选）</label><input type="number" id="chH" value="" min="40" max="230"></div>
+</div>
+<button class="btn btn-primary" id="chGo">预测</button>
+<div id="chOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>身高能预测吗？</h2><p>身高约 70% 由遗传决定，经典 CMH/青少年公式可估算成年身高中位线 ±5cm 范围，环境营养运动同样重要。</p><h2>公式原理是什么？</h2><p>男性中位身高 =（父+母+13）/2，女性 =（父+母-13）/2，再按生长曲线校正。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>结果一定准确吗？</summary><p>只是统计学估算，个体差异较大，±5cm 属正常波动。</p></details><details class="faq-item"><summary>孩子年龄需要填吗？</summary><p>填写后可按当前身高与百分位曲线提示发育状况，纯预测可不填。</p></details><details class="faq-item"><summary>怎么帮孩子长高？</summary><p>保证睡眠（生长激素夜间分泌）、均衡营养（蛋白质/钙/维生素D）、规律纵向运动（跳绳、篮球）。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>遗传身高预测 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='children-height';}); _r.unshift('children-height'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var chF = document.getElementById('chF');
+var chM = document.getElementById('chM');
+var chSex = document.getElementById('chSex');
+var chAge = document.getElementById('chAge');
+var chH = document.getElementById('chH');
+var chGo = document.getElementById('chGo');
+var chOut = document.getElementById('chOut');
+
+function fmt(x) { return Math.round(x * 10) / 10; }
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
+}
+
+function calc() {
+  var f = parseFloat(chF.value), m = parseFloat(chM.value);
+  var sex = chSex.value;
+  if (!(f > 0 && m > 0)) { chOut.innerHTML = '<div class="result-box">请输入父母身高</div>'; return; }
+  var mid = sex === 'm' ? (f + m + 13) / 2 : (f + m - 13) / 2;
+  var lo = mid - 5, hi = mid + 5;
+  var html = '';
+  html += row('预测成年身高（中位）', fmt(mid) + ' cm');
+  html += row('正常波动范围', fmt(lo) + ' ~ ' + fmt(hi) + ' cm');
+  var pct = sex === 'm' ? 23.7 : 20.1; // adult male/female final-height percentage of mid height
+  var age = parseFloat(chAge.value);
+  var cur = parseFloat(chH.value);
+  if (!isNaN(age) && age >= 1 && age <= 18 && !isNaN(cur) && cur > 0) {
+    var adultPct = sex === 'm' ? mid : mid;
+    var reached = cur / adultPct * 100;
+    html += row('目前已达成年身高的', fmt(reached) + '%');
+    if (reached > 88) html += row('剩余生长空间', '约 ' + fmt((1 - reached / 100) * adultPct) + ' cm');
+  }
+  html += '<div class="result-box" style="margin-top:6px;">提示：此为标准公式估算，仅供参考。身高 70% 由遗传决定，后天营养、睡眠、运动同样重要。</div>';
+  chOut.innerHTML = html;
+}
+
+chGo.addEventListener('click', calc);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
