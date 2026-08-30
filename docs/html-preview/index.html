@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML预览 - 在线HTML实时预览调试工具</title>
+  <meta name="description" content="免费在线 HTML 实时预览工具，左侧编写 HTML/CSS/JS 代码，右侧 iframe 实时渲染，支持开启/关闭 JS 执行，适合学习前端、调试片段与快速原型。" />
+  <meta name="keywords" content="HTML预览,实时预览,HTML调试,前端编辑器,在线HTML,iframe预览">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u4ee3\u7801\u4ec5\u5728\u672c\u5730 iframe \u4e2d\u6e32\u67d3\u6267\u884c\u3002"}},{"@type":"Question","name":"\u652f\u6301\u79fb\u52a8\u7aef\u6a21\u62df\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5207\u6362\u4e0d\u540c\u89c6\u53e3\u5bbd\u5ea6\u9884\u89c8\u54cd\u5e94\u5f0f\u6548\u679c\u3002"}},{"@type":"Question","name":"\u4ee3\u7801\u4f1a\u4e22\u5931\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u9875\u9762\u5237\u65b0\u4f1a\u4e22\u5931\uff0c\u5efa\u8bae\u70b9\u51fb\u300c\u590d\u5236\u4ee3\u7801\u300d\u4fdd\u5b58\uff1b\u652f\u6301\u4e0b\u8f7d\u4e3a HTML \u6587\u4ef6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧪 HTML实时预览</h1>
+    <p>编写 HTML/CSS/JS 实时预览效果</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">HTML实时预览</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#HTML</span><span class="badge">#预览</span><span class="badge">#调试</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>代码</label><textarea id="hpCode" rows="14" spellcheck="false" style="font-family:monospace;font-size:13px;"></textarea></div>
+  <div id="hpFrameWrap" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;min-height:300px;"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:auto auto auto auto; gap:10px; margin-bottom:12px;">
+  <button class="btn btn-primary" id="hpGo">刷新预览</button>
+  <label class="btn btn-secondary" style="display:inline-flex;align-items:center;gap:6px;margin:0;"><input type="checkbox" id="hpJs" checked> 允许 JS</label>
+  <label class="btn btn-secondary" style="display:inline-flex;align-items:center;gap:6px;margin:0;">视口
+    <select id="hpW">
+      <option value="100%">100%</option>
+      <option value="375px">375px</option>
+      <option value="768px">768px</option>
+      <option value="1200px">1200px</option>
+    </select>
+  </label>
+  <button class="btn btn-secondary" id="hpCopy">📋 复制代码</button>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>适合什么人用？</h2><p>前端初学者练习、临时调试 HTML 片段、快速验证样式效果，无需安装本地编辑器。</p><h2>支持 JS 吗？</h2><p>支持，可在 iframe 中执行脚本，并可通过开关禁用以排查 JS 报错。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，代码仅在本地 iframe 中渲染执行。</p></details><details class="faq-item"><summary>支持移动端模拟吗？</summary><p>支持切换不同视口宽度预览响应式效果。</p></details><details class="faq-item"><summary>代码会丢失吗？</summary><p>当前页面刷新会丢失，建议点击「复制代码」保存；支持下载为 HTML 文件。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>HTML实时预览 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='html-preview';}); _r.unshift('html-preview'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var hpCode = document.getElementById('hpCode');
+var hpFrameWrap = document.getElementById('hpFrameWrap');
+var hpGo = document.getElementById('hpGo');
+var hpJs = document.getElementById('hpJs');
+var hpW = document.getElementById('hpW');
+var hpCopy = document.getElementById('hpCopy');
+
+var iframe = document.createElement('iframe');
+iframe.style.cssText = 'width:100%;height:360px;border:0;background:#fff;display:block;';
+hpFrameWrap.appendChild(iframe);
+
+var DEFAULT_CODE = '<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { font-family: system-ui, sans-serif; padding: 24px; }\n  h1 { color: #4f46e5; }\n  button { padding: 8px 16px; border: 0; border-radius: 8px; background: #4f46e5; color: #fff; cursor: pointer; }\n</style>\n</head>\n<body>\n  <h1>Hello, 你好 👋</h1>\n  <p>左侧编辑 HTML / CSS / JS，这里实时预览。</p>\n  <button onclick="document.querySelector(\'p\').textContent = \'点击成功！\'">点我试试</button>\n</body>\n</html>';
+
+hpCode.value = DEFAULT_CODE;
+
+function render() {
+  var code = hpCode.value;
+  iframe.sandbox = hpJs.checked ? null : 'no-scripts';
+  var html = '<!DOCTYPE html><html><head><base target="_blank"></head><body>' + code + '</body></html>';
+  iframe.srcdoc = html;
+}
+
+hpGo.addEventListener('click', render);
+hpJs.addEventListener('change', render);
+hpW.addEventListener('change', function () {
+  iframe.style.width = hpW.value;
+});
+
+hpCopy.addEventListener('click', function () {
+  try { navigator.clipboard.writeText(hpCode.value); showToast('已复制代码'); }
+  catch (e) { showToast('复制失败，请手动复制'); }
+});
+
+hpCode.addEventListener('keydown', function (e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { render(); e.preventDefault(); }
+});
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
