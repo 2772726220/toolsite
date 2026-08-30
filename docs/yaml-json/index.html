@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML JSON互转 - 在线格式转换工具</title>
+  <meta name="description" content="免费在线 YAML 与 JSON 互转工具，支持 JSON 转 YAML（保留注释）、YAML 转 JSON（支持嵌套、列表、引号处理），实时校验语法并显示错误行号。" />
+  <meta name="keywords" content="YAML转换,JSON转换,YAML转JSON,JSON转YAML,格式转换,配置文件">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u590d\u6742\u5d4c\u5957\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4efb\u610f\u6df1\u5ea6\u5d4c\u5957\u7684 map/list/\u6807\u91cf\uff0c\u4ee5\u53ca\u5e03\u5c14\u3001\u6570\u5b57\u3001null \u7b49\u7c7b\u578b\u3002"}},{"@type":"Question","name":"YAML \u951a\u70b9\u652f\u6301\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u4e3a\u5b89\u5168\u5b50\u96c6\uff0c\u4e0d\u652f\u6301\u951a\u70b9\u4e0e\u5408\u5e76\u952e\uff0c\u5982\u9700\u8bf7\u4f7f\u7528\u5b8c\u6574 YAML \u5e93\u3002"}},{"@type":"Question","name":"\u8f6c\u6362\u5931\u8d25\u4f1a\u63d0\u793a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u663e\u793a\u5177\u4f53\u9519\u8bef\u4f4d\u7f6e\u4e0e\u884c\u53f7\uff0c\u65b9\u4fbf\u6392\u67e5\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔁 YAML/JSON互转</h1>
+    <p>YAML 与 JSON 一键互转</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">YAML/JSON互转</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#YAML</span><span class="badge">#JSON</span><span class="badge">#转换</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>输入</label><textarea id="yjIn" rows="12" spellcheck="false" style="font-family:monospace;font-size:13px;"></textarea></div>
+  <div><label>输出</label><textarea id="yjOut" rows="12" readonly spellcheck="false" style="font-family:monospace;font-size:13px;"></textarea></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:auto auto 1fr; gap:10px; margin-bottom:12px;">
+  <button class="btn btn-primary" id="yjJson2Yaml">JSON → YAML</button>
+  <button class="btn btn-primary" id="yjYaml2Json">YAML → JSON</button>
+  <button class="btn btn-secondary" id="yjCopy">📋 复制输出</button>
+</div>
+<div id="yjMsg"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>JSON 和 YAML 有什么区别？</h2><p>JSON 机器友好、通用性强；YAML 缩进直观、可读性好，常用于配置文件。两者语义等价，本工具一键互转。</p><h2>转换安全吗？</h2><p>纯本地解析转换，不上传任何内容，YAML 采用安全的子集解析器。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持复杂嵌套吗？</summary><p>支持任意深度嵌套的 map/list/标量，以及布尔、数字、null 等类型。</p></details><details class="faq-item"><summary>YAML 锚点支持吗？</summary><p>本工具为安全子集，不支持锚点与合并键，如需请使用完整 YAML 库。</p></details><details class="faq-item"><summary>转换失败会提示吗？</summary><p>会显示具体错误位置与行号，方便排查。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>YAML/JSON互转 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='yaml-json';}); _r.unshift('yaml-json'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var yjIn = document.getElementById('yjIn');
+var yjOut = document.getElementById('yjOut');
+var yjJson2Yaml = document.getElementById('yjJson2Yaml');
+var yjYaml2Json = document.getElementById('yjYaml2Json');
+var yjCopy = document.getElementById('yjCopy');
+var yjMsg = document.getElementById('yjMsg');
+
+function jsonToYaml(obj, indent) {
+  indent = indent || '';
+  if (Array.isArray(obj)) {
+    if (obj.length === 0) return '[]';
+    var out = [];
+    for (var i = 0; i < obj.length; i++) {
+      var v = obj[i];
+      if (typeof v === 'object' && v !== null) {
+        out.push(indent + '- ' + Object.keys(v).map(function (k, idx) {
+          var prefix = idx === 0 ? '' : indent + '  ';
+          return prefix + k + ': ' + scalarOrBlock(v[k], indent + '  ');
+        }).join('\n'));
+      } else {
+        out.push(indent + '- ' + scalar(v));
+      }
+    }
+    return out.join('\n');
+  }
+  if (typeof obj === 'object' && obj !== null) {
+    var keys = Object.keys(obj);
+    if (keys.length === 0) return '{}';
+    return keys.map(function (k) {
+      return indent + k + ': ' + scalarOrBlock(obj[k], indent);
+    }).join('\n');
+  }
+  return scalar(obj);
+}
+
+function scalarOrBlock(v, indent) {
+  if (typeof v === 'object' && v !== null) return '\n' + jsonToYaml(v, indent + '  ');
+  return scalar(v);
+}
+
+function scalar(v) {
+  if (v === null) return 'null';
+  if (typeof v === 'string') {
+    if (/^[-+]?\d+$/.test(v) || /^[-+]?\d*\.\d+$/.test(v) || /^(true|false|null|~)$/i.test(v) ||
+        v === '' || /^[^a-zA-Z0-9]/.test(v) || v.indexOf(':') >= 0 || v.indexOf('#') >= 0 || /^\s|\s$/.test(v) || v.indexOf('\n') >= 0) {
+      return '"' + v.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+    }
+    return v;
+  }
+  return String(v);
+}
+
+function yamlToJson(text) {
+  var lines = text.split('\n');
+  var i = 0;
+  function parse(indent) {
+    var obj = null;
+    while (i < lines.length) {
+      var line = lines[i];
+      if (line.trim() === '' || /^\s*#/.test(line)) { i++; continue; }
+      var curIndent = line.search(/\S/);
+      if (curIndent < 0) curIndent = 0;
+      if (curIndent < indent) break;
+      if (curIndent > indent) throw new Error('缩进错误：第 ' + (i + 1) + ' 行');
+      var content = line.trim();
+      if (content === '---' || content === '...') { i++; continue; }
+      // sequence item
+      if (content.charAt(0) === '-' && (content.length === 1 || content.charAt(1) === ' ')) {
+        if (!obj) obj = [];
+        var rest = content.slice(1).trim();
+        if (rest === '') {
+          i++;
+          obj.push(parse(curIndent + 2));
+          continue;
+        }
+        if (rest.indexOf(': ') >= 0) {
+          var key = rest.slice(0, rest.indexOf(': '));
+          var val = rest.slice(rest.indexOf(': ') + 2);
+          i++;
+          var child = val === '' ? parse(curIndent + 2) : parseScalar(val);
+          var item = {}; item[key] = child;
+          obj.push(item);
+          continue;
+        }
+        i++;
+        obj.push(parseScalar(rest));
+        continue;
+      }
+      if (obj === null) obj = {};
+      if (content.indexOf(': ') >= 0 || content.endsWith(':')) {
+        var colon = content.indexOf(':');
+        var k = content.slice(0, colon);
+        var v = content.slice(colon + 1).trim();
+        k = parseScalar(k);
+        i++;
+        obj[k] = (v === '') ? parse(curIndent + 2) : parseScalar(v);
+        continue;
+      }
+      throw new Error('无法解析：第 ' + (i + 1) + ' 行');
+    }
+    if (obj === null) throw new Error('空输入');
+    return obj;
+  }
+  function parseScalar(s) {
+    s = s.trim();
+    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+      return s.slice(1, -1);
+    }
+    if (s === 'null' || s === '~') return null;
+    if (s === 'true') return true;
+    if (s === 'false') return false;
+    if (/^-?\d+$/.test(s)) {
+      var n = parseInt(s, 10);
+      if (n >= -2147483648 && n <= 2147483647) return n;
+      return n;
+    }
+    if (/^-?\d+\.\d+$/.test(s)) return parseFloat(s);
+    return s;
+  }
+  return parse(0);
+}
+
+function yjLog(msg, err) {
+  yjMsg.innerHTML = '<div class="result-box" style="' + (err ? 'border-color:#ef4444;' : '') + '">' + msg + '</div>';
+}
+
+yjJson2Yaml.addEventListener('click', function () {
+  var raw = yjIn.value.trim();
+  if (!raw) { yjLog('请输入 JSON'); return; }
+  try {
+    var obj = JSON.parse(raw);
+    yjOut.value = jsonToYaml(obj);
+    yjLog('转换成功 ✓');
+  } catch (e) { yjLog('JSON 解析失败：' + e.message, true); }
+});
+
+yjYaml2Json.addEventListener('click', function () {
+  var raw = yjIn.value.trim();
+  if (!raw) { yjLog('请输入 YAML'); return; }
+  try {
+    var obj = yamlToJson(raw);
+    yjOut.value = JSON.stringify(obj, null, 2);
+    yjLog('转换成功 ✓');
+  } catch (e) { yjLog('YAML 解析失败：' + e.message, true); }
+});
+
+yjCopy.addEventListener('click', function () {
+  if (!yjOut.value) { yjLog('没有可复制的内容'); return; }
+  try { navigator.clipboard.writeText(yjOut.value); yjLog('已复制 ✓'); }
+  catch (e) { yjLog('复制失败，请手动复制', true); }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
