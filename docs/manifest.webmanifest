@@ -1,7 +1,7 @@
 {
   "name": "在线工具箱 - 免费在线工具大全",
   "short_name": "工具箱",
-  "description": "免费在线工具箱，168 款浏览器本地运行的小工具。",
+  "description": "免费在线工具箱，204 款浏览器本地运行的小工具。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
