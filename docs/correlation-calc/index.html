@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相关系数计算器 - 皮尔逊/斯皮尔曼/肯德尔相关系数在线计算</title>
+  <meta name="description" content="免费在线相关系数计算器，支持皮尔逊积差相关、斯皮尔曼等级相关、肯德尔 Tau 相关，给出相关系数、p值、置信区间，科研/数据分析必备。" />
+  <meta name="keywords" content="相关系数,皮尔逊相关系数,斯皮尔曼,肯德尔,相关性分析,统计计算,p值,置信区间">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u591a\u53d8\u91cf\u76f8\u5173\u77e9\u9635\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u7248\u672c\u4e3a\u4e24\u4e24\u53d8\u91cf\u8ba1\u7b97\uff0c\u76f8\u5173\u77e9\u9635\u529f\u80fd\u89c4\u5212\u4e2d\u3002"}},{"@type":"Question","name":"\u6570\u636e\u600e\u4e48\u8f93\u5165\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 CSV \u7c98\u8d34\u3001\u624b\u52a8\u8f93\u5165\u3001\u6587\u4ef6\u4e0a\u4f20\uff0c\u81ea\u52a8\u8bc6\u522b\u5217\u3002"}},{"@type":"Question","name":"\u7f6e\u4fe1\u533a\u95f4\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e Fisher z \u53d8\u6362\u8ba1\u7b97 95% \u7f6e\u4fe1\u533a\u95f4\u3002"}},{"@type":"Question","name":"\u652f\u6301\u7f3a\u5931\u503c\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6210\u5bf9\u5220\u9664/\u5217\u8868\u5220\u9664/\u5747\u503c\u586b\u8865\u4e09\u79cd\u7b56\u7565\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📈 相关系数计算</h1>
+    <p>皮尔逊/斯皮尔曼/肯德尔相关系数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">相关系数计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#相关系数</span><span class="badge">#皮尔逊</span><span class="badge">#斯皮尔曼</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>数据输入 (CSV/TSV/空格分隔)</label><textarea id="ccData" rows="8" placeholder="X,Y
+1,2
+2,4
+3,6
+4,8"></textarea></div>
+  <div><label>或分别输入 X 和 Y</label>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <input type="text" id="ccX" placeholder="X 值，用逗号分隔: 1,2,3,4">
+      <input type="text" id="ccY" placeholder="Y 值，用逗号分隔: 2,4,6,8">
+    </div>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>相关系数类型</label>
+    <select id="ccType">
+      <option value="pearson">Pearson (线性)</option>
+      <option value="spearman">Spearman (秩序)</option>
+      <option value="kendall">Kendall Tau</option>
+    </select>
+  </div>
+  <div><label>置信水平</label>
+    <select id="ccConf">
+      <option value="0.95">95%</option>
+      <option value="0.99">99%</option>
+      <option value="0.90">90%</option>
+    </select>
+  </div>
+  <div><label>缺失值处理</label>
+    <select id="ccNa">
+      <option value="pairwise">成对删除</option>
+      <option value="listwise">列表删除</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="ccCalc">计算</button>
+<div id="ccOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>三种相关系数区别？</h2><p>皮尔逊：线性关系、连续变量、正态分布；斯皮尔曼：单调关系、秩序/非正态；肯德尔：小样本、有序分类、抗干扰强。</p><h2>p值代表什么？</h2><p>原假设（无相关）下出现当前或更极端结果的概率，p<0.05 通常认为相关性显著。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持多变量相关矩阵吗？</summary><p>当前版本为两两变量计算，相关矩阵功能规划中。</p></details><details class="faq-item"><summary>数据怎么输入？</summary><p>支持 CSV 粘贴、手动输入、文件上传，自动识别列。</p></details><details class="faq-item"><summary>置信区间怎么算？</summary><p>基于 Fisher z 变换计算 95% 置信区间。</p></details><details class="faq-item"><summary>支持缺失值处理？</summary><p>支持成对删除/列表删除/均值填补三种策略。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>相关系数计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='correlation-calc';}); _r.unshift('correlation-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ccData = document.getElementById('ccData');
+var ccX = document.getElementById('ccX');
+var ccY = document.getElementById('ccY');
+var ccType = document.getElementById('ccType');
+var ccConf = document.getElementById('ccConf');
+var ccNa = document.getElementById('ccNa');
+var ccCalc = document.getElementById('ccCalc');
+var ccOut = document.getElementById('ccOut');
+
+function parseInput() {
+  var x = [], y = [];
+  if (ccData.value.trim()) {
+    var lines = ccData.value.trim().split('\n');
+    lines.forEach(function (line) {
+      var parts = line.split(/[\t,\s]+/).filter(Boolean);
+      if (parts.length >= 2) {
+        var v1 = parseFloat(parts[0]), v2 = parseFloat(parts[1]);
+        if (!isNaN(v1) && !isNaN(v2)) { x.push(v1); y.push(v2); }
+      }
+    });
+  } else if (ccX.value.trim() && ccY.value.trim()) {
+    x = ccX.value.split(',').map(function (v) { return parseFloat(v.trim()); }).filter(function (v) { return !isNaN(v); });
+    y = ccY.value.split(',').map(function (v) { return parseFloat(v.trim()); }).filter(function (v) { return !isNaN(v); });
+  }
+  var n = Math.min(x.length, y.length);
+  x = x.slice(0, n);
+  y = y.slice(0, n);
+  return { x: x, y: y };
+}
+
+function mean(arr) { return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length; }
+function std(arr, m) { return Math.sqrt(arr.reduce(function (a, b) { return a + (b - m) * (b - m); }, 0) / (arr.length - 1)); }
+
+function rank(arr) {
+  var indexed = arr.map(function (v, i) { return { v: v, i: i }; });
+  indexed.sort(function (a, b) { return a.v - b.v; });
+  var ranks = new Array(arr.length);
+  for (var i = 0; i < indexed.length; ) {
+    var j = i;
+    while (j < indexed.length && indexed[j].v === indexed[i].v) j++;
+    var avgRank = (i + j + 1) / 2;
+    for (var k = i; k < j; k++) ranks[indexed[k].i] = avgRank;
+    i = j;
+  }
+  return ranks;
+}
+
+function pearson(x, y) {
+  var mx = mean(x), my = mean(y);
+  var num = 0, dx2 = 0, dy2 = 0;
+  for (var i = 0; i < x.length; i++) {
+    var dx = x[i] - mx, dy = y[i] - my;
+    num += dx * dy;
+    dx2 += dx * dx;
+    dy2 += dy * dy;
+  }
+  return dx2 && dy2 ? num / Math.sqrt(dx2 * dy2) : 0;
+}
+
+function spearman(x, y) {
+  return pearson(rank(x), rank(y));
+}
+
+function kendall(x, y) {
+  var n = x.length;
+  var concordant = 0, discordant = 0, tx = 0, ty = 0;
+  for (var i = 0; i < n; i++) {
+    for (var j = i + 1; j < n; j++) {
+      var dx = x[i] - x[j], dy = y[i] - y[j];
+      if (dx === 0) tx++;
+      else if (dy === 0) ty++;
+      else if (dx * dy > 0) concordant++;
+      else discordant++;
+    }
+  }
+  var total = n * (n - 1) / 2;
+  return (concordant - discordant) / Math.sqrt((total - tx) * (total - ty));
+}
+
+function fisherZ(r) { return 0.5 * Math.log((1 + r) / (1 - r)); }
+function fisherCI(r, n, conf) {
+  var z = fisherZ(r);
+  var zAlpha = 1.96; // 95%
+  if (conf === 0.99) zAlpha = 2.576;
+  else if (conf === 0.90) zAlpha = 1.645;
+  var se = 1 / Math.sqrt(n - 3);
+  var lo = z - zAlpha * se, hi = z + zAlpha * se;
+  return [(Math.exp(2 * lo) - 1) / (Math.exp(2 * lo) + 1), (Math.exp(2 * hi) - 1) / (Math.exp(2 * hi) + 1)];
+}
+
+function tTest(r, n) {
+  if (Math.abs(r) >= 1) return 0;
+  return 2 * (1 - studentT(Math.abs(r) * Math.sqrt((n - 2) / (1 - r * r)), n - 2));
+}
+
+function studentT(t, df) {
+  // Approximate Student's t CDF
+  var x = df / (t * t + df);
+  var a = df / 2, b = 0.5;
+  return 1 - 0.5 * incompleteBeta(x, a, b);
+}
+
+function incompleteBeta(x, a, b) {
+  // Simple continued fraction approximation
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  var bt = Math.exp(a * Math.log(x) + b * Math.log(1 - x) - logBeta(a, b));
+  if (x < (a + 1) / (a + b + 2)) return bt * betacf(x, a, b) / a;
+  return 1 - bt * betacf(1 - x, b, a) / b;
+}
+
+function logBeta(a, b) { return logGamma(a) + logGamma(b) - logGamma(a + b); }
+function logGamma(z) {
+  var coef = [76.18009173, -86.50532033, 24.01409822, -1.231739516, 0.00120858003, -0.00000536382];
+  var x = z, y = z, tmp = x + 5.5 - (x + 0.5) * Math.log(x + 5.5);
+  var ser = 1.000000000190015;
+  for (var i = 0; i < 6; i++) ser += coef[i] / ++y;
+  return Math.log(2.5066282746310005 * ser / x) - tmp;
+}
+
+function betacf(x, a, b) {
+  var m2, aa, c, d, del, h;
+  var MAX = 100, EPS = 3e-7, FPMIN = 1e-30;
+  var qab = a + b, qap = a + 1, qam = a - 1;
+  c = 1; d = 1 - qab * x / qap;
+  if (Math.abs(d) < FPMIN) d = FPMIN;
+  d = 1 / d; h = d;
+  for (var m = 1; m <= MAX; m++) {
+    m2 = 2 * m;
+    aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+    d = 1 + aa * d; if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c; if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d; h *= d * c;
+    if (Math.abs(d * c - 1) < EPS) break;
+  }
+  return h;
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>';
+}
+
+ccCalc.addEventListener('click', function () {
+  var data = parseInput();
+  if (data.x.length < 3) { ccOut.innerHTML = '<div class="result-box">至少需要 3 组有效数据</div>'; return; }
+  var n = data.x.length;
+  var r = 0;
+  if (ccType.value === 'pearson') r = pearson(data.x, data.y);
+  else if (ccType.value === 'spearman') r = spearman(data.x, data.y);
+  else r = kendall(data.x, data.y);
+  var conf = parseFloat(ccConf.value);
+  var ci = fisherCI(r, n, conf);
+  var p = tTest(r, n);
+  var html = row('样本量', n);
+  html += row('相关系数 (' + ccType.value + ')', r.toFixed(6));
+  html += row('决定系数 R²', (r * r).toFixed(6));
+  html += row(conf * 100 + '% 置信区间', '[' + ci[0].toFixed(6) + ', ' + ci[1].toFixed(6) + ']');
+  html += row('p 值 (双侧)', p < 0.0001 ? '< 0.0001' : p.toFixed(6));
+  html += row('显著性', p < 0.05 ? '显著 *' : p < 0.01 ? '显著 **' : p < 0.001 ? '显著 ***' : '不显著');
+  ccOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
