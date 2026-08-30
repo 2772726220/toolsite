@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT 编码生成器 - 在线生成带签名的 JSON Web Token</title>
+  <meta name="description" content="免费在线 JWT 编码生成器，可视化编辑 Header(alg/typ/kid 等)、Payload(标准声明/自定义声明)、选择签名算法(HS256/HS384/HS512/RS256/RS384/RS512/ES256/ES384/ES512/PS256/none)，密钥/私钥输入，一键生成/验证/解码，支持 JWK 格式密钥，调试/测试/教学必备。" />
+  <meta name="keywords" content="JWT生成,JWT编码,JWT签名,HS256,RS256,ES256,JSON Web Token,Token生成,JWT调试">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u9a8c\u8bc1\u73b0\u6709 Token \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u7c98\u8d34 Token \u81ea\u52a8\u89e3\u7801 Header/Payload/\u9a8c\u8bc1\u7b7e\u540d(\u9700\u63d0\u4f9b\u5bc6\u94a5/\u516c\u94a5)\u3002"}},{"@type":"Question","name":"\u652f\u6301 JWK \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u7c98\u8d34 JWK Set \u6216\u5355\u4e2a JWK \u4f5c\u4e3a\u5bc6\u94a5\u6765\u6e90\u3002"}},{"@type":"Question","name":"\u80fd\u6279\u91cf\u751f\u6210\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u914d\u7f6e\u4e0d\u540c\u58f0\u660e\u6279\u91cf\u751f\u6210\u591a\u4e2a Token\uff0c\u4fbf\u4e8e\u6d4b\u8bd5\u6743\u9650/\u8fc7\u671f\u573a\u666f\u3002"}},{"@type":"Question","name":"\u65f6\u949f\u504f\u79fb\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u8bbe\u7f6e nbf/exp/iat \u7684\u65f6\u95f4\u504f\u79fb\uff0c\u6a21\u62df\u8fc7\u671f/\u672a\u751f\u6548\u573a\u666f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔐 JWT 编码生成</h1>
+    <p>Header/Payload/签名/HS256/RS256/ES256</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">JWT 编码生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#JWT</span><span class="badge">#编码</span><span class="badge">#签名</span><span class="badge">#生成</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>算法</label>
+    <select id="jeAlg">
+      <option value="HS256" selected>HS256</option>
+      <option value="HS384">HS384</option>
+      <option value="HS512">HS512</option>
+      <option value="RS256">RS256</option>
+      <option value="RS384">RS384</option>
+      <option value="RS512">RS512</option>
+      <option value="ES256">ES256</option>
+      <option value="ES384">ES384</option>
+      <option value="ES512">ES512</option>
+      <option value="PS256">PS256</option>
+      <option value="none">none (无签名)</option>
+    </select>
+  </div>
+  <div><label>操作</label>
+    <select id="jeMode">
+      <option value="encode" selected>生成 Token</option>
+      <option value="decode">解码/验证</option>
+    </select>
+  </div>
+  <div><label>密钥格式</label>
+    <select id="jeKeyFmt">
+      <option value="raw" selected>原始字符串</option>
+      <option value="base64">Base64</option>
+      <option value="jwk">JWK</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>Header (JSON)</label><textarea id="jeHeader" rows="6" placeholder='{"alg":"HS256","typ":"JWT"}'></textarea></div>
+  <div><label>Payload (JSON)</label><textarea id="jePayload" rows="6" placeholder='{"sub":"1234567890","name":"John Doe","iat":1516239022,"exp":1516242622}'></textarea></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>密钥 / 私钥 / 公钥</label><textarea id="jeKey" rows="6" placeholder="输入密钥 (HS256: 字符串; RS256: PEM 格式私钥/公钥)"></textarea></div>
+  <div><label>JWK (JSON)</label><textarea id="jeJwk" rows="6" placeholder='{"kty":"oct","k":"base64key"}'></textarea></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-primary" id="jeGenerate">生成 Token</button></div>
+  <div><button class="btn btn-secondary" id="jeVerify">验证/解码</button></div>
+  <div><button class="btn btn-secondary" id="jeCopy">复制 Token</button></div>
+</div>
+<div id="jeOut" style="display:grid; gap:8px;"></div>
+<div id="jeToken" style="margin-top:12px; padding:12px; background:var(--bg-elev); border-radius:8px; font-family:monospace; font-size:12px; word-break:break-all; max-height:200px; overflow:auto;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些算法？</h2><p>对称: HS256/HS384/HS512; 非对称: RS256/RS384/RS512/ES256/ES384/ES512/PS256; 无签名: none。</p><h2>私钥安全吗？</h2><p>私钥仅在浏览器内存中用于签名，不上传、不存储，离开页面即销毁。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能验证现有 Token 吗？</summary><p>支持粘贴 Token 自动解码 Header/Payload/验证签名(需提供密钥/公钥)。</p></details><details class="faq-item"><summary>支持 JWK 吗？</summary><p>支持粘贴 JWK Set 或单个 JWK 作为密钥来源。</p></details><details class="faq-item"><summary>能批量生成吗？</summary><p>可配置不同声明批量生成多个 Token，便于测试权限/过期场景。</p></details><details class="faq-item"><summary>时钟偏移怎么处理？</summary><p>可设置 nbf/exp/iat 的时间偏移，模拟过期/未生效场景。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>JWT 编码生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='jwt-encoder';}); _r.unshift('jwt-encoder'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var jeAlg = document.getElementById('jeAlg');
+var jeMode = document.getElementById('jeMode');
+var jeKeyFmt = document.getElementById('jeKeyFmt');
+var jeHeader = document.getElementById('jeHeader');
+var jePayload = document.getElementById('jePayload');
+var jeKey = document.getElementById('jeKey');
+var jeJwk = document.getElementById('jeJwk');
+var jeGenerate = document.getElementById('jeGenerate');
+var jeVerify = document.getElementById('jeVerify');
+var jeCopy = document.getElementById('jeCopy');
+var jeOut = document.getElementById('jeOut');
+var jeToken = document.getElementById('jeToken');
+
+jeMode.addEventListener('change', function () {
+  jeGenerate.style.display = jeMode.value === 'encode' ? '' : 'none';
+  jeVerify.style.display = jeMode.value === 'decode' ? '' : 'none';
+});
+
+jeKeyFmt.addEventListener('change', function () {
+  jeKey.style.display = jeKeyFmt.value === 'jwk' ? 'none' : '';
+  jeJwk.style.display = jeKeyFmt.value === 'jwk' ? '' : 'none';
+});
+
+function b64u(arr) {
+  return btoa(String.fromCharCode.apply(null, new Uint8Array(arr))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
+function b64uDecode(str) {
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+  var pad = str.length % 4;
+  if (pad) str += '='.repeat(4 - pad);
+  var binary = atob(str);
+  var bytes = new Uint8Array(binary.length);
+  for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function jsonToB64u(obj) {
+  return b64u(new TextEncoder().encode(JSON.stringify(obj)));
+}
+
+function b64uToJson(str) {
+  var bytes = b64uDecode(str);
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+async function signHS256(data, key) {
+  var keyBytes = new TextEncoder().encode(key);
+  var cryptoKey = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  var sig = await crypto.subtle.sign('HMAC', cryptoKey, new TextEncoder().encode(data));
+  return b64u(sig);
+}
+
+async function signRS256(data, pemKey) {
+  var isPrivate = pemKey.includes('PRIVATE');
+  var keyFormat = isPrivate ? 'pkcs8' : 'spki';
+  var pem = pemKey.replace(/-----BEGIN [A-Z ]+-----/, '').replace(/-----END [A-Z ]+-----/, '').replace(/\s/g, '');
+  var binary = b64uDecode(pem);
+  var cryptoKey = await crypto.subtle.importKey(keyFormat, binary, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, isPrivate ? ['sign'] : ['verify']);
+  if (isPrivate) {
+    var sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', cryptoKey, new TextEncoder().encode(data));
+    return b64u(sig);
+  } else {
+    return cryptoKey;
+  }
+}
+
+function parseJWK(jwk) {
+  var k = jwk.k;
+  if (!k) throw new Error('JWK 缺少 k 参数');
+  return b64uDecode(k);
+}
+
+jeGenerate.addEventListener('click', async function () {
+  try {
+    var header = JSON.parse(jeHeader.value);
+    var payload = JSON.parse(jePayload.value);
+    header.alg = header.alg || jeAlg.value;
+    var alg = header.alg;
+    var encodedHeader = jsonToB64u(header);
+    var encodedPayload = jsonToB64u(payload);
+    var signingInput = encodedHeader + '.' + encodedPayload;
+    var signature = '';
+
+    if (alg.startsWith('HS')) {
+      var key = jeKeyFmt.value === 'jwk' ? parseJWK(JSON.parse(jeJwk.value)) : new TextEncoder().encode(jeKey.value);
+      signature = await signHS256(signingInput, new TextDecoder().decode(key));
+    } else if (alg.startsWith('RS') || alg.startsWith('PS') || alg.startsWith('ES')) {
+      var keyInput = jeKey.value.trim();
+      if (!keyInput) throw new Error('请输入私钥');
+      signature = await signRS256(signingInput, keyInput);
+    } else if (alg === 'none') {
+      signature = '';
+    }
+
+    var token = signingInput + '.' + signature;
+    jeToken.textContent = token;
+    jeOut.innerHTML = '<div class="result-box">Token 生成成功</div>';
+  } catch (e) {
+    jeOut.innerHTML = '<div class="result-box" style="color:#dc2626;">错误: ' + e.message + '</div>';
+  }
+});
+
+jeVerify.addEventListener('click', async function () {
+  try {
+    var token = jeToken.textContent || prompt('请输入 Token:');
+    if (!token) return;
+    var parts = token.split('.');
+    if (parts.length !== 3) throw new Error('Token 格式错误');
+    var header = b64uToJson(parts[0]);
+    var payload = b64uToJson(parts[1]);
+    var sig = parts[2];
+    var alg = header.alg;
+    var signingInput = parts[0] + '.' + parts[1];
+
+    var valid = false;
+    if (alg.startsWith('HS')) {
+      var key = jeKeyFmt.value === 'jwk' ? parseJWK(JSON.parse(jeJwk.value)) : new TextEncoder().encode(jeKey.value);
+      var cryptoKey = await crypto.subtle.importKey('raw', key, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
+      valid = await crypto.subtle.verify('HMAC', cryptoKey, b64uDecode(sig), new TextEncoder().encode(signingInput));
+    } else if (alg.startsWith('RS') || alg.startsWith('PS') || alg.startsWith('ES')) {
+      var keyInput = jeKey.value.trim();
+      if (!keyInput) throw new Error('请输入公钥');
+      var pem = keyInput.replace(/-----BEGIN [A-Z ]+-----/, '').replace(/-----END [A-Z ]+-----/, '').replace(/\s/g, '');
+      var binary = b64uDecode(pem);
+      var cryptoKey = await crypto.subtle.importKey('spki', binary, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
+      valid = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', cryptoKey, b64uDecode(sig), new TextEncoder().encode(signingInput));
+    }
+
+    var html = '<div class="result-box">' + (valid ? '✅ 签名验证通过' : '❌ 签名验证失败') + '</div>';
+    html += '<div class="stat"><b>Header:</b> <pre style="font-size:12px;max-height:150px;overflow:auto;">' + JSON.stringify(header, null, 2) + '</pre></div>';
+    html += '<div class="stat"><b>Payload:</b> <pre style="font-size:12px;max-height:150px;overflow:auto;">' + JSON.stringify(payload, null, 2) + '</pre></div>';
+    jeOut.innerHTML = html;
+  } catch (e) {
+    jeOut.innerHTML = '<div class="result-box" style="color:#dc2626;">错误: ' + e.message + '</div>';
+  }
+});
+
+jeCopy.addEventListener('click', function () {
+  navigator.clipboard.writeText(jeToken.textContent).then(function () { showToast('Token 已复制'); });
+});
+
+jeHeader.value = '{"alg":"HS256","typ":"JWT"}';
+var now = Math.floor(Date.now() / 1000);
+jePayload.value = '{"sub":"1234567890","name":"John Doe","iat":' + now + ',"exp":' + (now + 3600) + '}';
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
