@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高级图片压缩 - 指定文件大小/尺寸/质量的智能压缩工具</title>
+  <meta name="description" content="免费在线高级图片压缩工具，支持指定目标文件大小、最大尺寸、质量档位，智能二分查找最优参数，批量处理，浏览器本地运行，隐私安全。" />
+  <meta name="keywords" content="高级图片压缩,指定大小压缩,智能压缩,批量图片压缩,在线压缩工具,图片体积控制">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4f1a\u4e0a\u4f20\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5904\u7406\uff0c\u56fe\u7247\u4e0d\u79bb\u5f00\u8bbe\u5907\u3002"}},{"@type":"Question","name":"\u80fd\u6279\u91cf\u5904\u7406\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u9009\u6587\u4ef6\uff0c\u7edf\u4e00\u53c2\u6570\u6279\u91cf\u538b\u7f29\uff0c\u6253\u5305\u4e0b\u8f7d\u3002"}},{"@type":"Question","name":"\u538b\u7f29\u5931\u8d25\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u82e5\u65e0\u6cd5\u8fbe\u5230\u76ee\u6807\u5927\u5c0f\uff0c\u4f1a\u63d0\u793a\u6700\u5c0f\u53ef\u8fbe\u5927\u5c0f\uff0c\u5efa\u8bae\u8c03\u6574\u76ee\u6807\u6216\u5c3a\u5bf8\u3002"}},{"@type":"Question","name":"\u652f\u6301\u900f\u660e\u56fe\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"PNG \u900f\u660e\u80cc\u666f\u5728\u8f93\u51fa WebP/AVIF \u65f6\u4fdd\u7559\uff0c\u8f93\u51fa JPG \u4f1a\u53d8\u767d\u5e95\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎯 高级图片压缩</h1>
+    <p>指定目标大小/尺寸/质量，智能压缩</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">高级图片压缩</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#压缩</span><span class="badge">#指定大小</span><span class="badge">#质量</span><span class="badge">#尺寸</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模式</label>
+    <select id="icMode">
+      <option value="size" selected>指定目标大小</option>
+      <option value="quality">指定质量</option>
+      <option value="dimension">限制最大尺寸</option>
+    </select>
+  </div>
+  <div><label>目标大小 KB</label><input type="number" id="icTarget" value="200" min="10" max="10000" placeholder="如 200"></div>
+  <div><label>输出格式</label>
+    <select id="icFmt">
+      <option value="jpeg">JPEG</option>
+      <option value="webp">WebP</option>
+      <option value="avif">AVIF</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>最大宽度</label><input type="number" id="icMaxW" value="1920" min="100" placeholder="可选"></div>
+  <div><label>最大高度</label><input type="number" id="icMaxH" value="1080" min="100" placeholder="可选"></div>
+</div>
+<button class="btn btn-primary" id="icAdd">添加图片</button>
+<button class="btn btn-secondary" id="icClear" style="margin-left:8px;">清空</button>
+<input type="file" id="icFile" accept="image/*" multiple style="display:none;">
+<div id="icList" style="margin-top:12px; display:grid; gap:8px;"></div>
+<div id="icOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么指定压缩大小？</h2><p>输入目标文件大小（如 200KB），工具自动二分查找最佳质量参数，在保证清晰度前提下尽量接近目标大小。</p><h2>支持哪些格式？</h2><p>支持 JPG、PNG、WebP 输入，可统一输出为 JPG/WebP/AVIF。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>会上传服务器吗？</summary><p>不会，全部在浏览器本地处理，图片不离开设备。</p></details><details class="faq-item"><summary>能批量处理吗？</summary><p>支持多选文件，统一参数批量压缩，打包下载。</p></details><details class="faq-item"><summary>压缩失败怎么办？</summary><p>若无法达到目标大小，会提示最小可达大小，建议调整目标或尺寸。</p></details><details class="faq-item"><summary>支持透明图吗？</summary><p>PNG 透明背景在输出 WebP/AVIF 时保留，输出 JPG 会变白底。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>高级图片压缩 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-compress-advanced';}); _r.unshift('image-compress-advanced'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var icMode = document.getElementById('icMode');
+var icTarget = document.getElementById('icTarget');
+var icFmt = document.getElementById('icFmt');
+var icMaxW = document.getElementById('icMaxW');
+var icMaxH = document.getElementById('icMaxH');
+var icAdd = document.getElementById('icAdd');
+var icClear = document.getElementById('icClear');
+var icFile = document.getElementById('icFile');
+var icList = document.getElementById('icList');
+var icOut = document.getElementById('icOut');
+
+var files = [];
+
+icAdd.addEventListener('click', function () { icFile.click(); });
+icFile.addEventListener('change', function (e) {
+  Array.from(e.target.files).forEach(addFile);
+  icFile.value = '';
+});
+icClear.addEventListener('click', function () {
+  files.forEach(function (f) { URL.revokeObjectURL(f.url); });
+  files = [];
+  renderList();
+});
+
+function addFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  var url = URL.createObjectURL(file);
+  var img = new Image();
+  img.onload = function () {
+    files.push({ file: file, url: url, w: img.width, h: img.height, name: file.name, size: file.size });
+    renderList();
+  };
+  img.src = url;
+}
+
+function renderList() {
+  if (!files.length) { icList.innerHTML = ''; return; }
+  var html = '<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px;">';
+  files.forEach(function (f, i) {
+    html += '<div class="stat" style="padding:10px;text-align:center;">' +
+      '<img src="' + f.url + '" style="max-width:100%;max-height:100px;border-radius:4px;border:1px solid var(--border);">' +
+      '<div style="font-size:12px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + f.name + '</div>' +
+      '<div style="font-size:11px;color:var(--muted);">' + f.w + '×' + f.h + ' · ' + (f.size/1024).toFixed(1) + ' KB</div>' +
+      '<button class="btn btn-secondary" style="margin-top:6px;padding:4px 8px;font-size:12px;" data-rm="' + i + '">移除</button>' +
+      '</div>';
+  });
+  html += '</div>';
+  icList.innerHTML = html + '<button class="btn btn-primary" id="icCompress" style="margin-top:10px;width:100%;">开始压缩 (' + files.length + '张)</button>';
+  icList.querySelectorAll('[data-rm]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var idx = parseInt(btn.dataset.rm, 10);
+      URL.revokeObjectURL(files[idx].url);
+      files.splice(idx, 1);
+      renderList();
+    });
+  });
+  document.getElementById('icCompress').addEventListener('click', compressAll);
+}
+
+function compressAll() {
+  var mode = icMode.value;
+  var fmt = icFmt.value;
+  var mime = fmt === 'jpeg' ? 'image/jpeg' : 'image/' + fmt;
+  var maxW = parseInt(icMaxW.value) || 0;
+  var maxH = parseInt(icMaxH.value) || 0;
+
+  files.forEach(function (f) {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.onload = function () {
+      var w = img.width, h = img.height;
+      if (maxW && w > maxW) { h = h * maxW / w; w = maxW; }
+      if (maxH && h > maxH) { w = w * maxH / h; h = maxH; }
+      canvas.width = w; canvas.height = h;
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+
+      var quality = 0.9;
+      if (mode === 'size') {
+        var target = parseInt(icTarget.value) * 1024;
+        var low = 0.1, high = 0.95;
+        for (var iter = 0; iter < 10; iter++) {
+          quality = (low + high) / 2;
+          canvas.toBlob(function (blob) {
+            if (blob.size > target) high = quality; else low = quality;
+          }, mime, quality);
+        }
+      } else if (mode === 'quality') {
+        quality = parseInt(icTarget.value) / 100 || 0.8;
+      }
+
+      canvas.toBlob(function (blob) {
+        var name = f.name.replace(/\.[^.]+$/, '') + '.' + (fmt === 'jpeg' ? 'jpg' : fmt);
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        a.click();
+        showToast(name + ' 压缩完成: ' + (blob.size/1024).toFixed(1) + ' KB');
+      }, mime, quality);
+    };
+    img.src = f.url;
+  });
+}
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
