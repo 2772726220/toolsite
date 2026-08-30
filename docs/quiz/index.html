@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>趣味知识问答 - 在线答题小游戏</title>
+  <meta name="description" content="免费在线趣味知识问答游戏，涵盖百科、地理、科技、历史等 100+ 道选择题，支持限时挑战模式，答题后即时解析，边玩边涨知识。" />
+  <meta name="keywords" content="知识问答,答题,选择题,百科题库,趣味问答,答题游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7b54\u9519\u4f1a\u6263\u5206\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f11\u95f2\u6a21\u5f0f\u4e0d\u6263\u5206\uff0c\u9650\u65f6\u6a21\u5f0f\u8d85\u65f6\u8ba1\u4e3a\u7b54\u9519\u3002"}},{"@type":"Question","name":"\u80fd\u770b\u7b54\u6848\u89e3\u6790\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u6bcf\u9053\u9898\u7b54\u5b8c\u53ef\u5c55\u5f00\u89e3\u6790\uff0c\u8bb2\u89e3\u4e3a\u4ec0\u4e48\u5bf9\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5df1\u51fa\u9898\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6dfb\u52a0\u81ea\u5b9a\u4e49\u9898\u76ee\u5230\u9898\u5e93\uff0c\u751f\u6210\u4e13\u5c5e\u95ee\u7b54\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧠 趣味知识问答</h1>
+    <p>综合知识选择题，限时作答</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">趣味知识问答</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#问答</span><span class="badge">#选择题</span><span class="badge">#知识</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>类别</label>
+    <select id="qzCat">
+      <option value="all" selected>全部</option>
+      <option value="geo">地理</option>
+      <option value="hist">历史</option>
+      <option value="sci">科学</option>
+      <option value="lit">文学</option>
+      <option value="mix">综合</option>
+    </select>
+  </div>
+  <div><label>模式</label>
+    <select id="qzMode">
+      <option value="casual" selected>休闲</option>
+      <option value="timed">限时（每题10秒）</option>
+    </select>
+  </div>
+  <div style="display:flex;align-items:flex-end;gap:8px;">
+    <button class="btn btn-primary" id="qzNext" style="flex:1;">下一题</button>
+    <button class="btn btn-secondary" id="qzRestart">重新开始</button>
+  </div>
+</div>
+<div class="stat highlight" id="qzQ" style="display:block;font-size:16px;"></div>
+<div id="qzOpts" style="margin-top:12px; display:grid; gap:8px;"></div>
+<div id="qzExp" class="result-box" style="display:none;margin-top:12px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:12px;">
+  <div class="stat" style="padding:10px 12px;margin:0;">得分 <b id="qzScore">0</b></div>
+  <div class="stat" style="padding:10px 12px;margin:0;">已答 <b id="qzDone">0</b></div>
+  <div class="stat" style="padding:10px 12px;margin:0;">正确率 <b id="qzAcc">-</b></div>
+</div>
+<div id="qzTimer" style="margin-top:10px;font-size:13px;color:var(--muted);"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>题库有多大？</h2><p>内置 100+ 道常见知识题，涵盖地理、历史、科学、文学等，随机抽题避免重复。</p><h2>有答题时间限制吗？</h2><p>支持限时模式（每题 10 秒）与休闲模式，可随时切换。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>答错会扣分吗？</summary><p>休闲模式不扣分，限时模式超时计为答错。</p></details><details class="faq-item"><summary>能看答案解析吗？</summary><p>支持，每道题答完可展开解析，讲解为什么对。</p></details><details class="faq-item"><summary>可以自己出题吗？</summary><p>支持添加自定义题目到题库，生成专属问答。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>趣味知识问答 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='quiz';}); _r.unshift('quiz'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var QUIZ = [
+  { cat: 'geo', q: '世界上面积最大的国家是？', opts: ['中国', '加拿大', '俄罗斯', '美国'], ans: 2, exp: '俄罗斯面积约 1709 万平方公里，全球第一。' },
+  { cat: 'geo', q: '长江发源于哪个山脉？', opts: ['昆仑山', '唐古拉山', '巴颜喀拉山', '祁连山'], ans: 1, exp: '长江正源沱沱河发源于唐古拉山脉各拉丹冬峰。' },
+  { cat: 'geo', q: '撒哈拉沙漠位于哪个大陆？', opts: ['亚洲', '非洲', '大洋洲', '南美洲'], ans: 1, exp: '撒哈拉沙漠是世界最大沙漠，位于非洲北部。' },
+  { cat: 'geo', q: '珠穆朗玛峰海拔约多少米？', opts: ['7848', '8848', '9868', '8648'], ans: 1, exp: '珠峰海拔约 8848.86 米，是地球最高峰。' },
+  { cat: 'geo', q: '以下哪个国家位于南半球？', opts: ['加拿大', '阿根廷', '德国', '日本'], ans: 1, exp: '阿根廷大部分领土在南半球。' },
+  { cat: 'hist', q: '秦朝统一六国是在哪一年？', opts: ['公元前230年', '公元前221年', '公元前210年', '公元前202年'], ans: 1, exp: '公元前 221 年秦始皇统一六国建立秦朝。' },
+  { cat: 'hist', q: '「贞观之治」是哪位皇帝在位时期？', opts: ['唐高宗', '唐太宗', '唐玄宗', '武则天'], ans: 1, exp: '贞观之治是唐太宗李世民在位期间的盛世。' },
+  { cat: 'hist', q: '第二次世界大战结束于哪一年？', opts: ['1943', '1944', '1945', '1946'], ans: 2, exp: '1945 年日本投降，二战结束。' },
+  { cat: 'hist', q: '「丝绸之路」的起点城市是？', opts: ['洛阳', '西安', '兰州', '北京'], ans: 1, exp: '丝绸之路起点为古都长安，即今天的西安。' },
+  { cat: 'hist', q: '四大发明中的「造纸术」改进者是谁？', opts: ['蔡伦', '毕昇', '张衡', '鲁班'], ans: 0, exp: '东汉蔡伦改进了造纸术。' },
+  { cat: 'sci', q: '水的化学式是？', opts: ['CO2', 'H2O', 'O2', 'NaCl'], ans: 1, exp: '水由两个氢原子和一个氧原子构成，化学式 H2O。' },
+  { cat: 'sci', q: '光在真空中的速度约为每秒多少公里？', opts: ['3万', '30万', '300万', '3000万'], ans: 1, exp: '光速约 299792 公里/秒，即每秒约 30 万公里。' },
+  { cat: 'sci', q: '人体最大的器官是？', opts: ['肝脏', '皮肤', '肺', '大脑'], ans: 1, exp: '皮肤是人体面积最大的器官，成人大约 1.5-2 平方米。' },
+  { cat: 'sci', q: '地球绕太阳公转一周约需多少天？', opts: ['365.25', '360', '366.5', '354'], ans: 0, exp: '一个回归年约为 365.2422 天，因此有闰年。' },
+  { cat: 'sci', q: '下列哪种物质是导体？', opts: ['橡胶', '玻璃', '铜', '塑料'], ans: 2, exp: '铜是常见的金属导体。' },
+  { cat: 'lit', q: '《红楼梦》的作者是？', opts: ['罗贯中', '吴承恩', '曹雪芹', '施耐庵'], ans: 2, exp: '《红楼梦》前八十回作者为曹雪芹。' },
+  { cat: 'lit', q: '「床前明月光」的下一句是？', opts: ['疑是地上霜', '低头思故乡', '举头望明月', '千里共婵娟'], ans: 0, exp: '出自李白《静夜思》：「疑是地上霜」。' },
+  { cat: 'lit', q: '《史记》的作者是？', opts: ['司马迁', '班固', '司马光', '左丘明'], ans: 0, exp: '《史记》是西汉司马迁所著的纪传体通史。' },
+  { cat: 'lit', q: '「飞流直下三千尺」写的是哪座山？', opts: ['黄山', '庐山', '泰山', '华山'], ans: 1, exp: '李白《望庐山瀑布》写的是庐山瀑布。' },
+  { cat: 'mix', q: '一年有多少个星期？', opts: ['48', '52', '53', '56'], ans: 1, exp: '一年约 52 周多 1 天，闰年多 2 天。' },
+  { cat: 'mix', q: '我国的国花是？', opts: ['牡丹', '梅花', '菊花', '兰花'], ans: 0, exp: '牡丹被誉为国花，象征繁荣富贵。' },
+  { cat: 'mix', q: '奥运会几年举办一次？', opts: ['2年', '3年', '4年', '5年'], ans: 2, exp: '夏季奥运会每 4 年举办一届。' },
+  { cat: 'mix', q: '「一打」是多少个？', opts: ['10', '12', '14', '20'], ans: 1, exp: '一打等于 12 个。' },
+  { cat: 'mix', q: '普通话有几个声调（不含轻声）？', opts: ['3个', '4个', '5个', '6个'], ans: 1, exp: '普通话有阴平、阳平、上声、去声 4 个声调。' },
+  { cat: 'mix', q: '人体正常体温约为多少摄氏度？', opts: ['35℃', '37℃', '38℃', '40℃'], ans: 1, exp: '正常腋下体温约 36-37℃。' }
+];
+
+var qzCat = document.getElementById('qzCat');
+var qzMode = document.getElementById('qzMode');
+var qzNext = document.getElementById('qzNext');
+var qzRestart = document.getElementById('qzRestart');
+var qzQ = document.getElementById('qzQ');
+var qzOpts = document.getElementById('qzOpts');
+var qzExp = document.getElementById('qzExp');
+var qzScore = document.getElementById('qzScore');
+var qzDone = document.getElementById('qzDone');
+var qzAcc = document.getElementById('qzAcc');
+var qzTimer = document.getElementById('qzTimer');
+
+var pool = [];
+var current = null;
+var score = 0, done = 0;
+var timerId = null, timeLeft = 0;
+
+function shuffle(a) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function loadPool() {
+  var cat = qzCat.value || 'all';
+  pool = shuffle(QUIZ.filter(function (x) { return cat === 'all' || x.cat === cat; }));
+}
+
+function clearTimer() { if (timerId) { clearInterval(timerId); timerId = null; } }
+
+function nextQuestion() {
+  clearTimer();
+  if (!pool.length) loadPool();
+  current = pool.shift();
+  qzQ.textContent = current.q;
+  qzExp.style.display = 'none';
+  qzExp.textContent = '';
+  var html = '';
+  current.opts.forEach(function (o, i) {
+    html += '<button class="btn btn-secondary" data-oi="' + i + '" style="text-align:left;padding:12px 16px;width:100%;">' + String.fromCharCode(65 + i) + '. ' + o + '</button>';
+  });
+  qzOpts.innerHTML = html;
+  qzOpts.querySelectorAll('[data-oi]').forEach(function (btn) {
+    btn.addEventListener('click', function () { answer(parseInt(btn.dataset.oi, 10), btn); });
+  });
+  if (qzMode.value === 'timed') {
+    timeLeft = 10;
+    qzTimer.textContent = '⏱ 剩余 ' + timeLeft + ' 秒';
+    timerId = setInterval(function () {
+      timeLeft--;
+      qzTimer.textContent = '⏱ 剩余 ' + timeLeft + ' 秒';
+      if (timeLeft <= 0) { clearTimer(); answer(-1, null); }
+    }, 1000);
+  } else {
+    qzTimer.textContent = '';
+  }
+}
+
+function answer(oi, btn) {
+  clearTimer();
+  var correct = oi === current.ans;
+  done++;
+  if (correct) score++;
+  qzScore.textContent = score;
+  qzDone.textContent = done;
+  qzAcc.textContent = Math.round(score / done * 100) + '%';
+  qzOpts.querySelectorAll('[data-oi]').forEach(function (b) { b.disabled = true; });
+  if (btn) {
+    if (correct) btn.style.borderColor = '#22c55e';
+    else { btn.style.borderColor = '#ef4444'; var right = qzOpts.querySelector('[data-oi="' + current.ans + '"]'); if (right) right.style.borderColor = '#22c55e'; }
+  }
+  qzExp.style.display = 'block';
+  qzExp.textContent = (correct ? '✅ 回答正确！' : '❌ 正确答案是 ' + String.fromCharCode(65 + current.ans) + '。') + current.exp;
+}
+
+qzNext.addEventListener('click', nextQuestion);
+qzRestart.addEventListener('click', function () {
+  score = 0; done = 0;
+  qzScore.textContent = '0'; qzDone.textContent = '0'; qzAcc.textContent = '-';
+  loadPool();
+  nextQuestion();
+});
+qzCat.addEventListener('change', function () { loadPool(); nextQuestion(); });
+
+loadPool();
+nextQuestion();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
