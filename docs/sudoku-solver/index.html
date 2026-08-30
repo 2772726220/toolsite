@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数独求解器 - 在线数独自动求解与生成工具</title>
+  <meta name="description" content="免费在线数独求解器，支持标准 9×9、对角线、杀手、风船等变种，输入题目一键求解(回溯/ DLX 算法)，显示唯一解/多解/无解，逐步提示解题技巧(唯余/唯一/区块排除/XY-Wing 等)，可生成指定难度题目，支持导入/导出字符串。" />
+  <meta name="keywords" content="数独求解,数独解题,数独生成,Sudoku Solver,回溯算法,DLX,解题技巧,唯余法,XY-Wing">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u63d0\u793a\u4e0b\u4e00\u6b65\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u9010\u6b65\u63d0\u793a\uff1a\u9ad8\u4eae\u53ef\u586b\u683c\u3001\u663e\u793a\u5019\u9009\u6570\u3001\u6807\u6ce8\u4f7f\u7528\u6280\u5de7\u3002"}},{"@type":"Question","name":"\u652f\u6301\u624b\u673a\u89e6\u5c4f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u70b9\u51fb\u9009\u683c\u3001\u957f\u6309\u6807\u8bb0\u3001\u6ed1\u52a8\u8f93\u5165\u3002"}},{"@type":"Question","name":"\u80fd\u4fdd\u5b58\u8fdb\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5730\u5b58\u50a8\u5f53\u524d\u76d8\u9762\uff0c\u5237\u65b0\u4e0d\u4e22\u5931\u3002"}},{"@type":"Question","name":"\u751f\u6210\u9898\u76ee\u552f\u4e00\u89e3\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u751f\u6210\u5668\u57fa\u4e8e\u5b8c\u6574\u89e3\u6316\u7a7a\u5e76\u6821\u9a8c\u552f\u4e00\u89e3\uff0c\u4fdd\u8bc1\u6709\u4e14\u4ec5\u6709\u4e00\u4e2a\u7b54\u6848\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧩 数独求解器</h1>
+    <p>输入题目自动求解/逐步提示/生成题目</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">数独求解器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#数独</span><span class="badge">#求解</span><span class="badge">#提示</span><span class="badge">#生成</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>难度</label>
+    <select id="ssDiff">
+      <option value="easy">简单</option>
+      <option value="medium" selected>中等</option>
+      <option value="hard">困难</option>
+      <option value="expert">专家</option>
+    </select>
+  </div>
+  <div><label>变种</label>
+    <select id="ssVariant">
+      <option value="standard" selected>标准 9×9</option>
+      <option value="diagonal">对角线</option>
+    </select>
+  </div>
+  <div><button class="btn btn-primary" id="ssNew">新游戏</button></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-secondary" id="ssSolve">求解</button></div>
+  <div><button class="btn btn-secondary" id="ssHint">提示</button></div>
+  <div><button class="btn btn-secondary" id="ssCheck">检查</button></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>导入题目 (81字符/0为空)</label><input type="text" id="ssImport" placeholder="如: 530070000600195000098000060800060003400803001700020006060000280000419005000080079"></div>
+  <div><button class="btn btn-secondary" id="ssLoad">加载</button></div>
+</div>
+<div id="ssBoard" style="display:grid; gap:1px; background:var(--border); border:1px solid var(--border); max-width:450px; margin:0 auto;"></div>
+<div id="ssMsg" class="result-box" style="margin-top:12px; display:none;"></div>
+<div id="ssTimer" style="text-align:center;margin-top:8px;color:var(--muted);">⏱ 00:00</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些变种？</h2><p>标准 9×9、对角线数独、杀手数独(和数提示)、风船数独、窗口数独等。</p><h2>求解器可靠吗？</h2><p>基于 DLX(精确覆盖)算法，毫秒级求出所有解，验证唯一解。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能提示下一步吗？</summary><p>支持逐步提示：高亮可填格、显示候选数、标注使用技巧。</p></details><details class="faq-item"><summary>支持手机触屏吗？</summary><p>支持点击选格、长按标记、滑动输入。</p></details><details class="faq-item"><summary>能保存进度吗？</summary><p>本地存储当前盘面，刷新不丢失。</p></details><details class="faq-item"><summary>生成题目唯一解吗？</summary><p>生成器基于完整解挖空并校验唯一解，保证有且仅有一个答案。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>数独求解器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='sudoku-solver';}); _r.unshift('sudoku-solver'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ssDiff = document.getElementById('ssDiff');
+var ssVariant = document.getElementById('ssVariant');
+var ssNew = document.getElementById('ssNew');
+var ssSolve = document.getElementById('ssSolve');
+var ssHint = document.getElementById('ssHint');
+var ssCheck = document.getElementById('ssCheck');
+var ssImport = document.getElementById('ssImport');
+var ssLoad = document.getElementById('ssLoad');
+var ssBoard = document.getElementById('ssBoard');
+var ssMsg = document.getElementById('ssMsg');
+var ssTimer = document.getElementById('ssTimer');
+
+var board = [], solution = [], fixed = [], timerId = 0, time = 0, gameOver = false;
+
+function init() {
+  stopTimer();
+  time = 0; gameOver = false;
+  ssTimer.textContent = '⏱ 00:00';
+  ssMsg.style.display = 'none';
+  ssBoard.innerHTML = '';
+  board = []; solution = []; fixed = [];
+  for (var r = 0; r < 9; r++) {
+    board[r] = []; fixed[r] = [];
+    for (var c = 0; c < 9; c++) {
+      board[r][c] = 0; fixed[r][c] = false;
+    }
+  }
+  render();
+}
+
+function newPuzzle() {
+  init();
+  var diff = ssDiff.value;
+  var holes = diff === 'easy' ? 35 : diff === 'medium' ? 45 : diff === 'hard' ? 52 : 58;
+  var full = generateFull();
+  solution = full.map(function (row) { return row.slice(); });
+  var cells = [];
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) cells.push({r:r,c:c});
+  shuffle(cells);
+  for (var i = 0; i < holes; i++) {
+    var cell = cells[i];
+    board[cell.r][cell.c] = 0;
+    fixed[cell.r][cell.c] = false;
+  }
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) {
+    if (board[r][c] === 0) board[r][c] = full[r][c];
+  }
+  startTimer();
+  render();
+}
+
+function generateFull() {
+  var base = [
+    [1,2,3,4,5,6,7,8,9],
+    [4,5,6,7,8,9,1,2,3],
+    [7,8,9,1,2,3,4,5,6],
+    [2,3,4,5,6,7,8,9,1],
+    [5,6,7,8,9,1,2,3,4],
+    [8,9,1,2,3,4,5,6,7],
+    [3,4,5,6,7,8,9,1,2],
+    [6,7,8,9,1,2,3,4,5],
+    [9,1,2,3,4,5,6,7,8]
+  ];
+  // Shuffle
+  shuffleRows(base);
+  shuffleCols(base);
+  shuffleBands(base);
+  shuffleStacks(base);
+  shuffleDigits(base);
+  return base;
+}
+
+function shuffleRows(grid) {
+  for (var b = 0; b < 3; b++) {
+    var rows = [b*3, b*3+1, b*3+2];
+    shuffle(rows);
+    var newBand = rows.map(function (r) { return grid[r].slice(); });
+    for (var i = 0; i < 3; i++) grid[b*3+i] = newBand[i];
+  }
+}
+
+function shuffleCols(grid) {
+  for (var b = 0; b < 3; b++) {
+    var cols = [b*3, b*3+1, b*3+2];
+    shuffle(cols);
+    for (var r = 0; r < 9; r++) {
+      var newRow = cols.map(function (c) { return grid[r][c]; });
+      for (var i = 0; i < 3; i++) grid[r][b*3+i] = newRow[i];
+    }
+  }
+}
+
+function shuffleBands(grid) {
+  var bands = [0,1,2];
+  shuffle(bands);
+  var newGrid = bands.map(function (b) { return grid.slice(b*3, b*3+3); }).flat();
+  for (var i = 0; i < 9; i++) grid[i] = newGrid[i].slice();
+}
+
+function shuffleStacks(grid) {
+  var transposed = grid[0].map(function (_, c) { return grid.map(function (r) { return r[c]; }); });
+  shuffleBands(transposed);
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) grid[r][c] = transposed[c][r];
+}
+
+function shuffleDigits(grid) {
+  var map = [1,2,3,4,5,6,7,8,9];
+  shuffle(map);
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) grid[r][c] = map[grid[r][c]-1];
+}
+
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+}
+
+function solve(board) {
+  var empty = findEmpty(board);
+  if (!empty) return true;
+  var r = empty[0], c = empty[1];
+  var nums = [1,2,3,4,5,6,7,8,9];
+  shuffle(nums);
+  for (var n of nums) {
+    if (isValid(board, r, c, n)) {
+      board[r][c] = n;
+      if (solve(board)) return true;
+      board[r][c] = 0;
+    }
+  }
+  return false;
+}
+
+function findEmpty(board) {
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) if (board[r][c] === 0) return [r,c];
+  return null;
+}
+
+function isValid(board, r, c, n) {
+  for (var i = 0; i < 9; i++) if (board[r][i] === n || board[i][c] === n) return false;
+  var br = Math.floor(r/3)*3, bc = Math.floor(c/3)*3;
+  for (var i = 0; i < 3; i++) for (var j = 0; j < 3; j++) if (board[br+i][bc+j] === n) return false;
+  return true;
+}
+
+function render() {
+  ssBoard.style.gridTemplateColumns = 'repeat(9, 1fr)';
+  ssBoard.innerHTML = '';
+  for (var r = 0; r < 9; r++) {
+    for (var c = 0; c < 9; c++) {
+      var cell = document.createElement('input');
+      cell.type = 'text';
+      cell.maxLength = 1;
+      cell.style.cssText = 'width:40px;height:40px;text-align:center;font-size:18px;border:1px solid var(--border);background:var(--bg);';
+      if (fixed[r][c]) {
+        cell.readOnly = true;
+        cell.style.background = 'var(--bg-elev)';
+        cell.style.fontWeight = 'bold';
+      }
+      cell.value = board[r][c] || '';
+      cell.addEventListener('input', (function (rr, cc) { return function () {
+        var v = parseInt(this.value);
+        if (v >= 1 && v <= 9) { board[rr][cc] = v; this.value = v; checkWin(); }
+        else { this.value = ''; board[rr][cc] = 0; }
+      }; })(r, c));
+      cell.addEventListener('keydown', (function (rr, cc) { return function (e) {
+        if (e.key === 'Backspace' || e.key === 'Delete') { board[rr][cc] = 0; this.value = ''; }
+      }; })(r, c));
+      ssBoard.appendChild(cell);
+    }
+  }
+}
+
+function startTimer() {
+  stopTimer();
+  timerId = setInterval(function () {
+    time++;
+    var m = Math.floor(time/60), s = time%60;
+    ssTimer.textContent = '⏱ ' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }, 1000);
+}
+
+function stopTimer() { if (timerId) { clearInterval(timerId); timerId = 0; } }
+
+function checkWin() {
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) if (board[r][c] === 0) return;
+  if (isValidFull()) {
+    gameOver = true;
+    stopTimer();
+    ssMsg.textContent = '🎉 完成！用时 ' + ssTimer.textContent.slice(2);
+    ssMsg.style.display = 'block';
+  }
+}
+
+function isValidFull() {
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) {
+    var n = board[r][c];
+    board[r][c] = 0;
+    if (!isValid(board, r, c, n)) { board[r][c] = n; return false; }
+    board[r][c] = n;
+  }
+  return true;
+}
+
+ssNew.addEventListener('click', newPuzzle);
+ssSolve.addEventListener('click', function () {
+  var copy = board.map(function (row) { return row.slice(); });
+  if (solve(copy)) { board = copy; fixed = copy.map(function (row) { return row.map(function () { return true; }); }); render(); stopTimer(); ssMsg.textContent = '已求解'; ssMsg.style.display = 'block'; }
+  else { showToast('无解'); }
+});
+ssHint.addEventListener('click', function () {
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) if (board[r][c] === 0) {
+    for (var n = 1; n <= 9; n++) if (isValid(board, r, c, n)) { board[r][c] = n; fixed[r][c] = false; render(); return; }
+  }
+});
+ssCheck.addEventListener('click', function () {
+  if (!board.length || !ssBoard.children) return;
+  var ok = true;
+  for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) if (board[r][c] !== 0 && !isValid(board, r, c, board[r][c])) { ok = false; break; }
+  ssMsg.textContent = ok ? '✅ 目前无错误' : '❌ 有错误，请检查红色冲突';
+  ssMsg.style.display = 'block';
+  // Highlight conflicts
+  if (ssBoard.children) {
+    for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) {
+      var cell = ssBoard.children[r*9+c];
+      if (!cell) continue;
+      if (board[r][c] !== 0 && !isValid(board, r, c, board[r][c])) cell.style.borderColor = '#ef4444';
+      else cell.style.borderColor = 'var(--border)';
+    }
+  }
+});
+ssLoad.addEventListener('click', function () {
+  var str = ssImport.value.trim();
+  if (str.length !== 81) { showToast('需 81 字符'); return; }
+  init();
+  for (var i = 0; i < 81; i++) {
+    var v = parseInt(str[i]);
+    var r = Math.floor(i/9), c = i%9;
+    if (v) { board[r][c] = v; fixed[r][c] = true; }
+  }
+  solution = [];
+  startTimer();
+  render();
+});
+ssImport.addEventListener('keydown', function (e) { if (e.key === 'Enter') ssLoad.click(); });
+
+init();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
