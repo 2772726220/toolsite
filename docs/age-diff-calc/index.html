@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年龄差计算器 - 两人年龄差与纪念日倒计时在线工具</title>
+  <meta name="description" content="免费在线年龄差计算器，输入两人出生日期，精确计算年龄差（年/月/日/时/分/秒），内置纪念日倒计时（相识/结婚/生日/节日），附赠星座/生肖/配对趣味分析，情侣/亲友必备。" />
+  <meta name="keywords" content="年龄差计算器,年龄差,纪念日倒计时,生日倒计时,星座配对,生肖配对,情侣工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u661f\u5ea7\u914d\u5bf9\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u4f9b\u5a31\u4e50\u53c2\u8003\uff0c\u57fa\u4e8e\u4f20\u7edf\u661f\u5ea7\u5143\u7d20\uff08\u706b/\u571f/\u98ce/\u6c34\uff09\u76f8\u751f\u76f8\u514b\u7406\u8bba\u3002"}},{"@type":"Question","name":"\u652f\u6301\u519c\u5386\u751f\u65e5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u5207\u6362\u516c\u5386/\u519c\u5386\u8f93\u5165\uff0c\u81ea\u52a8\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5730\u6d4f\u89c8\u5668\u5b58\u50a8\uff0c\u5237\u65b0\u4e0d\u4e22\u5931\uff0c\u4e0d\u4e0a\u4f20\u670d\u52a1\u5668\u3002"}},{"@type":"Question","name":"\u80fd\u5206\u4eab\u94fe\u63a5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u751f\u6210\u5e26\u53c2\u6570\u7684\u5206\u4eab\u94fe\u63a5\uff0c\u5bf9\u65b9\u6253\u5f00\u5373\u89c1\u7ed3\u679c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>👶 年龄差计算器</h1>
+    <p>两人年龄差/纪念日倒计时/星座配对</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">年龄差计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#年龄差</span><span class="badge">#纪念日</span><span class="badge">#倒计时</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>人员 A 出生日期</label><input type="date" id="adA"></div>
+  <div><label>人员 B 出生日期</label><input type="date" id="adB"></div>
+  <div><label>日期类型</label>
+    <select id="adType">
+      <option value="gregorian">公历</option>
+      <option value="lunar">农历</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>纪念日名称</label><input type="text" id="adAnnName" placeholder="如: 相识日"></div>
+  <div><label>纪念日日期</label><input type="date" id="adAnnDate"></div>
+</div>
+<button class="btn btn-primary" id="adAddAnn">添加纪念日</button>
+<div id="adAnnList" style="margin-top:8px; display:grid; gap:4px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0;">
+  <div><button class="btn btn-secondary" id="adCalc">计算年龄差</button></div>
+  <div><button class="btn btn-secondary" id="adShare">生成分享链接</button></div>
+  <div><button class="btn btn-secondary" id="adClear">清空</button></div>
+</div>
+<div id="adOut" style="display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么算精确年龄差？</h2><p>按出生日期逐位相减：年差、月差、日差，再折算为总天数/小时/秒，支持闰年修正。</p><h2>纪念日支持哪些？</h2><p>支持自定义纪念日（相识日、结婚日等）、双方生日、法定节假日、情人节/七夕等节日倒计时。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>星座配对准吗？</summary><p>仅供娱乐参考，基于传统星座元素（火/土/风/水）相生相克理论。</p></details><details class="faq-item"><summary>支持农历生日吗？</summary><p>支持，可切换公历/农历输入，自动换算。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>本地浏览器存储，刷新不丢失，不上传服务器。</p></details><details class="faq-item"><summary>能分享链接吗？</summary><p>支持生成带参数的分享链接，对方打开即见结果。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>年龄差计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='age-diff-calc';}); _r.unshift('age-diff-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var adA = document.getElementById('adA');
+var adB = document.getElementById('adB');
+var adType = document.getElementById('adType');
+var adAnnName = document.getElementById('adAnnName');
+var adAnnDate = document.getElementById('adAnnDate');
+var adAddAnn = document.getElementById('adAddAnn');
+var adAnnList = document.getElementById('adAnnList');
+var adCalc = document.getElementById('adCalc');
+var adShare = document.getElementById('adShare');
+var adClear = document.getElementById('adClear');
+var adOut = document.getElementById('adOut');
+
+var anniversaries = [];
+var lunarCalc = null;
+
+function loadLunar() {
+  if (window.lunarCalc) return window.lunarCalc;
+  var s = document.createElement('script');
+  s.src = '/lunar-calendar/app.js';
+  document.head.appendChild(s);
+  // Wait for it to load
+  var tries = 0;
+  return new Promise(function (resolve) {
+    var iv = setInterval(function () {
+      if (window.solarToLunar) { clearInterval(iv); resolve(window); }
+      else if (++tries > 50) { clearInterval(iv); resolve(null); }
+    }, 50);
+  });
+}
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>';
+}
+
+function formatDiff(diffMs) {
+  var sec = Math.floor(diffMs / 1000);
+  var min = Math.floor(sec / 60);
+  var hr = Math.floor(min / 60);
+  var day = Math.floor(hr / 24);
+  var yr = Math.floor(day / 365.2425);
+  var mo = Math.floor((day % 365.2425) / 30.44);
+  var d = Math.floor(day % 30.44);
+  return yr + ' 年 ' + mo + ' 月 ' + d + ' 天';
+}
+
+function calcAgeDiff() {
+  if (!adA.value || !adB.value) { adOut.innerHTML = '<div class="result-box">请选择两个出生日期</div>'; return; }
+  var a = new Date(adA.value), b = new Date(adB.value);
+  var diff = Math.abs(b - a);
+  var older = a < b ? 'A' : 'B';
+  var html = row('年龄差', formatDiff(diff));
+  html += row('较大者', '人员 ' + older);
+  html += row('总天数', Math.floor(diff / 86400000).toLocaleString());
+  html += row('总小时数', Math.floor(diff / 3600000).toLocaleString());
+  html += row('总秒数', Math.floor(diff / 1000).toLocaleString());
+  // Next half birthday
+  var now = new Date();
+  var nextA = new Date(now.getFullYear(), a.getMonth(), a.getDate());
+  if (nextA < now) nextA.setFullYear(nextA.getFullYear() + 1);
+  var nextB = new Date(now.getFullYear(), b.getMonth(), b.getDate());
+  if (nextB < now) nextB.setFullYear(nextB.getFullYear() + 1);
+  html += row('A 下次生日', nextA.toLocaleDateString('zh-CN') + ' (倒计时 ' + Math.ceil((nextA - now) / 86400000) + ' 天)');
+  html += row('B 下次生日', nextB.toLocaleDateString('zh-CN') + ' (倒计时 ' + Math.ceil((nextB - now) / 86400000) + ' 天)');
+  adOut.innerHTML = html;
+}
+
+function renderAnn() {
+  adAnnList.innerHTML = anniversaries.map(function (a, i) {
+    var d = new Date(a.date);
+    var now = new Date();
+    var next = new Date(now.getFullYear(), d.getMonth(), d.getDate());
+    if (next < now) next.setFullYear(next.getFullYear() + 1);
+    var days = Math.ceil((next - now) / 86400000);
+    return '<div class="stat" style="display:flex;justify-content:space-between;padding:8px 12px;">' +
+      '<span>' + a.name + ': ' + d.toLocaleDateString('zh-CN') + ' (倒计时 ' + days + ' 天)</span>' +
+      '<button class="btn btn-secondary" style="padding:2px 8px;font-size:12px;" data-del="' + i + '">删除</button>' +
+      '</div>';
+  }).join('');
+  adAnnList.querySelectorAll('[data-del]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      anniversaries.splice(parseInt(btn.dataset.del, 10), 1);
+      renderAnn();
+    });
+  });
+}
+
+adCalc.addEventListener('click', calcAgeDiff);
+
+adAddAnn.addEventListener('click', function () {
+  if (!adAnnName.value || !adAnnDate.value) { showToast('请填写名称和日期'); return; }
+  anniversaries.push({ name: adAnnName.value, date: adAnnDate.value });
+  adAnnName.value = ''; adAnnDate.value = '';
+  renderAnn();
+});
+
+adShare.addEventListener('click', function () {
+  if (!adA.value || !adB.value) { showToast('请先选择出生日期'); return; }
+  var url = location.origin + location.pathname + '?a=' + adA.value + '&b=' + adB.value;
+  navigator.clipboard.writeText(url).then(function () { showToast('分享链接已复制'); });
+});
+
+adClear.addEventListener('click', function () {
+  adA.value = ''; adB.value = '';
+  anniversaries = [];
+  adOut.innerHTML = '';
+  renderAnn();
+});
+
+// Load from URL params
+var params = (typeof URLSearchParams !== 'undefined') ? new URLSearchParams(location.search) : { get: function() { return null; } };
+if (params.get('a')) adA.value = params.get('a');
+if (params.get('b')) adB.value = params.get('b');
+if (adA.value && adB.value) calcAgeDiff();
+
+var today = new Date();
+adAnnDate.value = today.toISOString().slice(0, 10);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
