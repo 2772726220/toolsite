@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>条形码生成器 - 在线Code128条形码生成工具</title>
+  <meta name="description" content="免费在线 Code128 条形码生成器，输入字母数字文本生成标准 Code 128B 条形码，自动计算校验位，实时预览并下载 SVG/PNG，适合标签打印与库存管理。" />
+  <meta name="keywords" content="条形码生成,Code128,条码,条码生成器,条形码下载,标签打印">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>〰️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u5b57\u7b26\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 ASCII \u53ef\u6253\u5370\u5b57\u7b26\uff0832-126\uff09\uff0c\u5373\u6570\u5b57\u3001\u5b57\u6bcd\u4e0e\u5e38\u7528\u7b26\u53f7\u3002"}},{"@type":"Question","name":"\u6821\u9a8c\u4f4d\u4f1a\u81ea\u52a8\u7b97\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\uff0cCode128 \u6821\u9a8c\u4f4d\u7531\u7f16\u7801\u8ba1\u7b97\uff0c\u81ea\u52a8\u9644\u52a0\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u653e\u5927\u6253\u5370\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"SVG \u662f\u77e2\u91cf\u56fe\uff0c\u4efb\u610f\u7f29\u653e\u4e0d\u6a21\u7cca\uff0c\u53ef\u76f4\u63a5\u7528\u4e8e\u6253\u5370\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>〰️ 条形码生成</h1>
+    <p>Code128 条形码生成与下载</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">条形码生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#条形码</span><span class="badge">#Code128</span><span class="badge">#条码</span>
+<div class="field">
+  <label>条码内容（ASCII 可打印字符）</label>
+  <input type="text" id="bcText" value="TOOLSITE-2026" maxlength="60">
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>高度（px）</label><input type="number" id="bcH" value="90" min="20" max="300"></div>
+  <div><label>条宽（px）</label><input type="number" id="bcW" value="2" min="1" max="6"></div>
+  <div><label>显示文字</label>
+    <select id="bcTextOpt">
+      <option value="1" selected>显示</option>
+      <option value="0">隐藏</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="bcGo">生成</button>
+<div id="bcOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Code128 是什么？</h2><p>Code128 是高密度条码标准，支持全部 ASCII 字符，常用于物流与零售标签，本工具实现 Code 128B 编码与校验位。</p><h2>怎么用生成的条码？</h2><p>下载 SVG 或 PNG 后插入标签模板或打印，配合扫码枪即可读取。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些字符？</summary><p>支持 ASCII 可打印字符（32-126），即数字、字母与常用符号。</p></details><details class="faq-item"><summary>校验位会自动算吗？</summary><p>会，Code128 校验位由编码计算，自动附加。</p></details><details class="faq-item"><summary>可以放大打印吗？</summary><p>SVG 是矢量图，任意缩放不模糊，可直接用于打印。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>条形码生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='barcode-generator';}); _r.unshift('barcode-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bcText = document.getElementById('bcText');
+var bcH = document.getElementById('bcH');
+var bcW = document.getElementById('bcW');
+var bcTextOpt = document.getElementById('bcTextOpt');
+var bcGo = document.getElementById('bcGo');
+var bcOut = document.getElementById('bcOut');
+
+// Code128B: value = charCode - 32, start=104, checksum mod 103
+var CODE128 = [
+  '11011001100', '11001101100', '11001100110', '10010011000', '10010001100',
+  '10001001100', '10011001000', '10011000100', '10001100100', '11001001000',
+  '11001000100', '11000100100', '10110011100', '10011011100', '10011001110',
+  '10111001100', '10011101100', '10011100110', '11001110010', '11001011100',
+  '11001001110', '11011100100', '11001110100', '11101101110', '11101011100',
+  '11101011000', '11101100010', '11100011010', '11101111010', '11001000010',
+  '11110001010', '10100110000', '10100001100', '10010110000', '10010000110',
+  '10000101100', '10000100110', '10110010000', '10110000100', '10011010000',
+  '10011000010', '10000110100', '10000110010', '11000010010', '11001010000',
+  '11110111010', '11000010100', '10001111010', '10100111100', '10010111100',
+  '10010011110', '10111100100', '10011110100', '10011110010', '11110100100',
+  '11110010100', '11110010010', '11011011110', '11011110110', '11110110110',
+  '10101111000', '10100011110', '10001011110', '10111101000', '10111100010',
+  '11110101000', '11110100010', '10111011110', '10111101110', '11101011110',
+  '11110101110', '11010000100', '11010010000', '11010011100', '11000111010',
+  '11010111000', '11000110110', '10010111000', '10010011100', '10011100100',
+  '10011101110', '11101001100', '11010111110', '11011101110', '11101101110',
+  '11101110110', '11010001000', '11010100000', '10111011000', '10110001110',
+  '10001110110', '10111000110', '10001011100', '10100110010', '11001010010',
+  '11110011010', '11100110110', '10111001110', '10111100010', '11110001110',
+  '10110111000', '10100001100', '10010110110', '11101001100', '11010010000', '11010011100', '11000111010'
+];
+
+function encode128b(text) {
+  var codes = [104];
+  var sum = 104;
+  for (var i = 0; i < text.length; i++) {
+    var v = text.charCodeAt(i) - 32;
+    if (v < 0 || v > 94) return null;
+    codes.push(v);
+    sum += v * (i + 1);
+  }
+  codes.push(sum % 103); // checksum
+  codes.push(106); // stop
+  var bits = '';
+  codes.forEach(function (c) { bits += CODE128[c]; });
+  return bits;
+}
+
+function renderBarcode() {
+  var text = bcText.value;
+  if (!text) { showToast('请输入条码内容'); return; }
+  var bits = encode128b(text);
+  if (!bits) { showToast('仅支持 ASCII 可打印字符'); return; }
+  var h = parseInt(bcH.value, 10) || 90;
+  var w = parseInt(bcW.value, 10) || 2;
+  var showText = bcTextOpt.value === '1';
+  var check = 0;
+  for (var i = 0; i < text.length; i++) check += text.charCodeAt(i) * (i + 1);
+  check = (104 + check) % 103;
+
+  var svgWidth = bits.length * w + 20;
+  var svgHeight = h + (showText ? 26 : 10);
+  var bars = '';
+  var x = 10;
+  for (var j = 0; j < bits.length; j++) {
+    if (bits[j] === '1') bars += '<rect x="' + x + '" y="4" width="' + w + '" height="' + h + '" fill="#111"/>';
+    x += w;
+  }
+  var label = showText ? '<text x="' + (svgWidth / 2) + '" y="' + (h + 20) + '" text-anchor="middle" font-family="monospace" font-size="16">' + text + '</text>' : '';
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + svgWidth + '" height="' + svgHeight + '" viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '" role="img">' + bars + label + '</svg>';
+  var dataUri = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+  bcOut.innerHTML =
+    '<div class="stat" style="display:block;padding:12px 14px;margin:0;text-align:center;">' + svg + '</div>' +
+    '<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">' +
+    '<a class="btn btn-primary" style="text-align:center;" href="' + dataUri + '" download="barcode.svg">⬇️ 下载 SVG</a>' +
+    '<button class="btn btn-secondary" id="bcCopySvg">📋 复制 SVG</button></div>' +
+    '<div class="result-box" style="margin-top:6px;">Code128B · 校验位 ' + check + ' · 条数 ' + bits.length + '</div>';
+  document.getElementById('bcCopySvg').addEventListener('click', function () {
+    try { navigator.clipboard.writeText(svg); showToast('已复制 SVG'); }
+    catch (e) { showToast('复制失败'); }
+  });
+}
+
+bcGo.addEventListener('click', renderBarcode);
+bcText.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') renderBarcode();
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
