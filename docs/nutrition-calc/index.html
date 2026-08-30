@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>营养素计算器 - 宏量营养素与热量分配在线计算</title>
+  <meta name="description" content="免费在线营养素计算器，基于 TDEE 计算每日所需热量，按目标（减脂/增肌/维持）分配蛋白质/碳水/脂肪比例，支持 IIFYM 灵活饮食、生酮、低碳水等预设模板，一键生成分餐建议。" />
+  <meta name="keywords" content="营养素计算器,宏量营养素,蛋白质碳水脂肪比例,热量分配,IIFYM,生酮饮食,减脂饮食">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥗</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u81ea\u5b9a\u4e49\u6bd4\u4f8b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u53ef\u624b\u52a8\u8f93\u5165\u86cb\u767d\u8d28/\u78b3\u6c34/\u8102\u80aa\u767e\u5206\u6bd4\uff0c\u603b\u548c\u9700\u4e3a 100%\u3002"}},{"@type":"Question","name":"\u5206\u9910\u5efa\u8bae\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u6bcf\u65e5\u603b\u5b8f\u91cf\u7d20\u5747\u5206\u5230\u9910\u6b21\uff083-6 \u9910\uff09\uff0c\u53ef\u8bbe\u7f6e\u8bad\u7ec3\u524d\u540e\u9910\u5360\u6bd4\u66f4\u9ad8\u3002"}},{"@type":"Question","name":"\u5fae\u91cf\u5143\u7d20\u7b97\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u7248\u672c\u4ec5\u5b8f\u91cf\u7d20\uff08\u86cb/\u78b3/\u8102/\u70ed\u91cf\uff09\uff0c\u5fae\u91cf\u5143\u7d20\u5efa\u8bae\u53c2\u8003\u81b3\u98df\u5b9d\u5854\u3002"}},{"@type":"Question","name":"\u9002\u5408\u7279\u6b8a\u4eba\u7fa4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b55\u5987\u3001\u80be\u75c5\u3001\u7cd6\u5c3f\u75c5\u7b49\u8bf7\u9075\u533b\u5631\uff0c\u672c\u5de5\u5177\u4ec5\u4f9b\u5065\u5eb7\u6210\u4eba\u53c2\u8003\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🥗 营养素计算器</h1>
+    <p>宏量营养素/热量/分餐分配</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">营养素计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#营养素</span><span class="badge">#宏量</span><span class="badge">#热量</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>性别</label><select id="ncSex"><option value="m">男</option><option value="f">女</option></select></div>
+  <div><label>年龄</label><input type="number" id="ncAge" value="30" min="15" max="100"></div>
+  <div><label>身高</label><input type="number" id="ncHeight" value="175" min="100" max="250"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>体重</label><input type="number" id="ncWeight" value="70" min="30" max="200" step="0.1"></div>
+  <div><label>活动水平</label>
+    <select id="ncAct">
+      <option value="1.2">久坐不动</option>
+      <option value="1.375">轻度活动 (周1-3次)</option>
+      <option value="1.55" selected>中度活动 (周3-5次)</option>
+      <option value="1.725">重度活动 (周6-7次)</option>
+      <option value="1.9">极重度活动</option>
+    </select>
+  </div>
+  <div><label>目标</label>
+    <select id="ncGoal">
+      <option value="maintain">维持体重</option>
+      <option value="lose">减脂 (-15%)</option>
+      <option value="gain">增肌 (+15%)</option>
+      <option value="custom">自定义</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; display:none;" id="ncCustomWrap">
+  <div><label>自定义热量调整 %</label><input type="number" id="ncCustom" value="0" step="1"></div>
+  <div><label>分餐数</label><input type="number" id="ncMeals" value="3" min="2" max="8"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>饮食模板</label>
+    <select id="ncDiet">
+      <option value="balanced">均衡 30/40/30</option>
+      <option value="highp">高蛋白 35/35/30</option>
+      <option value="keto">生酮 20/5/75</option>
+      <option value="lowc">低碳水 30/20/50</option>
+      <option value="custom">自定义</option>
+    </select>
+  </div>
+  <div id="ncCustomMacroWrap" style="display:none;"><label>自定义 P/C/F %</label><input type="text" id="ncCustomMacro" placeholder="如: 30,40,30"></div>
+  <div><label>分餐数</label><input type="number" id="ncMeals" value="3" min="2" max="8"></div>
+</div>
+<button class="btn btn-primary" id="ncCalc">计算</button>
+<div id="ncOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>宏量营养素怎么分配？</h2><p>常见比例：均衡 30/40/30（蛋/碳/脂）、高蛋白 35/35/30、生酮 20/5/75、低碳 30/20/50。工具提供预设与自定义。</p><h2>TDEE 是什么？</h2><p>每日总能量消耗，含基础代谢 BMR + 活动系数。工具内置 Mifflin-St Jeor 公式自动算出。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持自定义比例吗？</summary><p>支持，可手动输入蛋白质/碳水/脂肪百分比，总和需为 100%。</p></details><details class="faq-item"><summary>分餐建议怎么算？</summary><p>按每日总宏量素均分到餐次（3-6 餐），可设置训练前后餐占比更高。</p></details><details class="faq-item"><summary>微量元素算吗？</summary><p>当前版本仅宏量素（蛋/碳/脂/热量），微量元素建议参考膳食宝塔。</p></details><details class="faq-item"><summary>适合特殊人群吗？</summary><p>孕妇、肾病、糖尿病等请遵医嘱，本工具仅供健康成人参考。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>营养素计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='nutrition-calc';}); _r.unshift('nutrition-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ncSex = document.getElementById('ncSex');
+var ncAge = document.getElementById('ncAge');
+var ncHeight = document.getElementById('ncHeight');
+var ncWeight = document.getElementById('ncWeight');
+var ncAct = document.getElementById('ncAct');
+var ncGoal = document.getElementById('ncGoal');
+var ncCustomWrap = document.getElementById('ncCustomWrap');
+var ncCustom = document.getElementById('ncCustom');
+var ncDiet = document.getElementById('ncDiet');
+var ncCustomMacroWrap = document.getElementById('ncCustomMacroWrap');
+var ncCustomMacro = document.getElementById('ncCustomMacro');
+var ncMeals = document.getElementById('ncMeals');
+var ncCalc = document.getElementById('ncCalc');
+var ncOut = document.getElementById('ncOut');
+
+ncGoal.addEventListener('change', function () {
+  ncCustomWrap.style.display = ncGoal.value === 'custom' ? '' : 'none';
+});
+
+ncDiet.addEventListener('change', function () {
+  ncCustomMacroWrap.style.display = ncDiet.value === 'custom' ? '' : 'none';
+});
+
+function fmt(x) { return x.toLocaleString('zh-CN', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function fmt0(x) { return x.toLocaleString('zh-CN', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
+
+function row(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>';
+}
+
+ncCalc.addEventListener('click', function () {
+  var sex = ncSex.value;
+  var age = parseInt(ncAge.value, 10);
+  var h = parseFloat(ncHeight.value);
+  var w = parseFloat(ncWeight.value);
+  var act = parseFloat(ncAct.value);
+  var goal = ncGoal.value;
+  var customAdj = parseFloat(ncCustom.value) / 100 || 0;
+  var diet = ncDiet.value;
+  var customMacro = ncCustomMacro.value.split(',').map(function (v) { return parseFloat(v.trim()) / 100; });
+  var meals = parseInt(ncMeals.value, 10);
+
+  // BMR
+  var bmr = sex === 'm'
+    ? 88.362 + 13.397 * w + 4.799 * h - 5.677 * age
+    : 447.593 + 9.247 * w + 3.098 * h - 4.330 * age;
+  var tdee = bmr * act;
+  var target = tdee * (1 + customAdj);
+  if (goal === 'lose') target = tdee * 0.85;
+  else if (goal === 'gain') target = tdee * 1.15;
+
+  // Macro ratios
+  var pRatio, cRatio, fRatio;
+  if (diet === 'custom') {
+    pRatio = customMacro[0] || 0.3;
+    cRatio = customMacro[1] || 0.4;
+    fRatio = customMacro[2] || 0.3;
+  } else if (diet === 'highp') { pRatio = 0.35; cRatio = 0.35; fRatio = 0.30; }
+  else if (diet === 'keto') { pRatio = 0.20; cRatio = 0.05; fRatio = 0.75; }
+  else if (diet === 'lowc') { pRatio = 0.30; cRatio = 0.20; fRatio = 0.50; }
+  else { pRatio = 0.30; cRatio = 0.40; fRatio = 0.30; }
+
+  var protein = target * pRatio / 4;
+  var carb = target * cRatio / 4;
+  var fat = target * fRatio / 9;
+
+  var html = row('基础代谢 BMR', fmt0(bmr) + ' kcal');
+  html += row('每日总消耗 TDEE', fmt0(tdee) + ' kcal');
+  html += row('目标热量', fmt0(target) + ' kcal');
+  html += row('蛋白质', fmt(protein) + ' g (' + (pRatio * 100).toFixed(0) + '%)');
+  html += row('碳水化合物', fmt(carb) + ' g (' + (cRatio * 100).toFixed(0) + '%)');
+  html += row('脂肪', fmt(fat) + ' g (' + (fRatio * 100).toFixed(0) + '%)');
+
+  html += '<div class="result-box" style="margin-top:8px;">每餐建议 (' + meals + ' 餐):</div>';
+  var pMeal = protein / meals, cMeal = carb / meals, fMeal = fat / meals, calMeal = target / meals;
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;">';
+  for (var i = 1; i <= meals; i++) {
+    html += '<div class="stat" style="text-align:center;padding:10px;"><b>第 ' + i + ' 餐</b><br>热量: ' + fmt0(calMeal) + ' kcal<br>蛋白: ' + fmt(pMeal) + 'g 碳水: ' + fmt(cMeal) + 'g 脂肪: ' + fmt(fMeal) + 'g</div>';
+  }
+  html += '</div>';
+
+  ncOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
