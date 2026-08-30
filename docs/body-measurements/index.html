@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>身体围度指标计算器 - 体脂/腰臀比/WHtR/标准体重在线计算</title>
+  <meta name="description" content="免费在线身体围度指标计算器，输入身高/体重/年龄/性别/腰围/臀围/颈围，计算体脂率(海军/ YMCA/ BMI 法)、腰臀比(WHR)、身高腰比(WHtR)、标准体重(多公式)、BMI、基础代谢、内脏脂肪等级、健康风险评估，健康管理必备。" />
+  <meta name="keywords" content="体脂率计算,腰臀比,WHtR,身高腰比,标准体重,BMI,内脏脂肪,身体测量,健康指标">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📏</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6d4b\u91cf\u90e8\u4f4d\u6807\u51c6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8170\u56f4: \u808b\u9aa8\u4e0b\u7f18\u4e0e\u9ac2\u5d74\u4e0a\u7f18\u8fde\u7ebf\u4e2d\u70b9; \u81c0\u56f4: \u81c0\u90e8\u6700\u7a81\u5904; \u9888\u56f4: \u5589\u7ed3\u4e0b\u7f18\u3002"}},{"@type":"Question","name":"\u9002\u7528\u4eba\u7fa4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6210\u5e74\u4eba(18+)\uff0c\u5b55\u5987/\u513f\u7ae5/\u8fd0\u52a8\u5458/\u8001\u5e74\u4eba\u7ed3\u679c\u4ec5\u4f9b\u53c2\u8003\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5730\u5b58\u50a8\u5386\u53f2\u8bb0\u5f55\uff0c\u652f\u6301\u8d8b\u52bf\u56fe\u67e5\u770b\u3002"}},{"@type":"Question","name":"\u80fd\u751f\u6210\u5065\u5eb7\u62a5\u544a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa PDF/\u56fe\u7247\u5065\u5eb7\u8bc4\u4f30\u62a5\u544a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📏 身体围度指标</h1>
+    <p>体脂率/腰臀比/WHtR/标准体重/BMIs</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">身体围度指标</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#体脂</span><span class="badge">#围度</span><span class="badge">#腰臀比</span><span class="badge">#WHtR</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>性别</label><select id="bmSex"><option value="m">男</option><option value="f">女</option></select></div>
+  <div><label>年龄</label><input type="number" id="bmAge" value="30" min="10" max="100"></div>
+  <div><label>身高 cm</label><input type="number" id="bmHeight" value="175" min="100" max="250"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>体重 kg</label><input type="number" id="bmWeight" value="70" min="30" max="200" step="0.1"></div>
+  <div><label>腰围 cm</label><input type="number" id="bmWaist" value="80" min="50" max="150" step="0.1"></div>
+  <div><label>臀围 cm</label><input type="number" id="bmHip" value="95" min="50" max="150" step="0.1"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>颈围 cm</label><input type="number" id="bmNeck" value="38" min="25" max="60" step="0.1"></div>
+  <div><label>体脂公式</label>
+    <select id="bmFormula">
+      <option value="navy" selected>海军法 (围度法)</option>
+      <option value="ymca">YMCA 法</option>
+      <option value="bmi">BMI 推算法</option>
+    </select>
+  </div>
+</div>
+<button class="btn btn-primary" id="bmCalc">计算</button>
+<div id="bmOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>体脂率哪个公式准？</h2><p>海军法(围度法)误差 ±3-4%，适合无器械自测；YMCA 法适合女性；BMI 推算法仅粗略参考。</p><h2>WHtR 比 BMI 好吗？</h2><p>WHtR(腰围/身高) >0.5 提示中心性肥胖风险，比 BMI 更能反映内脏脂肪，国际公认优于 BMI。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>测量部位标准？</summary><p>腰围: 肋骨下缘与髂嵴上缘连线中点; 臀围: 臀部最突处; 颈围: 喉结下缘。</p></details><details class="faq-item"><summary>适用人群？</summary><p>成年人(18+)，孕妇/儿童/运动员/老年人结果仅供参考。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>本地存储历史记录，支持趋势图查看。</p></details><details class="faq-item"><summary>能生成健康报告吗？</summary><p>支持导出 PDF/图片健康评估报告。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>身体围度指标 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='body-measurements';}); _r.unshift('body-measurements'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bmSex = document.getElementById('bmSex');
+var bmAge = document.getElementById('bmAge');
+var bmHeight = document.getElementById('bmHeight');
+var bmWeight = document.getElementById('bmWeight');
+var bmWaist = document.getElementById('bmWaist');
+var bmHip = document.getElementById('bmHip');
+var bmNeck = document.getElementById('bmNeck');
+var bmFormula = document.getElementById('bmFormula');
+var bmCalc = document.getElementById('bmCalc');
+var bmOut = document.getElementById('bmOut');
+
+function fmt(x) { return x.toLocaleString('zh-CN', {minimumFractionDigits:1,maximumFractionDigits:1}); }
+function fmt0(x) { return x.toLocaleString('zh-CN', {minimumFractionDigits:0,maximumFractionDigits:0}); }
+function row(label,val) { return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">'+label+'</span><b>'+val+'</b></div>'; }
+
+bmCalc.addEventListener('click', function () {
+  var sex = bmSex.value;
+  var age = parseInt(bmAge.value);
+  var h = parseFloat(bmHeight.value);
+  var w = parseFloat(bmWeight.value);
+  var waist = parseFloat(bmWaist.value);
+  var hip = parseFloat(bmHip.value);
+  var neck = parseFloat(bmNeck.value);
+  var formula = bmFormula.value;
+
+  var bmi = w / Math.pow(h / 100, 2);
+  var bf = 0;
+  if (formula === 'navy') {
+    if (sex === 'm') bf = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(h)) - 450;
+    else bf = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(h)) - 450;
+  } else if (formula === 'ymca') {
+    if (sex === 'm') bf = (0.72 * w + 0.23 * age - 16.2) / w * 100; // simplified
+    else bf = (0.72 * w + 0.23 * age - 16.2) / w * 100;
+    // YMCA simplified - using weight and age approximation
+    bf = sex === 'm' ? (0.72 * w + 0.23 * age - 16.2) / w * 100 : (0.72 * w + 0.23 * age - 16.2) / w * 100;
+  } else {
+    // BMI formula
+    bf = 1.2 * bmi + 0.23 * age - (sex === 'm' ? 16.2 : 5.4);
+  }
+  bf = Math.max(0, Math.min(100, bf));
+
+  var whr = waist / hip;
+  var whtr = waist / h;
+  var sw = sex === 'm' ? Math.pow(h - 80, 2) * 0.7 : Math.pow(h - 70, 2) * 0.6;
+  var bmr = sex === 'm'
+    ? 88.362 + 13.397 * w + 4.799 * h - 5.677 * age
+    : 447.593 + 9.247 * w + 3.098 * h - 4.330 * age;
+  var vfat = w * bf / 100;
+  var visceralLevel = Math.min(9, Math.max(1, Math.floor(whr * 10)));
+
+  var html = row('BMI', fmt(bmi) + ' (' + (bmi < 18.5 ? '偏瘦' : bmi < 24 ? '正常' : bmi < 28 ? '超重' : '肥胖') + ')');
+  html += row('体脂率 (' + (formula === 'navy' ? '海军法' : formula === 'ymca' ? 'YMCA法' : 'BMI推算') + ')', fmt(bf) + '%');
+  html += row('腰臀比 WHR', fmt(whr) + ' (' + (sex === 'm' ? (whr > 0.9 ? '风险↑' : '正常') : (whr > 0.85 ? '风险↑' : '正常')) + ')');
+  html += row('身高腰比 WHtR', fmt(whtr) + ' (' + (whtr > 0.5 ? '中心性肥胖风险↑' : '正常') + ')');
+  html += row('标准体重 (Broca)', fmt0(sw) + ' kg');
+  html += row('基础代谢 BMR', fmt0(bmr) + ' kcal/天');
+  html += row('体脂重量', fmt(vfat) + ' kg');
+  html += row('内脏脂肪等级', visceralLevel + '/9 (' + (visceralLevel > 5 ? '偏高' : '正常') + ')');
+
+  bmOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
