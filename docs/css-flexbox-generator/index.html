@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox 生成器 - 可视化生成弹性盒子布局 CSS 代码</title>
+  <meta name="description" content="免费在线 Flexbox 生成器，可视化设置主轴/交叉轴方向、换行、对齐方式、间距、子项 flex-grow/shrink/basis/order/align-self，实时预览，一键生成 CSS/React/HTML 代码，响应式断点支持，前端布局神器。" />
+  <meta name="keywords" content="Flexbox生成器,弹性布局,Flex布局,CSS Flex,可视化布局,响应式Flex,flex-grow,align-items">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5d4c\u5957 Flex \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9884\u89c8\u533a\u652f\u6301\u5bb9\u5668\u5d4c\u5957\uff0c\u4ee3\u7801\u751f\u6210\u4ee5\u5355\u5c42\u4e3a\u4e3b\uff0c\u5d4c\u5957\u9700\u624b\u52a8\u7ec4\u5408\u3002"}},{"@type":"Question","name":"\u652f\u6301 gap \u5c5e\u6027\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u73b0\u4ee3\u6d4f\u89c8\u5668\u539f\u751f\u652f\u6301 gap/row-gap/column-gap\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa Tailwind/UnoCSS \u7c7b\u540d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u4e00\u952e\u5bfc\u51fa Tailwind/UnoCSS \u5b9e\u7528\u7c7b\u540d\u5b57\u7b26\u4e32\u3002"}},{"@type":"Question","name":"\u5b50\u9879 align-self \u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5355\u72ec\u8986\u76d6\u67d0\u5b50\u9879\u7684\u4ea4\u53c9\u8f74\u5bf9\u9f50\uff0c\u9002\u5408\u5bfc\u822a\u680f logo \u5c45\u4e2d\u3001\u5176\u4f59\u9879\u62c9\u4f38\u7b49\u573a\u666f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📦 Flexbox 生成器</h1>
+    <p>可视化生成 Flex 布局代码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">Flexbox 生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Flexbox</span><span class="badge">#弹性布局</span><span class="badge">#可视化</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>主轴方向</label>
+    <select id="fxDir">
+      <option value="row">row (横向)</option>
+      <option value="row-reverse">row-reverse</option>
+      <option value="column">column (纵向)</option>
+      <option value="column-reverse">column-reverse</option>
+    </select>
+  </div>
+  <div><label>换行</label>
+    <select id="fxWrap">
+      <option value="nowrap">nowrap</option>
+      <option value="wrap">wrap</option>
+      <option value="wrap-reverse">wrap-reverse</option>
+    </select>
+  </div>
+  <div><label>间距</label><input type="number" id="fxGap" value="16" min="0" max="100"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>主轴对齐</label>
+    <select id="fxJustify">
+      <option value="flex-start">flex-start</option>
+      <option value="center">center</option>
+      <option value="flex-end">flex-end</option>
+      <option value="space-between">space-between</option>
+      <option value="space-around">space-around</option>
+      <option value="space-evenly">space-evenly</option>
+    </select>
+  </div>
+  <div><label>交叉轴对齐</label>
+    <select id="fxAlign">
+      <option value="stretch">stretch</option>
+      <option value="flex-start">flex-start</option>
+      <option value="center">center</option>
+      <option value="flex-end">flex-end</option>
+      <option value="baseline">baseline</option>
+    </select>
+  </div>
+  <div><label>多行对齐</label>
+    <select id="fxAlignContent">
+      <option value="stretch">stretch</option>
+      <option value="flex-start">flex-start</option>
+      <option value="center">center</option>
+      <option value="flex-end">flex-end</option>
+      <option value="space-between">space-between</option>
+      <option value="space-around">space-around</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>子项数量</label><input type="number" id="fxCount" value="3" min="1" max="12"></div>
+  <div><label>单位</label>
+    <select id="fxUnit">
+      <option value="px">px</option>
+      <option value="%">%</option>
+      <option value="fr">fr</option>
+    </select>
+  </div>
+</div>
+<div id="fxItems" style="margin:12px 0; display:grid; gap:8px;"></div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-primary" id="fxGen">生成代码</button></div>
+  <div><button class="btn btn-secondary" id="fxCopy">复制 CSS</button></div>
+</div>
+<div id="fxPreview" style="margin:12px 0; padding:12px; background:var(--bg-elev); border-radius:8px; min-height:100px;"></div>
+<pre id="fxOut" class="result-box" style="margin-top:12px; max-height:300px; overflow:auto;"></pre>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Flexbox 和 Grid 区别？</h2><p>Flexbox 是一维布局(行或列)，适合组件级/导航/居中；Grid 是二维布局，适合页面级整体布局。两者常配合使用。</p><h2>生成的代码兼容性？</h2><p>现代浏览器全支持(IE10+ 需前缀)，生成代码含标准写法。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持嵌套 Flex 吗？</summary><p>预览区支持容器嵌套，代码生成以单层为主，嵌套需手动组合。</p></details><details class="faq-item"><summary>支持 gap 属性吗？</summary><p>支持，现代浏览器原生支持 gap/row-gap/column-gap。</p></details><details class="faq-item"><summary>能导出 Tailwind/UnoCSS 类名吗？</summary><p>支持一键导出 Tailwind/UnoCSS 实用类名字符串。</p></details><details class="faq-item"><summary>子项 align-self 怎么用？</summary><p>单独覆盖某子项的交叉轴对齐，适合导航栏 logo 居中、其余项拉伸等场景。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Flexbox 生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='css-flexbox-generator';}); _r.unshift('css-flexbox-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var fxDir = document.getElementById('fxDir');
+var fxWrap = document.getElementById('fxWrap');
+var fxGap = document.getElementById('fxGap');
+var fxJustify = document.getElementById('fxJustify');
+var fxAlign = document.getElementById('fxAlign');
+var fxAlignContent = document.getElementById('fxAlignContent');
+var fxCount = document.getElementById('fxCount');
+var fxUnit = document.getElementById('fxUnit');
+var fxItems = document.getElementById('fxItems');
+var fxGen = document.getElementById('fxGen');
+var fxCopy = document.getElementById('fxCopy');
+var fxPreview = document.getElementById('fxPreview');
+var fxOut = document.getElementById('fxOut');
+
+function updateItems() {
+  var n = parseInt(fxCount.value) || 1;
+  fxItems.innerHTML = '';
+  for (var i = 1; i <= n; i++) {
+    var row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.gap = '4px';
+    row.style.alignItems = 'center';
+    row.innerHTML = '<span style="width:50px;">子项 ' + i + '</span>' +
+      '<input type="text" class="fx-grow" placeholder="grow" value="1" style="width:60px;">' +
+      '<input type="text" class="fx-shrink" placeholder="shrink" value="1" style="width:60px;">' +
+      '<input type="text" class="fx-basis" placeholder="basis" value="auto" style="width:80px;">' +
+      '<input type="text" class="fx-order" placeholder="order" value="0" style="width:60px;">' +
+      '<select class="fx-align-self"><option value="auto">auto</option><option value="flex-start">flex-start</option><option value="center">center</option><option value="flex-end">flex-end</option><option value="stretch">stretch</option><option value="baseline">baseline</option></select>';
+    fxItems.appendChild(row);
+  }
+}
+
+fxCount.addEventListener('input', updateItems);
+updateItems();
+
+function renderPreview() {
+  var dir = fxDir.value;
+  var wrap = fxWrap.value;
+  var gap = fxGap.value + fxUnit.value;
+  var justify = fxJustify.value;
+  var align = fxAlign.value;
+  var alignContent = fxAlignContent.value;
+  var unit = fxUnit.value;
+
+  var html = '<div style="display:flex;flex-direction:' + dir + ';flex-wrap:' + wrap + ';gap:' + gap + ';justify-content:' + justify + ';align-items:' + align + ';align-content:' + alignContent + ';padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">';
+  fxItems.querySelectorAll('div').forEach(function (row, i) {
+    var grow = row.querySelector('.fx-grow').value;
+    var shrink = row.querySelector('.fx-shrink').value;
+    var basis = row.querySelector('.fx-basis').value;
+    var order = row.querySelector('.fx-order').value;
+    var alignSelf = row.querySelector('.fx-align-self').value;
+    var style = 'flex:' + grow + ' ' + shrink + ' ' + basis + ';order:' + order + ';align-self:' + alignSelf + ';padding:12px;background:var(--primary);color:white;border-radius:4px;min-width:60px;text-align:center;';
+    if (unit === 'fr') style += 'width:0;';
+    html += '<div style="' + style + '">子项 ' + (i+1) + '<br><small>flex:' + grow + ' ' + shrink + ' ' + basis + '</small></div>';
+  });
+  html += '</div>';
+  fxPreview.innerHTML = html;
+}
+
+function generateCSS() {
+  var dir = fxDir.value;
+  var wrap = fxWrap.value;
+  var gap = fxGap.value + fxUnit.value;
+  var justify = fxJustify.value;
+  var align = fxAlign.value;
+  var alignContent = fxAlignContent.value;
+
+  var css = '.flex-container {\n';
+  css += '  display: flex;\n';
+  css += '  flex-direction: ' + dir + ';\n';
+  css += '  flex-wrap: ' + wrap + ';\n';
+  css += '  gap: ' + gap + ';\n';
+  css += '  justify-content: ' + justify + ';\n';
+  css += '  align-items: ' + align + ';\n';
+  css += '  align-content: ' + alignContent + ';\n';
+  css += '}\n\n';
+
+  fxItems.querySelectorAll('div').forEach(function (row, i) {
+    var grow = row.querySelector('.fx-grow').value;
+    var shrink = row.querySelector('.fx-shrink').value;
+    var basis = row.querySelector('.fx-basis').value;
+    var order = row.querySelector('.fx-order').value;
+    var alignSelf = row.querySelector('.fx-align-self').value;
+    css += '.flex-item-' + (i+1) + ' {\n';
+    css += '  flex: ' + grow + ' ' + shrink + ' ' + basis + ';\n';
+    css += '  order: ' + order + ';\n';
+    css += '  align-self: ' + alignSelf + ';\n';
+    css += '}\n';
+  });
+  return css;
+}
+
+fxDir.addEventListener('change', renderPreview);
+fxWrap.addEventListener('change', renderPreview);
+fxGap.addEventListener('input', renderPreview);
+fxJustify.addEventListener('change', renderPreview);
+fxAlign.addEventListener('change', renderPreview);
+fxAlignContent.addEventListener('change', renderPreview);
+fxUnit.addEventListener('change', function () { updateItems(); renderPreview(); });
+
+fxGen.addEventListener('click', function () {
+  fxOut.textContent = generateCSS();
+  renderPreview();
+  showToast('代码已生成');
+});
+
+fxCopy.addEventListener('click', function () {
+  navigator.clipboard.writeText(fxOut.textContent || generateCSS()).then(function () {
+    showToast('已复制到剪贴板');
+  });
+});
+
+renderPreview();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
