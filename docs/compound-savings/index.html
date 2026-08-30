@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>复利储蓄计算器 - 定投复利与目标达成时间在线计算</title>
+  <meta name="description" content="免费在线复利储蓄计算器，支持单笔投资/定期定投/递增定投，计算终值/所需本金/达成目标所需时间/每期需投金额，内置通胀调整、税后收益、费率扣除，理财规划必备。" />
+  <meta name="keywords" content="复利计算器,定投计算,复利终值,储蓄目标,财务自由,复利效应,递增定投">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8003\u8651\u901a\u80c0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u5f00\u542f\u901a\u80c0\u8c03\u6574\uff0c\u663e\u793a\u5b9e\u9645\u8d2d\u4e70\u529b(\u5b9e\u9645\u6536\u76ca\u7387 = \u540d\u4e49\u6536\u76ca\u7387 - \u901a\u80c0\u7387)\u3002"}},{"@type":"Question","name":"\u652f\u6301\u4e0d\u89c4\u5219\u6295\u5165\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u7248\u672c\u4ec5\u89c4\u5f8b\u5b9a\u6295\uff0c\u4e0d\u89c4\u5219\u6295\u5165\u5efa\u8bae\u7528\u7535\u5b50\u8868\u683c\u3002"}},{"@type":"Question","name":"\u8d39\u7387\u600e\u4e48\u8bbe\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u8bbe\u7f6e\u5e74\u5316\u7ba1\u7406\u8d39/\u7533\u8d2d\u8d39/\u8d4e\u56de\u8d39\uff0c\u81ea\u52a8\u6263\u9664\u540e\u8ba1\u7b97\u51c0\u6536\u76ca\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa\u660e\u7ec6\u8868\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa\u6bcf\u671f\u672c\u91d1/\u6536\u76ca/\u7d2f\u8ba1\u51c0\u503c CSV \u660e\u7ec6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💰 复利储蓄计算器</h1>
+    <p>定投/复利/目标金额/达成时间</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">复利储蓄计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#复利</span><span class="badge">#定投</span><span class="badge">#储蓄</span><span class="badge">#目标</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模式</label>
+    <select id="csMode">
+      <option value="fv" selected>计算终值</option>
+      <option value="pv">计算现值/本金</option>
+      <option value="pmt">计算每期投入</option>
+      <option value="nper">计算所需期数</option>
+    </select>
+  </div>
+  <div><label>复利频率</label>
+    <select id="csFreq">
+      <option value="12">月度</option>
+      <option value="4">季度</option>
+      <option value="1">年度</option>
+    </select>
+  </div>
+  <div><label>投入方式</label>
+    <select id="csPmtType">
+      <option value="end" selected>期末投入</option>
+      <option value="begin">期初投入</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>本金 (元)</label><input type="number" id="csPv" value="10000" min="0" step="100"></div>
+  <div><label>每期投入 (元)</label><input type="number" id="csPmt" value="1000" min="0" step="100"></div>
+  <div><label>年化收益率 %</label><input type="number" id="csRate" value="5" min="0" max="50" step="0.1"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>投资年限</label><input type="number" id="csYears" value="10" min="0.1" max="100" step="0.5"></div>
+  <div><label>递增率 %/年</label><input type="number" id="csGrowth" value="0" min="0" max="100" step="0.1" placeholder="定投递增"></div>
+  <div><label>通胀率 %</label><input type="number" id="csInflation" value="0" min="0" max="20" step="0.1"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>目标金额 (元)</label><input type="number" id="csTarget" value="0" min="0" step="1000" placeholder="仅计算期数/投入时用"></div>
+  <div><label>费率 %/年</label><input type="number" id="csFee" value="0" min="0" max="10" step="0.01"></div>
+  <div><label>税率 %</label><input type="number" id="csTax" value="0" min="0" max="50" step="0.1"></div>
+</div>
+<button class="btn btn-primary" id="csCalc">计算</button>
+<button class="btn btn-secondary" id="csExport" style="margin-left:8px;">导出明细 CSV</button>
+<div id="csOut" style="margin-top:12px; display:grid; gap:8px;"></div>
+<div id="csTable" style="margin-top:12px; max-height:300px; overflow:auto;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>复利公式是什么？</h2><p>终值 = 本金 × (1+收益率)^期数 + 定投额 × [(1+收益率)^期数 - 1] / 收益率。工具支持月/季/年复利频率。</p><h2>递增定投怎么算？</h2><p>每期定投额按年增长率递增，模拟薪资增长带来的投资增加。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>考虑通胀吗？</summary><p>可开启通胀调整，显示实际购买力(实际收益率 = 名义收益率 - 通胀率)。</p></details><details class="faq-item"><summary>支持不规则投入吗？</summary><p>当前版本仅规律定投，不规则投入建议用电子表格。</p></details><details class="faq-item"><summary>费率怎么设？</summary><p>可设置年化管理费/申购费/赎回费，自动扣除后计算净收益。</p></details><details class="faq-item"><summary>能导出明细表吗？</summary><p>支持导出每期本金/收益/累计净值 CSV 明细。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>复利储蓄计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='compound-savings';}); _r.unshift('compound-savings'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var csMode = document.getElementById('csMode');
+var csFreq = document.getElementById('csFreq');
+var csPmtType = document.getElementById('csPmtType');
+var csPv = document.getElementById('csPv');
+var csPmt = document.getElementById('csPmt');
+var csRate = document.getElementById('csRate');
+var csYears = document.getElementById('csYears');
+var csGrowth = document.getElementById('csGrowth');
+var csInflation = document.getElementById('csInflation');
+var csTarget = document.getElementById('csTarget');
+var csFee = document.getElementById('csFee');
+var csTax = document.getElementById('csTax');
+var csCalc = document.getElementById('csCalc');
+var csExport = document.getElementById('csExport');
+var csOut = document.getElementById('csOut');
+var csTable = document.getElementById('csTable');
+
+var lastRows = [];
+
+function fmt(x) { return x.toLocaleString('zh-CN', {minimumFractionDigits:2,maximumFractionDigits:2}); }
+function row(label,val) { return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">'+label+'</span><b>'+val+'</b></div>'; }
+
+csCalc.addEventListener('click', function () {
+  var mode = csMode.value;
+  var freq = parseInt(csFreq.value);
+  var pmtType = csPmtType.value === 'begin' ? 1 : 0;
+  var pv = parseFloat(csPv.value) || 0;
+  var pmt = parseFloat(csPmt.value) || 0;
+  var rate = parseFloat(csRate.value) / 100;
+  var years = parseFloat(csYears.value);
+  var growth = parseFloat(csGrowth.value) / 100;
+  var inflation = parseFloat(csInflation.value) / 100;
+  var target = parseFloat(csTarget.value) || 0;
+  var fee = parseFloat(csFee.value) / 100;
+  var tax = parseFloat(csTax.value) / 100;
+
+  var r = rate - fee;
+  var rReal = (1 + r) / (1 + inflation) - 1;
+  var n = years * freq;
+  var i = r / freq;
+  var iReal = rReal / freq;
+  var g = growth / freq;
+
+  var html = '';
+  lastRows = [];
+
+  if (mode === 'fv') {
+    var fv = pv * Math.pow(1 + i, n);
+    if (pmt !== 0) {
+      if (growth !== 0) {
+        for (var k = 1; k <= n; k++) {
+          var pmtK = pmt * Math.pow(1 + g, Math.floor((k - 1) / freq));
+          fv += pmtK * Math.pow(1 + i, n - k) * (pmtType ? (1 + i) : 1);
+        }
+      } else {
+        fv += pmt * (Math.pow(1 + i, n) - 1) / i * (1 + i * pmtType);
+      }
+    }
+    var totalInvested = pv + pmt * n;
+    if (growth !== 0) {
+      for (var k = 1; k <= n; k++) totalInvested += pmt * Math.pow(1 + g, Math.floor((k - 1) / freq));
+    }
+    var profit = fv - totalInvested;
+    var taxAmt = profit > 0 ? profit * tax : 0;
+    var net = fv - taxAmt;
+    var fvReal = fv / Math.pow(1 + inflation, years);
+
+    html += row('期末价值 (名义)', '¥' + fmt(fv));
+    html += row('期末价值 (实际购买力)', '¥' + fmt(fvReal));
+    html += row('总投入本金', '¥' + fmt(totalInvested));
+    html += row('收益总额', '¥' + fmt(profit));
+    html += row('税后净值', '¥' + fmt(net));
+    html += row('年化收益率 (扣费后)', (r * 100).toFixed(2) + '%');
+    html += row('实际年化收益率 (扣通胀)', (rReal * 100).toFixed(2) + '%');
+
+    lastRows.push(['期数','期初本金','本期投入','期末本金','累计投入','收益']);
+    var bal = pv, invested = pv;
+    for (var k = 1; k <= n; k++) {
+      var pmtK = growth !== 0 ? pmt * Math.pow(1 + g, Math.floor((k - 1) / freq)) : pmt;
+      var startBal = bal;
+      if (pmtType) bal += pmtK;
+      bal = bal * (1 + i);
+      if (!pmtType) bal += pmtK;
+      invested += pmtK;
+      lastRows.push([k, fmt(startBal), fmt(pmtK), fmt(bal), fmt(invested), fmt(bal - invested)]);
+    }
+  } else if (mode === 'pv') {
+    var fv = target;
+    var pv = fv / Math.pow(1 + i, n);
+    if (pmt !== 0) {
+      if (growth !== 0) {
+        for (var k = 1; k <= n; k++) {
+          var pmtK = pmt * Math.pow(1 + g, Math.floor((k - 1) / freq));
+          pv -= pmtK * Math.pow(1 + i, -(k - pmtType)) / Math.pow(1 + i, n - k);
+        }
+      } else {
+        pv -= pmt * (1 - Math.pow(1 + i, -n)) / i * (1 + i * pmtType);
+      }
+    }
+    html += row('所需现值/本金', '¥' + fmt(pv));
+    html += row('目标金额', '¥' + fmt(target));
+  } else if (mode === 'pmt') {
+    var fv = target;
+    var pvPart = pv * Math.pow(1 + i, n);
+    var pmt = (fv - pvPart) / ((Math.pow(1 + i, n) - 1) / i * (1 + i * pmtType));
+    html += row('每期需投入', '¥' + fmt(pmt));
+    html += row('目标金额', '¥' + fmt(target));
+  } else if (mode === 'nper') {
+    var fv = target;
+    var nCalc = Math.log(1 + (fv - pv * Math.pow(1 + i, 0)) * i / (pmt * (1 + i * pmtType))) / Math.log(1 + i);
+    var yearsCalc = nCalc / freq;
+    html += row('所需期数', nCalc.toFixed(2) + ' 期 (' + freq + '期/年)');
+    html += row('所需年数', yearsCalc.toFixed(2) + ' 年');
+  }
+
+  if (lastRows.length) {
+    var tbl = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:var(--bg-elev);"><th style="padding:6px;border:1px solid var(--border);">期数</th><th style="padding:6px;border:1px solid var(--border);">期初本金</th><th style="padding:6px;border:1px solid var(--border);">本期投入</th><th style="padding:6px;border:1px solid var(--border);">期末本金</th><th style="padding:6px;border:1px solid var(--border);">累计投入</th><th style="padding:6px;border:1px solid var(--border);">收益</th></tr>';
+    lastRows.forEach(function (r) {
+      tbl += '<tr>' + r.map(function (c) { return '<td style="padding:4px;border:1px solid var(--border);">' + c + '</td>'; }).join('') + '</tr>';
+    });
+    tbl += '</table>';
+    csTable.innerHTML = tbl;
+  }
+  csOut.innerHTML = html;
+});
+
+csExport.addEventListener('click', function () {
+  if (!lastRows.length) { showToast('请先计算'); return; }
+  var csv = lastRows.map(function (r) { return r.join(','); }).join('\n');
+  csv = '期数,期初本金,本期投入,期末本金,累计投入,收益\n' + csv;
+  var blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'compound-savings.csv';
+  a.click();
+  showToast('CSV 已导出');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
