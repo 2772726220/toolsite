@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二维码生成器 - 在线QR二维码生成工具</title>
+  <meta name="description" content="免费在线二维码生成器，输入文字或链接即可生成 QR 码，支持前景/背景颜色定制与纠错级别选择，下载 PNG 高清图片，完全浏览器本地生成不联网。" />
+  <meta name="keywords" content="二维码生成,QR码,二维码工具,二维码在线,QR生成器,二维码定制">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔳</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e8c\u7ef4\u7801\u5b89\u5168\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7f16\u7801\u5728\u672c\u5730\u5b8c\u6210\uff0c\u5185\u5bb9\u4e0d\u4e0a\u4f20\uff1b\u626b\u7801\u672c\u8eab\u8bf7\u8b66\u60d5\u964c\u751f\u94fe\u63a5\u3002"}},{"@type":"Question","name":"\u989c\u8272\u80fd\u6539\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u81ea\u5b9a\u4e49\u524d\u666f/\u80cc\u666f\u8272\uff0c\u5efa\u8bae\u4fdd\u6301\u6df1\u8272\u524d\u666f+\u6d45\u8272\u80cc\u666f\u4ee5\u4fdd\u8bc1\u8bc6\u522b\u7387\u3002"}},{"@type":"Question","name":"\u80fd\u4e0b\u8f7d\u9ad8\u6e05\u56fe\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6309\u500d\u6570\u5bfc\u51fa PNG\uff0c\u6700\u9ad8\u53ef\u8f93\u51fa 1024px\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔳 二维码生成</h1>
+    <p>文本/链接生成二维码，支持颜色定制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">二维码生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#二维码</span><span class="badge">#QR</span><span class="badge">#生成</span>
+<div class="field">
+  <label>内容（文本或链接）</label>
+  <textarea id="qrText" rows="3" maxlength="130" placeholder="https://example.com/ 或任意文本（推荐英文/数字更稳定）"></textarea>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>纠错级别</label>
+    <select id="qrEc">
+      <option value="L">L（7%）</option>
+      <option value="M" selected>M（15%）</option>
+      <option value="Q">Q（25%）</option>
+      <option value="H">H（30%）</option>
+    </select>
+  </div>
+  <div><label>前景色</label><input type="color" id="qrFg" value="#000000"></div>
+  <div><label>背景色</label><input type="color" id="qrBg" value="#ffffff"></div>
+  <div><label>导出倍数</label><input type="number" id="qrScale" value="8" min="1" max="32"></div>
+</div>
+<button class="btn btn-primary" id="qrGo">生成二维码</button>
+<div id="qrOut" style="margin-top:14px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>二维码怎么用？</h2><p>把网址、文本、WiFi 信息编码成二维码，扫码即可打开或读取，适用名片、海报、包装与支付码。</p><h2>支持什么内容？</h2><p>支持文本与 URL，纠错级别可选 L/M/Q/H，内容越长所需版本越高。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>二维码安全吗？</summary><p>编码在本地完成，内容不上传；扫码本身请警惕陌生链接。</p></details><details class="faq-item"><summary>颜色能改吗？</summary><p>可以自定义前景/背景色，建议保持深色前景+浅色背景以保证识别率。</p></details><details class="faq-item"><summary>能下载高清图吗？</summary><p>支持按倍数导出 PNG，最高可输出 1024px。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>二维码生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='qr-generator';}); _r.unshift('qr-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var qrText = document.getElementById('qrText');
+var qrEc = document.getElementById('qrEc');
+var qrFg = document.getElementById('qrFg');
+var qrBg = document.getElementById('qrBg');
+var qrScale = document.getElementById('qrScale');
+var qrGo = document.getElementById('qrGo');
+var qrOut = document.getElementById('qrOut');
+
+// ---- QR 编码核心（byte mode, EC L/M/Q/H, versions 1-6）----
+var EC_LEVEL_BITS = { L: 1, M: 0, Q: 3, H: 2 };
+var EC_BLOCKS = {
+  L: [[19, 7], [34, 10], [55, 15], [80, 20], [108, 26], [[68, 18], 2]],
+  M: [[16, 10], [28, 16], [44, 26], [64, 36], [86, 46], [[56, 36], 2]],
+  Q: [[13, 13], [22, 22], [34, 34], [48, 48], [62, 62], [[44, 62], 2]],
+  H: [[9, 17], [16, 28], [26, 44], [36, 64], [46, 76], [[36, 88], 2]]
+};
+var CAPACITY_BYTES = { L: [17, 32, 53, 78, 106, 134], M: [14, 26, 42, 62, 84, 106], Q: [11, 20, 32, 46, 60, 74], H: [7, 14, 24, 34, 44, 58] };
+var ALIGN = { 1: [], 2: [[6, 18]], 3: [[6, 22]], 4: [[6, 26]], 5: [[6, 30]], 6: [[6, 34]] };
+var FORMAT_MASK = 0x5412;
+
+// ---- GF(256) & Reed-Solomon ----
+var GF_EXP = [], GF_LOG = [];
+(function initGF() {
+  var x = 1;
+  for (var i = 0; i < 255; i++) { GF_EXP[i] = x; GF_LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+})();
+function gfMul(a, b) { if (!a || !b) return 0; return GF_EXP[(GF_LOG[a] + GF_LOG[b]) % 255]; }
+function gfPolyMul(p, q) {
+  var r = new Array(p.length + q.length - 1).fill(0);
+  for (var i = 0; i < p.length; i++) for (var j = 0; j < q.length; j++) {
+    if (p[i] && q[j]) r[i + j] ^= gfMul(p[i], q[j]);
+  }
+  return r;
+}
+function gfPolyMod(p, q) {
+  var r = p.slice();
+  while (r.length >= q.length) {
+    var scale = gfMul(r[0], gfPowInv(q[0]));
+    for (var i = 0; i < q.length; i++) r[i] ^= gfMul(q[i], scale);
+    while (r.length && r[0] === 0) r.shift();
+  }
+  while (r.length < q.length - 1) r.unshift(0);
+  return r;
+}
+function gfPowInv(x) { return GF_EXP[(255 - GF_LOG[x]) % 255]; }
+function rsEncode(data, ecLen) {
+  var gen = [1];
+  for (var i = 0; i < ecLen; i++) gen = gfPolyMul(gen, [1, GF_EXP[i]]);
+  var rem = gfPolyMod(data.concat(new Array(ecLen).fill(0)), gen);
+  return rem;
+}
+
+function toBits(n, len) {
+  var s = '';
+  for (var i = len - 1; i >= 0; i--) s += (n >> i) & 1;
+  return s;
+}
+
+function utf8Bytes(str) {
+  var out = [];
+  var u = unescape(encodeURIComponent(str));
+  for (var i = 0; i < u.length; i++) out.push(u.charCodeAt(i));
+  return out;
+}
+
+function blockSpec(ec, version) {
+  var spec = EC_BLOCKS[ec][version - 1];
+  if (Array.isArray(spec[0])) return { blocks: spec[1], data: spec[0][0], ec: spec[0][1] };
+  return { blocks: 1, data: spec[0], ec: spec[1] };
+}
+
+function buildDataAndInterleave(version, ec, bytes) {
+  var b = blockSpec(ec, version);
+  var totalDataBits = b.data * b.blocks * 8;
+  var bits = '0100' + toBits(bytes.length, 8);
+  bytes.forEach(function (x) { bits += toBits(x, 8); });
+  bits += '0000';
+  while (bits.length % 8 !== 0) bits += '0';
+  var pad = true;
+  while (bits.length < totalDataBits) { bits += pad ? '11101100' : '00010001'; pad = !pad; }
+  bits = bits.slice(0, totalDataBits);
+  var offset = 0;
+  var dataBlocks = [];
+  for (var k = 0; k < b.blocks; k++) {
+    var arr = [];
+    for (var i = 0; i < b.data; i++) { arr.push(parseInt(bits.substr(offset, 8), 2)); offset += 8; }
+    dataBlocks.push(arr);
+  }
+  var ecBlocks = dataBlocks.map(function (db) { return rsEncode(db, b.ec); });
+  var result = [];
+  for (var d = 0; d < b.data; d++) dataBlocks.forEach(function (db) { result.push(db[d]); });
+  for (var e = 0; e < b.ec; e++) ecBlocks.forEach(function (eb) { result.push(eb[e]); });
+  return result;
+}
+
+function makeMatrix(version) {
+  var size = 17 + 4 * version;
+  var mod = Array.from({ length: size }, function () { return Array(size).fill(null); });
+  function set(r, c, v) { mod[r][c] = v; }
+  function finder(r, c) {
+    for (var i = -1; i <= 7; i++) for (var j = -1; j <= 7; j++) {
+      var rr = r + i, cc = c + j;
+      if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+      var inOuter = i >= 0 && i <= 6 && j >= 0 && j <= 6;
+      set(rr, cc, inOuter && (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)));
+    }
+  }
+  finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+  for (var t = 8; t < size - 8; t++) {
+    if (mod[6][t] === null) set(6, t, t % 2 === 0);
+    if (mod[t][6] === null) set(t, 6, t % 2 === 0);
+  }
+  set(size - 8, 8, true);
+  ALIGN[version].forEach(function (p) {
+    for (var i = -2; i <= 2; i++) for (var j = -2; j <= 2; j++) {
+      var rr = p[0] + i, cc = p[1] + j;
+      if (mod[rr][cc] !== null) continue;
+      set(rr, cc, Math.max(Math.abs(i), Math.abs(j)) !== 1);
+    }
+  });
+  return mod;
+}
+
+function placeData(mod, codewords) {
+  var size = mod.length;
+  var idx = 0, bit = 7;
+  function nextBit() {
+    if (bit < 0) { bit = 7; idx++; }
+    return ((codewords[idx] >> bit--) & 1) === 1;
+  }
+  var dir = 0; // 0 = up, 1 = down; rightmost group goes up
+  for (var col = size - 1; col >= 1; col -= 2) {
+    if (col === 6) col--;
+    for (var rowI = 0; rowI < size; rowI++) {
+      var row = dir === 0 ? size - 1 - rowI : rowI;
+      for (var d = 0; d < 2; d++) {
+        var c = col - d;
+        if (mod[row][c] === null && idx < codewords.length) {
+          mod[row][c] = nextBit();
+        }
+      }
+    }
+    dir = 1 - dir;
+  }
+}
+
+function applyMask(mod, mask) {
+  var size = mod.length;
+  for (var r = 0; r < size; r++) for (var c = 0; c < size; c++) {
+    if (mod[r][c] === null) {
+      var dark;
+      switch (mask) {
+        case 0: dark = (r + c) % 2 === 0; break;
+        case 1: dark = r % 2 === 0; break;
+        case 2: dark = c % 3 === 0; break;
+        case 3: dark = (r + c) % 3 === 0; break;
+        case 4: dark = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
+        case 5: dark = (r * c) % 2 + (r * c) % 3 === 0; break;
+        case 6: dark = ((r * c) % 2 + (r * c) % 3) % 2 === 0; break;
+        case 7: dark = ((r * c) % 3 + (r + c) % 2) % 2 === 0; break;
+      }
+      mod[r][c] = dark;
+    }
+  }
+}
+
+function drawFormat(mod, ec, mask) {
+  var data = (EC_LEVEL_BITS[ec] << 3) | mask;
+  var rem = data;
+  for (var i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+  var bits = ((data << 10 | rem) ^ FORMAT_MASK) & 0x7fff;
+  var size = mod.length;
+  function getBit(x, n) { return ((x >>> n) & 1) !== 0; }
+  var i;
+  for (i = 0; i <= 5; i++) mod[i][8] = getBit(bits, i);
+  mod[7][8] = getBit(bits, 6);
+  mod[8][8] = getBit(bits, 7);
+  mod[8][7] = getBit(bits, 8);
+  for (i = 9; i < 15; i++) mod[8][14 - i] = getBit(bits, i);
+  for (i = 0; i < 8; i++) mod[8][size - 1 - i] = getBit(bits, i);
+  for (i = 8; i < 15; i++) mod[size - 15 + i][8] = getBit(bits, i);
+  mod[size - 8][8] = true;
+}
+
+function penalty(mod) {
+  var size = mod.length;
+  function cell(r, c) { return mod[r][c] ? 1 : 0; }
+  var score = 0;
+  for (var r = 0; r < size; r++) {
+    var run = 1;
+    for (var c = 1; c < size; c++) {
+      if (cell(r, c) === cell(r, c - 1)) run++;
+      else { if (run >= 5) score += 3 + (run - 5); run = 1; }
+    }
+    if (run >= 5) score += 3 + (run - 5);
+  }
+  for (var c = 0; c < size; c++) {
+    var run = 1;
+    for (var r = 1; r < size; r++) {
+      if (cell(r, c) === cell(r - 1, c)) run++;
+      else { if (run >= 5) score += 3 + (run - 5); run = 1; }
+    }
+    if (run >= 5) score += 3 + (run - 5);
+  }
+  for (var r = 0; r < size - 1; r++) for (var c = 0; c < size - 1; c++) {
+    var v = cell(r, c);
+    if (v === cell(r, c + 1) && v === cell(r + 1, c) && v === cell(r + 1, c + 1)) score += 3;
+  }
+  var pat1 = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0];
+  var pat2 = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+  function scan(arr) {
+    for (var i = 0; i <= arr.length - 11; i++) {
+      var m1 = true, m2 = true;
+      for (var j = 0; j < 11; j++) {
+        if (arr[i + j] !== pat1[j]) m1 = false;
+        if (arr[i + j] !== pat2[j]) m2 = false;
+      }
+      if (m1 || m2) score += 40;
+    }
+  }
+  for (var r = 0; r < size; r++) { var row = []; for (var c = 0; c < size; c++) row.push(cell(r, c)); scan(row); }
+  for (var c = 0; c < size; c++) { var col = []; for (var r = 0; r < size; r++) col.push(cell(r, c)); scan(col); }
+  var dark = 0;
+  for (var r = 0; r < size; r++) for (var c = 0; c < size; c++) if (mod[r][c]) dark++;
+  var pct = dark / (size * size) * 100;
+  score += Math.floor(Math.abs(pct - 50) / 5) * 10;
+  return score;
+}
+
+function makeQR(text, ecLevel) {
+  var ec = ecLevel || 'M';
+  var bytes = utf8Bytes(text);
+  var version = 1;
+  for (var v = 1; v <= 6; v++) {
+    if (bytes.length <= CAPACITY_BYTES[ec][v - 1]) { version = v; break; }
+  }
+  if (bytes.length > CAPACITY_BYTES[ec][5]) throw new Error('内容过长（' + ec + ' 纠错级别最多 ' + CAPACITY_BYTES[ec][5] + ' 字节）');
+  var codewords = buildDataAndInterleave(version, ec, bytes);
+  var best = null;
+  for (var mask = 0; mask < 8; mask++) {
+    var m = makeMatrix(version);
+    placeData(m, codewords);
+    applyMask(m, mask);
+    drawFormat(m, ec, mask);
+    var p = penalty(m);
+    if (!best || p < best.penalty) best = { mod: m, mask: mask, penalty: p };
+  }
+  return best;
+}
+
+function renderQR() {
+  var text = qrText.value.trim();
+  if (!text) { showToast('请输入内容'); return; }
+  var ec = qrEc.value;
+  var fg = qrFg.value, bg = qrBg.value;
+  var scale = Math.min(32, Math.max(1, parseInt(qrScale.value, 10) || 8));
+  var qr;
+  try { qr = makeQR(text, ec); }
+  catch (e) { showToast(e.message); return; }
+  var size = qr.mod.length;
+  var quiet = 4;
+  var px = size + quiet * 2;
+  var cv = document.createElement('canvas');
+  cv.width = px * scale; cv.height = px * scale;
+  var ctx = cv.getContext('2d');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = fg;
+  for (var r = 0; r < size; r++) for (var c = 0; c < size; c++) {
+    if (qr.mod[r][c]) ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+  }
+  var dataUrl = cv.toDataURL('image/png');
+  qrOut.innerHTML =
+    '<div class="stat" style="display:block;padding:16px;margin:0;text-align:center;background:' + bg + ';">' +
+    '<img src="' + dataUrl + '" alt="QR" style="max-width:320px;width:100%;height:auto;image-rendering:pixelated;"></div>' +
+    '<div class="result-box">版本 ' + (Math.floor((size - 17) / 4)) + ' · 纠错 ' + ec + ' · 掩码 ' + qr.mask + ' · 大小 ' + size + '×' + size + '</div>' +
+    '<a class="btn btn-primary" style="margin-top:10px;" href="' + dataUrl + '" download="qrcode.png">⬇️ 下载 PNG（' + px * scale + 'px）</a>';
+}
+
+qrGo.addEventListener('click', renderQR);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
