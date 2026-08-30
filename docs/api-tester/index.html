@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API 测试工具 - 在线 HTTP 接口调试与测试平台</title>
+  <meta name="description" content="免费在线 API 测试工具，支持 GET/POST/PUT/DELETE/PATCH/HEAD/OPTIONS，自定义 Header/Query/Body(JSON/Form/Data/Raw)，环境变量、历史记录、收藏夹、cURL 导入导出、响应格式化/校验/断言，接口开发/联调必备。" />
+  <meta name="keywords" content="API测试,HTTP请求,接口调试,Postman替代,cURL导入,API文档,响应校验,断言测试">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8bf7\u6c42\u4f1a\u7ecf\u8fc7\u4ee3\u7406\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u76f4\u63a5\u4ece\u6d4f\u89c8\u5668\u53d1\u8d77\uff0c\u53d7\u540c\u6e90\u7b56\u7565\u9650\u5236\uff1b\u8de8\u57df\u9700\u76ee\u6807\u670d\u52a1\u5668\u914d\u7f6e CORS \u6216\u81ea\u884c\u90e8\u7f72\u4ee3\u7406\u3002"}},{"@type":"Question","name":"\u652f\u6301 GraphQL \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0cBody \u9009\u62e9 GraphQL\uff0c\u8f93\u5165 query/variables\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5386\u53f2\u8bb0\u5f55/\u6536\u85cf/\u73af\u5883\u53d8\u91cf\u5b58\u672c\u5730 IndexedDB\uff0c\u4e0d\u4e0a\u4f20\u670d\u52a1\u5668\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa Postman Collection \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa Postman Collection v2.1 \u683c\u5f0f JSON\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌐 API 测试工具</h1>
+    <p>HTTP 请求构建/测试/收藏/导出</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">API 测试工具</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#API</span><span class="badge">#HTTP</span><span class="badge">#测试</span><span class="badge">#请求</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>方法</label>
+    <select id="atMethod">
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="DELETE">DELETE</option>
+      <option value="PATCH">PATCH</option>
+      <option value="HEAD">HEAD</option>
+      <option value="OPTIONS">OPTIONS</option>
+    </select>
+  </div>
+  <div><label>URL</label><input type="text" id="atUrl" placeholder="https://api.example.com/users" style="width:100%;"></div>
+  <div><button class="btn btn-primary" id="atSend" style="width:100%;">发送</button></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>环境</label>
+    <select id="atEnv">
+      <option value="">无</option>
+    </select>
+    <button class="btn btn-secondary" id="atEnvAdd" style="margin-top:4px;width:100%;">管理环境</button>
+  </div>
+  <div><label>历史记录</label>
+    <select id="atHistory">
+      <option value="">选择历史记录</option>
+    </select>
+  </div>
+</div>
+<div id="atTabs" style="display:flex;gap:8px;margin-bottom:8px;border-bottom:1px solid var(--border);">
+  <button class="tab-btn active" data-tab="params">Params</button>
+  <button class="tab-btn" data-tab="headers">Headers</button>
+  <button class="tab-btn" data-tab="body">Body</button>
+  <button class="tab-btn" data-tab="auth">Auth</button>
+  <button class="tab-btn" data-tab="scripts">Scripts</button>
+</div>
+<div id="atTabPanels">
+  <div class="tab-panel active" data-tab="params"><div id="atParams" style="display:grid;gap:4px;"></div><button class="btn btn-secondary" id="atAddParam" style="margin-top:8px;">添加参数</button></div>
+  <div class="tab-panel" data-tab="headers"><div id="atHeaders" style="display:grid;gap:4px;"></div><button class="btn btn-secondary" id="atAddHeader" style="margin-top:8px;">添加头</button></div>
+  <div class="tab-panel" data-tab="body">
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+      <div><label>Body 类型</label>
+        <select id="atBodyType">
+          <option value="none">无</option>
+          <option value="json">JSON</option>
+          <option value="form">Form Data</option>
+          <option value="urlencoded">x-www-form-urlencoded</option>
+          <option value="raw">Raw</option>
+          <option value="graphql">GraphQL</option>
+        </select>
+      </div>
+      <div><label>编码</label>
+        <select id="atBodyEnc"><option value="utf-8">UTF-8</option></select>
+      </div>
+    </div>
+    <textarea id="atBodyJson" rows="8" placeholder='{"key": "value"}' style="width:100%;font-family:monospace;font-size:13px;display:none;"></textarea>
+    <div id="atBodyForm" style="display:none;display:grid;gap:4px;"></div>
+  </div>
+  <div class="tab-panel" data-tab="auth">
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+      <div><label>类型</label>
+        <select id="atAuthType">
+          <option value="none">无</option>
+          <option value="bearer">Bearer Token</option>
+          <option value="basic">Basic Auth</option>
+          <option value="apikey">API Key</option>
+        </select>
+      </div>
+      <div></div>
+    </div>
+    <div id="atAuthFields" style="display:grid;gap:4px;"></div>
+  </div>
+  <div class="tab-panel" data-tab="scripts">
+    <label>Pre-request Script (JS)</label>
+    <textarea id="atPreScript" rows="4" style="width:100%;font-family:monospace;font-size:13px;" placeholder="// 在发送前运行&#10;// 可用: at (请求对象), env (环境变量)"></textarea>
+    <label style="margin-top:8px;display:block;">Test Script (JS)</label>
+    <textarea id="atTestScript" rows="4" style="width:100%;font-family:monospace;font-size:13px;" placeholder="// 在响应后运行&#10;// 可用: response, at, env&#10;// at.assert(condition, message)"></textarea>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0;">
+  <div><button class="btn btn-secondary" id="atSave">保存到收藏</button></div>
+  <div><button class="btn btn-secondary" id="atImportCurl">导入 cURL</button></div>
+  <div><button class="btn btn-secondary" id="atExportCurl">导出 cURL</button></div>
+</div>
+<div id="atResponse" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>能替代 Postman 吗？</h2><p>覆盖核心调试功能：请求构建、环境变量、历史记录、cURL 互转。云端同步/团队协作等高级功能暂不支持。</p><h2>支持自动化测试吗？</h2><p>支持简单断言(状态码/响应时间/JSON 路径)，批量运行规划中。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>请求会经过代理吗？</summary><p>直接从浏览器发起，受同源策略限制；跨域需目标服务器配置 CORS 或自行部署代理。</p></details><details class="faq-item"><summary>支持 GraphQL 吗？</summary><p>支持，Body 选择 GraphQL，输入 query/variables。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>历史记录/收藏/环境变量存本地 IndexedDB，不上传服务器。</p></details><details class="faq-item"><summary>能导出 Postman Collection 吗？</summary><p>支持导出 Postman Collection v2.1 格式 JSON。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>API 测试工具 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='api-tester';}); _r.unshift('api-tester'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var atMethod = document.getElementById('atMethod');
+var atUrl = document.getElementById('atUrl');
+var atSend = document.getElementById('atSend');
+var atTabs = document.getElementById('atTabs');
+var atTabPanels = document.getElementById('atTabPanels');
+var atParams = document.getElementById('atParams');
+var atHeaders = document.getElementById('atHeaders');
+var atBodyType = document.getElementById('atBodyType');
+var atBodyJson = document.getElementById('atBodyJson');
+var atBodyForm = document.getElementById('atBodyForm');
+var atAuthType = document.getElementById('atAuthType');
+var atAuthFields = document.getElementById('atAuthFields');
+var atSend = document.getElementById('atSend');
+var atSave = document.getElementById('atSave');
+var atImportCurl = document.getElementById('atImportCurl');
+var atExportCurl = document.getElementById('atExportCurl');
+var atResponse = document.getElementById('atResponse');
+var atAddParam = document.getElementById('atAddParam');
+var atAddHeader = document.getElementById('atAddHeader');
+var atBodyEnc = document.getElementById('atBodyEnc');
+var atAuthType = document.getElementById('atAuthType');
+var atBodyForm = document.getElementById('atBodyForm');
+var atBodyJson = document.getElementById('atBodyJson');
+
+var paramCount = 0, headerCount = 0, formCount = 0;
+
+function addKVRow(container, key, value, onRemove) {
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:4px;align-items:center;';
+  row.innerHTML = '<input type="checkbox" class="kv-enable" checked style="width:16px;">' +
+    '<input type="text" class="kv-key" placeholder="Key" value="' + (key || '') + '" style="flex:1;">' +
+    '<input type="text" class="kv-value" placeholder="Value" value="' + (value || '') + '" style="flex:2;">' +
+    '<button class="btn btn-secondary kv-del" style="padding:2px 6px;">删除</button>';
+  row.querySelector('.kv-del').addEventListener('click', function () { row.remove(); });
+  container.appendChild(row);
+  return row;
+}
+
+atAddParam.addEventListener('click', function () { addKVRow(atParams); });
+atAddHeader.addEventListener('click', function () { addKVRow(atHeaders); });
+
+atTabs.querySelectorAll('.tab-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    atTabs.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    atTabPanels.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    atTabPanels.querySelector('[data-tab="' + btn.dataset.tab + '"]').classList.add('active');
+  });
+});
+
+atBodyType.addEventListener('change', function () {
+  atBodyJson.style.display = atBodyType.value === 'json' ? 'block' : 'none';
+  atBodyForm.style.display = atBodyType.value === 'form' ? 'block' : 'none';
+});
+
+atAuthType.addEventListener('change', function () {
+  atAuthFields.innerHTML = '';
+  var type = atAuthType.value;
+  if (type === 'bearer') {
+    atAuthFields.innerHTML = '<input type="text" id="atBearer" placeholder="Token" style="width:100%;">';
+  } else if (type === 'basic') {
+    atAuthFields.innerHTML = '<div style="display:flex;gap:4px;"><input type="text" id="atBasicUser" placeholder="用户名" style="flex:1;"><input type="password" id="atBasicPass" placeholder="密码" style="flex:1;"></div>';
+  } else if (type === 'apikey') {
+    atAuthFields.innerHTML = '<div style="display:flex;gap:4px;"><input type="text" id="atApiKey" placeholder="Key" style="flex:1;"><input type="text" id="atApiValue" placeholder="Value" style="flex:2;"><select id="atApiIn"><option value="header">Header</option><option value="query">Query</option></select></div>';
+  }
+});
+
+function getParams() {
+  var obj = {};
+  atParams.querySelectorAll('div').forEach(function (row) {
+    if (row.querySelector('.kv-enable').checked) {
+      var k = row.querySelector('.kv-key').value.trim();
+      var v = row.querySelector('.kv-value').value;
+      if (k) obj[k] = v;
+    }
+  });
+  return obj;
+}
+
+function getHeaders() {
+  var obj = {};
+  atHeaders.querySelectorAll('div').forEach(function (row) {
+    if (row.querySelector('.kv-enable').checked) {
+      var k = row.querySelector('.kv-key').value.trim();
+      var v = row.querySelector('.kv-value').value;
+      if (k) obj[k] = v;
+    }
+  });
+  return obj;
+}
+
+function getBody() {
+  var type = atBodyType.value;
+  if (type === 'json') {
+    try { return JSON.parse(atBodyJson.value || '{}'); } catch (e) { return {}; }
+  } else if (type === 'form') {
+    var fd = new FormData();
+    atBodyForm.querySelectorAll('div').forEach(function (row) {
+      if (row.querySelector('.kv-enable').checked) {
+        var k = row.querySelector('.kv-key').value.trim();
+        var v = row.querySelector('.kv-value').value;
+        if (k) fd.append(k, v);
+      }
+    });
+    return fd;
+  } else if (type === 'urlencoded') {
+    var params = new URLSearchParams();
+    atBodyForm.querySelectorAll('div').forEach(function (row) {
+      if (row.querySelector('.kv-enable').checked) {
+        var k = row.querySelector('.kv-key').value.trim();
+        var v = row.querySelector('.kv-value').value;
+        if (k) params.append(k, v);
+      }
+    });
+    return params;
+  } else if (type === 'raw') {
+    return atBodyJson.value;
+  } else if (type === 'graphql') {
+    try { return JSON.parse(atBodyJson.value || '{}'); } catch (e) { return {}; }
+  }
+  return null;
+}
+
+function getAuthHeaders() {
+  var type = atAuthType.value, headers = {};
+  if (type === 'bearer') {
+    var token = document.getElementById('atBearer')?.value || '';
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+  } else if (type === 'basic') {
+    var u = document.getElementById('atBasicUser')?.value || '';
+    var p = document.getElementById('atBasicPass')?.value || '';
+    if (u || p) headers['Authorization'] = 'Basic ' + btoa(u + ':' + p);
+  } else if (type === 'apikey') {
+    var k = document.getElementById('atApiKey')?.value || '';
+    var v = document.getElementById('atApiValue')?.value || '';
+    var where = document.getElementById('atApiIn')?.value || 'header';
+    if (k && v) {
+      if (where === 'header') headers[k] = v;
+      else atUrl.value += (atUrl.value.includes('?') ? '&' : '?') + encodeURIComponent(k) + '=' + encodeURIComponent(v);
+    }
+  }
+  return headers;
+}
+
+var atResponse = document.getElementById('atResponse');
+
+atSend.addEventListener('click', async function () {
+  var url = atUrl.value.trim();
+  if (!url) { showToast('请输入 URL'); return; }
+  var method = atMethod.value;
+  var headers = Object.assign({}, getHeaders(), getAuthHeaders());
+  headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+  var body = getBody();
+  var init = { method: method, headers: headers };
+  if (body && method !== 'GET' && method !== 'HEAD') {
+    if (body instanceof FormData || body instanceof URLSearchParams) {
+      init.body = body;
+      delete headers['Content-Type'];
+    } else if (typeof body === 'object') {
+      init.body = JSON.stringify(body);
+    } else {
+      init.body = body;
+    }
+  }
+  var start = Date.now();
+  atResponse.innerHTML = '<div class="result-box">请求中...</div>';
+  try {
+    var resp = await fetch(url, init);
+    var elapsed = Date.now() - start;
+    var respHeaders = {};
+    resp.headers.forEach(function (v, k) { respHeaders[k] = v; });
+    var text = await resp.text();
+    var data;
+    try { data = JSON.parse(text); } catch (e) { data = text; }
+    var html = '<div class="result-box"><b>状态:</b> ' + resp.status + ' ' + resp.statusText + ' | ' + elapsed + 'ms</div>';
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+    html += '<div><b>响应头:</b><pre style="font-size:11px;max-height:200px;overflow:auto;">' + JSON.stringify(respHeaders, null, 2) + '</pre></div>';
+    html += '<div><b>响应体:</b><pre style="font-size:11px;max-height:300px;overflow:auto;">' + (typeof data === 'string' ? data : JSON.stringify(data, null, 2)) + '</pre></div>';
+    html += '</div>';
+    atResponse.innerHTML = html;
+  } catch (e) {
+    atResponse.innerHTML = '<div class="result-box" style="color:#dc2626;">请求失败: ' + e.message + '</div>';
+  }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
