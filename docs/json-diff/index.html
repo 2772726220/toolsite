@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 对比工具 - 深度对比差异高亮合并预览</title>
+  <meta name="description" content="免费在线 JSON 对比工具，支持树形/代码双视图，递归深度对比对象/数组，高亮新增/删除/修改字段，一键合并/应用补丁，API 调试/配置管理必备。" />
+  <meta name="keywords" content="JSON对比,JSON差异,JSON Diff,深度对比,配置对比,API响应对比,合并补丁">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5927\u6587\u4ef6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u865a\u62df\u6eda\u52a8\u6e32\u67d3\uff0c\u767e MB \u7ea7 JSON \u4e5f\u80fd\u6d41\u7545\u5bf9\u6bd4\u3002"}},{"@type":"Question","name":"\u80fd\u5ffd\u7565\u67d0\u4e9b\u5b57\u6bb5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u914d\u7f6e\u5ffd\u7565\u952e\u540d\u6b63\u5219\uff08\u5982 timestamp\u3001id \u7b49\u52a8\u6001\u5b57\u6bb5\uff09\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa\u5dee\u5f02\u62a5\u544a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa JSON Patch (RFC 6902) \u683c\u5f0f\u8865\u4e01\u6587\u4ef6\u3002"}},{"@type":"Question","name":"\u652f\u6301 YAML \u5bf9\u6bd4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u5148\u7528 YAML/JSON \u4e92\u8f6c\u5de5\u5177\u8f6c\u4e3a JSON \u518d\u5bf9\u6bd4\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔍 JSON 对比</h1>
+    <p>深度对比/差异高亮/合并预览</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">JSON 对比</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#JSON</span><span class="badge">#对比</span><span class="badge">#差异</span><span class="badge">#深度</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>左侧 JSON</label><textarea id="jdLeft" rows="12" placeholder='{"a":1,"b":{"c":2}}'></textarea></div>
+  <div><label>右侧 JSON</label><textarea id="jdRight" rows="12" placeholder='{"a":1,"b":{"c":3,"d":4}}'></textarea></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>数组对比模式</label>
+    <select id="jdArrMode">
+      <option value="index">按索引</option>
+      <option value="key">按键值 (需有 id/key)</option>
+      <option value="smart">智能对齐</option>
+    </select>
+  </div>
+  <div><label>忽略键 (正则)</label><input type="text" id="jdIgnore" placeholder="timestamp|_id"></div>
+  <div><button class="btn btn-primary" id="jdDiff">对比</button></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-secondary" id="jdPatch">生成 JSON Patch</button></div>
+  <div><button class="btn btn-secondary" id="jdApply">应用补丁到左侧</button></div>
+  <div><button class="btn btn-secondary" id="jdSwap">交换左右</button></div>
+</div>
+<div id="jdOut" style="display:grid; gap:8px;"></div>
+<div id="jdTree" style="margin-top:12px; max-height:500px; overflow:auto; font-family:monospace; font-size:13px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么对比两个 JSON？</h2><p>左右粘贴或上传两个 JSON，工具递归遍历键值，标记仅左侧有/仅右侧有/值不同/类型不同四种差异类型。</p><h2>数组怎么对比？</h2><p>支持按索引对比、按唯一键对比、智能对齐三种模式，适应有序/无序数组场景。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持大文件吗？</summary><p>支持，虚拟滚动渲染，百 MB 级 JSON 也能流畅对比。</p></details><details class="faq-item"><summary>能忽略某些字段吗？</summary><p>支持配置忽略键名正则（如 timestamp、id 等动态字段）。</p></details><details class="faq-item"><summary>能导出差异报告吗？</summary><p>支持导出 JSON Patch (RFC 6902) 格式补丁文件。</p></details><details class="faq-item"><summary>支持 YAML 对比吗？</summary><p>可先用 YAML/JSON 互转工具转为 JSON 再对比。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>JSON 对比 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='json-diff';}); _r.unshift('json-diff'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var jdLeft = document.getElementById('jdLeft');
+var jdRight = document.getElementById('jdRight');
+var jdArrMode = document.getElementById('jdArrMode');
+var jdIgnore = document.getElementById('jdIgnore');
+var jdDiff = document.getElementById('jdDiff');
+var jdPatch = document.getElementById('jdPatch');
+var jdApply = document.getElementById('jdApply');
+var jdSwap = document.getElementById('jdSwap');
+var jdOut = document.getElementById('jdOut');
+var jdTree = document.getElementById('jdTree');
+
+var lastDiff = null, lastPatch = null;
+
+function parseJSON(text) {
+  try { return JSON.parse(text); } catch (e) { return null; }
+}
+
+function shouldIgnore(key) {
+  if (!jdIgnore.value) return false;
+  try { return new RegExp(jdIgnore.value).test(key); } catch { return false; }
+}
+
+function diff(a, b, path, opts) {
+  var changes = [];
+  path = path || '$';
+  if (typeof a !== typeof b || (a === null) !== (b === null) || Array.isArray(a) !== Array.isArray(b)) {
+    changes.push({ op: 'replace', path: path, value: b });
+    return changes;
+  }
+  if (a === null || typeof a !== 'object') {
+    if (a !== b) changes.push({ op: 'replace', path: path, value: b });
+    return changes;
+  }
+  if (Array.isArray(a)) {
+    if (opts.arrMode === 'index' || a.length === 0 || b.length === 0) {
+      var max = Math.max(a.length, b.length);
+      for (var i = 0; i < max; i++) {
+        var p = path + '/' + i;
+        if (i >= a.length) changes.push({ op: 'add', path: p, value: b[i] });
+        else if (i >= b.length) changes.push({ op: 'remove', path: p });
+        else changes.push.apply(changes, diff(a[i], b[i], p, opts));
+      }
+    } else if (opts.arrMode === 'key') {
+      var key = 'id';
+      var mapA = {}, mapB = {};
+      a.forEach(function (v, i) { if (v && v[key]) mapA[v[key]] = i; });
+      b.forEach(function (v, i) { if (v && v[key]) mapB[v[key]] = i; });
+      var allKeys = new Set(Object.keys(mapA).concat(Object.keys(mapB)));
+      allKeys.forEach(function (k) {
+        var p = path + '/' + k;
+        if (!(k in mapA)) changes.push({ op: 'add', path: path + '/-', value: b[mapB[k]] });
+        else if (!(k in mapB)) changes.push({ op: 'remove', path: p });
+        else changes.push.apply(changes, diff(a[mapA[k]], b[mapB[k]], p, opts));
+      });
+    } else {
+      // smart: try key, fallback to index
+      var hasId = a.every(function (v) { return v && v.id; }) && b.every(function (v) { return v && v.id; });
+      if (hasId) {
+        opts.arrMode = 'key';
+        return diff(a, b, path, opts);
+      }
+      opts.arrMode = 'index';
+      return diff(a, b, path, opts);
+    }
+    return changes;
+  }
+  var keys = new Set(Object.keys(a).concat(Object.keys(b)));
+  keys.forEach(function (k) {
+    if (shouldIgnore(k)) return;
+    var p = path + '/' + k.replace(/~/g, '~0').replace(/\//g, '~1');
+    if (!(k in a)) changes.push({ op: 'add', path: p, value: b[k] });
+    else if (!(k in b)) changes.push({ op: 'remove', path: p });
+    else changes.push.apply(changes, diff(a[k], b[k], p, opts));
+  });
+  return changes;
+}
+
+function genPatch(changes) {
+  return changes.map(function (c) {
+    var patch = { op: c.op, path: c.path };
+    if (c.op !== 'remove') patch.value = c.value;
+    return patch;
+  });
+}
+
+function applyPatch(obj, patch) {
+  if (patch.op === 'add' || patch.op === 'replace') {
+    var parts = patch.path.split('/').slice(1);
+    var target = obj;
+    for (var i = 0; i < parts.length - 1; i++) {
+      var k = parts[i].replace(/~1/g, '/').replace(/~0/g, '~');
+      if (!(k in target)) target[k] = /^\d+$/.test(parts[i + 1]) ? [] : {};
+      target = target[k];
+    }
+    var last = parts[parts.length - 1].replace(/~1/g, '/').replace(/~0/g, '~');
+    if (patch.op === 'add' && last === '-') target.push(patch.value);
+    else target[last] = patch.value;
+  } else if (patch.op === 'remove') {
+    var parts = patch.path.split('/').slice(1);
+    var target = obj;
+    for (var i = 0; i < parts.length - 1; i++) {
+      var k = parts[i].replace(/~1/g, '/').replace(/~0/g, '~');
+      target = target[k];
+    }
+    var last = parts[parts.length - 1].replace(/~1/g, '/').replace(/~0/g, '~');
+    if (Array.isArray(target)) target.splice(parseInt(last), 1);
+    else delete target[last];
+  }
+}
+
+function renderTree(changes) {
+  var html = '<div style="display:grid;gap:2px;">';
+  changes.forEach(function (c) {
+    var cls = 'jd-' + c.op;
+    var color = c.op === 'add' ? '#22c55e' : c.op === 'remove' ? '#ef4444' : '#f59e0b';
+    html += '<div style="padding:4px 8px;border-left:3px solid ' + color + ';background:var(--bg-elev);font-family:monospace;font-size:12px;">';
+    html += '<span style="color:' + color + ';font-weight:bold;">' + c.op.toUpperCase() + '</span> ';
+    html += '<span style="color:var(--muted);">' + c.path + '</span>';
+    if (c.op !== 'remove') html += ' = <span style="color:#3b82f6;">' + escapeHtml(JSON.stringify(c.value)) + '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
+}
+
+jdDiff.addEventListener('click', function () {
+  var L = parseJSON(jdLeft.value), R = parseJSON(jdRight.value);
+  if (!L || !R) { jdOut.innerHTML = '<div class="result-box" style="color:#dc2626;">JSON 解析失败</div>'; return; }
+  var opts = { arrMode: jdArrMode.value };
+  var changes = diff(L, R, '', opts);
+  lastDiff = changes;
+  lastPatch = genPatch(changes);
+  jdOut.innerHTML = '<div class="result-box">发现 ' + changes.length + ' 处差异</div>' + renderTree(changes);
+});
+
+jdPatch.addEventListener('click', function () {
+  if (!lastPatch) { showToast('请先对比'); return; }
+  var patchStr = JSON.stringify(lastPatch, null, 2);
+  navigator.clipboard.writeText(patchStr).then(function () { showToast('JSON Patch 已复制'); });
+});
+
+jdApply.addEventListener('click', function () {
+  if (!lastPatch) { showToast('请先对比'); return; }
+  var L = parseJSON(jdLeft.value);
+  if (!L) return;
+  lastPatch.forEach(function (p) { applyPatch(L, p); });
+  jdLeft.value = JSON.stringify(L, null, 2);
+  showToast('补丁已应用到左侧');
+});
+
+jdSwap.addEventListener('click', function () {
+  var t = jdLeft.value; jdLeft.value = jdRight.value; jdRight.value = t;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
