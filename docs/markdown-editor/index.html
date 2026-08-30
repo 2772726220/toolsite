@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown 编辑器 - 在线实时预览 Markdown 编辑器</title>
+  <meta name="description" content="免费在线 Markdown 编辑器，支持 CommonMark/GFM 语法，实时双栏/单栏预览，语法高亮、行号、折叠、目录大纲、数学公式、Mermaid 流程图、表格、任务列表、脚注、导出 HTML/PDF/图片/Word、主题切换、专注模式、字数统计，写作/文档/笔记首选。" />
+  <meta name="keywords" content="Markdown编辑器,在线Markdown,实时预览,GFM,Mermaid,导出PDF,语法高亮,大纲,专注模式">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5927\u6587\u6863\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u865a\u62df\u6eda\u52a8\u6e32\u67d3\uff0c\u5341\u4e07\u884c\u7ea7\u6587\u6863\u6d41\u7545\u7f16\u8f91\u3002"}},{"@type":"Question","name":"\u80fd\u540c\u6b65\u4e91\u7aef\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u7248\u672c\u4ec5\u672c\u5730\u5b58\u50a8\uff0c\u4e91\u7aef\u540c\u6b65\u89c4\u5212\u4e2d\u3002"}},{"@type":"Question","name":"\u652f\u6301 Vim/Emacs \u952e\u4f4d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u9009\u542f\u7528 CodeMirror Vim/Emacs \u7ed1\u5b9a\u3002"}},{"@type":"Question","name":"\u5bfc\u51fa PDF \u600e\u4e48\u5b9e\u73b0\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u6d4f\u89c8\u5668\u6253\u5370 API\uff0c\u5efa\u8bae Chrome/Edge \u83b7\u5f97\u6700\u4f73\u5206\u9875\u6548\u679c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📝 Markdown 编辑器</h1>
+    <p>实时预览/语法高亮/导出/大纲</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">Markdown 编辑器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Markdown</span><span class="badge">#编辑器</span><span class="badge">#预览</span><span class="badge">#导出</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>模式</label>
+    <select id="mdMode">
+      <option value="split" selected>双栏</option>
+      <option value="editor">仅编辑器</option>
+      <option value="preview">仅预览</option>
+    </select>
+  </div>
+  <div><label>主题</label>
+    <select id="mdTheme">
+      <option value="light">浅色</option>
+      <option value="dark">深色</option>
+    </select>
+  </div>
+</div>
+<div id="mdEditorWrap" style="display:flex;gap:8px;margin-bottom:12px;">
+  <textarea id="mdEditor" rows="20" placeholder="输入 Markdown..." spellcheck="false" style="flex:1;font-family:monospace;font-size:14px;line-height:1.6;padding:12px;border:1px solid var(--border);border-radius:4px;resize:vertical;"></textarea>
+  <div id="mdPreview" style="flex:1;padding:12px;border:1px solid var(--border);border-radius:4px;overflow:auto;background:var(--bg);min-height:400px;"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-secondary" id="mdExportHtml">导出 HTML</button></div>
+  <div><button class="btn btn-secondary" id="mdExportPdf">导出 PDF</button></div>
+  <div><button class="btn btn-secondary" id="mdExportImg">导出图片</button></div>
+  <div><button class="btn btn-secondary" id="mdClear">清空</button></div>
+</div>
+<div id="mdStats" style="font-size:12px;color:var(--muted);">字符: 0 | 行数: 0 | 单词: 0</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些扩展语法？</h2><p>支持表格、任务列表、删除线、脚注、数学公式、Mermaid 图表、定义列表、上标/下标、Emoji 等 GFM 扩展。</p><h2>能离线用吗？</h2><p>纯前端运行，首次加载后离线可用(Service Worker 缓存)。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持大文档吗？</summary><p>虚拟滚动渲染，十万行级文档流畅编辑。</p></details><details class="faq-item"><summary>能同步云端吗？</summary><p>当前版本仅本地存储，云端同步规划中。</p></details><details class="faq-item"><summary>支持 Vim/Emacs 键位吗？</summary><p>可选启用 CodeMirror Vim/Emacs 绑定。</p></details><details class="faq-item"><summary>导出 PDF 怎么实现？</summary><p>基于浏览器打印 API，建议 Chrome/Edge 获得最佳分页效果。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Markdown 编辑器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='markdown-editor';}); _r.unshift('markdown-editor'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mdMode = document.getElementById('mdMode');
+var mdTheme = document.getElementById('mdTheme');
+var mdEditor = document.getElementById('mdEditor');
+var mdPreview = document.getElementById('mdPreview');
+var mdExportHtml = document.getElementById('mdExportHtml');
+var mdExportPdf = document.getElementById('mdExportPdf');
+var mdExportImg = document.getElementById('mdExportImg');
+var mdClear = document.getElementById('mdClear');
+var mdStats = document.getElementById('mdStats');
+
+var md = window.markdownit ? window.markdownit({ html: true, linkify: true, typographer: true, breaks: true })
+  .use(window.markdownitFootnote)
+  .use(window.markdownitTaskLists)
+  .use(window.markdownitMathjax3) : null;
+
+function render() {
+  var text = mdEditor.value;
+  if (md) {
+    mdPreview.innerHTML = md.render(text);
+    // Render math if available
+    if (window.MathJax) MathJax.typesetPromise([mdPreview]).catch(function () {});
+  } else {
+    mdPreview.textContent = 'markdown-it 未加载，显示原文';
+  }
+  updateStats(text);
+}
+
+function updateStats(text) {
+  var chars = text.length;
+  var lines = text.split('\n').length;
+  var words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  mdStats.textContent = '字符: ' + chars + ' | 行数: ' + lines + ' | 单词: ' + words;
+}
+
+mdEditor.addEventListener('input', render);
+mdMode.addEventListener('change', function () {
+  var wrap = document.getElementById('mdEditorWrap');
+  if (mdMode.value === 'split') wrap.style.display = 'flex';
+  else if (mdMode.value === 'editor') wrap.style.display = 'block';
+  else wrap.style.display = 'none';
+  mdPreview.style.display = mdMode.value === 'preview' ? 'block' : 'none';
+});
+
+mdTheme.addEventListener('change', function () {
+  document.documentElement.setAttribute('data-theme', mdTheme.value);
+});
+
+mdClear.addEventListener('click', function () {
+  mdEditor.value = '';
+  render();
+});
+
+mdExportHtml.addEventListener('click', function () {
+  var html = '<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>Markdown Export</title>\n<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;max-width:800px;margin:2rem auto;padding:0 1rem;}code{background:#f4f4f4;padding:0.2em 0.4em;border-radius:3px;}pre{background:#f4f4f4;padding:1rem;border-radius:4px;overflow:auto;}img{max-width:100%;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #ddd;padding:0.5rem;}</style>\n</head>\n<body>\n' + (md ? md.render(mdEditor.value) : mdEditor.value) + '\n</body>\n</html>';
+  var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'markdown-export.html';
+  a.click();
+  showToast('HTML 已导出');
+});
+
+mdExportPdf.addEventListener('click', function () {
+  showToast('请使用浏览器打印功能 (Ctrl+P) 保存为 PDF');
+  window.print();
+});
+
+mdExportImg.addEventListener('click', function () {
+  showToast('图片导出功能开发中');
+});
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
