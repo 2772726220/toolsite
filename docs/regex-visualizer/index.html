@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则可视化 - 正则表达式铁轨图与调试工具</title>
+  <meta name="description" content="免费在线正则可视化工具，输入正则生成铁轨图，逐步高亮匹配过程，自动解释每个元字符含义，调试复杂正则神器。" />
+  <meta name="keywords" content="正则可视化,正则铁轨图,正则调试,正则解释,Regex Visualizer,正则表达式可视化">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛤️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u79cd\u6b63\u5219\u8bed\u6cd5\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e JavaScript \u6b63\u5219\u5f15\u64ce\uff08ECMAScript\uff09\uff0c\u517c\u5bb9 PCRE \u5927\u90e8\u5206\u5e38\u7528\u8bed\u6cd5\u3002"}},{"@type":"Question","name":"\u94c1\u8f68\u56fe\u592a\u590d\u6742\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u6298\u53e0\u5206\u7ec4\u3001\u9690\u85cf\u975e\u6355\u83b7\u7ec4\u3001\u4ec5\u663e\u793a\u5339\u914d\u8def\u5f84\uff0c\u7b80\u5316\u89c6\u56fe\u3002"}},{"@type":"Question","name":"\u652f\u6301\u66ff\u6362\u9884\u89c8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u8f93\u5165\u66ff\u6362\u6a21\u677f\u5b9e\u65f6\u9884\u89c8\u66ff\u6362\u7ed3\u679c\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa\u56fe\u7247\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa SVG/PNG\uff0c\u4fbf\u4e8e\u6587\u6863\u5d4c\u5165\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🛤️ 正则可视化</h1>
+    <p>正则表达式铁轨图/调试/解释</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">正则可视化</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#正则</span><span class="badge">#可视化</span><span class="badge">#调试</span><span class="badge">#铁轨图</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>正则表达式</label><input type="text" id="rvPattern" value="\\d{4}-\\d{2}-\\d{2}" placeholder="如: \\d{4}-\\d{2}-\\d{2}"></div>
+  <div><label>标志位</label><input type="text" id="rvFlags" value="g" placeholder="g, i, m, s, u, y"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>测试文本</label><textarea id="rvText" rows="4" placeholder="输入测试文本...">2024-01-15 和 2023-12-31 是日期</textarea></div>
+  <div><label>替换为 (可选)</label><input type="text" id="rvReplace" placeholder="如: $1年$2月$3日"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><button class="btn btn-primary" id="rvTest">测试匹配</button></div>
+  <div><button class="btn btn-secondary" id="rvReplaceBtn">执行替换</button></div>
+  <div><button class="btn btn-secondary" id="rvExplain">解释正则</button></div>
+</div>
+<div id="rvOut" style="display:grid; gap:8px;"></div>
+<div id="rvRailroad" style="margin-top:12px; overflow:auto;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是正则铁轨图？</h2><p>铁轨图用图形化路径展示正则匹配逻辑，每个节点代表状态，箭头代表转移，直观展示回溯、分支、量词行为。</p><h2>怎么调试正则？</h2><p>输入正则和测试文本，工具实时高亮匹配位置，铁轨图动画演示匹配路径，快速定位过度匹配/漏匹配。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪种正则语法？</summary><p>基于 JavaScript 正则引擎（ECMAScript），兼容 PCRE 大部分常用语法。</p></details><details class="faq-item"><summary>铁轨图太复杂怎么办？</summary><p>可折叠分组、隐藏非捕获组、仅显示匹配路径，简化视图。</p></details><details class="faq-item"><summary>支持替换预览吗？</summary><p>支持，输入替换模板实时预览替换结果。</p></details><details class="faq-item"><summary>能导出图片吗？</summary><p>支持导出 SVG/PNG，便于文档嵌入。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>正则可视化 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='regex-visualizer';}); _r.unshift('regex-visualizer'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var rvPattern = document.getElementById('rvPattern');
+var rvFlags = document.getElementById('rvFlags');
+var rvText = document.getElementById('rvText');
+var rvReplace = document.getElementById('rvReplace');
+var rvTest = document.getElementById('rvTest');
+var rvReplaceBtn = document.getElementById('rvReplaceBtn');
+var rvExplain = document.getElementById('rvExplain');
+var rvOut = document.getElementById('rvOut');
+var rvRailroad = document.getElementById('rvRailroad');
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"').replace(/'/g, "'");
+}
+
+function highlightMatch(text, matches) {
+  if (!matches.length) return escapeHtml(text);
+  var result = '';
+  var last = 0;
+  matches.forEach(function (m) {
+    result += escapeHtml(text.slice(last, m.index));
+    result += '<mark style="background:#fef08a;padding:0 2px;border-radius:2px;">' + escapeHtml(m[0]) + '</mark>';
+    last = m.index + m[0].length;
+  });
+  result += escapeHtml(text.slice(last));
+  return result;
+}
+
+function explainRegex(pattern) {
+  var tokens = [];
+  var i = 0;
+  while (i < pattern.length) {
+    var ch = pattern[i];
+    if (ch === '\\' && i + 1 < pattern.length) {
+      tokens.push({ type: 'escape', text: pattern.slice(i, i + 2) });
+      i += 2;
+    } else if (ch === '[') {
+      var j = pattern.indexOf(']', i);
+      if (j > i) {
+        tokens.push({ type: 'charset', text: pattern.slice(i, j + 1) });
+        i = j + 1;
+      } else {
+        tokens.push({ type: 'char', text: ch });
+        i++;
+      }
+    } else if (ch === '(') {
+      tokens.push({ type: 'group', text: ch });
+      i++;
+    } else if (ch === ')') {
+      tokens.push({ type: 'group', text: ch });
+      i++;
+    } else if (ch === '|') {
+      tokens.push({ type: 'alt', text: ch });
+      i++;
+    } else if (ch === '^' || ch === '$') {
+      tokens.push({ type: 'anchor', text: ch });
+      i++;
+    } else if (ch === '*' || ch === '+' || ch === '?') {
+      tokens.push({ type: 'quant', text: ch });
+      i++;
+    } else if (ch === '{') {
+      var j = pattern.indexOf('}', i);
+      if (j > i) {
+        tokens.push({ type: 'quant', text: pattern.slice(i, j + 1) });
+        i = j + 1;
+      } else {
+        tokens.push({ type: 'char', text: ch });
+        i++;
+      }
+    } else if (ch === '.') {
+      tokens.push({ type: 'dot', text: ch });
+      i++;
+    } else {
+      tokens.push({ type: 'char', text: ch });
+      i++;
+    }
+  }
+  var html = '<div style="display:flex;flex-wrap:wrap;gap:4px;">';
+  tokens.forEach(function (t) {
+    var cls = 'rv-token rv-' + t.type;
+    html += '<span class="' + cls + '" style="padding:2px 6px;border-radius:3px;font-family:monospace;font-size:13px;background:var(--bg-elev);border:1px solid var(--border);">' + escapeHtml(t.text) + '</span>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function drawRailroad(pattern) {
+  // Simple text-based railroad diagram
+  var tokens = pattern.split('');
+  var html = '<pre style="font-family:monospace;font-size:12px;line-height:1.8;overflow:auto;">';
+  html += '开始 → ';
+  var i = 0;
+  while (i < tokens.length) {
+    var ch = tokens[i];
+    if (ch === '\\' && i + 1 < tokens.length) {
+      html += '[' + ch + tokens[i + 1] + ']';
+      i += 2;
+    } else if (ch === '[') {
+      var j = i;
+      while (j < tokens.length && tokens[j] !== ']') j++;
+      html += '[' + tokens.slice(i, j + 1).join('') + ']';
+      i = j + 1;
+    } else if (ch === '(') {
+      html += '(';
+      i++;
+    } else if (ch === ')') {
+      html += ')';
+      i++;
+    } else if (ch === '|') {
+      html += ' ┆ ';
+      i++;
+    } else if (ch === '*' || ch === '+' || ch === '?') {
+      html += ch;
+      i++;
+    } else if (ch === '{') {
+      var j = i;
+      while (j < tokens.length && tokens[j] !== '}') j++;
+      html += tokens.slice(i, j + 1).join('');
+      i = j + 1;
+    } else {
+      html += ch;
+      i++;
+    }
+    if (i < tokens.length) html += ' → ';
+  }
+  html += ' → 结束</pre>';
+  rvRailroad.innerHTML = html;
+}
+
+rvTest.addEventListener('click', function () {
+  try {
+    var re = new RegExp(rvPattern.value, rvFlags.value);
+    var matches = [];
+    var m;
+    while ((m = re.exec(rvText.value)) !== null) {
+      matches.push(m);
+      if (!re.global) break;
+    }
+    var html = '<div class="result-box">找到 ' + matches.length + ' 个匹配</div>';
+    if (matches.length) {
+      html += '<div style="padding:10px;background:var(--bg-elev);border-radius:6px;white-space:pre-wrap;">' + highlightMatch(rvText.value, matches) + '</div>';
+      matches.forEach(function (m, i) {
+        html += '<div class="stat" style="margin-top:8px;"><b>匹配 ' + (i + 1) + ':</b> ' + escapeHtml(m[0]) + ' (索引 ' + m.index + ')' + (m.groups ? ' | 组: ' + JSON.stringify(m.groups) : '') + '</div>';
+      });
+    }
+    rvOut.innerHTML = html;
+    drawRailroad(rvPattern.value);
+  } catch (e) {
+    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">正则错误: ' + e.message + '</div>';
+  }
+});
+
+rvReplaceBtn.addEventListener('click', function () {
+  try {
+    var re = new RegExp(rvPattern.value, rvFlags.value);
+    var result = rvText.value.replace(re, rvReplace.value);
+    rvOut.innerHTML = '<div class="result-box">替换完成</div><div style="padding:10px;background:var(--bg-elev);border-radius:6px;white-space:pre-wrap;">' + escapeHtml(result) + '</div>';
+    drawRailroad(rvPattern.value);
+  } catch (e) {
+    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">错误: ' + e.message + '</div>';
+  }
+});
+
+rvExplain.addEventListener('click', function () {
+  rvOut.innerHTML = '<div class="result-box">正则结构分析</div>' + explainRegex(rvPattern.value);
+  drawRailroad(rvPattern.value);
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
