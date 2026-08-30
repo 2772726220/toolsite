@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>色轮配色生成器 - 配色方案与和谐色在线生成</title>
+  <meta name="description" content="免费在线色轮配色工具，支持单色、互补、分裂互补、三角色、矩形、类似色六大和谐规则，拖拽色相/饱和度/明度实时生成配色方案，导出 CSS/SCSS/Tailwind/JSON，设计师必备。" />
+  <meta name="keywords" content="色轮配色,配色方案生成,和谐色,色相环,互补色,三角色,单色配色,设计配色工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u8272\u76f2\u5b89\u5168\u68c0\u67e5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e WCAG \u5bf9\u6bd4\u5ea6\u68c0\u6d4b\uff0c\u6807\u6ce8\u4e0d\u8fbe\u6807\u7ec4\u5408\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u9501\u5b9a\u67d0\u4e2a\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u9501\u5b9a\u4e3b\u8272\uff0c\u5176\u4f59\u8272\u968f\u89c4\u5219\u81ea\u52a8\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5bfc\u51fa\u56fe\u7247\u8272\u677f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5bfc\u51fa PNG \u8272\u677f\u56fe\uff0c\u542b\u8272\u503c\u6807\u6ce8\u3002"}},{"@type":"Question","name":"\u652f\u6301 P3 \u5e7f\u8272\u57df\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u7248\u672c\u57fa\u4e8e sRGB\uff0cP3 \u652f\u6301\u89c4\u5212\u4e2d\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎨 色轮配色</h1>
+    <p>单色/互补/三角色/类似色/分裂互补</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">色轮配色</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#色轮</span><span class="badge">#配色</span><span class="badge">#和谐</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>主色 (HEX/HSL/RGB)</label><input type="text" id="chBase" value="#4f46e5" placeholder="#4f46e5 或 hsl(239,84%,67%)"></div>
+  <div><label>色相偏移</label><input type="range" id="chHue" min="0" max="360" value="0"><span id="chHueVal">0°</span></div>
+  <div><label>方案</label>
+    <select id="chScheme">
+      <option value="mono">单色</option>
+      <option value="complement">互补</option>
+      <option value="split">分裂互补</option>
+      <option value="triad">三角色</option>
+      <option value="tetrad">矩形/双互补</option>
+      <option value="analogous">类似色</option>
+    </select>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>饱和度</label><input type="range" id="chSat" min="0" max="100" value="50"><span id="chSatVal">50%</span></div>
+  <div><label>明度</label><input type="range" id="chLight" min="0" max="100" value="50"><span id="chLightVal">50%</span></div>
+  <div><button class="btn btn-primary" id="chGen">生成配色</button></div>
+</div>
+<div id="chPalette" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-top:12px;"></div>
+<div id="chExport" style="margin-top:12px; display:grid; gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>色轮配色原理？</h2><p>基于色相环几何关系：互补色相差 180°，三角色 120°，类似色相邻 30°，分裂互补取互补色两侧各 30°，保证视觉和谐。</p><h2>怎么用生成的配色？</h2><p>复制 HEX/RGB/HSL 值到设计软件或 CSS，支持一键导出 Tailwind config、SCSS 变量、JSON 供代码直接引用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持色盲安全检查吗？</summary><p>内置 WCAG 对比度检测，标注不达标组合。</p></details><details class="faq-item"><summary>可以锁定某个颜色吗？</summary><p>支持锁定主色，其余色随规则自动计算。</p></details><details class="faq-item"><summary>支持导出图片色板吗？</summary><p>支持导出 PNG 色板图，含色值标注。</p></details><details class="faq-item"><summary>支持 P3 广色域吗？</summary><p>当前版本基于 sRGB，P3 支持规划中。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>色轮配色 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='color-harmony';}); _r.unshift('color-harmony'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var chBase = document.getElementById('chBase');
+var chHue = document.getElementById('chHue');
+var chHueVal = document.getElementById('chHueVal');
+var chSat = document.getElementById('chSat');
+var chSatVal = document.getElementById('chSatVal');
+var chLight = document.getElementById('chLight');
+var chLightVal = document.getElementById('chLightVal');
+var chScheme = document.getElementById('chScheme');
+var chGen = document.getElementById('chGen');
+var chPalette = document.getElementById('chPalette');
+var chExport = document.getElementById('chExport');
+
+function parseColor(str) {
+  str = str.trim();
+  if (str.startsWith('#')) {
+    var hex = str.slice(1);
+    if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+    var r = parseInt(hex.slice(0, 2), 16), g = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
+    return rgbToHsl(r, g, b);
+  }
+  var m = str.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/i);
+  if (m) return { h: parseInt(m[1]), s: parseInt(m[2]), l: parseInt(m[3]) };
+  m = str.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/i);
+  if (m) return rgbToHsl(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]));
+  return { h: 240, s: 50, l: 50 };
+}
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+  if (max === min) h = s = 0;
+  else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h *= 60;
+  }
+  return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  var c = (1 - Math.abs(2 * l - 1)) * s;
+  var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  var m = l - c / 2;
+  var r = 0, g = 0, b = 0;
+  if (h < 60) { r = c; g = x; }
+  else if (h < 120) { r = x; g = c; }
+  else if (h < 180) { g = c; b = x; }
+  else if (h < 240) { g = x; b = c; }
+  else if (h < 300) { r = x; b = c; }
+  else { r = c; b = x; }
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
+  };
+}
+
+function toHex(r, g, b) {
+  return '#' + [r, g, b].map(function (v) { return v.toString(16).padStart(2, '0'); }).join('');
+}
+
+function toHslStr(h, s, l) { return 'hsl(' + h + ', ' + s + '%, ' + l + '%)'; }
+function toRgbStr(r, g, b) { return 'rgb(' + r + ', ' + g + ', ' + b + ')'; }
+
+function generateScheme(base, scheme) {
+  var colors = [base];
+  if (scheme === 'mono') {
+    for (var i = 1; i < 5; i++) colors.push({ h: base.h, s: Math.max(0, base.s - i * 10), l: Math.min(100, base.l + i * 10) });
+    for (var i = 1; i < 3; i++) colors.push({ h: base.h, s: Math.min(100, base.s + i * 10), l: Math.max(0, base.l - i * 10) });
+  } else if (scheme === 'complement') {
+    colors.push({ h: (base.h + 180) % 360, s: base.s, l: base.l });
+  } else if (scheme === 'split') {
+    colors.push({ h: (base.h + 150) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h + 210) % 360, s: base.s, l: base.l });
+  } else if (scheme === 'triad') {
+    colors.push({ h: (base.h + 120) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h + 240) % 360, s: base.s, l: base.l });
+  } else if (scheme === 'tetrad') {
+    colors.push({ h: (base.h + 90) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h + 180) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h + 270) % 360, s: base.s, l: base.l });
+  } else if (scheme === 'analogous') {
+    colors.push({ h: (base.h + 30) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h + 60) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h - 30 + 360) % 360, s: base.s, l: base.l });
+    colors.push({ h: (base.h - 60 + 360) % 360, s: base.s, l: base.l });
+  }
+  return colors.slice(0, 8);
+}
+
+function render() {
+  var base = parseColor(chBase.value);
+  base.h = (base.h + parseInt(chHue.value)) % 360;
+  base.s = parseInt(chSat.value);
+  base.l = parseInt(chLight.value);
+  var colors = generateScheme(base, chScheme.value);
+  var html = '';
+  colors.forEach(function (c, i) {
+    var rgb = hslToRgb(c.h, c.s, c.l);
+    var hex = toHex(rgb.r, rgb.g, rgb.b);
+    var hsl = toHslStr(c.h, c.s, c.l);
+    var rgbStr = toRgbStr(rgb.r, rgb.g, rgb.b);
+    var label = i === 0 ? '主色' : '配色 ' + i;
+    html += '<div class="stat" style="padding:16px;text-align:center;background:' + hex + ';border-radius:8px;color:' + (c.l > 60 ? '#000' : '#fff') + ';min-height:100px;display:flex;flex-direction:column;justify-content:center;">';
+    html += '<div style="font-weight:bold;font-size:14px;">' + label + '</div>';
+    html += '<div style="font-family:monospace;font-size:12px;margin:4px 0;">' + hex.toUpperCase() + '</div>';
+    html += '<div style="font-family:monospace;font-size:11px;opacity:.8;">' + hsl + '</div>';
+    html += '<div style="font-family:monospace;font-size:11px;opacity:.8;">' + rgbStr + '</div>';
+    html += '<button class="btn btn-secondary" style="margin-top:8px;padding:4px 8px;font-size:11px;" data-copy="' + hex + '">复制</button>';
+    html += '</div>';
+  });
+  chPalette.innerHTML = html;
+  chPalette.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(btn.dataset.copy).then(function () { showToast('已复制: ' + btn.dataset.copy); });
+    });
+  });
+  chExport.innerHTML = '<div class="result-box"><b>导出:</b> <button class="btn btn-secondary" id="chCopyCss">CSS 变量</button> <button class="btn btn-secondary" id="chCopyTailwind">Tailwind config</button> <button class="btn btn-secondary" id="chCopyJson">JSON</button></div>';
+  document.getElementById('chCopyCss').addEventListener('click', function () {
+    var css = ':root {\n' + colors.map(function (c, i) {
+      var rgb = hslToRgb(c.h, c.s, c.l);
+      return '  --color-' + (i === 0 ? 'primary' : i) + ': ' + toHex(rgb.r, rgb.g, rgb.b) + ';';
+    }).join('\n') + '\n}';
+    navigator.clipboard.writeText(css).then(function () { showToast('CSS 变量已复制'); });
+  });
+  document.getElementById('chCopyTailwind').addEventListener('click', function () {
+    var js = 'module.exports = {\n  theme: {\n    extend: {\n      colors: {\n' + colors.map(function (c, i) {
+      var rgb = hslToRgb(c.h, c.s, c.l);
+      return '        color' + (i === 0 ? '' : i) + ': "' + toHex(rgb.r, rgb.g, rgb.b) + '",';
+    }).join('\n') + '\n      }\n    }\n  }\n};';
+    navigator.clipboard.writeText(js).then(function () { showToast('Tailwind config 已复制'); });
+  });
+  document.getElementById('chCopyJson').addEventListener('click', function () {
+    var json = JSON.stringify(colors.map(function (c) {
+      var rgb = hslToRgb(c.h, c.s, c.l);
+      return { hex: toHex(rgb.r, rgb.g, rgb.b), hsl: 'hsl(' + c.h + ', ' + c.s + '%, ' + c.l + '%)', rgb: 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')' };
+    }), null, 2);
+    navigator.clipboard.writeText(json).then(function () { showToast('JSON 已复制'); });
+  });
+}
+
+chHue.addEventListener('input', function () { chHueVal.textContent = chHue.value + '°'; render(); });
+chSat.addEventListener('input', function () { chSatVal.textContent = chSat.value + '%'; render(); });
+chLight.addEventListener('input', function () { chLightVal.textContent = chLight.value + '%'; render(); });
+chScheme.addEventListener('change', render);
+chGen.addEventListener('click', render);
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
