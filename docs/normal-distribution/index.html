@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正态分布计算器 - 在线 Z 值概率与区间面积换算工具</title>
+  <meta name="description" content="在线正态分布计算器，支持 Z 值→概率、概率→Z 值、值域→概率区间面积三种模式，内置高精度 erf 累积分布函数与反函数，输出 P(Z≤z)、右侧概率、区间面积与经验法则对照，统计学与质量分析必备。" />
+  <meta name="keywords" content="正态分布,Z值,累积概率,标准正态,CDF,概率计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u00b11\u03c3 \u00b12\u03c3 \u00b13\u03c3 \u662f\u591a\u5927\u533a\u95f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b63\u6001\u5206\u5e03\u4e2d\u7ea6 68.27% \u6570\u636e\u843d\u5728 \u00b11\u03c3\u300195.45% \u843d\u5728 \u00b12\u03c3\u300199.73% \u843d\u5728 \u00b13\u03c3\uff0c\u8fd9\u662f\u7ecf\u9a8c\u6cd5\u5219\u3002"}},{"@type":"Question","name":"\u975e\u6807\u51c6\u6b63\u6001\u600e\u4e48\u7b97\u9762\u79ef\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ed9\u5b9a\u5747\u503c \u03bc \u4e0e\u6807\u51c6\u5dee \u03c3 \u65f6\uff0c\u5148\u8f6c\u6807\u51c6\u5206 z = (X-\u03bc)/\u03c3\uff0c\u518d\u7528\u6807\u51c6\u6b63\u6001\u7d2f\u79ef\u5206\u5e03\u51fd\u6570\u6c42\u533a\u95f4\u9762\u79ef\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528 erf \u903c\u8fd1\u516c\u5f0f\u4e0e 200 \u6b21\u4e8c\u5206\u8fed\u4ee3\uff0c\u03a6(1.96)\u22480.97500\u3001\u5206\u4f4d\u6570\u7b49\u5173\u952e\u503c\u53ef\u8fbe 5-6 \u4f4d\u5c0f\u6570\uff0c\u8db3\u591f\u6559\u5b66\u4e0e\u8d28\u68c0\u4f7f\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎯 正态分布计算</h1>
+    <p>Z 值概率与区间面积计算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">正态分布计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#正态分布</span><span class="badge">#Z值</span><span class="badge">#概率</span><span class="badge">#CDF</span>
+<div class="field">
+  <label>计算模式</label>
+  <select id="ndMode">
+    <option value="z">给定 Z 值 → 概率</option>
+    <option value="p" selected>给定概率 → Z 值</option>
+    <option value="range">值域 → 概率</option>
+  </select>
+</div>
+<div id="ndPanel" style="display:flex;flex-direction:column;gap:10px;">
+  <div class="field nd-z"><label for="ndZ">Z 值（标准差单位）</label><input type="number" id="ndZ" value="1.96" step="0.01"></div>
+  <div class="field nd-p"><label for="ndP">累计概率（0 – 1，左侧面积）</label><input type="number" id="ndP" value="0.975" min="0" max="1" step="0.001"></div>
+  <div class="field nd-range"><label for="ndA">从（下限 X₁）</label><input type="number" id="ndA" value="-1" step="0.1"></div>
+  <div class="field nd-range"><label for="ndB">到（上限 X₂）</label><input type="number" id="ndB" value="1" step="0.1"></div>
+  <div class="field nd-range"><label for="ndMU">均值 μ</label><input type="number" id="ndMU" value="0" step="0.1"></div>
+  <div class="field nd-range"><label for="ndSD">标准差 σ</label><input type="number" id="ndSD" value="1" min="0.001" step="0.1"></div>
+</div>
+<button class="btn btn-primary" id="ndBtn">计算</button>
+<div id="ndOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Z 值概率怎么算？</h2><p>Z 值对应的左侧累积概率 Φ(z) 用误差函数 erf 精确计算；右侧概率 = 1 - Φ(z)；标准正态分布均值 0 标准差 1。</p><h2>概率反推 Z 值怎么算？</h2><p>用二分法反解标准正态累积分布函数，得到满足 P(Z ≤ z) = p 的分位数，常用作 90%/95%/99% 置信区间临界值，如 ±1.645/±1.96/±2.576。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>±1σ ±2σ ±3σ 是多大区间？</summary><p>正态分布中约 68.27% 数据落在 ±1σ、95.45% 落在 ±2σ、99.73% 落在 ±3σ，这是经验法则。</p></details><details class="faq-item"><summary>非标准正态怎么算面积？</summary><p>给定均值 μ 与标准差 σ 时，先转标准分 z = (X-μ)/σ，再用标准正态累积分布函数求区间面积。</p></details><details class="faq-item"><summary>结果精度如何？</summary><p>采用 erf 逼近公式与 200 次二分迭代，Φ(1.96)≈0.97500、分位数等关键值可达 5-6 位小数，足够教学与质检使用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>正态分布计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='normal-distribution';}); _r.unshift('normal-distribution'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ndMode = document.getElementById('ndMode');
+var ndZ = document.getElementById('ndZ');
+var ndP = document.getElementById('ndP');
+var ndA = document.getElementById('ndA');
+var ndB = document.getElementById('ndB');
+var ndMU = document.getElementById('ndMU');
+var ndSD = document.getElementById('ndSD');
+var ndBtn = document.getElementById('ndBtn');
+var ndOut = document.getElementById('ndOut');
+
+function erf(x) {
+  var sign = x < 0 ? -1 : 1;
+  x = Math.abs(x);
+  var t = 1 / (1 + 0.3275911 * x);
+  var y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+  return sign * y;
+}
+
+function phi(z) {
+  return 0.5 * (1 + erf(z / Math.SQRT2));
+}
+
+function phiInverse(p) {
+  p = Math.min(Math.max(p, 1e-12), 1 - 1e-12);
+  var lo = -8, hi = 8, mid = 0;
+  for (var i = 0; i < 200; i++) {
+    mid = (lo + hi) / 2;
+    if (phi(mid) < p) lo = mid; else hi = mid;
+  }
+  return mid;
+}
+
+function ndZone(p) {
+  if (p >= 0.841344746) return '常见值：+1σ ≈ 0.8413，+1.645 ≈ 0.95，+1.96 ≈ 0.975，+2.576 ≈ 0.995';
+  if (p >= 0.5) return '常见值：+1σ ≈ 0.8413，+1.645 ≈ 0.95，+1.96 ≈ 0.975';
+  if (p >= 0.158655254) return '常见值：0 的左侧面积恰为 0.5';
+  return '常见值：-1σ 左侧 ≈ 0.1587，-1.645 ≈ 0.05，-1.96 ≈ 0.025';
+}
+
+function ndModeChange() {
+  ['nd-z', 'nd-p', 'nd-range'].forEach(function (c) {
+    var show = (c === 'nd-z' && ndMode.value === 'z') || (c === 'nd-p' && ndMode.value === 'p') || (c === 'nd-range' && ndMode.value === 'range');
+    var els = document.getElementsByClassName ? document.getElementsByClassName(c) : [];
+    for (var i = 0; i < els.length; i++) els[i].style.display = show ? '' : 'none';
+  });
+}
+ndMode.addEventListener('change', ndModeChange);
+ndModeChange();
+
+ndBtn.addEventListener('click', function () {
+  var m = ndMode.value;
+  var html = '';
+  if (m === 'z') {
+    var z = Number(ndZ.value);
+    if (!isFinite(z)) { showToast('请输入有效 Z 值'); return; }
+    var left = phi(z);
+    var right = 1 - left;
+    var between = 2 * Math.min(left, right);
+    html = '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+      '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + left.toFixed(6) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">P(Z ≤ ' + z + ') 左侧</div></div>' +
+      '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + right.toFixed(6) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">P(Z &gt; ' + z + ') 右侧</div></div>' +
+      '</div>';
+    html += '<div class="result-box">Z=' + z.toFixed(2) + ' 左侧概率约 ' + (left * 100).toFixed(2) + '%，右侧约 ' + (right * 100).toFixed(4) + '%</div>';
+  } else if (m === 'p') {
+    var p = Number(ndP.value);
+    if (!isFinite(p) || p <= 0 || p >= 1) { showToast('概率须在 0 到 1 之间（不含端点）'); return; }
+    var zInv = phiInverse(p);
+    html = '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+      '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:150px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + zInv.toFixed(6) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">Z 值（满足 P(Z ≤ z) = ' + p + '）</div></div>' +
+      '</div>';
+    html += '<div class="result-box">' + ndZone(p) + '</div>';
+  } else {
+    var a = Number(ndA.value);
+    var b = Number(ndB.value);
+    var mu = Number(ndMU.value);
+    var sd = Number(ndSD.value);
+    if (!isFinite(a) || !isFinite(b) || !isFinite(mu)) { showToast('请输入有效数值'); return; }
+    if (!isFinite(sd) || sd <= 0) { showToast('σ 须大于 0'); return; }
+    if (b < a) { showToast('上限须 ≥ 下限'); return; }
+    var za = (a - mu) / sd;
+    var zb = (b - mu) / sd;
+    var area = phi(zb) - phi(za);
+    html = '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+      '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:150px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + (area * 100).toFixed(4) + '%</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">P(' + a + ' ≤ X ≤ ' + b + ')（μ=' + mu + ', σ=' + sd + '）</div></div>' +
+      '</div>';
+    html += '<div class="result-box">标准分 z₁=' + za.toFixed(3) + '，z₂=' + zb.toFixed(3) + '。经验法则：±1σ ≈ 68.27%，±2σ ≈ 95.45%，±3σ ≈ 99.73%。</div>';
+  }
+  ndOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
