@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG 波浪生成器 - 在线网页波浪背景一键生成工具</title>
+  <meta name="description" content="在线 SVG 波浪生成器，调节层高、振幅、波纹数与图层数，选择双色渐变，一键生成带线性渐变的多层波浪 SVG 代码与实时预览，常做网页页首、页脚与分区背景，前端素材生成必备。" />
+  <meta name="keywords" content="SVG波浪,波浪背景,水波纹,渐变wav,SVG生成,网页背景">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684 SVG \u4f1a\u56fa\u5b9a\u5bbd\u5ea6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0cviewBox \u9ad8\u5ea6\u56fa\u5b9a\u800c\u5bbd\u5ea6\u968f\u5bb9\u5668\u81ea\u9002\u5e94\uff0c\u8bbe\u4e3a preserveAspectRatio=none \u540e\u53ef\u5728\u4efb\u610f\u5c4f\u5bbd\u4e0b\u6ee1\u5e45\u94fa\u5f00\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u6539\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4e24\u4e2a\u53d6\u8272\u5668\u51b3\u5b9a\u6e10\u53d8\u4e24\u7aef\u989c\u8272\uff0c\u6e10\u53d8\u65b9\u5411\u9ed8\u8ba4\u6c34\u5e73\uff1b\u56fe\u5c42\u8d8a\u591a\u989c\u8272\u8fc7\u6e21\u5c42\u6b21\u8d8a\u4e30\u5bcc\u3002"}},{"@type":"Question","name":"\u80fd\u4fdd\u5b58\u6216\u5546\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"SVG \u4ee3\u7801\u7531\u4f60\u672c\u5730\u751f\u6210\uff0c\u53ef\u81ea\u7531\u4fdd\u5b58\u4e0e\u7528\u4e8e\u5546\u4e1a\u9875\u9762\uff1b\u4e0d\u5efa\u8bae\u53e6\u5b58\u56fe\u7247\uff0c\u77e2\u91cf\u4ee3\u7801\u4f53\u79ef\u66f4\u5c0f\u66f4\u6e05\u6670\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌊 SVG 波浪生成器</h1>
+    <p>网页分层波浪背景 SVG 生成</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">SVG 波浪生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#SVG</span><span class="badge">#波浪</span><span class="badge">#背景</span><span class="badge">#渐变</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;">
+  <div class="field"><label for="swW">画面宽度（px）</label><input type="number" id="swW" value="1440" min="100"></div>
+  <div class="field"><label for="swH">波峰层高（px）</label><input type="number" id="swH" value="120" min="20"></div>
+  <div class="field"><label for="swA">振幅（px）</label><input type="number" id="swA" value="24" min="0" max="300"></div>
+  <div class="field"><label for="swF">波纹数</label><input type="number" id="swF" value="3" min="1" max="12"></div>
+  <div class="field"><label for="swL">图层数</label><input type="number" id="swL" value="2" min="1" max="3"></div>
+  <div class="field"><label for="swR">颜色 A</label><input type="color" id="swR" value="#2563eb"></div>
+  <div class="field"><label for="swG">颜色 B</label><input type="color" id="swG" value="#7dd3fc"></div>
+</div>
+<button class="btn btn-primary" id="swBtn">生成 SVG</button>
+<button class="btn" id="swCopy">复制 SVG 代码</button>
+<div id="swPrev" style="margin-top:12px;overflow:auto;border:1px solid var(--border,#ddd);border-radius:8px;background:#fff;"></div>
+<div class="field" style="margin-top:12px;"><label>SVG 代码</label><textarea id="swOut" readonly rows="10" style="width:100%;box-sizing:border-box;font-family:monospace;font-size:12px;"></textarea></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>SVG 波浪怎么用？</h2><p>设置宽度、层高、振幅、波纹数、图层数并选择两个颜色，生成器输出带渐变的 SVG 代码，粘贴到网页中即可作为分区背景，贴满任意宽度。</p><h2>为什么分层？</h2><p>多层波浪叠加不同透明度可营造更大的纵深与流动感，是插画与后台登录页常见的装饰手法。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的 SVG 会固定宽度吗？</summary><p>不会，viewBox 高度固定而宽度随容器自适应，设为 preserveAspectRatio=none 后可在任意屏宽下满幅铺开。</p></details><details class="faq-item"><summary>可以改颜色吗？</summary><p>可以，两个取色器决定渐变两端颜色，渐变方向默认水平；图层越多颜色过渡层次越丰富。</p></details><details class="faq-item"><summary>能保存或商用吗？</summary><p>SVG 代码由你本地生成，可自由保存与用于商业页面；不建议另存图片，矢量代码体积更小更清晰。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>SVG 波浪生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='svg-wave';}); _r.unshift('svg-wave'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var swW = document.getElementById('swW');
+var swH = document.getElementById('swH');
+var swA = document.getElementById('swA');
+var swF = document.getElementById('swF');
+var swL = document.getElementById('swL');
+var swR = document.getElementById('swR');
+var swG = document.getElementById('swG');
+var swBtn = document.getElementById('swBtn');
+var swCopy = document.getElementById('swCopy');
+var swPrev = document.getElementById('swPrev');
+var swOut = document.getElementById('swOut');
+var lastSvg = '';
+
+function wavePoints(width, height, amp, freq, layers) {
+  var pts = [];
+  var step = Math.max(2, Math.round(width / 240));
+  for (var x = 0; x <= width; x += step) {
+    var y = height / 2 + amp * Math.sin(2 * Math.PI * freq * x / width) - amp * (layers - 1);
+    pts.push([x, Math.round(y * 100) / 100]);
+  }
+  if (pts[pts.length - 1][0] !== width) pts.push([width, Math.round((height / 2 + amp * Math.sin(2 * Math.PI * freq)) * 100) / 100]);
+  return pts;
+}
+
+function buildSvg(w, h, amp, freq, layers, c1, c2) {
+  var paths = [];
+  var base = [];
+  var i;
+  for (i = 0; i < layers; i++) {
+    var pts = wavePoints(w, h, amp, freq, layers - i);
+    var d = 'M0,' + h;
+    for (var k = 0; k < pts.length; k++) d += ' L' + pts[k][0].toFixed(1) + ',' + pts[k][1].toFixed(1);
+    d += ' L' + w + ',' + h + ' Z';
+    paths.push(d);
+  }
+  var defs = '<linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">' +
+    '<stop offset="0%" stop-color="' + c1 + '"/><stop offset="100%" stop-color="' + c2 + '"/></linearGradient>';
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + w + ' ' + (h * layers) + '" preserveAspectRatio="none" style="display:block;width:100%;height:auto;">' +
+    '<defs>' + defs + '</defs>';
+  for (i = 0; i < layers; i++) {
+    var opacity = (0.9 - i * 0.3).toFixed(1);
+    svg += '<path d="' + paths[i] + '" fill="url(#waveGrad)" fill-opacity="' + opacity + '"/>';
+  }
+  svg += '</svg>';
+  return svg;
+}
+
+swBtn.addEventListener('click', function () {
+  var w = Number(swW.value);
+  var h = Number(swH.value);
+  var a = Number(swA.value);
+  var f = Number(swF.value);
+  var l = Number(swL.value);
+  if (!isFinite(w) || w < 100) { showToast('宽度至少 100px'); return; }
+  if (!isFinite(h) || h < 20) { showToast('高度至少 20px'); return; }
+  if (!isFinite(a) || a < 0) { showToast('振幅不能为负'); return; }
+  if (!isFinite(f) || f < 1 || f > 12) { showToast('波纹数 1-12'); return; }
+  if (!isFinite(l) || l < 1 || l > 3) { showToast('图层数 1-3'); return; }
+  lastSvg = buildSvg(w, h, a, f, l, swR.value, swG.value);
+  swPrev.innerHTML = lastSvg;
+  swOut.value = lastSvg;
+});
+
+swCopy.addEventListener('click', function () {
+  if (!lastSvg) { showToast('请先生成'); return; }
+  navigator.clipboard.writeText(lastSvg).then(function () { showToast('已复制 SVG'); });
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
