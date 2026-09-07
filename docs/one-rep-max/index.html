@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1RM 计算器 - 在线最大重量与各次数训练重量估算</title>
+  <meta name="description" content="在线 1RM（一次最大重量）估算器，输入你实际完成的重量与次数，结合 Epley 与 Lander 两个公式估算单次最大力量，并给出各次数（2-12 次）对应的工作重量表，力量训练计划制定必备。" />
+  <meta name="keywords" content="1RM计算器,最大重量,力量训练,Epley,Lander,训练重量">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6b21\u6570\u8981\u591a\u4e25\u683c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b21\u6570\u5e94\u63a5\u8fd1\u529b\u7aed\u4f46\u7559\u6709 1-2 \u6b21\u4f59\u91cf\uff0c\u52a8\u4f5c\u5168\u7a0b\u6807\u51c6\uff0c\u8fd9\u6837\u53cd\u63a8\u6700\u63a5\u8fd1\u771f\u5b9e 1RM\u3002"}},{"@type":"Question","name":"\u8d85\u8fc7 10 \u6b21\u8fd8\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b21\u6570\u8d8a\u591a\u8bef\u5dee\u8d8a\u5927\uff0c10 \u6b21\u4ee5\u4e0a\u516c\u5f0f\u4f1a\u9ad8\u4f30 1RM\uff0c\u6b64\u65f6\u5efa\u8bae\u7528\u66f4\u8f7b\u6216\u505a\u5176\u4ed6\u8010\u529b\u8bad\u7ec3\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u7528\u7ed3\u679c\u5b89\u6392\u8bad\u7ec3\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u6309 1RM \u767e\u5206\u6bd4\u7ed9\u51fa 2-12 \u6b21\u5efa\u8bae\u91cd\u91cf\uff0c\u5982 5\u00d75 \u8ba1\u5212\u7528\u7ea6 87% 1RM\uff0c\u6bcf\u7ec4\u6b21\u6570\u76ee\u6807\u4e0d\u540c\u76f4\u63a5\u67e5\u8868\u5373\u53ef\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🏋️ 1RM 计算器</h1>
+    <p>最大力量与重量组估算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">1RM 计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#1RM</span><span class="badge">#最大重量</span><span class="badge">#力量训练</span><span class="badge">#健身</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:10px;">
+  <div class="field"><label for="ormW">重量（kg）</label><input type="number" id="ormW" value="100" min="1"></div>
+  <div class="field"><label for="ormR">标准组次数（1 – 12）</label><input type="number" id="ormR" value="5" min="1" max="12"></div>
+</div>
+<button class="btn btn-primary" id="ormBtn">估算 1RM</button>
+<div id="ormOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>1RM 怎么估算？</h2><p>Epley 公式：1RM = 重量 × (1 + 次数/30)；Lander 公式：1RM = 100×重量 ÷ (101.3 - 2.67123×次数)。工具取两者平均值减小偏差。</p><h2>为什么用次数而不是直接测？</h2><p>直接用最大重量测试受伤风险高。用一组 1-12 次标准组次数反推 1RM 更安全，也适合普通训练者日常参考。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>次数要多严格？</summary><p>次数应接近力竭但留有 1-2 次余量，动作全程标准，这样反推最接近真实 1RM。</p></details><details class="faq-item"><summary>超过 10 次还准吗？</summary><p>次数越多误差越大，10 次以上公式会高估 1RM，此时建议用更轻或做其他耐力训练。</p></details><details class="faq-item"><summary>怎么用结果安排训练？</summary><p>工具按 1RM 百分比给出 2-12 次建议重量，如 5×5 计划用约 87% 1RM，每组次数目标不同直接查表即可。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>1RM 计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='one-rep-max';}); _r.unshift('one-rep-max'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ormW = document.getElementById('ormW');
+var ormR = document.getElementById('ormR');
+var ormBtn = document.getElementById('ormBtn');
+var ormOut = document.getElementById('ormOut');
+
+function epley(w, reps) { return w * (1 + reps / 30); }
+function lander(w, reps) { return 100 * w / (101.3 - 2.67123 * reps); }
+
+function ormZones(oneRM) {
+  var defs = [
+    [1, 1.00, '单次最大'],
+    [1, 1.00, '单次最大'],
+    [2, 0.95, '两次'],
+    [3, 0.93, '三次'],
+    [4, 0.90, '四次'],
+    [5, 0.87, '五次'],
+    [6, 0.85, '六次'],
+    [8, 0.80, '八次'],
+    [10, 0.75, '十次'],
+    [12, 0.67, '十二次']
+  ];
+  var rows = [];
+  var seen = {};
+  for (var i = 0; i < defs.length; i++) {
+    var d = defs[i];
+    if (seen[d[0]]) continue;
+    seen[d[0]] = true;
+    rows.push('<tr><td>' + d[0] + '</td><td>' + Math.round((1 - d[1]) * 100) + '%</td><td>' + Number(oneRM * d[1]).toFixed(1) + ' kg</td></tr>');
+  }
+  return rows.join('');
+}
+
+ormBtn.addEventListener('click', function () {
+  var w = Number(ormW.value);
+  var r = Math.round(Number(ormR.value));
+  if (!isFinite(w) || w <= 0) { showToast('请输入有效重量'); return; }
+  if (!isFinite(r) || r < 1 || r > 12) { showToast('次数请输入 1-12'); return; }
+  var e = epley(w, r);
+  var l = lander(w, r);
+  var est = (e + l) / 2;
+  ormOut.innerHTML =
+    '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:130px;"><div class="kpi-val" style="font-size:22px;font-weight:700;">' + est.toFixed(1) + ' kg</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">估算 1RM（两法均值）</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:130px;"><div class="kpi-val" style="font-size:16px;">Epley: ' + e.toFixed(1) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">Epley 公式</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:130px;"><div class="kpi-val" style="font-size:16px;">' + l.toFixed(1) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">Lander 公式</div></div>' +
+    '</div>' +
+    '<div class="result-box">该重量约为你 1RM 的 ' + Math.round(100 * w / est) + '%（' + r + ' 次）。下面是以 1RM ' + est.toFixed(1) + ' kg 推算的各次数工作重量：</div>' +
+    '<div style="overflow-x:auto;margin-top:10px;"><table class="data-table"><thead><tr><th>每组次数</th><th>对应 % 1RM</th><th>建议重量</th></tr></thead><tbody>' + ormZones(est) + '</tbody></table></div>' +
+    '<div style="font-size:12px;color:var(--muted,#666);margin-top:8px;">估算基于 Epley（1 + n/30）与 Lander 两公式平均；次数超过 10 的估算误差较大，正式冲击大重量前请务必有人保护。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
