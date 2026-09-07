@@ -56,7 +56,7 @@
 </div>
 <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; display:none;" id="ncCustomWrap">
   <div><label>自定义热量调整 %</label><input type="number" id="ncCustom" value="0" step="1"></div>
-  <div><label>分餐数</label><input type="number" id="ncMeals" value="3" min="2" max="8"></div>
+  <div><label>步进提示</label><span style="color:var(--muted);font-size:12px;align-self:center;">输入相对 TDEE 的百分比调整</span></div>
 </div>
 <div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
   <div><label>饮食模板</label>
@@ -160,10 +160,11 @@ ncCalc.addEventListener('click', function () {
   var customMacro = ncCustomMacro.value.split(',').map(function (v) { return parseFloat(v.trim()) / 100; });
   var meals = parseInt(ncMeals.value, 10);
 
-  // BMR
+  // BMR (Mifflin-St Jeor，与站内 bmr-calculator 一致)
+  if (!(age > 0 && h > 0 && w > 0)) { ncOut.innerHTML = '<div class="result-box">请填写有效的年龄、身高与体重</div>'; return; }
   var bmr = sex === 'm'
-    ? 88.362 + 13.397 * w + 4.799 * h - 5.677 * age
-    : 447.593 + 9.247 * w + 3.098 * h - 4.330 * age;
+    ? 10 * w + 6.25 * h - 5 * age + 5
+    : 10 * w + 6.25 * h - 5 * age - 161;
   var tdee = bmr * act;
   var target = tdee * (1 + customAdj);
   if (goal === 'lose') target = tdee * 0.85;
@@ -184,7 +185,7 @@ ncCalc.addEventListener('click', function () {
   var carb = target * cRatio / 4;
   var fat = target * fRatio / 9;
 
-  var html = row('基础代谢 BMR', fmt0(bmr) + ' kcal');
+  var html = row('基础代谢 BMR（Mifflin-St Jeor）', fmt0(bmr) + ' kcal');
   html += row('每日总消耗 TDEE', fmt0(tdee) + ' kcal');
   html += row('目标热量', fmt0(target) + ' kcal');
   html += row('蛋白质', fmt(protein) + ' g (' + (pRatio * 100).toFixed(0) + '%)');
