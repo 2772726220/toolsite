@@ -133,8 +133,9 @@ var acResult = document.getElementById('acResult');
   });
 
   var today = new Date();
+  function pad2(n) { return String(n).padStart(2, '0'); }
   document.getElementById('acBirth').value = '1990-01-01';
-  document.getElementById('acTarget').value = today.toISOString().slice(0, 10);
+  document.getElementById('acTarget').value = today.getFullYear() + '-' + pad2(today.getMonth() + 1) + '-' + pad2(today.getDate());
   window.toggleTheme = function () {
     var r = document.documentElement;
     if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
