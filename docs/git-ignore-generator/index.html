@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.gitignore生成器 - 在线生成常用.gitignore文件</title>
+  <meta name="description" content="在线 .gitignore 生成工具：勾选 Node.js/Python/Java/macOS/Windows/Vim/IDEA 等模板，一键生成规范的 .gitignore，支持复制与预览，避免把 node_modules、密钥或系统文件提交进 Git。" />
+  <meta name="keywords" content="gitignore,gitignore生成,git忽略文件,.gitignore模板,node_modules">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u591a\u9009\u6a21\u677f\u4f1a\u51b2\u7a81\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u5404\u90e8\u5206\u6309\u987a\u5e8f\u62fc\u63a5\u5e76\u5e26\u6ce8\u91ca\u6807\u9898\uff0c\u91cd\u590d\u6761\u76ee\u4e5f\u5b89\u5168\u3002"}},{"@type":"Question","name":"\u600e\u6837\u5e94\u7528\u5230\u9879\u76ee\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u590d\u5236\u751f\u6210\u5185\u5bb9\uff0c\u7c98\u8d34\u5230\u4ed3\u5e93\u6839\u76ee\u5f55\u65b0\u5efa\u7684 .gitignore \u6587\u4ef6\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u5305\u542b\u5bc6\u94a5\u6587\u4ef6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u300c\u5bc6\u94a5\u4e0e\u914d\u7f6e\u300d\u6a21\u677f\u4f1a\u5ffd\u7565 .env\u3001*.pem \u7b49\u5e38\u89c1\u654f\u611f\u6587\u4ef6\uff0c\u5f3a\u70c8\u5efa\u8bae\u52fe\u9009\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🙈 .gitignore生成</h1>
+    <p>勾选技术栈一键生成 .gitignore</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">.gitignore生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#gitignore</span><span class="badge">#Git</span><span class="badge">#忽略文件</span><span class="badge">#模板</span>
+<h3>.gitignore 生成器</h3>
+<p class="muted">勾选技术栈与系统，一键生成常用 <code>.gitignore</code>，粘贴到仓库根部即可。</p>
+<div class="row">
+  <div class="col">
+    <label>选择模板</label>
+    <div class="gi-grid" style="display:flex;flex-wrap:wrap;gap:6px;">
+      <label><input type="checkbox" class="gi-check" value="node"> Node.js</label>
+      <label><input type="checkbox" class="gi-check" value="python"> Python</label>
+      <label><input type="checkbox" class="gi-check" value="java"> Java</label>
+      <label><input type="checkbox" class="gi-check" value="go"> Go</label>
+      <label><input type="checkbox" class="gi-check" value="php"> PHP</label>
+      <label><input type="checkbox" class="gi-check" value="c"> C/C++</label>
+      <label><input type="checkbox" class="gi-check" value="vim"> Vim</label>
+      <label><input type="checkbox" class="gi-check" value="jetbrains"> JetBrains</label>
+      <label><input type="checkbox" class="gi-check" value="vscode"> VS Code</label>
+      <label><input type="checkbox" class="gi-check" value="macos"> macOS</label>
+      <label><input type="checkbox" class="gi-check" value="windows"> Windows</label>
+      <label><input type="checkbox" class="gi-check" value="logs"> 日志</label>
+      <label><input type="checkbox" class="gi-check" value="secrets"> 密钥/配置</label>
+    </div>
+    <button id="giSel" style="margin-top:8px;">全选</button>
+    <button id="giCopy">复制</button>
+  </div>
+  <div class="col">
+    <label>生成的 .gitignore</label>
+    <textarea id="giOut" rows="16" readonly spellcheck="false" style="width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:12px;"></textarea>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么需要 .gitignore？</h2><p>node_modules、密钥文件、编译产物和系统杂项文件不该进 Git。用 .gitignore 忽略它们，仓库更干净、克隆更快、不出安全事故。</p><h2>模板会不会过时？</h2><p>模板来自官方 gitignore 生态的常用条目，覆盖主流语言、IDE 与操作系统，随时可用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>多选模板会冲突吗？</summary><p>不会，各部分按顺序拼接并带注释标题，重复条目也安全。</p></details><details class="faq-item"><summary>怎样应用到项目？</summary><p>复制生成内容，粘贴到仓库根目录新建的 .gitignore 文件即可。</p></details><details class="faq-item"><summary>包含密钥文件吗？</summary><p>「密钥与配置」模板会忽略 .env、*.pem 等常见敏感文件，强烈建议勾选。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>.gitignore生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='git-ignore-generator';}); _r.unshift('git-ignore-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var giNodes = document.querySelectorAll('input.gi-check');
+var giSel = document.getElementById('giSel');
+var giCopy = document.getElementById('giCopy');
+var giOut = document.getElementById('giOut');
+
+var GI_TEMPLATES = {
+  node: {
+    label: 'Node.js',
+    body: ['node_modules/', 'npm-debug.log*', 'yarn-error.log*', 'yarn-debug.log*', 'package-lock.json', '.node_repl_history', '.npm/', '.yarn/cache/']
+  },
+  python: {
+    label: 'Python',
+    body: ['__pycache__/', '*.py[cod]', '*$py.class', '*.so', '.Python', 'venv/', 'env/', '.env/', 'ENV/', '.venv/', '.pytest_cache/', '.mypy_cache/', '.ruff_cache/', '.tox/', '*.egg-info/', 'dist/', 'build/']
+  },
+  java: {
+    label: 'Java',
+    body: ['*.class', '*.jar', '*.war', '*.ear', '.classpath', '.project', '.settings/', 'target/', '.gradle/', 'build/']
+  },
+  macos: {
+    label: 'macOS',
+    body: ['.DS_Store', '.AppleDouble', '.LSOverride', '._*', '.AppleDB', '.Spotlight-V100', '.Trashes', 'Icon\r']
+  },
+  windows: {
+    label: 'Windows',
+    body: ['Thumbs.db', 'ehthumbs.db', 'Desktop.ini', '$RECYCLE.BIN/', 'desktop.ini', '*.tmp']
+  },
+  vim: {
+    label: 'Vim',
+    body: ['[._]*.s[a-w][a-z]', '[._]s[a-w][a-z]', '*.un~', 'Session.vim', '.netrwhist', '*~']
+  },
+  jetbrains: {
+    label: 'JetBrains IDE',
+    body: ['.idea/', '*.iml', '*.ipr', '*.iws', 'out/']
+  },
+  vscode: {
+    label: 'VS Code',
+    body: ['.vscode/*', '!.vscode/settings.json', '!.vscode/tasks.json', '!.vscode/launch.json', '!.vscode/extensions.json', '.history/', '.vscode-server/']
+  },
+  logs: {
+    label: '日志文件',
+    body: ['*.log', 'logs/', '*.log.*']
+  },
+  secrets: {
+    label: '密钥与配置',
+    body: ['.env', '.env.local', '.env.*.local', '.keys', '*.pem', '*.key', '*.crt', 'credentials.json', 'secrets.yaml', 'secret*']
+  },
+  c: {
+    label: 'C / C++',
+    body: ['*.o', '*.obj', '*.exe', '*.dll', '*.dylib', '*.so', '*.a', '*.lib', '*.out', '*.app', 'Debug/', 'Release/', 'x64/', 'x86/']
+  },
+  go: {
+    label: 'Go',
+    body: ['*.exe', '*.test', '*.out', 'bin/', 'vendor/']
+  },
+  php: {
+    label: 'PHP',
+    body: ['composer.phar', 'vendor/', '*.log']
+  }
+};
+
+function buildGitignore(selected, all) {
+  var out = ['# Generated by 常用 .gitignore 生成器'];
+  all.forEach(function (id) {
+    var t = GI_TEMPLATES[id];
+    if (!t) return;
+    if (!selected.has(id)) return;
+    out.push('');
+    out.push('# ' + t.label);
+    t.body.forEach(function (line) { out.push(line); });
+  });
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+}
+
+function selectedSet() {
+  var s = new Set();
+  giNodes.forEach(function (n) { if (n.checked) s.add(n.value); });
+  return s;
+}
+
+function render() {
+  var all = Object.keys(GI_TEMPLATES);
+  var sel = selectedSet();
+  giSel.textContent = sel.size === all.length ? '取消全选' : '全选';
+  var txt = buildGitignore(sel, all);
+  giOut.value = txt;
+  giCopy.disabled = txt.length === 0;
+}
+
+giSel.addEventListener('click', function () {
+  var all = Object.keys(GI_TEMPLATES);
+  var on = selectedSet().size !== all.length;
+  giNodes.forEach(function (n) { n.checked = on; });
+  render();
+});
+giCopy.addEventListener('click', function () {
+  giOut.select();
+  try { document.execCommand('copy'); giCopy.textContent = '已复制 ✓'; } catch (e) { }
+  setTimeout(function () { giCopy.textContent = '复制'; }, 1200);
+});
+
+giNodes.forEach(function (n) { n.addEventListener('change', render); });
+['node', 'macos', 'windows', 'git', 'vim'].forEach(function (id) {
+  var n = document.querySelector('input.gi-check[value="' + id + '"]');
+  if (n) n.checked = true;
+});
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
