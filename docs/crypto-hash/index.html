@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>哈希计算工具 - 在线 MD5/SHA1/SHA256 摘要</title>
+  <meta name="description" content="免费在线哈希摘要计算器，计算字符串或文件的 MD5、SHA-1、SHA-256、SHA-512、HMAC-SHA256 等摘要，十六进制/Base64 编码输出、大小写切换、实时更新、支持多次哈希与盐值附加，校验文件与接口签名调试必备。" />
+  <meta name="keywords" content="哈希计算,MD5,SHA256,SHA1,摘要计算,HMAC,加密签名,文件校验">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u54c8\u5e0c\u53ef\u9006\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u54c8\u5e0c\u4e3a\u5355\u5411\u51fd\u6570\uff0c\u65e0\u6cd5\u4ece\u6458\u8981\u53cd\u63a8\u539f\u6587\u3002"}},{"@type":"Question","name":"\u652f\u6301\u591a\u79cd\u8f93\u51fa\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5341\u516d\u8fdb\u5236\u4e0e Base64 \u7f16\u7801\u8f93\u51fa\u3002"}},{"@type":"Question","name":"\u5b89\u5168\u6027\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"MD5/SHA1 \u5df2\u4e0d\u9002\u5408\u5b89\u5168\u573a\u666f\uff0c\u53ef\u7528\u4e8e\u6821\u9a8c\u6216\u53c2\u8003\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔐 哈希摘要计算</h1>
+    <p>计算 MD5/SHA1/SHA256 等摘要</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">哈希摘要计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#哈希</span><span class="badge">#MD5</span><span class="badge">#SHA</span><span class="badge">#摘要</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>输入内容</label>
+    <textarea id="chInput" rows="5" placeholder="输入要哈希的文本或内容">hello world</textarea>
+    <label>算法</label>
+    <select id="chAlgo">
+      <option value="md5" selected>MD5</option>
+      <option value="sha1">SHA-1</option>
+      <option value="sha256">SHA-256</option>
+      <option value="sha512">SHA-512</option>
+      <option value="hmac">HMAC-SHA256</option>
+    </select>
+    <div id="chKeyRow">
+      <label>密钥 (HMAC)</label>
+      <input type="text" id="chKey" placeholder="secret key" value="mysecret">
+    </div>
+    <label>输出编码</label>
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:6px;">
+      <button class="btn" id="chHex">十六进制 (HEX)</button>
+      <button class="btn" id="chB64">Base64</button>
+    </div>
+    <button class="btn btn-primary" id="chCalc" style="width:100%;margin-top:10px;">计算哈希</button>
+  </div>
+  <div>
+    <label style="display:flex;justify-content:space-between;align-items:center;">结果 <button class="btn" id="chCopy" style="padding:2px 10px;font-size:12px;">复制</button></label>
+    <textarea id="chOut" rows="5" readonly style="font-family:monospace;font-size:13px;"></textarea>
+    <div id="chInfo" style="margin-top:8px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何计算哈希？</h2><p>输入文本选择算法(如 MD5/SHA256)即得摘要。</p><h2>能对文件算吗？</h2><p>支持选择文件计算其内容摘要用于校验。</p><h2>支持 HMAC 吗？</h2><p>支持 HMAC-SHA256 等带密钥的哈希。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>哈希可逆吗？</summary><p>哈希为单向函数，无法从摘要反推原文。</p></details><details class="faq-item"><summary>支持多种输出吗？</summary><p>支持十六进制与 Base64 编码输出。</p></details><details class="faq-item"><summary>安全性如何？</summary><p>MD5/SHA1 已不适合安全场景，可用于校验或参考。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>哈希摘要计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='crypto-hash';}); _r.unshift('crypto-hash'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var chInput = document.getElementById('chInput');
+var chAlgo = document.getElementById('chAlgo');
+var chKey = document.getElementById('chKey');
+var chKeyRow = document.getElementById('chKeyRow');
+var chHex = document.getElementById('chHex');
+var chB64 = document.getElementById('chB64');
+var chCalc = document.getElementById('chCalc');
+var chCopy = document.getElementById('chCopy');
+var chOut = document.getElementById('chOut');
+var chInfo = document.getElementById('chInfo');
+
+var encoding = 'hex';
+
+function utf8bytes(s) {
+  var bytes = [];
+  for (var i = 0; i < s.length; i++) {
+    var c = s.codePointAt(i);
+    if (c > 0xFFFF) i++;
+    if (c < 0x80) {
+      bytes.push(c);
+    } else if (c < 0x800) {
+      bytes.push(0xc0 | (c >> 6), 0x80 | (c & 63));
+    } else if (c < 0x10000) {
+      bytes.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+    } else {
+      bytes.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 63), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+    }
+  }
+  return bytes;
+}
+
+function bytesToHex(b) {
+  var h = '';
+  for (var i = 0; i < b.length; i++) { var x = b[i].toString(16); h += x.length < 2 ? '0' + x : x; }
+  return h;
+}
+
+function bytesToB64(b) {
+  var CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var out = '';
+  for (var i = 0; i < b.length; i += 3) {
+    var o1 = b[i], o2 = i + 1 < b.length ? b[i + 1] : 0, o3 = i + 2 < b.length ? b[i + 2] : 0;
+    out += CH[o1 >> 2];
+    out += CH[((o1 & 3) << 4) | (o2 >> 4)];
+    out += i + 1 < b.length ? CH[((o2 & 15) << 2) | (o3 >> 6)] : '=';
+    out += i + 2 < b.length ? CH[o3 & 63] : '=';
+  }
+  return out;
+}
+
+function fmt(b) { return encoding === 'hex' ? bytesToHex(b) : bytesToB64(b); }
+
+function u32be(w) { return [(w >>> 24) & 0xff, (w >>> 16) & 0xff, (w >>> 8) & 0xff, w & 0xff]; }
+function u32le(w) { return [w & 0xff, (w >>> 8) & 0xff, (w >>> 16) & 0xff, (w >>> 24) & 0xff]; }
+function rol(x, c) { return (x << c) | (x >>> (32 - c)); }
+function rotr(x, c) { return (x >>> c) | (x << (32 - c)); }
+
+function md5(msg) {
+  var s = utf8bytes(msg);
+  var bitLen = s.length * 8;
+  s.push(0x80);
+  while (s.length % 64 !== 56) s.push(0);
+  for (var i = 0; i < 8; i++) s.push(Math.floor(bitLen / Math.pow(2, 8 * i)) & 0xff);
+  function F(x, y, z) { return (x & y) | (~x & z); }
+  function G(x, y, z) { return (x & z) | (y & ~z); }
+  function H(x, y, z) { return x ^ y ^ z; }
+  function I(x, y, z) { return y ^ (x | ~z); }
+  var K = [0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,0xf61e2562,0xc040b340,0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,0x676f02d9,0x8d2a4c8a,0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,0x289b7ec6,0xeaa127fa,0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,0xffeff47d,0x85845dd1,0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391];
+  var S = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+  var a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+  var M = new Array(16);
+  for (var off = 0; off < s.length; off += 64) {
+    for (var j = 0; j < 16; j++) {
+      M[j] = s[off + j * 4] | (s[off + j * 4 + 1] << 8) | (s[off + j * 4 + 2] << 16) | (s[off + j * 4 + 3] << 24);
+    }
+    var A = a0, B = b0, C = c0, D = d0;
+    for (var k = 0; k < 64; k++) {
+      var Ff, g;
+      if (k < 16) { Ff = F(B, C, D); g = k; }
+      else if (k < 32) { Ff = G(B, C, D); g = (5 * k + 1) % 16; }
+      else if (k < 48) { Ff = H(B, C, D); g = (3 * k + 5) % 16; }
+      else { Ff = I(B, C, D); g = (7 * k) % 16; }
+      var tmp = D; D = C; C = B;
+      B = (B + rol((A + Ff + K[k] + M[g]) | 0, S[k])) | 0;
+      A = tmp;
+    }
+    a0 = (a0 + A) | 0; b0 = (b0 + B) | 0; c0 = (c0 + C) | 0; d0 = (d0 + D) | 0;
+  }
+  return u32le(a0).concat(u32le(b0), u32le(c0), u32le(d0));
+}
+
+function sha1core(s) {
+  var bits = s.length * 8;
+  var lenHi = Math.floor(bits / 4294967296), lenLo = bits >>> 0;
+  s.push(0x80);
+  while (s.length % 64 !== 56) s.push(0);
+  s.push((lenHi >>> 24) & 0xff, (lenHi >>> 16) & 0xff, (lenHi >>> 8) & 0xff, lenHi & 0xff);
+  s.push((lenLo >>> 24) & 0xff, (lenLo >>> 16) & 0xff, (lenLo >>> 8) & 0xff, lenLo & 0xff);
+  var h0 = 0x67452301, h1 = 0xefcdab89, h2 = 0x98badcfe, h3 = 0x10325476, h4 = 0xc3d2e1f0;
+  var w = new Array(80);
+  for (var off = 0; off < s.length; off += 64) {
+    for (var t = 0; t < 16; t++) {
+      w[t] = (s[off + t * 4] << 24) | (s[off + t * 4 + 1] << 16) | (s[off + t * 4 + 2] << 8) | s[off + t * 4 + 3];
+    }
+    for (var k = 16; k < 80; k++) w[k] = rol((w[k - 3] ^ w[k - 8] ^ w[k - 14] ^ w[k - 16]), 1);
+    var a = h0, b = h1, c = h2, d = h3, e = h4;
+    for (var z = 0; z < 80; z++) {
+      var f, kk;
+      if (z < 20) { f = (b & c) | (~b & d); kk = 0x5a827999; }
+      else if (z < 40) { f = b ^ c ^ d; kk = 0x6ed9eba1; }
+      else if (z < 60) { f = (b & c) | (b & d) | (c & d); kk = 0x8f1bbcdc; }
+      else { f = b ^ c ^ d; kk = 0xca62c1d6; }
+      var temp = (rol(a, 5) + f + e + kk + w[z]) | 0;
+      e = d; d = c; c = rol(b, 30); b = a; a = temp;
+    }
+    h0 = (h0 + a) | 0; h1 = (h1 + b) | 0; h2 = (h2 + c) | 0; h3 = (h3 + d) | 0; h4 = (h4 + e) | 0;
+  }
+  return u32be(h0).concat(u32be(h1), u32be(h2), u32be(h3), u32be(h4));
+}
+function sha1(msg) { return sha1core(utf8bytes(msg)); }
+
+var SHA256_K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+var SHA256_H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+
+function sha256core(bytes) {
+  var s = bytes.slice();
+  var bits = s.length * 8;
+  var lenHi = Math.floor(bits / 4294967296), lenLo = bits >>> 0;
+  s.push(0x80);
+  while (s.length % 64 !== 56) s.push(0);
+  s.push((lenHi >>> 24) & 0xff, (lenHi >>> 16) & 0xff, (lenHi >>> 8) & 0xff, lenHi & 0xff);
+  s.push((lenLo >>> 24) & 0xff, (lenLo >>> 16) & 0xff, (lenLo >>> 8) & 0xff, lenLo & 0xff);
+  var H = SHA256_H.slice();
+  var w = new Array(64);
+  function ch(x, y, z) { return (x & y) ^ (~x & z); }
+  function maj(x, y, z) { return (x & y) ^ (x & z) ^ (y & z); }
+  function bsig0(x) { return rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22); }
+  function bsig1(x) { return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25); }
+  function ssig0(x) { return rotr(x, 7) ^ rotr(x, 18) ^ (x >>> 3); }
+  function ssig1(x) { return rotr(x, 17) ^ rotr(x, 19) ^ (x >>> 10); }
+  for (var off = 0; off < s.length; off += 64) {
+    for (var t = 0; t < 16; t++) {
+      w[t] = (s[off + t * 4] << 24) | (s[off + t * 4 + 1] << 16) | (s[off + t * 4 + 2] << 8) | s[off + t * 4 + 3];
+    }
+    for (var k = 16; k < 64; k++) w[k] = (ssig1(w[k - 2]) + w[k - 7] + ssig0(w[k - 15]) + w[k - 16]) | 0;
+    var a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (var z = 0; z < 64; z++) {
+      var t1 = (h + bsig1(e) + ch(e, f, g) + SHA256_K[z] + w[z]) | 0;
+      var t2 = (bsig0(a) + maj(a, b, c)) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H[0]=(H[0]+a)|0; H[1]=(H[1]+b)|0; H[2]=(H[2]+c)|0; H[3]=(H[3]+d)|0;
+    H[4]=(H[4]+e)|0; H[5]=(H[5]+f)|0; H[6]=(H[6]+g)|0; H[7]=(H[7]+h)|0;
+  }
+  var out = [];
+  H.forEach(function (x) { out.push((x >>> 24) & 0xff, (x >>> 16) & 0xff, (x >>> 8) & 0xff, x & 0xff); });
+  return out;
+}
+
+function sha256(msg) { return sha256core(utf8bytes(msg)); }
+
+function hmac256(msg, keyBytes) {
+  var blockSize = 64;
+  var k = keyBytes;
+  if (k.length > blockSize) k = sha256core(k);
+  var ipad = new Array(blockSize), opad = new Array(blockSize);
+  for (var i = 0; i < blockSize; i++) {
+    ipad[i] = (k[i] || 0) ^ 0x36;
+    opad[i] = (k[i] || 0) ^ 0x5c;
+  }
+  return sha256core(opad.concat(sha256core(ipad.concat(utf8bytes(msg)))));
+}
+
+var SHA512_K = ['428a2f98d728ae22','7137449123ef65cd','b5c0fbcfec4d3b2f','e9b5dba58189dbbc','3956c25bf348b538','59f111f1b605d019','923f82a4af194f9b','ab1c5ed5da6d8118','d807aa98a3030242','12835b0145706fbe','243185be4ee4b28c','550c7dc3d5ffb4e2','72be5d74f27b896f','80deb1fe3b1696b1','9bdc06a725c71235','c19bf174cf692694','e49b69c19ef14ad2','efbe4786384f25e3','0fc19dc68b8cd5b5','240ca1cc77ac9c65','2de92c6f592b0275','4a7484aa6ea6e483','5cb0a9dcbd41fbd4','76f988da831153b5','983e5152ee66dfab','a831c66d2db43210','b00327c898fb213f','bf597fc7beef0ee4','c6e00bf33da88fc2','d5a79147930aa725','06ca6351e003826f','142929670a0e6e70','27b70a8546d22ffc','2e1b21385c26c926','4d2c6dfc5ac42aed','53380d139d95b3df','650a73548baf63de','766a0abb3c77b2a8','81c2c92e47edaee6','92722c851482353b','a2bfe8a14cf10364','a81a664bbc423001','c24b8b70d0f89791','c76c51a30654be30','d192e819d6ef5218','d69906245565a910','f40e35855771202a','106aa07032bbd1b8','19a4c116b8d2d0c8','1e376c085141ab53','2748774cdf8eeb99','34b0bcb5e19b48a8','391c0cb3c5c95a63','4ed8aa4ae3418acb','5b9cca4f7763e373','682e6ff3d6b2b8a3','748f82ee5defb2fc','78a5636f43172f60','84c87814a1f0ab72','8cc702081a6439ec','90befffa23631e28','a4506cebde82bde9','bef9a3f7b2c67915','c67178f2e372532b','ca273eceea26619c','d186b8c721c0c207','eada7dd6cde0eb1e','f57d4f7fee6ed178','06f067aa72176fba','0a637dc5a2c898a6','113f9804bef90dae','1b710b35131c471b','28db77f523047d84','32caab7b40c72493','3c9ebe0a15c9bebc','431d67c49c100d4c','4cc5d4becb3e42b6','597f299cfc657e2a','5fcb6fab3ad6faec','6c44198c4a475817'];
+var SHA512_H = ['6a09e667f3bcc908','bb67ae8584caa73b','3c6ef372fe94f82b','a54ff53a5f1d36f1','510e527fade682d1','9b05688c2b3e6c1f','1f83d9abfb41bd6b','5be0cd19137e2179'];
+var K512 = SHA512_K.map(h => BigInt('0x' + h));
+var H512 = SHA512_H.map(h => BigInt('0x' + h));
+var MASK64 = (BigInt(1) << BigInt(64)) - BigInt(1);
+
+function rotr64(x, c) { return ((x >> BigInt(c)) | (x << (BigInt(64) - BigInt(c)))) & MASK64; }
+function shr64(x, c) { return x >> BigInt(c); }
+
+function sha512core(bytes) {
+  var s = bytes.slice();
+  var bits = BigInt(s.length) * BigInt(8);
+  s.push(0x80);
+  while ((s.length % 128) !== 112) s.push(0);
+  for (var i = 0; i < 8; i++) s.push(0);
+  for (var j = 7; j >= 0; j--) s.push(Number((bits >> BigInt(8 * j)) & BigInt(0xff)));
+  var H = H512.slice();
+  var w = new Array(80);
+  function be64(x) {
+    var out = [];
+    for (var z = 7; z >= 0; z--) out.push(Number((x >> BigInt(8 * z)) & BigInt(0xff)));
+    return out;
+  }
+  function ld64(p) {
+    var v = BigInt(0);
+    for (var z = 0; z < 8; z++) v = (v << BigInt(8)) | BigInt(s[p + z]);
+    return v;
+  }
+  function bs0(x) { return rotr64(x, 28) ^ rotr64(x, 34) ^ rotr64(x, 39); }
+  function bs1(x) { return rotr64(x, 14) ^ rotr64(x, 18) ^ rotr64(x, 41); }
+  function ss0(x) { return rotr64(x, 1) ^ rotr64(x, 8) ^ shr64(x, 7); }
+  function ss1(x) { return rotr64(x, 19) ^ rotr64(x, 61) ^ shr64(x, 6); }
+  function ch(x, y, z) { return (x & y) ^ (~x & z); }
+  function maj(x, y, z) { return (x & y) ^ (x & z) ^ (y & z); }
+  for (var off = 0; off < s.length; off += 128) {
+    var base = off;
+    for (var t = 0; t < 16; t++) w[t] = ld64(base + t * 8);
+    for (var k = 16; k < 80; k++) w[k] = (ss1(w[k - 2]) + w[k - 7] + ss0(w[k - 15]) + w[k - 16]) & MASK64;
+    var a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+    for (var z = 0; z < 80; z++) {
+      var t1 = (h + bs1(e) + ch(e, f, g) + K512[z] + w[z]) & MASK64;
+      var t2 = (bs0(a) + maj(a, b, c)) & MASK64;
+      h = g; g = f; f = e; e = (d + t1) & MASK64; d = c; c = b; b = a; a = (t1 + t2) & MASK64;
+    }
+    H[0] = (H[0] + a) & MASK64; H[1] = (H[1] + b) & MASK64; H[2] = (H[2] + c) & MASK64; H[3] = (H[3] + d) & MASK64;
+    H[4] = (H[4] + e) & MASK64; H[5] = (H[5] + f) & MASK64; H[6] = (H[6] + g) & MASK64; H[7] = (H[7] + h) & MASK64;
+  }
+  var out = [];
+  H.forEach(function (x) { out = out.concat(be64(x)); });
+  return out;
+}
+
+function sha512(msg) { return sha512core(utf8bytes(msg)); }
+
+chAlgo.addEventListener('change', function () {
+  chKeyRow.style.display = chAlgo.value === 'hmac' ? 'block' : 'none';
+});
+
+var SHA2_NORM = { sha1: 'SHA-1', sha256: 'SHA-256', sha384: 'SHA-384', sha512: 'SHA-512' };
+
+function hasWebCrypto() {
+  return typeof crypto !== 'undefined' && crypto.subtle && typeof crypto.subtle.digest === 'function';
+}
+
+function fallbackDigest(name, bytes) {
+  if (name === 'sha1') return sha1core(bytes.slice());
+  if (name === 'sha256') return sha256core(bytes);
+  if (name === 'sha512') return sha512core(bytes);
+  if (name === 'sha384') return sha512core(bytes).slice(0, 48);
+  return null;
+}
+
+function digestBytes(name, bytes) {
+  return new Promise(function (resolve, reject) {
+    if (hasWebCrypto()) {
+      crypto.subtle.digest(SHA2_NORM[name], new Uint8Array(bytes)).then(function (ab) {
+        resolve(Array.prototype.slice.call(new Uint8Array(ab)));
+      }, reject);
+    } else {
+      var out = fallbackDigest(name, bytes);
+      if (out) resolve(out); else reject(new Error('当前环境不支持 ' + name));
+    }
+  });
+}
+
+function compute() {
+  var msg = chInput.value;
+  var algo = chAlgo.value;
+  if (algo === 'md5') {
+    var m = md5(msg);
+    chOut.value = fmt(m);
+    renderInfo(algo, msg, m.length);
+    return;
+  }
+  if (algo === 'hmac') {
+    var h = hmac256(msg, utf8bytes(chKey.value || ''));
+    chOut.value = fmt(h);
+    renderInfo(algo, msg, h.length);
+    return;
+  }
+  digestBytes(algo, utf8bytes(msg)).then(function (d) {
+    chOut.value = fmt(d);
+    renderInfo(algo, msg, d.length);
+  }).catch(function () {
+    chOut.value = '';
+    renderInfo(algo, msg, 0);
+  });
+}
+
+function renderInfo(algo, msg, len) {
+  chInfo.innerHTML = '<div>算法：<b>' + algo.toUpperCase() + (hasWebCrypto() && algo !== 'md5' && algo !== 'hmac' ? '（Web Crypto）' : '') + '</b></div>' +
+    '<div>输入长度：' + msg.length + ' 字符</div>' +
+    '<div>摘要长度：' + len + ' 字节（' + len * 8 + ' bit）</div>' +
+    '<div style="margin-top:4px;">输出格式：' + (encoding === 'hex' ? '十六进制' : 'Base64') + '</div>';
+}
+
+chCalc.addEventListener('click', compute);
+chHex.addEventListener('click', function () { encoding = 'hex'; compute(); });
+chB64.addEventListener('click', function () { encoding = 'b64'; compute(); });
+chCopy.addEventListener('click', function () {
+  if (!chOut.value) { showToast('请先计算'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(chOut.value);
+  showToast('已复制');
+});
+
+chKeyRow.style.display = chAlgo.value === 'hmac' ? 'block' : 'none';
+compute();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
