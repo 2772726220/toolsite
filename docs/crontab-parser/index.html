@@ -94,9 +94,19 @@ function parseField(str, min, max) {
     var end = m[2] ? parseInt(m[2], 10) : (m[1] === '*' ? max : start);
     var step = m[3] ? parseInt(m[3], 10) : 1;
     if (step < 1) throw new Error('步进需大于 0: ' + part);
-    for (var v = start; v <= end; v += step) values.push(v);
+    if (start > end) throw new Error('范围无效: ' + part);
+    for (var v = start; v <= end; v += step) {
+      if (v < min || v > max) throw new Error('取值超出范围: ' + part + '（合法 ' + min + '-' + max + '）');
+      values.push(v);
+    }
   });
   return values;
+}
+
+function unique(vals) {
+  var seen = {}, out = [];
+  vals.forEach(function (v) { if (!seen[v]) { seen[v] = 1; out.push(v); } });
+  return out;
 }
 
 function parseCron(expr) {
@@ -104,6 +114,7 @@ function parseCron(expr) {
   if (fields.length !== 5 && fields.length !== 6) throw new Error('需要 5 段（分 时 日 月 周）或 6 段（秒 分 时 日 月 周）');
   var hasSec = fields.length === 6;
   var f = hasSec ? fields.slice(1) : fields;
+  var weekdays = unique(parseField(f[4], 0, 7).map(function (v) { return v === 7 ? 0 : v; }));
   return {
     hasSec: hasSec,
     seconds: hasSec ? parseField(fields[0], 0, 59) : null,
@@ -111,7 +122,7 @@ function parseCron(expr) {
     hours: parseField(f[1], 0, 23),
     days: parseField(f[2], 1, 31),
     months: parseField(f[3], 1, 12),
-    weekdays: parseField(f[4], 0, 6)
+    weekdays: weekdays
   };
 }
 
@@ -119,10 +130,10 @@ function describeField(str, min, max, unit) {
   if (str === '*') return '每' + unit;
   var m = str.match(/^\*\/(\d+)$/);
   if (m) return '每 ' + m[1] + ' ' + unit;
-  if (/^[0-9]+$/.test(str)) return unit + ' ' + str;
+  if (/^[0-9]+$/.test(str)) return unit + ' ' + str + (unit === '周' && str === '7' ? '（周日）' : '');
   if (str.indexOf('-') >= 0) {
     var r = str.split('-');
-    return unit + ' ' + r[0] + '-' + r[1];
+    return unit + ' ' + r[0] + '-' + r[1] + (unit === '周' && r[1] === '7' ? '（含周日）' : '');
   }
   return unit + ' ' + str;
 }
