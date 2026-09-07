@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线月相计算器 - 查询日期对应的月相/月球年龄</title>
+  <meta name="description" content="在线月相计算器：输入日期查询当天的月相（新月/娥眉月/上弦月/满月等）、农历月亮年龄与被照亮百分比，使用简化天文模型，精度约 ±1 天。" />
+  <meta name="keywords" content="月相,月亮,农历,满月,新月,月相查询,月球日期">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4eca\u5929\u662f\u6ee1\u6708\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a\u65e5\u671f\u9009\u4e3a\u4eca\u5929\u5373\u53ef\u770b\u5230\u5f53\u5929\u7684\u6708\u76f8\u3001\u4eae\u5ea6\u4e0e\u6708\u4eae\u5e74\u9f84\u3002"}},{"@type":"Question","name":"\u88ab\u7167\u4eae\u6bd4\u4f8b\u662f\u600e\u4e48\u7b97\u7684\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u6708\u7403\u76f8\u4f4d\u89d2\u8ba1\u7b97\uff1a\u65b0\u6708\u7ea6 0%\uff0c\u4e0a/\u4e0b\u5f26\u7ea6 50%\uff0c\u6ee1\u6708\u7ea6 100%\u3002"}},{"@type":"Question","name":"\u6709\u54ea\u4e9b\u6708\u76f8\u540d\u79f0\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u65b0\u6708\u3001\u5a25\u7709\u6708\u3001\u4e0a\u5f26\u6708\u3001\u76c8\u51f8\u6708\u3001\u6ee1\u6708\u3001\u4e8f\u51f8\u6708\u3001\u4e0b\u5f26\u6708\u3001\u6b8b\u6708\u5171 8 \u4e2a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🌙 月相查询</h1>
+    <p>查询任一日期的月相、月球年龄与亮度</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">月相查询</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#月相</span><span class="badge">#月亮</span><span class="badge">#满月</span><span class="badge">#新月</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>月相计算器</title>
+<style>
+input { margin: 4px 0; }
+button { margin: 6px 4px 6px 0; }
+#mpOut { font-size: 14px; line-height: 1.8; margin-top: 8px; }
+#mpGlyph { font-size: 44px; margin-top: 4px; }
+.hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<p>计算指定日期的月相（阴晴圆缺）、月球年龄与亮度百分比。采用简化天文模型，精度约 ±1 天，仅供参考。</p>
+<input type="date" id="mpDate">
+<button id="mpGo">计算</button>
+<div id="mpOut"></div>
+<div id="mpGlyph"></div>
+<p class="hint">月相每 29.53 天一个周期。新月时月亮几乎不可见，满月时最亮。</p>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>月相周期多长？</h2><p>一个朔望月约 29.53 天，从新月 → 上弦 → 满月 → 下弦 → 回到新月循环。</p><h2>为什么会有误差？</h2><p>本工具用简化天文模型近似计算，通常 ±1 天以内；精确观月建议结合天文年历核对。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>今天是满月吗？</summary><p>把日期选为今天即可看到当天的月相、亮度与月亮年龄。</p></details><details class="faq-item"><summary>被照亮比例是怎么算的？</summary><p>按月球相位角计算：新月约 0%，上/下弦约 50%，满月约 100%。</p></details><details class="faq-item"><summary>有哪些月相名称？</summary><p>新月、娥眉月、上弦月、盈凸月、满月、亏凸月、下弦月、残月共 8 个。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>月相查询 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='moon-phase';}); _r.unshift('moon-phase'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mpDate = document.getElementById('mpDate');
+var mpGo = document.getElementById('mpGo');
+var mpOut = document.getElementById('mpOut');
+var mpGlyph = document.getElementById('mpGlyph');
+
+var MP_SYNODIC = 29.530588853;
+var MP_EPOCH = Date.UTC(2000, 0, 6, 18, 14, 0);
+
+function moonPhase(date) {
+  if (!date || isNaN(date.getTime())) return null;
+  var t = (date.getTime() - MP_EPOCH) / 86400000;
+  var age = ((t % MP_SYNODIC) + MP_SYNODIC) % MP_SYNODIC;
+  var illum = (1 - Math.cos(2 * Math.PI * age / MP_SYNODIC)) / 2;
+  var name;
+  if (age < 1.846 || age > 27.685) name = '新月';
+  else if (age < 5.537) name = '娥眉月';
+  else if (age < 9.228) name = '上弦月';
+  else if (age < 12.919) name = '盈凸月';
+  else if (age < 16.611) name = '满月';
+  else if (age < 20.302) name = '亏凸月';
+  else if (age < 23.993) name = '下弦月';
+  else name = '残月';
+  var glyph;
+  switch (name) {
+    case '新月': glyph = '🌑'; break;
+    case '娥眉月': glyph = '🌒'; break;
+    case '上弦月': glyph = '🌓'; break;
+    case '盈凸月': glyph = '🌔'; break;
+    case '满月': glyph = '🌕'; break;
+    case '亏凸月': glyph = '🌖'; break;
+    case '下弦月': glyph = '🌗'; break;
+    default: glyph = '🌘';
+  }
+  return { age: age, illum: illum, name: name, glyph: glyph };
+}
+
+function parseLocal(v) {
+  if (!v) return null;
+  var m = String(v).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return null;
+  return new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+}
+
+function run() {
+  var d = parseLocal(mpDate.value);
+  if (d === null) { mpOut.textContent = '请选择日期。'; mpGlyph.textContent = ''; return; }
+  var r = moonPhase(d);
+  mpOut.textContent = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日'
+    + '：' + r.name
+    + '\n月球年龄：' + r.age.toFixed(1) + ' 天（周期 ' + MP_SYNODIC.toFixed(2) + ' 天）'
+    + '\n被照亮比例：' + Math.round(r.illum * 100) + '%'
+    + (r.age < 1.846 || r.age > 27.685 ? '\n（新月前后，肉眼几乎不可见）' : '');
+  mpGlyph.textContent = r.glyph;
+}
+
+var now = new Date();
+mpDate.value = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+mpGo.addEventListener('click', run);
+run();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
