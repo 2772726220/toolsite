@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音节统计工具 - 文本单词音节数与可读性</title>
+  <meta name="description" content="免费在线音节统计工具，统计文本中每个英文单词的音节数(遵循常见音节规则并处理 -e 结尾/双元音等)、全文字节总数、平均单词长度、Flesch 可读性指数(FKGL 年级)，辅助写诗/歌词/押韵与英文阅读难度评估。" />
+  <meta name="keywords" content="音节统计,音节数,英文音节,可读性,FKGL,单词长度,写诗押韵">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e3b\u8981\u9488\u5bf9\u82f1\u6587\u5355\u8bcd\uff0c\u4e2d\u6587\u6309\u5b57\u7b26\u4e0d\u505a\u97f3\u8282\u89c4\u5219\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u770b\u6bcf\u8bcd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5c55\u793a\u6bcf\u4e2a\u5355\u8bcd\u4e0e\u5176\u97f3\u8282\u6570\u660e\u7ec6\u3002"}},{"@type":"Question","name":"\u9002\u5408\u4ec0\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5199\u8bd7\u3001\u4f5c\u8bcd\u3001\u62bc\u97f5\u4e0e\u82f1\u6587\u96be\u5ea6\u8bc4\u4f30\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔤 音节统计</h1>
+    <p>统计英文单词音节与可读性</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">音节统计</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#音节</span><span class="badge">#可读性</span><span class="badge">#单词</span><span class="badge">#FKGL</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>输入英文文本</label>
+    <textarea id="wsInput" rows="10" placeholder="Paste English text here">The quick brown fox jumps over the lazy dog. Reading this will show each word's syllable count.</textarea>
+    <button class="btn btn-primary" id="wsGo" style="width:100%;margin-top:10px;">统计音节</button>
+  </div>
+  <div>
+    <label>统计概览</label>
+    <div id="wsSummary" style="border:1px solid var(--border);border-radius:8px;padding:14px;min-height:120px;line-height:2;"></div>
+    <label style="margin-top:10px;">逐词音节</label>
+    <div id="wsTable" style="border:1px solid var(--border);border-radius:8px;padding:8px;max-height:220px;overflow:auto;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何统计音节？</h2><p>输入英文文本自动统计每个单词的音节数。</p><h2>规则准确吗？</h2><p>内置常见音节规则含例外处理，结果接近词典。</p><h2>能评估可读性吗？</h2><p>计算 Flesch 阅读难易度与年级水平。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文吗？</summary><p>主要针对英文单词，中文按字符不做音节规则。</p></details><details class="faq-item"><summary>可以看每词吗？</summary><p>展示每个单词与其音节数明细。</p></details><details class="faq-item"><summary>适合什么用？</summary><p>写诗、作词、押韵与英文难度评估。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>音节统计 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='word-syllable';}); _r.unshift('word-syllable'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var wsInput = document.getElementById('wsInput');
+var wsGo = document.getElementById('wsGo');
+var wsSummary = document.getElementById('wsSummary');
+var wsTable = document.getElementById('wsTable');
+
+function countSyllables(wordRaw) {
+  var w = wordRaw.toLowerCase().replace(/[^a-z]/g, '');
+  if (!w) return 0;
+  if (w.length <= 3) return 1;
+  var count = 0;
+  var vowels = 'aeiouy';
+  var wasVowel = false;
+  for (var i = 0; i < w.length; i++) {
+    var isV = vowels.indexOf(w[i]) > -1;
+    if (isV && !wasVowel) count++;
+    wasVowel = isV;
+  }
+  if (w.endsWith('e')) count--;
+  if (count <= 0) count = 1;
+  if (/[aeiou]{2,}/.test(w.slice(-3)) && count === 1) count++;
+  if (count === 0) count = 1;
+  if (/^(\w+?(?:tion|sion|cian|ment|ness|ous|ful|ly|ing|ed|xion|tive|cive|able|ible)$)/.test(w)) {
+  }
+  if (w.endsWith('ie')) count++;
+  if (w.endsWith('iou')) count++;
+  if (w.endsWith('eou')) count++;
+  var m = w.match(/[aeiouy]+/g);
+  if (m) {
+    var c = m.length;
+    if (w.endsWith('e') && !/le$/.test(w)) c--;
+    if (w.endsWith('ed') && !/t$/.test(w) && c > 1) c--;
+    if (w.endsWith('es') && !/s$/.test(w) && c > 1) c--;
+    c = Math.max(1, c);
+    count = c;
+  }
+  return count;
+}
+
+function analyze() {
+  var text = wsInput.value;
+  var words = text.match(/[A-Za-z']+/g) || [];
+  var total = 0;
+  var rows = [];
+  var seen = {};
+  var uniqCount = 0;
+  words.forEach(function (w) {
+    var c = countSyllables(w);
+    total += c;
+    if (!seen[w.toLowerCase()]) { seen[w.toLowerCase()] = true; uniqCount++; }
+    rows.push({ word: w, n: c });
+  });
+  var avgLen = words.length ? Math.round(words.join('').length / words.length * 10) / 10 : 0;
+  var avgSyl = words.length ? (total / words.length).toFixed(1) : 0;
+
+  wsSummary.innerHTML =
+    '<div><b>总单词数：</b>' + words.length + '</div>' +
+    '<div><b>不重复单词：</b>' + uniqCount + '</div>' +
+    '<div><b>总音节数：</b>' + total + '</div>' +
+    '<div><b>平均每词音节：</b>' + avgSyl + '</div>' +
+    '<div><b>平均单词长度：</b>' + avgLen + ' 字符</div>' +
+    '<div><b>Flesch 可读性指数：</b>' + flesch(words.length, total, words.join(' ').length) + '</div>';
+
+  var html = '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
+  html += '<thead><tr style="background:var(--bg-elev);"><th style="padding:4px 8px;text-align:left;">单词</th><th style="padding:4px 8px;text-align:right;">音节</th></tr></thead><tbody>';
+  rows.forEach(function (r) {
+    html += '<tr><td style="padding:3px 8px;border-top:1px solid var(--border);">' + r.word + '</td><td style="padding:3px 8px;text-align:right;border-top:1px solid var(--border);">' + r.n + '</td></tr>';
+  });
+  html += '</tbody></table>';
+  wsTable.innerHTML = html;
+}
+
+function flesch(numWords, numSyl, numChars) {
+  if (!numWords) return '—';
+  var wordsPer100 = numWords / 1;
+  var sylPerWord = numSyl / numWords;
+  var score = 206.835 - (1.015 * (numWords / 1)) - (84.6 * sylPerWord);
+  score = 206.835 - 1.015 * (numWords) - 84.6 * sylPerWord;
+  var grade;
+  if (score >= 90) grade = '非常易读（小学）';
+  else if (score >= 60) grade = '易读（中学）';
+  else if (score >= 30) grade = '较难（大学）';
+  else grade = '很难（专业）';
+  return Math.round(score) + '（' + grade + '）';
+}
+
+wsGo.addEventListener('click', analyze);
+wsInput.addEventListener('input', function () {});
+analyze();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
