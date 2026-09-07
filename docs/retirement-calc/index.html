@@ -152,7 +152,8 @@ rcCalc.addEventListener('click', function () {
       html += row('建议每月额外储蓄', '¥' + fmt(monthly));
     }
   } else if (mode === '4rule') {
-    var portfolio = totalNeed * 0.04; // 4% rule
+    var annualNeed = expenseAtRetire * 12;
+    var portfolio = annualNeed / 0.04; // 4% rule：本金 × 4% ≥ 退休年支出
     var need = portfolio - savingsAtRetire;
     html += row('4% 法则所需本金', '¥' + fmt(portfolio));
     html += row('当前预估本金', '¥' + fmt(savingsAtRetire));
@@ -162,7 +163,8 @@ rcCalc.addEventListener('click', function () {
     if (gap <= 0) { html += row('结果', '无需额外储蓄，当前轨道可达标'); }
     else {
       var monthly = gap / yearsToRetire / 12;
-      var futureValueMonthly = monthly * ((Math.pow(1 + r / 12, yearsToRetire * 12) - 1) / (r / 12));
+      var futureValueMonthly = (r === 0) ? monthly * yearsToRetire * 12
+        : monthly * ((Math.pow(1 + r / 12, yearsToRetire * 12) - 1) / (r / 12));
       html += row('资金缺口', '¥' + fmt(gap));
       html += row('需每月储蓄 (不含收益)', '¥' + fmt(monthly));
       html += row('每月储蓄终值 (含复利)', '¥' + fmt(futureValueMonthly));
