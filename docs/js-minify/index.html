@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 JS 压缩工具 - JavaScript 代码压缩</title>
+  <meta name="description" content="免费在线 JavaScript 压缩工具：本地压缩 JS 代码——剥离注释、折叠空白、去除结构标点旁空格，同时保护字符串、模板串、正则与除法语义，无需上传服务器。" />
+  <meta name="keywords" content="JS压缩,JavaScript压缩,js minify,代码压缩,脚本压缩,在线压缩">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301 ES6+ \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002\u57fa\u4e8e\u5b57\u9762\u91cf\u626b\u63cf\u4e0d\u9650\u8bed\u6cd5\u7248\u672c\uff0c\u6a21\u677f\u5b57\u7b26\u4e32\u3001\u5b57\u7b26\u7c7b\u6b63\u5219\u5747\u539f\u6837\u4fdd\u7559\u3002"}},{"@type":"Question","name":"\u4f1a\u4fdd\u7559\u6362\u884c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u3002\u6298\u884c\u4fdd\u7559\uff08\u540c\u884c\u5185\u591a\u5904\u7a7a\u767d\u6298\u53e0\u4e3a\u5355\u7a7a\u683c\uff09\uff0c\u907f\u514d return \u540e\u6362\u884c\u7b49 ASI \u573a\u666f\u8bed\u4e49\u6539\u53d8\u3002"}},{"@type":"Question","name":"\u4ee3\u7801\u4f1a\u4e0a\u4f20\u5230\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u5b8c\u5168\u5728\u672c\u5730\u5904\u7406\uff0c\u9690\u79c1\u5b89\u5168\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📦 JS 压缩</h1>
+    <p>浏览器本地压缩 JavaScript 代码（白名单扫描）</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">JS 压缩</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#JS</span><span class="badge">#压缩</span><span class="badge">#minify</span><span class="badge">#JavaScript</span>
+<div class="field">
+  <label for="jsmInput">JavaScript 代码</label>
+  <textarea id="jsmInput" rows="10" placeholder="// 粘贴要压缩的 JS 代码"></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="jsmGo" type="button">压缩</button>
+  <button class="btn btn-secondary" id="jsmCopy" type="button">复制结果</button>
+</div>
+<div class="stat-bar">
+  <div class="stat"><div class="num" id="jsmBefore">0 B</div><div class="label">压缩前</div></div>
+  <div class="stat"><div class="num" id="jsmAfter">0 B</div><div class="label">压缩后</div></div>
+  <div class="stat"><div class="num" id="jsmSaved">0%</div><div class="label">节省</div></div>
+</div>
+<div class="result-box">
+  <div id="jsmOut"></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>压缩会改变代码行为吗？</h2><p>不会。白名单式扫描器识别字符串/模板串/正则字面量并原样保留，换行会保留以避免 ASI（自动分号插入）改变语义。</p><h2>与专业混淆器有差别吗？</h2><p>本工具做空白压缩而非变量重命名，输出仍可读，适合粘贴压缩、代码提交前瘦身与存档。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持 ES6+ 吗？</summary><p>支持。基于字面量扫描不限语法版本，模板字符串、字符类正则均原样保留。</p></details><details class="faq-item"><summary>会保留换行吗？</summary><p>会。折行保留（同行内多处空白折叠为单空格），避免 return 后换行等 ASI 场景语义改变。</p></details><details class="faq-item"><summary>代码会上传到服务器吗？</summary><p>不会。完全在本地处理，隐私安全。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>JS 压缩 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='js-minify';}); _r.unshift('js-minify'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var jsmInput = document.getElementById('jsmInput');
+var jsmOut = document.getElementById('jsmOut');
+var lastOut = '';
+
+function isWordChar(ch) {
+  return ch === '$' || ch === '_' || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
+}
+
+function minifyJs(src) {
+  if (typeof src !== 'string') return null;
+  var s = src, out = '', i = 0, n = s.length, prev = '', lastWord = false;
+  while (i < n) {
+    var c = s[i];
+    if (c === "'" || c === '"' || c === '`') {
+      var q = c, i0 = i;
+      i++;
+      while (i < n) {
+        if (s[i] === '\\') { i += 2; continue; }
+        if (q === '`' && s[i] === '$' && s[i + 1] === '{') {
+          var bd = 1, j = i + 2;
+          while (j < n && bd > 0) { if (s[j] === '{') bd++; else if (s[j] === '}') bd--; j++; }
+          i = j; continue;
+        }
+        if (s[i] === q) { i++; break; }
+        i++;
+      }
+      out += s.slice(i0, i);
+      prev = q; lastWord = false;
+      continue;
+    }
+    if (c === '/' && s[i + 1] === '/') {
+      i += 2; while (i < n && s[i] !== '\n' && s[i] !== '\r') i++; continue;
+    }
+    if (c === '/' && s[i + 1] === '*') {
+      i += 2; while (i < n && !(s[i] === '*' && s[i + 1] === '/')) i++; i = Math.min(n, i + 2); continue;
+    }
+    if (c === '/') {
+      var isDiv = lastWord || prev === ')' || prev === ']' || prev === '}' || prev === "'" || prev === '"' || prev === '`';
+      if (!isDiv) {
+        var i1 = i + 1, inCls = false, closed = false;
+        while (i1 < n) {
+          var ch = s[i1];
+          if (ch === '\\') { i1 += 2; continue; }
+          if (ch === '[') inCls = true;
+          else if (ch === ']') inCls = false;
+          else if (ch === '/' && !inCls) { i1++; closed = true; break; }
+          else if (ch === '\n') break;
+          i1++;
+        }
+        if (closed) while (i1 < n && /[dgimsuvy]/.test(s[i1])) i1++;
+        out += s.slice(i, i1);
+        i = i1;
+        prev = 'l'; lastWord = true;
+        continue;
+      }
+      out += '/'; prev = '/'; lastWord = false; i++; continue;
+    }
+    if (/\s/.test(c)) {
+      var hasNL = false;
+      while (i < n && /\s/.test(s[i])) { if (s[i] === '\n' || s[i] === '\r') hasNL = true; i++; }
+      // preserve line breaks (ASI-safe: never turn "return\nx" into "return x")
+      if (hasNL) { out += '\n'; continue; }
+      var nb = s[i];
+      var outp = out.charAt(out.length - 1);
+      if (nb === '{' || nb === '}' || nb === ';' || nb === ',' || nb === ')' || nb === '(' || nb === ':') continue;
+      if (outp === '{' || outp === '}' || outp === ';' || outp === ',' || outp === '(' || outp === ')' || outp === ':') continue;
+      out += ' '; continue;
+    }
+    out += c;
+    if (isWordChar(c)) lastWord = true; else { lastWord = false; prev = c; }
+    i++;
+  }
+  return out.trim();
+}
+
+document.getElementById('jsmGo').addEventListener('click', function () {
+  var src = jsmInput.value;
+  if (!src.trim()) { showToast('请输入 JS 代码'); return; }
+  lastOut = minifyJs(src);
+  var before = src.length, after = lastOut.length;
+  document.getElementById('jsmBefore').textContent = formatSize(before);
+  document.getElementById('jsmAfter').textContent = formatSize(after);
+  var saved = before > 0 ? Math.round((1 - after / before) * 100) : 0;
+  document.getElementById('jsmSaved').textContent = saved + '%';
+  jsmOut.textContent = lastOut;
+});
+
+document.getElementById('jsmCopy').addEventListener('click', function () {
+  if (!lastOut) { showToast('请先压缩'); return; }
+  navigator.clipboard.writeText(lastOut).then(function () { showToast('已复制'); });
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
