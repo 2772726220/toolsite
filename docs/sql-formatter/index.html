@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 格式化工具 - 在线美化 SQL 语句工具</title>
+  <meta name="description" content="免费在线 SQL 格式化工具，粘贴 SQL 一键美化缩进对齐，支持多种关键字大写/小写策略、SELECT/UPDATE/INSERT/DELETE 子句换行、压缩模式(去除多余空白)、语法高亮显示、复制结果，MySQL/PostgreSQL/SQLite 均适用，数据库开发必备。" />
+  <meta name="keywords" content="SQL格式化,SQL美化,SQL高亮,SQL压缩,SQL整理,数据库,查询美化">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗄️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u6570\u636e\u5e93\u65b9\u8a00\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 MySQL / PostgreSQL / SQLite \u7b49\u5e38\u89c1 SQL \u65b9\u8a00\u3002"}},{"@type":"Question","name":"\u4f1a\u9ad8\u4eae\u6ce8\u91ca\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 -- \u4e0e /* */ \u6ce8\u91ca\u4fdd\u7559\u5e76\u9ad8\u4eae\u663e\u793a\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b8c\u5168\u672c\u5730\u5904\u7406\uff0cSQL \u4e0d\u79bb\u5f00\u6d4f\u89c8\u5668\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🗄️ SQL 格式化</h1>
+    <p>SQL 美化/压缩/关键字高亮</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">SQL 格式化</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#SQL</span><span class="badge">#格式化</span><span class="badge">#美化</span>
+<div>
+  <label>输入 SQL</label>
+  <textarea id="sfInput" rows="10" placeholder="粘贴 SQL 语句，例如：select id,name from users where age>18 order by id desc"></textarea>
+</div>
+<div class="controls">
+  <label>关键字大小写</label>
+  <select id="sfCase">
+    <option value="upper" selected>大写</option>
+    <option value="lower">小写</option>
+    <option value="keep">保持原样</option>
+  </select>
+  <label>缩进</label>
+  <select id="sfIndent">
+    <option value="2" selected>2 空格</option>
+    <option value="4">4 空格</option>
+  </select>
+  <label>模式</label>
+  <select id="sfMode">
+    <option value="format" selected>格式化</option>
+    <option value="minify">压缩</option>
+  </select>
+  <button class="btn btn-primary" id="sfFormat">格式化</button>
+  <button class="btn" id="sfCopy">复制</button>
+</div>
+<label>结果</label>
+<pre id="sfOut" style="background:var(--bg-elev);padding:12px;border-radius:8px;font-size:12px;overflow:auto;max-height:360px;min-height:80px;line-height:1.6;"></pre>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何美化 SQL？</h2><p>粘贴 SQL 点击格式化，自动缩进并对齐关键字。</p><h2>支持关键字大小写吗？</h2><p>支持选择关键字大写、小写或保持原样。</p><h2>能压缩 SQL 吗？</h2><p>压缩模式去除多余空白与换行，适合日志与单行存储。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些数据库方言？</summary><p>支持 MySQL / PostgreSQL / SQLite 等常见 SQL 方言。</p></details><details class="faq-item"><summary>会高亮注释吗？</summary><p>支持 -- 与 /* */ 注释保留并高亮显示。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>完全本地处理，SQL 不离开浏览器。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>SQL 格式化 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='sql-formatter';}); _r.unshift('sql-formatter'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var sfInput = document.getElementById('sfInput');
+var sfCase = document.getElementById('sfCase');
+var sfIndent = document.getElementById('sfIndent');
+var sfMode = document.getElementById('sfMode');
+var sfFormat = document.getElementById('sfFormat');
+var sfCopy = document.getElementById('sfCopy');
+var sfOut = document.getElementById('sfOut');
+
+var KEYWORDS = ['SELECT','FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','INSERT INTO','VALUES','UPDATE','SET','DELETE FROM','JOIN','LEFT JOIN','RIGHT JOIN','INNER JOIN','FULL JOIN','AND','OR','ON','UNION','UNION ALL','CASE','WHEN','THEN','ELSE','END','IN','BETWEEN','LIKE','NOT','AS','DISTINCT','COUNT','SUM','AVG','MIN','MAX','ASC','DESC','NULL','IS','EXISTS','WITH','CREATE','TABLE','ALTER','DROP','INDEX','VIEW','PRIMARY','KEY','FOREIGN','REFERENCES','DEFAULT','UNIQUE','CHECK','CONSTRAINT','TRUNCATE','GRANT','USE'];
+
+function fmtKw(w, mode) {
+  if (mode === 'upper') return w.toUpperCase();
+  if (mode === 'lower') return w.toLowerCase();
+  return w;
+}
+
+function isKeyword(w) {
+  var up = w.toUpperCase();
+  return KEYWORDS.indexOf(up) > -1;
+}
+
+function minifySql(sql) {
+  var out = '';
+  var i = 0, n = sql.length;
+  var pending = false;
+  while (i < n) {
+    var ch = sql[i];
+    if (ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r') { pending = true; i++; continue; }
+    if (ch === '-' && sql[i + 1] === '-') {
+      var j0 = sql.indexOf('\n', i);
+      i = j0 === -1 ? n : j0;
+      pending = true;
+      continue;
+    }
+    if (ch === '/' && sql[i + 1] === '*') {
+      var j1 = sql.indexOf('*/', i);
+      i = j1 === -1 ? n : j1 + 2;
+      pending = true;
+      continue;
+    }
+    if (ch === "'" || ch === '"') {
+      var q = ch, j = i + 1, s = ch;
+      while (j < n) {
+        if (sql[j] === q && sql[j + 1] === q) { s += q + q; j += 2; continue; }
+        if (sql[j] === q) { s += q; j++; break; }
+        s += sql[j]; j++;
+      }
+      if (pending && out) out += ' ';
+      out += s;
+      pending = false;
+      i = j;
+      continue;
+    }
+    if (pending && out) out += ' ';
+    out += ch;
+    pending = false;
+    i++;
+  }
+  return out;
+}
+
+function formatSql(sql, kwMode, indentCount) {
+  var indentUnit = '';
+  for (var i = 0; i < indentCount; i++) indentUnit += ' ';
+  var tokens = tokenize(sql);
+  var out = [];
+  var depth = 0;
+  var line = '';
+  var inParen = 0;
+  var needIndent = false;
+  var prevTok = '';
+
+  function flush() {
+    if (line.trim()) {
+      out.push(repeat(indentUnit, depth) + line.trim());
+    }
+    line = '';
+    needIndent = false;
+  }
+
+  for (var i = 0; i < tokens.length; i++) {
+    var t = tokens[i];
+    if (t === '(') {
+      flush();
+      --depth;
+      line += '(';
+      inParen++;
+      // newline after ( often useful
+      out.push(repeat(indentUnit, depth) + line.trim());
+      line = '';
+      depth++;
+      continue;
+    }
+    if (t === ')') {
+      flush();
+      depth = Math.max(0, depth - 1);
+      out.push(repeat(indentUnit, depth) + ')');
+      inParen = Math.max(0, inParen - 1);
+      line = '';
+      continue;
+    }
+    if (t === ',' && inParen === 0) {
+      line += ',';
+      flush();
+      continue;
+    }
+    var up = t.toUpperCase();
+    if (KEYWORDS.indexOf(up) > -1) {
+      var formatted = fmtKw(t, kwMode);
+      if (up === 'SELECT' || up === 'WHERE' || up === 'FROM' || up === 'ORDER BY' || up === 'GROUP BY' ||
+          up === 'HAVING' || up === 'LIMIT' || up === 'VALUES' || up === 'UPDATE' || up === 'SET' || up === 'AND' ||
+          up === 'ON' || up === 'JOIN' || up === 'LEFT' || up === 'RIGHT' || up === 'INNER' || up === 'UNION' ||
+          up === 'INSERT INTO' || up === 'DELETE FROM' || up === 'WHEN' || up === 'THEN' || up === 'ELSE' ||
+          up === 'OR' || up === 'CASE' || up === 'IN' || up === 'CREATE' || up === 'TABLE') {
+        if (up === 'AND' && inParen > 0) {
+          line += ' ' + formatted;
+        } else {
+          flush();
+          line = formatted;
+          if (up === 'LEFT' || up === 'RIGHT' || up === 'INNER' || up === 'FULL') { /* handled with JOIN */ }
+        }
+      } else {
+        line = line ? line + ' ' + formatted : formatted;
+      }
+    } else if (t === ';') {
+      line += ';';
+      flush();
+      depth = 0;
+    } else {
+      var sep = line ? ' ' : '';
+      if (prevTok === '(') sep = '';
+      line += sep + t;
+    }
+    prevTok = t;
+  }
+  flush();
+  return out.join('\n');
+}
+
+function repeat(s, n) { var r = ''; for (var i = 0; i < n; i++) r += s; return r; }
+
+function tokenize(sql) {
+  var tokens = [];
+  var i = 0;
+  var n = sql.length;
+  while (i < n) {
+    var ch = sql[i];
+    if (ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r') { i++; continue; }
+    if (ch === '-' && sql[i+1] === '-') {
+      var j = sql.indexOf('\n', i);
+      tokens.push(sql.slice(i, j === -1 ? n : j));
+      i = j === -1 ? n : j;
+      continue;
+    }
+    if (ch === '/' && sql[i+1] === '*') {
+      var j2 = sql.indexOf('*/', i);
+      tokens.push(sql.slice(i, j2 === -1 ? n : j2 + 2));
+      i = j2 === -1 ? n : j2 + 2;
+      continue;
+    }
+    if (ch === "'" || ch === '"') {
+      var quote = ch;
+      var j3 = i + 1;
+      while (j3 < n && sql[j3] !== quote) {
+        if (sql[j3] === '\\') j3++;
+        j3++;
+      }
+      tokens.push(sql.slice(i, j3 + 1));
+      i = j3 + 1;
+      continue;
+    }
+    if (ch === '(' || ch === ')' || ch === ',' || ch === ';') {
+      tokens.push(ch);
+      i++;
+      continue;
+    }
+    var start = i;
+    while (i < n && !/[\s(),;'"]/.test(sql[i]) && !(sql[i] === '-' && sql[i+1] === '-')) i++;
+    tokens.push(sql.slice(start, i));
+  }
+  return tokens;
+}
+
+sfFormat.addEventListener('click', function () {
+  var raw = sfInput.value;
+  if (!raw.trim()) { showToast('请输入 SQL'); return; }
+  var kwMode = sfCase.value;
+  var indentCount = parseInt(sfIndent.value, 10);
+  if (sfMode.value === 'minify') {
+    sfOut.textContent = minifySql(raw);
+    return;
+  }
+  var formatted = formatSql(raw, kwMode, indentCount);
+  sfOut.textContent = formatted;
+});
+
+sfCopy.addEventListener('click', function () {
+  var txt = sfOut.textContent;
+  if (!txt) { showToast('请先格式化'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt);
+  showToast('已复制');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
