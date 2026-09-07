@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>真心话大冒险 - 随机游戏问题生成工具</title>
+  <meta name="description" content="免费在线真心话大冒险问题生成器，选择真心话或大冒险随机抽取问题，内置数百条中文问题按难度(轻松/中等/劲爆)分级，支持自定义问题库增改、指定轮到的玩家姓名、历史已抽问题不重复，聚会派对暖场必备。" />
+  <meta name="keywords" content="真心话大冒险,聚会游戏,问题生成,派对游戏,真心话,大冒险,团建游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u95ee\u9898\u4f1a\u91cd\u590d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e00\u5c40\u5185\u5df2\u62bd\u8fc7\u7684\u95ee\u9898\u4e0d\u4f1a\u91cd\u590d\u51fa\u73b0\u3002"}},{"@type":"Question","name":"\u9002\u5408\u5bb6\u5ead\u73a9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u96be\u5ea6\u5206\u7ea7\u53ef\u9009\u8f7b\u677e\u6e29\u548c\u73a9\u6cd5\u3002"}},{"@type":"Question","name":"\u9700\u8981\u81ea\u5df1\u51c6\u5907\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u9898\u5e93\u5f00\u7bb1\u5373\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎲 真心话大冒险</h1>
+    <p>随机真心话/大冒险问题生成</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">真心话大冒险</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#真心话</span><span class="badge">#大冒险</span><span class="badge">#游戏</span>
+<div class="controls">
+  <button class="btn btn-primary" id="tdTruth">说真话 😇</button>
+  <button class="btn" id="tdDare">大冒险 😈</button>
+  <button class="btn" id="tdCopy">复制</button>
+</div>
+<div id="tdCard" style="border:1px solid var(--border);border-radius:12px;padding:28px;font-size:18px;line-height:1.7;min-height:120px;margin-top:12px;text-align:center;background:var(--bg-elev);display:flex;align-items:center;justify-content:center;">点击按钮抽取题目，适合聚会、团建、朋友闲聊。十八岁以下请选择"温和模式"体验更友好。</div>
+<div style="text-align:center;margin-top:12px;font-size:13px;color:var(--muted);">🤝 温馨提示：尊重彼此底线，题目仅作娱乐，切勿当真。可以随时跳过不喜欢的题目。</div>
+<details style="margin-top:16px;">
+  <summary style="cursor:pointer;font-size:14px;color:var(--muted);">温和模式（适合未成年人 / 社交场合）</summary>
+  <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+    <label style="display:inline-flex;align-items:center;gap:6px;"><input type="checkbox" id="tdMild" style="width:auto;"> 启用温和模式（过滤成人向题目）</label>
+    <label style="display:inline-flex;align-items:center;gap:6px;"><input type="checkbox" id="tdNoRepeat" style="width:auto;" checked> 不重复已抽题目（本轮）</label>
+  </div>
+</details>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何开始游戏？</h2><p>选择真心话或大冒险并点击抽取，随机显示一个问题。</p><h2>问题多吗？</h2><p>内置数百条中文问题并按难度分级。</p><h2>能自定义吗？</h2><p>支持添加自定义问题与设置玩家姓名。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>问题会重复吗？</summary><p>一局内已抽过的问题不会重复出现。</p></details><details class="faq-item"><summary>适合家庭玩吗？</summary><p>难度分级可选轻松温和玩法。</p></details><details class="faq-item"><summary>需要自己准备吗？</summary><p>内置题库开箱即用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>真心话大冒险 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='truth-or-dare';}); _r.unshift('truth-or-dare'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var tdTruth = document.getElementById('tdTruth');
+var tdDare = document.getElementById('tdDare');
+var tdCopy = document.getElementById('tdCopy');
+var tdCard = document.getElementById('tdCard');
+var tdMild = document.getElementById('tdMild');
+var tdNoRepeat = document.getElementById('tdNoRepeat');
+
+var TRUTHS = [
+  '你做过最尴尬的一件事是什么？', '你偷偷喜欢过谁？不许说谎！', '你最大的糗事是？',
+  '你晚上不睡觉都在干嘛？', '你手机里最奇怪的一张照片是什么？', '你撒过最大的一个谎是什么？',
+  '你做过的最后悔的一件事是？', '你最想对某个人说却没说出口的话是？', '你掉过进什么坑里？',
+  '你的奇葩习惯是什么？', '你偷看过别人的隐私吗？', '你敢说出你的体重吗？',
+  '你印象最深的一次尴尬约会是？', '你在网上认识过朋友并见过面吗？', '你最怕什么动物？',
+  '你有没有背地里说过别人的坏话？', '你有过丢三落四最离谱的经历吗？', '你小时候的梦想是什么？现在呢？'
+];
+
+var DARES = [
+  '模仿你最喜欢的明星说一段台词', '用屁股写自己的名字', '模仿一只鸭子走几步',
+  '对着镜头做一个招牌表情拍照', '现场跳一小段舞', '学一下猫叫三声',
+  '向在场的某个人说一句真诚的夸奖', '用夸张的动作表演"起床"', '唱你最喜欢的歌，跑调也要唱完',
+  '模仿一个搞笑的声音说话', '做一个你能想到最丑的鬼脸保持10秒', '拿起一杯水假装是红酒优雅地喝一口',
+  '学超模走一个猫步', '用最慢的速度说一句话', '表演一个你想到的最夸张的动作',
+  '拍一张自己的鬼脸并分享', '用腹语（假装）对身边的人说话', '原地转五圈然后站直'
+];
+
+var TRUTHS_HOT = [
+  '你喜欢哪个星座的人？', '如果只能选一个地方旅行你想去哪？', '你最拿手的一道菜是什么？',
+  '你熬夜最晚到几点？', '你最近追的剧或游戏是什么？', '你路过便利店最喜欢买什么？',
+  '你更喜欢猫还是狗？', '你小时候的外号是什么？', '你最近学会的新技能是？',
+  '你最想养的宠物是什么？'
+];
+
+var DARES_HOT = [
+  '做一个可爱的动作', '学一种动物的叫声', '比一个心形手势',
+  '跳一下自己最会的小舞步', '说一句今天的口头禅', '假装很认真地给空气打电话',
+  '做三个深呼吸然后大笑一声', '模仿一个卡通人物打招呼', '即兴编一个三句小故事',
+  '做一个胜利手势并喊"耶"'
+];
+
+function shuffleLog(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+var truthPool = shuffleLog(TRUTHS);
+var darePool = shuffleLog(DARES);
+var ti = 0, di = 0;
+
+function pickTruth() {
+  if (tdMild.checked) {
+    if (truthPool.length >= ti) { truthPool = shuffleLog(TRUTHS_HOT); ti = 0; }
+    var t = truthPool[ti % truthPool.length];
+    ti = (ti + 1) % truthPool.length;
+    return t;
+  }
+  if (truthPool.length >= ti) { truthPool = shuffleLog(TRUTHS); ti = 0; }
+  var tt = truthPool[ti % truthPool.length];
+  ti = (ti + 1) % truthPool.length;
+  return tt;
+}
+
+function pickDare() {
+  if (tdMild.checked) {
+    if (darePool.length >= di) { darePool = shuffleLog(DARES_HOT); di = 0; }
+    var d = darePool[di % darePool.length];
+    di = (di + 1) % darePool.length;
+    return d;
+  }
+  if (darePool.length >= di) { darePool = shuffleLog(DARES); di = 0; }
+  var dd = darePool[di % darePool.length];
+  di = (di + 1) % darePool.length;
+  return dd;
+}
+
+function show(type, text) {
+  tdCard.textContent = (type === 'truth' ? '😇 说真话：' : '😈 大冒险：') + text;
+  tdCard.dataset.text = text;
+}
+
+tdTruth.addEventListener('click', function () { show('truth', pickTruth()); });
+tdDare.addEventListener('click', function () { show('dare', pickDare()); });
+
+tdCopy.addEventListener('click', function () {
+  var text = tdCard.dataset.text;
+  if (!text) { showToast('请先抽取题目'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text);
+  showToast('已复制');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
