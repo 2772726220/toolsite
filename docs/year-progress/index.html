@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年度进度条 - 在线查看2026年时间进度工具</title>
+  <meta name="description" content="免费在线年度进度工具，实时计算今年的第几天、剩余天数、月度进度、周进度可视化进度条展示，按本地时区自动更新，时间管理、年度目标追踪必备。" />
+  <meta name="keywords" content="年度进度,年度进度条,今年第几天,剩余天数,时间进度,年度目标">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗓️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6309\u54ea\u4e2a\u65f6\u533a\u8ba1\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u8bbe\u5907\u672c\u8eab\u7684\u672c\u5730\u65f6\u533a\u8ba1\u7b97\uff0c\u8de8\u65f6\u533a\u65c5\u884c\u65f6\u663e\u793a\u7684\u662f\u5f53\u65f6\u6240\u5728\u5730\u65f6\u95f4\u3002"}},{"@type":"Question","name":"\u95f0\u5e74\u4f1a\u6b63\u786e\u5904\u7406\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u3002\u80fd\u88ab 4 \u6574\u9664\u4e14\u4e0d\u80fd\u88ab 100 \u6574\u9664\u3001\u6216\u80fd\u88ab 400 \u6574\u9664\u7684\u5e74\u4efd\u6309 366 \u5929\u8ba1\u7b97\uff0c\u5168\u5e74\u8fdb\u5ea6\u767e\u5206\u6bd4\u59cb\u7ec8\u51c6\u786e\u3002"}},{"@type":"Question","name":"\u9875\u9762\u4e0d\u5237\u65b0\u4f1a\u66f4\u65b0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6253\u5f00\u9875\u9762\u65f6\u81ea\u52a8\u8ba1\u7b97\uff1b\u505c\u7559\u671f\u95f4\u5982\u9700\u5237\u65b0\u53ef\u91cd\u65b0\u6253\u5f00\u9875\u9762\u83b7\u53d6\u6700\u65b0\u8fdb\u5ea6\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u8ba1\u7b97\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u8fdb\u884c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🗓️ 年度进度</h1>
+    <p>可视化今年已过天数与进度条</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">年度进度</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#年度</span><span class="badge">#进度</span><span class="badge">#天数</span><span class="badge">#倒计时</span>
+<div id="ypOut" style="display:grid;gap:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>年度进度怎么计算？</h2><p>按本地时区以每年 1 月 1 日为起点计算已过天数占全年天数的百分比，自动区分平闰年，同时展示已过/剩余天数、月进度与周进度。</p><h2>为什么要看年度进度？</h2><p>可视化时间流逝能帮助追踪年度目标节奏，配合周进度、月进度可以更直观地复盘计划完成情况，是效率达人的常见习惯。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>按哪个时区计算？</summary><p>按设备本身的本地时区计算，跨时区旅行时显示的是当时所在地时间。</p></details><details class="faq-item"><summary>闰年会正确处理吗？</summary><p>会。能被 4 整除且不能被 100 整除、或能被 400 整除的年份按 366 天计算，全年进度百分比始终准确。</p></details><details class="faq-item"><summary>页面不刷新会更新吗？</summary><p>打开页面时自动计算；停留期间如需刷新可重新打开页面获取最新进度。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，计算完全在浏览器本地进行。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>年度进度 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='year-progress';}); _r.unshift('year-progress'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ypOut = document.getElementById('ypOut');
+
+function isLeapYear(y) { return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0); }
+function daysInYear(y) { return isLeapYear(y) ? 366 : 365; }
+function dayOfYear(d) {
+  var start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d - start) / 86400000);
+}
+function daysLeft(d) { return daysInYear(d.getFullYear()) - dayOfYear(d); }
+function daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+
+function bar(pct, color) {
+  return '<div style="height:14px;background:var(--bg-elev);border-radius:8px;overflow:hidden;border:1px solid var(--border);"><div style="height:100%;width:' + Math.min(100, pct).toFixed(2) + '%;background:' + color + ';transition:width .3s;"></div></div>';
+}
+function block(title, body) {
+  return '<div class="result-box" style="padding:14px;"><div style="font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600;">' + title + '</div>' + body + '</div>';
+}
+function kv(label, val) {
+  return '<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px dashed var(--border);"><span style="color:var(--muted);">' + label + '</span><b style="font-family:monospace;">' + val + '</b></div>';
+}
+
+function render() {
+  var now = new Date();
+  var y = now.getFullYear();
+  var doy = dayOfYear(now);
+  var total = daysInYear(y);
+  var pct = doy / total * 100;
+  var dl = daysLeft(now);
+  var weekOfYear = Math.ceil((doy + (new Date(y, 0, 1).getDay() === 0 ? 7 : new Date(y, 0, 1).getDay()) ) / 7);
+  var weeksTotal = Math.ceil(total / 7);
+  var dow = now.getDay();
+  var dowPct = dow / 7 * 100;
+  var months = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  var mStart = new Date(y, now.getMonth(), 0).getDay(); // day of week of month start
+  var dimPct = (now.getDate() - 1) / daysInMonth(y, now.getMonth()) * 100;
+
+  var html = '';
+  html += block('年度进度 ' + y + ' · ' + pct.toFixed(2) + '%', bar(pct, 'linear-gradient(90deg,#4f46e5,#6366f1)') + kv('已过天数', doy + ' / ' + total + ' 天') + kv('剩余天数', dl + ' 天') + kv('本周是第 ' + weekOfYear + ' 周', weekOfYear + ' / ' + weeksTotal + ' 周'));
+  html += block(months[now.getMonth()] + '进度 · ' + now.getDate() + ' 日', bar(dimPct, 'linear-gradient(90deg,#10b981,#34d399)') + kv('本月第 ' + now.getDate() + ' 天', daysInMonth(y, now.getMonth()) + ' 天' ));
+  html += block('本周进度（' + dowPct.toFixed(1) + '%）', bar(dowPct, 'linear-gradient(90deg,#f59e0b,#fbbf24)'));
+  html += '<div style="font-size:12px;color:var(--muted);text-align:center;">按设备本地时区计算 · 页面打开时自动更新</div>';
+  ypOut.innerHTML = html;
+}
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
