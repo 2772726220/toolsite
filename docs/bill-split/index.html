@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聚餐AA分摊计算器 - 人均AA账单拆分</title>
+  <meta name="description" content="同学生日、公司聚餐、朋友聚会必备 AA 计算器：输入账单总额、折扣、服务费与小费比例，自动算出折后价、各项金额与人均应付，支持 1-200 人分摊。" />
+  <meta name="keywords" content="AA分摊,聚餐AA,人均消费,账单拆分,小费计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u670d\u52a1\u8d39\u60f3\u6309\u539f\u4ef7\u7b97\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a\u670d\u52a1\u8d39/\u5c0f\u8d39\u586b 0\uff0c\u624b\u52a8\u628a\u4e0d\u6253\u6298\u7684\u90e8\u5206\u52a0\u5165\u603b\u989d\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u6298\u6263\u80fd\u8d85\u8fc7 100% \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\uff0c\u6298\u6263\u3001\u670d\u52a1\u8d39\u3001\u5c0f\u8d39\u90fd\u5728 0~100% \u4e4b\u95f4\u6821\u9a8c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧾 聚餐AA计算</h1>
+    <p>账单折扣+服务费+小费，一键人均 AA</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">聚餐AA计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#AA</span><span class="badge">#分摊</span><span class="badge">#聚餐</span><span class="badge">#小费</span>
+<h3>聚餐 AA 分摊计算器</h3>
+<p class="muted">输入账单总额、折扣、服务费与小费比例，一键算出每个人应付多少钱，支持自定义参数。</p>
+<div class="row">
+  <div class="col">
+    <label>账单总额（元）</label>
+    <input id="bsTotal" type="number" min="0" step="0.01" placeholder="例如 500">
+    <label>折扣（%）</label>
+    <input id="bsDiscount" type="number" min="0" max="100" step="0.1" value="0" placeholder="0">
+    <label>服务费（%）</label>
+    <input id="bsService" type="number" min="0" max="100" step="0.1" value="0" placeholder="例如 10">
+    <label>小费（%）</label>
+    <input id="bsTip" type="number" min="0" max="100" step="0.1" value="0" placeholder="例如 10">
+    <label>人数</label>
+    <input id="bsPeople" type="number" min="1" max="200" step="1" value="4">
+    <button id="bsBtn">计算人均</button>
+  </div>
+  <div class="col">
+    <label>分摊明细</label>
+    <div id="bsOut" style="width:100%;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>先打折再算服务费还是先算服务费再打折？</h2><p>本工具按常见餐饮习惯：先对账单总额打折，再在折后价上计算服务费与小费；与多数收银台一致。</p><h2>能算人均吗？</h2><p>可以，填入分摊人数后自动给出每人应付金额，支持最多 200 人。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>服务费想按原价算怎么处理？</summary><p>把服务费/小费填 0，手动把不打折的部分加入总额即可。</p></details><details class="faq-item"><summary>折扣能超过 100% 吗？</summary><p>不能，折扣、服务费、小费都在 0~100% 之间校验。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>聚餐AA计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='bill-split';}); _r.unshift('bill-split'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bsTotal = document.getElementById('bsTotal');
+var bsDiscount = document.getElementById('bsDiscount');
+var bsService = document.getElementById('bsService');
+var bsTip = document.getElementById('bsTip');
+var bsPeople = document.getElementById('bsPeople');
+var bsBtn = document.getElementById('bsBtn');
+var bsOut = document.getElementById('bsOut');
+
+function money2(x) {
+  if (!isFinite(x)) return '—';
+  return Number(x).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calcBillSplit(total, discountPct, servicePct, tipPct, people) {
+  total = Number(total); discountPct = Number(discountPct); servicePct = Number(servicePct);
+  tipPct = Number(tipPct); people = Number(people);
+  if (!(total > 0)) return null;
+  if (!(discountPct >= 0 && discountPct <= 100)) return null;
+  if (!(servicePct >= 0 && servicePct <= 100)) return null;
+  if (!(tipPct >= 0 && tipPct <= 100)) return null;
+  if (!(people >= 1 && people <= 200)) return null;
+  var discounted = total * (1 - discountPct / 100);
+  var service = discounted * servicePct / 100;
+  var tip = discounted * tipPct / 100;
+  var final = discounted + service + tip;
+  return {
+    total: total, discountPct: discountPct, servicePct: servicePct, tipPct: tipPct, people: people,
+    discountAmount: total - discounted, discounted: discounted, service: service, tip: tip, final: final,
+    perPerson: final / people
+  };
+}
+
+bsBtn.addEventListener('click', function () {
+  var r = calcBillSplit(bsTotal.value, bsDiscount.value, bsService.value, bsTip.value, bsPeople.value);
+  if (!r) {
+    bsOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请检查输入：总额 &gt; 0，折扣/服务费/小费 0~100%，人数 1~200</div>';
+    return;
+  }
+  bsOut.innerHTML = '<div class="result-box">' +
+    '<div>小计 = <b>¥' + money2(r.total) + '</b></div>' +
+    '<div>折扣 ' + r.discountPct + '% = −¥' + money2(r.discountAmount) + ' → 折后 ¥' + money2(r.discounted) + '</div>' +
+    '<div>服务费 ' + r.servicePct + '% = ¥' + money2(r.service) + '　小费 ' + r.tipPct + '% = ¥' + money2(r.tip) + '</div>' +
+    '<div style="border-top:1px dashed #e2e8f0;padding-top:6px;margin-top:6px;">应付合计 = <b>¥' + money2(r.final) + '</b></div>' +
+    '<div><b>' + r.people + '</b> 人 AA，人均 = <b>¥' + money2(r.perPerson) + '</b></div>' +
+    '</div><div class="hint">顺序：先打折，再在折后价上算服务费与小费。若按原价算服务费请把小费/服务费填入 0 自行拆分。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
