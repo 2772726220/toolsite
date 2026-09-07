@@ -90,29 +90,57 @@
 var scResult = document.getElementById('scResult');
   var scInput = document.getElementById('scDisplay');
 
+  function processFactorial(expr) {
+    if (expr.indexOf('!') < 0) return expr;
+    var chars = expr.split('');
+    for (var i = 0; i < chars.length; i++) {
+      if (chars[i] !== '!') continue;
+      if (i > 0 && /[0-9]/.test(chars[i - 1])) {
+        var s = i - 1;
+        while (s > 0 && /[0-9.]/.test(chars[s - 1])) s--;
+        var num = parseFloat(chars.slice(s, i).join(''));
+        var v;
+        if (!Number.isInteger(num) || num < 0 || num > 170) v = 'fact(' + num + ')';
+        else { v = 1; for (var k = 2; k <= num; k++) v *= k; }
+        for (var p = s; p < i; p++) chars[p] = '';
+        chars[i] = String(v);
+      } else if (i > 0 && chars[i - 1] === ')') {
+        var depth = 1, j = i - 2;
+        while (j >= 0 && depth > 0) {
+          if (chars[j] === ')') depth++;
+          else if (chars[j] === '(') depth--;
+          if (depth > 0) j--;
+        }
+        if (j >= 0 && depth === 0 && chars[j] === '(') {
+          chars[j] = 'fact(';
+          chars[i - 1] = ')';
+          chars[i] = '';
+        }
+      }
+    }
+    return chars.join('');
+  }
+
   function evalExpr(expr, deg) {
     var rad = deg ? Math.PI / 180 : 1;
-    var withFuncs = expr
-      .replace(/sin\(/g, 'Math.sin(' + rad + '*')
-      .replace(/cos\(/g, 'Math.cos(' + rad + '*')
-      .replace(/tan\(/g, 'Math.tan(' + rad + '*')
-      .replace(/sqrt\(/g, 'Math.sqrt(')
-      .replace(/log\(/g, 'Math.log(')
-      .replace(/abs\(/g, 'Math.abs(')
-      .replace(/floor\(/g, 'Math.floor(')
-      .replace(/ceil\(/g, 'Math.ceil(')
-      .replace(/round\(/g, 'Math.round(')
-      .replace(/\^/g, '**')
-      .replace(/(\d+|\))!/g, function (m) {
-        var n = parseFloat(m.replace(/!/g, ''));
-        var r = 1;
-        for (var i = 2; i <= n; i++) r *= i;
-        return r;
-      });
-    withFuncs = withFuncs.replace(/Math\.(sin|cos|tan)\((\d*\.?\d+)\*\*/g, function (m, fn, num) {
-      return 'Math.' + fn + '(' + num + '*';
-    });
-    return Function('"use strict"; return (' + withFuncs + ');')();
+    var FN = /^(sin|cos|tan|asin|acos|atan|log|log10|ln|sqrt|abs|floor|ceil|round|pow|fact|pi)$/;
+    var tokens = expr.match(/(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?|[A-Za-z_$][A-Za-z0-9_$]*|[+\-*/^!%(),.\s]/g);
+    if (!tokens || tokens.join('') !== expr) throw new Error('bad');
+    for (var ti = 0; ti < tokens.length; ti++) {
+      if (/^[A-Za-z]/.test(tokens[ti]) && !FN.test(tokens[ti])) throw new Error('bad');
+    }
+    expr = expr.replace(/pi/g, 'PI')
+      .replace(/log\(/g, 'log10(')
+      .replace(/\^/g, '**');
+    expr = processFactorial(expr);
+    var defs = 'const rad=' + rad + ',PI=Math.PI,' +
+      'sin=x=>Math.sin(rad*x),cos=x=>Math.cos(rad*x),tan=x=>Math.tan(rad*x),' +
+      'asin=x=>Math.asin(x)/rad,acos=x=>Math.acos(x)/rad,atan=x=>Math.atan(x)/rad,' +
+      'log10=x=>Math.log10(x),ln=x=>Math.log(x),sqrt=x=>Math.sqrt(x),abs=x=>Math.abs(x),' +
+      'floor=x=>Math.floor(x),ceil=x=>Math.ceil(x),round=x=>Math.round(x),pow=(a,b)=>Math.pow(a,b),' +
+      'fact=n=>{if(!Number.isInteger(n)||n<0)return NaN;if(n>170)return Infinity;var r=1;for(var i=2;i<=n;i++)r*=i;return r;};' +
+      'return (' + expr + ');';
+    return Function('"use strict";' + defs)();
   }
 
   scInput.addEventListener('keydown', function (e) {
