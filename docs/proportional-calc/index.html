@@ -128,6 +128,8 @@ pcGo.addEventListener('click', function () {
   if (missingCount > 1) { pcResult.innerHTML = '<div class="result-box">只能留一个空，请填写其余三个</div>'; return; }
   if (a === 0 && d === null) { pcResult.innerHTML = '<div class="result-box">A 不能为 0（除数）</div>'; return; }
   if (c === 0 && b === null) { pcResult.innerHTML = '<div class="result-box">C 不能为 0（除数）</div>'; return; }
+  if (b === 0 && c === null) { pcResult.innerHTML = '<div class="result-box">B 不能为 0（除数）</div>'; return; }
+  if (d === 0 && a === null) { pcResult.innerHTML = '<div class="result-box">D 不能为 0（除数）</div>'; return; }
   var res = solve(a, b, c, d);
   if (res.x === null) { pcResult.innerHTML = '<div class="result-box">' + res.step + '</div>'; return; }
   var names = { a: 'A', b: 'B', c: 'C', d: 'D' };
