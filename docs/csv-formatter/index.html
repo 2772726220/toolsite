@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV格式化工具 - CSV解析美化与格式转换</title>
+  <meta name="description" content="在线 CSV 格式化工具，正确解析带引号的字段（逗号、换行、双引号转义），一键输出列对齐美化、RFC4180 引号统一、Tab 分隔或 SQL 插入语句，并预览表格。" />
+  <meta name="keywords" content="CSV格式化,CSV解析,CSV美化,CSV转TSV,CSV转SQL,CSV在线工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5206\u9694\u7b26\u53ea\u80fd\u8bc6\u522b\u9017\u53f7\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u81ea\u52a8\u68c0\u6d4b\u9017\u53f7/\u5206\u53f7/Tab\uff0c\u4e5f\u53ef\u624b\u52a8\u6307\u5b9a\u3002\u68c0\u6d4b\u53ea\u7edf\u8ba1\u524d 2000 \u5b57\u7b26\uff0c\u907f\u514d\u8d85\u957f\u5185\u5bb9\u62d6\u6162\u901f\u5ea6\u3002"}},{"@type":"Question","name":"\u89e3\u6790\u540e\u53ef\u4ee5\u76f4\u63a5\u770b\u8868\u683c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u8f93\u51fa\u533a\u4e0b\u65b9\u4f1a\u6e32\u67d3\u524d 200 \u884c\u7684\u8868\u683c\u9884\u89c8\uff0c\u65b9\u4fbf\u6838\u5bf9\u5217\u540d\u4e0e\u5185\u5bb9\u662f\u5426\u5bf9\u9f50\u3002"}},{"@type":"Question","name":"\u8f6c SQL \u65f6\u5f15\u53f7\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5b57\u7b26\u4e32\u5b57\u6bb5\u7edf\u4e00\u7528\u5355\u5f15\u53f7\u5305\u88f9\u5e76\u5c06\u5185\u90e8\u5355\u5f15\u53f7\u8f6c\u4e49\u4e3a ''\uff0c\u7eaf\u6570\u5b57\u5b57\u6bb5\u4e0d\u52a0\u5f15\u53f7\uff0c\u53ef\u76f4\u63a5\u6267\u884c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📊 CSV 格式化</h1>
+    <p>解析并美化 CSV 表格，转列对齐 / RFC4180 / Tab / SQL</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">CSV 格式化</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#CSV</span><span class="badge">#格式化</span><span class="badge">#美化</span><span class="badge">#表格</span>
+<div class="field">
+  <label for="cfInput">CSV 内容</label>
+  <textarea id="cfInput" rows="10" placeholder='"姓名",年龄,城市
+张三,28,"北京"
+李四,35,"上海,浦东"'></textarea>
+  <div class="hint">支持引号包裹字段，含逗号、换行、双引号（"" 转义）都能正确解析</div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+  <div>
+    <label>分隔符</label>
+    <select id="cfDelim">
+      <option value="auto" selected>自动</option>
+      <option value=",">逗号 ,</option>
+      <option value=";">分号 ;</option>
+      <option value="&#9;">制表符 Tab</option>
+    </select>
+  </div>
+  <div>
+    <label>输出格式</label>
+    <select id="cfMode">
+      <option value="align" selected>列对齐美化</option>
+      <option value="rfc">RFC4180 引号统一</option>
+      <option value="tsv">Tab 分隔</option>
+      <option value="sql">INSERT 语句</option>
+    </select>
+  </div>
+  <div>
+    <label>表头</label>
+    <select id="cfHeader"><option value="1" selected>第一行为表头</option><option value="0">无表头</option></select>
+  </div>
+  <div>
+    <label>&nbsp;</label>
+    <button class="btn btn-primary" id="cfBtn" style="width:100%;">格式化</button>
+  </div>
+</div>
+<div id="cfOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>CSV 里的引号要注意什么？</h2><p>字段内含逗号或换行时需要整体加双引号包裹，字段内的双引号写作两个引号（""）转义。本工具正确解析这些情况，避免列错位。</p><h2>可以转成哪些格式？</h2><p>支持列对齐美化（对齐空格）、RFC4180 标准引号、Tab 分隔（TSV）以及 MySQL 风格的 INSERT 语句四种输出。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>分隔符只能识别逗号吗？</summary><p>默认自动检测逗号/分号/Tab，也可手动指定。检测只统计前 2000 字符，避免超长内容拖慢速度。</p></details><details class="faq-item"><summary>解析后可以直接看表格吗？</summary><p>可以，输出区下方会渲染前 200 行的表格预览，方便核对列名与内容是否对齐。</p></details><details class="faq-item"><summary>转 SQL 时引号怎么处理？</summary><p>字符串字段统一用单引号包裹并将内部单引号转义为 ''，纯数字字段不加引号，可直接执行。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>CSV 格式化 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='csv-formatter';}); _r.unshift('csv-formatter'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cfInput = document.getElementById('cfInput');
+var cfDelim = document.getElementById('cfDelim');
+var cfMode = document.getElementById('cfMode');
+var cfHeader = document.getElementById('cfHeader');
+var cfBtn = document.getElementById('cfBtn');
+var cfOut = document.getElementById('cfOut');
+var lastCsv = { rows: [], width: 0 };
+
+function escC(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function detectDelim(text) {
+  var cands = [',', ';', '\t'];
+  var best = ',', bestN = -1;
+  cands.forEach(function (d) {
+    var n = 0, inQ = false;
+    for (var i = 0; i < Math.min(text.length, 2000); i++) {
+      var c = text[i];
+      if (inQ) { if (c === '"') inQ = false; continue; }
+      if (c === '"') inQ = true;
+      else if (c === d) n++;
+    }
+    if (n > bestN) { bestN = n; best = d; }
+  });
+  return best;
+}
+
+function parseCsv(text, delim) {
+  if (!text) return { rows: [], openQuote: false };
+  delim = delim == null ? ',' : delim;
+  var rows = [], row = [], field = '', inQ = false, i = 0, n = text.length, openQuote = false;
+  while (i < n) {
+    var c = text[i];
+    if (inQ) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+        inQ = false; i++; continue;
+      }
+      field += c; i++; continue;
+    }
+    if (c === '"') { inQ = true; i++; continue; }
+    if (c === delim) { row.push(field); field = ''; i++; continue; }
+    if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(field); field = '';
+      rows.push(row); row = [];
+      i++; continue;
+    }
+    field += c; i++;
+  }
+  if (inQ) openQuote = true;
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  rows = rows.filter(function (r) { return !(r.length === 1 && r[0] === ''); });
+  if (rows.length && rows[rows.length - 1].length === 1 && rows[rows.length - 1][0] === '') rows.pop();
+  return { rows: rows, openQuote: openQuote };
+}
+
+function quoteField(f, delim) {
+  if (/["\r\n]/.test(f) || f.indexOf(delim) >= 0) return '"' + f.replace(/"/g, '""') + '"';
+  return f;
+}
+
+function csvToAlign(rows) {
+  var width = 0;
+  rows.forEach(function (r) { if (r.length > width) width = r.length; });
+  var widths = [];
+  for (var c = 0; c < width; c++) {
+    var w = 1;
+    rows.forEach(function (r) { if (r[c] != null) w = Math.max(w, r[c].length + 2); });
+    widths.push(w);
+  }
+  return rows.map(function (r) {
+    var out = [];
+    for (var c = 0; c < width; c++) {
+      var f = r[c] == null ? '' : String(r[c]);
+      out.push(c === width - 1 ? f : f + new Array(Math.max(1, widths[c] - f.length + 1)).join(' '));
+    }
+    return out.join('');
+  }).join('\n');
+}
+
+function csvToRfc(rows, delim) {
+  return rows.map(function (r) { return r.map(function (f) { return quoteField(f, delim); }).join(delim); }).join('\n');
+}
+
+function csvToTsv(rows) {
+  return rows.map(function (r) { return r.map(function (f) { return /["\t\r\n]/.test(f) ? '"' + f.replace(/"/g, '""') + '"' : f; }).join('\t'); }).join('\n');
+}
+
+function csvToSql(rows, table, hasHeader) {
+  var start = hasHeader ? 1 : 0;
+  var sql = [];
+  rows.slice(start).forEach(function (r) {
+    var vals = r.map(function (f) {
+      var v = String(f);
+      if (/^-?[\d.]+$/.test(v) && !isNaN(Number(v)) && v.indexOf('NaN') < 0) return v;
+      return "'" + v.replace(/'/g, "''") + "'";
+    });
+    sql.push('INSERT INTO ' + table + ' VALUES (' + vals.join(', ') + ');');
+  });
+  return sql.join('\n');
+}
+
+function formatCsv(text, mode, table) {
+  var delim = cfDelim.value === 'auto' ? detectDelim(text) : (cfDelim.value === '&#9;' ? '\t' : cfDelim.value);
+  var p = parseCsv(text, delim);
+  if (p.openQuote) return { ok: false, message: '存在未闭合的引号，已中断解析', rows: p.rows };
+  var out;
+  if (mode === 'rfc') out = csvToRfc(p.rows, delim);
+  else if (mode === 'tsv') out = csvToTsv(p.rows);
+  else if (mode === 'sql') out = csvToSql(p.rows, table || 'my_table', cfHeader.value === '1');
+  else out = csvToAlign(p.rows);
+  return { ok: true, rows: p.rows, out: out, delim: delim };
+}
+
+cfBtn.addEventListener('click', function () {
+  var text = cfInput.value;
+  if (!text.trim()) { showToast('请输入 CSV 内容'); return; }
+  var r = formatCsv(text, cfMode.value);
+  if (!r.ok) { cfOut.innerHTML = '<div class="result-box" style="color:#dc2626;">' + escC(r.message) + '</div>'; return; }
+  lastCsv = r;
+  var w = 0;
+  r.rows.forEach(function (row) { if (row.length > w) w = row.length; });
+  var html = '<div class="result-box" style="margin-bottom:8px;">合计 ' + r.rows.length + ' 行，最多 ' + w + ' 列，分隔符：' + escC(r.delim === '\t' ? 'Tab' : r.delim) + '</div>';
+  html += '<textarea readonly rows="10" style="width:100%;box-sizing:border-box;font-family:ui-monospace,monospace;font-size:12px;">' + escC(r.out) + '</textarea>';
+  if (r.rows.length && r.rows.length <= 500 && w <= 12) {
+    var tb = '<table class="csv-preview"><thead><tr>';
+    r.rows.slice(0, 1).forEach(function (row) {
+      for (var i = 0; i < w; i++) tb += '<th>' + escC(row[i] == null ? '' : row[i]) + '</th>';
+      tb += '</tr></thead><tbody>';
+    });
+    r.rows.slice(1, 201).forEach(function (row) {
+      tb += '<tr>';
+      for (var i = 0; i < w; i++) tb += '<td>' + escC(row[i] == null ? '' : row[i]) + '</td>';
+      tb += '</tr>';
+    });
+    tb += '</tbody></table>';
+    html += '<div class="result-box" style="margin-top:8px;overflow-x:auto;">' + tb + '</div>';
+  }
+  cfOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
