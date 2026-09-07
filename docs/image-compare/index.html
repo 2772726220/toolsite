@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片对比工具 - 前后面图片差异对比</title>
+  <meta name="description" content="在线图片前后对比工具：上传两张图片（如压缩前后的版本），拖动滑块左右滑动查看差异，浏览器本地加载，不占服务器带宽，适合图片优化自查与修图前后对照。" />
+  <meta name="keywords" content="图片对比,图片前后对比,对比滑块,压缩前后对比,修图对比">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎚️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4ec0\u4e48\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u80fd\u663e\u793a\u7684\u683c\u5f0f\u57fa\u672c\u90fd\u652f\u6301\uff1aJPG\u3001PNG\u3001WebP\u3001GIF \u7b49\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u592a\u5927\u80fd\u770b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u81ea\u52a8\u7b49\u6bd4\u7f29\u653e\u5230 420px \u5185\u9884\u89c8\uff0c\u7ec6\u8282\u5bf9\u6bd4\u5efa\u8bae\u7528\u539f\u5c3a\u5bf8\u66f4\u5927\u7684\u7248\u672c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎚️ 图片对比</h1>
+    <p>拖动滑块对比压缩前后/修改前后图片</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片对比</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#图片对比</span><span class="badge">#滑块</span><span class="badge">#前后对比</span><span class="badge">#压缩</span>
+<h3>图片对比工具</h3>
+<p class="muted">上传压缩前后（或修改前后）两张图片，拖动滑块直观查看差异。图片不离开浏览器。</p>
+<div class="row">
+  <div class="col" style="text-align:center;">
+    <label id="icLblA">图片 A</label>
+    <input id="icA" type="file" accept="image/*">
+  </div>
+  <div class="col" style="text-align:center;">
+    <label id="icLblB">图片 B（叠加在上层）</label>
+    <input id="icB" type="file" accept="image/*">
+  </div>
+</div>
+<div style="position:relative;width:100%;max-width:420px;margin:0 auto;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+  <canvas id="icCanvasA" style="display:block;width:100%;"></canvas>
+  <canvas id="icCanvasB" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;">
+    <input id="icSlider" type="range" min="0" max="100" value="50" style="position:absolute;top:50%;left:4px;right:4px;transform:translateY(-50%);pointer-events:auto;width:calc(100% - 8px);">
+  </div>
+</div>
+<p id="icRatio" style="text-align:center;margin:6px 0;">50%</p>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>这个工具适合什么场景？</h2><p>压缩前后画质对比、滤镜或 AI 修图前后对照、新旧网页截图比对。比来回切换窗口直观得多。</p><h2>图片会传服务器吗？</h2><p>不会，两张图片都只在浏览器本地加载和绘制。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持什么格式？</summary><p>浏览器能显示的格式基本都支持：JPG、PNG、WebP、GIF 等。</p></details><details class="faq-item"><summary>图片太大能看吗？</summary><p>会自动等比缩放到 420px 内预览，细节对比建议用原尺寸更大的版本。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片对比 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-compare';}); _r.unshift('image-compare'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var icA = document.getElementById('icA');
+var icB = document.getElementById('icB');
+var icLblA = document.getElementById('icLblA');
+var icLblB = document.getElementById('icLblB');
+var icCanvasA = document.getElementById('icCanvasA');
+var icCanvasB = document.getElementById('icCanvasB');
+var icSlider = document.getElementById('icSlider');
+var icRatio = document.getElementById('icRatio');
+
+function ratioToClip(r) {
+  r = Math.max(0, Math.min(100, Number(r) || 0));
+  return 'inset(0 ' + (100 - r).toFixed(0) + '% 0 0)';
+}
+
+function icLoadImage(file, canvas, cb) {
+  if (!file) { cb(null); return; }
+  var url = URL.createObjectURL(file);
+  var img = new Image();
+  img.onload = function () {
+    var c = canvas.getContext('2d');
+    var scale = Math.min(420 / img.naturalWidth, img.naturalHeight ? 420 / img.naturalHeight : 1);
+    if (!(scale > 0)) scale = 1;
+    canvas.width = Math.round(img.naturalWidth * scale);
+    canvas.height = Math.round(img.naturalHeight * scale);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+    cb({ w: canvas.width, h: canvas.height });
+  };
+  img.onerror = function () { URL.revokeObjectURL(url); cb(null); };
+  img.src = url;
+}
+
+function icUpdateSlider() {
+  var r = Number(icSlider.value) || 50;
+  icCanvasB.style.clipPath = ratioToClip(r);
+  icCanvasB.style['-webkit-clip-path'] = ratioToClip(r);
+  icRatio.textContent = r + '%';
+}
+
+icA.addEventListener('change', function () {
+  icLoadImage(icA.files && icA.files[0], icCanvasA, function (res) {
+    icLblA.textContent = icA.files && icA.files[0] ? icA.files[0].name + (res ? '（' + res.w + '×' + res.h + '）' : '') : '选择图片 A';
+  });
+});
+icB.addEventListener('change', function () {
+  icLoadImage(icB.files && icB.files[0], icCanvasB, function (res) {
+    icLblB.textContent = icB.files && icB.files[0] ? icB.files[0].name + (res ? '（' + res.w + '×' + res.h + '）' : '') : '选择图片 B';
+  });
+});
+icSlider.addEventListener('input', icUpdateSlider);
+// placeholder rects so the area isn't empty before an image is chosen
+['A', 'B'].forEach(function (k) {
+  var canvas = k === 'A' ? icCanvasA : icCanvasB;
+  canvas.width = 420; canvas.height = 280;
+  var c = canvas.getContext('2d');
+  c.fillStyle = k === 'A' ? '#cffafe' : '#fef9c3';
+  c.fillRect(0, 0, 420, 280);
+  c.fillStyle = '#64748b';
+  c.font = '14px sans-serif';
+  c.textAlign = 'center';
+  c.fillText('图片 ' + k + ' 区域', 210, 140);
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
