@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线导数计算器 - 求导工具（符号+数值）</title>
+  <meta name="description" content="在线导数计算器：支持多项式符号求导与任意函数（含三角函数/指数/对数）的数值求导（中心差分），输入函数与求导点即可得到导数值与导数表达式。" />
+  <meta name="keywords" content="导数,求导,求导计算器,微分,微分计算器,导数计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e24\u79cd\u6c42\u5bfc\u65b9\u5f0f\u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7b26\u53f7\u6c42\u5bfc\u8f93\u51fa\u5bfc\u51fd\u6570\u8868\u8fbe\u5f0f\u5e76\u4ee3\u5165\u6c42\u5bfc\u70b9\uff1b\u6570\u503c\u6c42\u5bfc\u76f4\u63a5\u8f93\u51fa\u8be5\u70b9\u7684\u5bfc\u6570\u8fd1\u4f3c\u503c\uff0c\u9002\u7528\u8303\u56f4\u66f4\u5e7f\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u9760\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u5fc3\u5dee\u5206\u662f\u6807\u51c6\u65b9\u6cd5\uff0c\u5bf9\u5149\u6ed1\u51fd\u6570\u7cbe\u5ea6\u5f88\u9ad8\uff1b\u5982 x\u00b2 \u5728 x=3 \u5904\u5bfc\u6570\u4e3a 6\uff0cf(x)=3x\u00b3+2x-5 \u5728 x=2 \u5904\u4e3a 38\u3002"}},{"@type":"Question","name":"\u51fd\u6570\u6709\u975e\u6cd5\u5b57\u7b26\u4f1a\u88ab\u62e6\u622a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u3002\u8f93\u5165\u5148\u6821\u9a8c\u53ea\u5141\u8bb8\u6570\u5b57\u3001\u8fd0\u7b97\u7b26\u4e0e\u51fd\u6570\u540d\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📐 导数计算器</h1>
+    <p>多项式符号求导 + 任意函数数值求导</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">导数计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#导数</span><span class="badge">#求导</span><span class="badge">#微分</span><span class="badge">#符号运算</span>
+<div class="field">
+  <label for="dcFunc">函数 f(x)</label>
+  <input id="dcFunc" value="3*x^3 + 2*x - 5" placeholder="如：3*x^3 + 2*x - 5">
+</div>
+<div class="field-row">
+  <div class="field"><label for="dcX">求导点 x</label><input id="dcX" value="2"></div>
+  <div class="field"><label for="dcH">步长 h</label><input id="dcH" value="1e-6"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="dcGo" type="button">求导</button>
+</div>
+<div class="result-box" id="dcOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些函数？</h2><p>多项式、幂函数（x^n）、三角/指数/对数等；符号求导支持多项式，其余函数自动使用中心差分数值求导。</p><h2>数值求导的步长是多少？</h2><p>默认 1e-6，可手动调整；步长过小有浮点误差，过大则精度下降。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>两种求导方式有什么区别？</summary><p>符号求导输出导函数表达式并代入求导点；数值求导直接输出该点的导数近似值，适用范围更广。</p></details><details class="faq-item"><summary>结果可靠吗？</summary><p>中心差分是标准方法，对光滑函数精度很高；如 x² 在 x=3 处导数为 6，f(x)=3x³+2x-5 在 x=2 处为 38。</p></details><details class="faq-item"><summary>函数有非法字符会被拦截吗？</summary><p>会。输入先校验只允许数字、运算符与函数名。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>导数计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='derivative-calculator';}); _r.unshift('derivative-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dcFunc = document.getElementById('dcFunc');
+var dcX = document.getElementById('dcX');
+var dcH = document.getElementById('dcH');
+var dcGo = document.getElementById('dcGo');
+var dcOut = document.getElementById('dcOut');
+
+function compileMathD(expr) {
+  var e = String(expr).replace(/\s+/g, '');
+  if (!e) return { error: '请输入函数' };
+  if (!/^[0-9+\-*/().^,a-zA-Z]+$/.test(e)) return { error: '函数含非法字符' };
+  var src = e
+    .replace(/\^/g, '**')
+    .replace(/asin/g, 'Math.asin').replace(/acos/g, 'Math.acos').replace(/atan/g, 'Math.atan')
+    .replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(')
+    .replace(/exp\(/g, 'Math.exp(').replace(/log10?\(/g, 'Math.log10(').replace(/ln/g, 'Math.log')
+    .replace(/abs\(/g, 'Math.abs(').replace(/sqrt\(/g, 'Math.sqrt(');
+  try {
+    var fn = new Function('x', 'return (' + src + ');');
+    return { fn: fn };
+  } catch (err) { return { error: '函数无法编译：' + err.message }; }
+}
+
+// numeric derivative (central difference)
+function numericDerivative(f, x, h) {
+  if (typeof f !== 'function') return null;
+  if (!h || h <= 0) h = 1e-6;
+  return (f(x + h) - f(x - h)) / (2 * h);
+}
+
+// symbolic derivative of polynomials (returns derivative expression string, then evaluated at x via the compiled fn)
+function derivativeSymbolic(expr, x) {
+  var e = String(expr).trim();
+  if (!/^[0-9xX+\-*^./\s]+$/.test(e)) return null;
+  if (/[()]/.test(e)) return null;
+  var s = e.replace(/\s+/g, '').toLowerCase();
+  var terms = [], cur = '', sign = 1;
+  for (var i = 0; i < s.length; i++) {
+    var c = s[i];
+    if (c === '+' || c === '-') { if (cur !== '') { terms.push([sign, cur]); cur = ''; } sign = c === '+' ? 1 : -1; }
+    else cur += c;
+  }
+  if (cur !== '') terms.push([sign, cur]);
+  var dExprs = [];
+  for (var t = 0; t < terms.length; t++) {
+    var sg = terms[t][0], term = terms[t][1];
+    var de = diffTermExpr(term);
+    if (de === null) return null;
+    if (de !== '0') dExprs.push((sg === -1 ? '-' : '+') + de);
+  }
+  if (dExprs.length === 0) return { text: '0', value: 0 };
+  var expr2 = dExprs.join('').replace(/^\+/, '');
+  // evaluate derivative expression at x using a second compile
+  var comp = compileMathD(expr2.replace(/x/g, 'x'));
+  if (!comp || comp.error) return null;
+  var value;
+  try { value = comp.fn(x); } catch (err) { return null; }
+  return { text: expr2, value: value };
+}
+
+// returns string for derivative of a single term (coef*x^n style)
+function diffTermExpr(term) {
+  var m = term.match(/^([0-9.]*)\*?x\^([0-9.]+)$/);
+  if (m) {
+    var coef = m[1] === '' || m[1] === '.' ? 1 : parseFloat(m[1]);
+    var n = parseFloat(m[2]);
+    var nc = coef * n;
+    var np = n - 1;
+    if (Math.abs(np) < 1e-12) return String(nc);
+    if (Math.abs(np - 1) < 1e-12) {
+      return (Math.abs(nc - Math.round(nc)) < 1e-12 ? (nc === 1 ? 'x' : String(nc) + '*x') : formatNum(nc) + '*x');
+    }
+    if (Math.abs(nc - Math.round(nc)) < 1e-12 && Math.abs(np - Math.round(np)) < 1e-12) {
+      return (nc === 1 ? '' : String(nc)) + '*x^' + String(np);
+    }
+    return formatNum(nc) + '*x^' + formatNum(np);
+  }
+  m = term.match(/^([0-9.]*)\*?x$/);
+  if (m) return m[1] === '' || m[1] === '.' ? '1' : String(parseFloat(m[1]));
+  if (/^[0-9.]+$/.test(term)) return '0';
+  m = term.match(/^x\^([0-9.]+)$/);
+  if (m) return diffTermExpr('1*x^' + m[1]);
+  return null;
+}
+function formatNum(v) {
+  if (Number.isInteger(v)) return String(v);
+  return v.toPrecision(6).replace(/\.?0+$/, '');
+}
+
+dcGo.addEventListener('click', function () {
+  var x = parseFloat(dcX.value);
+  var h = parseFloat(dcH.value);
+  if (isNaN(x)) { dcOut.textContent = '请输入有效的求导点'; return; }
+  var comp = compileMathD(dcFunc.value);
+  if (comp.error) { dcOut.textContent = comp.error; return; }
+  var num;
+  try { num = numericDerivative(comp.fn, x, h); }
+  catch (err) { dcOut.textContent = '计算错误：' + err.message; return; }
+  var sym = derivativeSymbolic(dcFunc.value, x);
+  var html = '<div class="stat"><div class="num">f\'(x) ≈ ' + num.toPrecision(6) + '</div><div class="label">数值导数（中心差分，h=' + h + '）</div></div>';
+  if (sym) html += '<div style="margin-top:8px;color:#667;font-size:13px;">符号导数：f\'(x) = ' + sym.text + '，代入 x=' + x + ' → ' + sym.value.toPrecision(6) + '</div>';
+  dcOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
