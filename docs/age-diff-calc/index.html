@@ -211,7 +211,7 @@ if (params.get('b')) adB.value = params.get('b');
 if (adA.value && adB.value) calcAgeDiff();
 
 var today = new Date();
-adAnnDate.value = today.toISOString().slice(0, 10);
+  adAnnDate.value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
   window.toggleTheme = function () {
     var r = document.documentElement;
     if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
