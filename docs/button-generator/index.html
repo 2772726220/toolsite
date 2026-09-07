@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 CSS 按钮样式生成器 - 渐变/圆角/阴影/悬停</title>
+  <meta name="description" content="可视化 CSS 按钮生成器：调整渐变色、圆角、内边距、字号、阴影与悬停放大，实时预览并一键复制生成的 .btn 样式代码。" />
+  <meta name="keywords" content="按钮生成器,CSS按钮,按钮样式,渐变按钮,hover效果,UI生成">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫖</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u7528\u4e8e\u751f\u4ea7\u9879\u76ee\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u751f\u6210\u7684\u4ee3\u7801\u662f\u6807\u51c6 CSS\uff0c\u65e0\u5916\u90e8\u4f9d\u8d56\u3002"}},{"@type":"Question","name":"\u6e10\u53d8\u89d2\u5ea6\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6e10\u53d8\u65b9\u5411\u89d2\u5ea6\uff1a0deg \u4ece\u4e0a\u5230\u4e0b\uff0c90deg \u4ece\u5de6\u5230\u53f3\uff0c135deg \u4ece\u5de6\u4e0a\u5230\u53f3\u4e0b\u3002"}},{"@type":"Question","name":"\u53ea\u60f3\u8981\u7eaf\u8272\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a\u6e10\u53d8\u4e24\u7aef\u7684\u989c\u8272\u8bbe\u4e3a\u76f8\u540c\u5373\u5f97\u5230\u7eaf\u8272\u80cc\u666f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🫖 按钮生成器</h1>
+    <p>渐变按钮 CSS 生成：圆角阴影悬停动画一键复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">按钮生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#按钮</span><span class="badge">#CSS</span><span class="badge">#渐变</span><span class="badge">#hover</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 按钮生成器</title>
+<style>
+input, select { margin: 4px 4px 4px 0; vertical-align: middle; }
+button { margin: 6px 4px 6px 0; }
+select { padding: 2px; }
+#btnPreviewWrap { margin: 12px 0; padding: 24px; background: #f4f5f7; border-radius: 8px; text-align: center; }
+#btnPreview { display: inline-block; }
+#btnCode { background: #0f1420; color: #dbe4ff; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 12px; }
+.hint { font-size: 12px; color: #888; }
+table { border-collapse: collapse; }
+td, th { padding: 4px 16px 4px 0; text-align: left; font-size: 13px; }
+</style>
+</head>
+<body>
+<p>可视化生成 CSS 按钮样式：渐变背景、圆角、阴影与悬停缩放，一键复制代码 + 实时预览。</p>
+<table>
+  <tr><th>按钮文字</th><td><input id="btnText" value="立即开始"></td></tr>
+  <tr><th>底色（渐变 1）</th><td><input type="color" id="btnFrom" value="#4f46e5"></td></tr>
+  <tr><th>渐变 2</th><td><input type="color" id="btnTo" value="#06b6d4"></td></tr>
+  <tr><th>渐变角度（度）</th><td><input id="btnAngle" value="135" type="number" min="0" max="360"></td></tr>
+  <tr><th>文字颜色</th><td><input type="color" id="btnColor" value="#ffffff"></td></tr>
+  <tr><th>圆角（px）</th><td><input id="btnRadius" value="8" type="number" min="0"></td></tr>
+  <tr><th>内边距（垂直/水平 px）</th><td><input id="btnPadV" value="10" type="number" min="0"> <input id="btnPadH" value="24" type="number" min="0"></td></tr>
+  <tr><th>字号（px）</th><td><input id="btnFont" value="15" type="number" min="8"></td></tr>
+  <tr><th>阴影（模糊 px）</th><td><input id="btnShadow" value="4" type="number" min="0"></td></tr>
+  <tr><th>悬停放大</th><td><input id="btnHover" value="1.05" type="number" step="0.01"></td></tr>
+</table>
+<button id="btnGo">生成/刷新</button>
+<button id="btnCopy">复制 CSS</button>
+<div id="btnPreviewWrap"><button id="btnPreview">立即开始</button></div>
+<div id="btnCode"></div>
+<p class="hint">生成的类名为 .btn，悬停效果使用 :hover。</p>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>能生成哪些样式？</h2><p>线性渐变背景（角度可调）、文字颜色、圆角、内边距、字号、盒阴影与悬停缩放效果。</p><h2>生成的代码怎么用？</h2><p>把复制的 .btn 与 .btn:hover 样式贴进 CSS，再把类名加到你想要的 <button> 上即可。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以用于生产项目吗？</summary><p>可以，生成的代码是标准 CSS，无外部依赖。</p></details><details class="faq-item"><summary>渐变角度是什么？</summary><p>渐变方向角度：0deg 从上到下，90deg 从左到右，135deg 从左上到右下。</p></details><details class="faq-item"><summary>只想要纯色怎么办？</summary><p>把渐变两端的颜色设为相同即得到纯色背景。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>按钮生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='button-generator';}); _r.unshift('button-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var btnText = document.getElementById('btnText');
+var btnFrom = document.getElementById('btnFrom');
+var btnTo = document.getElementById('btnTo');
+var btnAngle = document.getElementById('btnAngle');
+var btnColor = document.getElementById('btnColor');
+var btnRadius = document.getElementById('btnRadius');
+var btnPadV = document.getElementById('btnPadV');
+var btnPadH = document.getElementById('btnPadH');
+var btnFont = document.getElementById('btnFont');
+var btnShadow = document.getElementById('btnShadow');
+var btnHover = document.getElementById('btnHover');
+var btnGo = document.getElementById('btnGo');
+var btnCopy = document.getElementById('btnCopy');
+var btnPreview = document.getElementById('btnPreview');
+var btnCode = document.getElementById('btnCode');
+
+function buildButtonCss(o) {
+  var s = '.btn {\n';
+  s += '  background: linear-gradient(' + (o.angle === undefined ? 135 : o.angle) + 'deg, ' + o.from + ', ' + o.to + ');\n';
+  s += '  color: ' + o.color + ';\n';
+  s += '  border: none;\n';
+  s += '  border-radius: ' + o.radius + 'px;\n';
+  s += '  padding: ' + o.padV + 'px ' + o.padH + 'px;\n';
+  s += '  font-size: ' + o.font + 'px;\n';
+  s += '  box-shadow: 0 ' + o.shadow + 'px rgba(0, 0, 0, 0.18);\n';
+  s += '  cursor: pointer;\n';
+  s += '  transition: transform 0.2s ease;\n';
+  s += '}\n';
+  s += '.btn:hover {\n';
+  s += '  transform: scale(' + o.hover + ');\n';
+  s += '}';
+  return s;
+}
+
+function collect() {
+  return {
+    from: btnFrom.value,
+    to: btnTo.value,
+    angle: parseInt(btnAngle.value, 10) || 135,
+    color: btnColor.value,
+    radius: parseInt(btnRadius.value, 10) || 0,
+    padV: parseInt(btnPadV.value, 10) || 0,
+    padH: parseInt(btnPadH.value, 10) || 0,
+    font: parseInt(btnFont.value, 10) || 14,
+    shadow: parseInt(btnShadow.value, 10) || 0,
+    hover: parseFloat(btnHover.value) || 1
+  };
+}
+
+function render() {
+  var o = collect();
+  btnPreview.textContent = btnText.value || '按钮';
+  btnPreview.style.cssText =
+    'background: linear-gradient(' + o.angle + 'deg, ' + o.from + ', ' + o.to + ');'
+    + 'color: ' + o.color + ';border: none;border-radius: ' + o.radius + 'px;'
+    + 'padding: ' + o.padV + 'px ' + o.padH + 'px;font-size: ' + o.font + 'px;'
+    + 'box-shadow: 0 ' + o.shadow + 'px rgba(0,0,0,0.18);cursor:pointer;font-family:inherit;';
+  btnCode.textContent = buildButtonCss(o);
+}
+
+btnGo.addEventListener('click', render);
+btnCopy.addEventListener('click', function () {
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(btnCode.textContent);
+  else btnCode.textContent = btnCode.textContent;
+});
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
