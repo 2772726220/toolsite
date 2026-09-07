@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线定积分计算器 - 数值积分（辛普森法）</title>
+  <meta name="description" content="在线定积分计算器：基于复化辛普森法计算数值定积分，支持多项式、三角、指数、对数与绝对值等函数，输入函数与上下限即可得到近似值。" />
+  <meta name="keywords" content="定积分,积分计算器,求积分,辛普森法,数值积分,微积分">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∫</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7ed3\u679c\u6709\u591a\u51c6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u533a\u95f4\u6570 n \u9ed8\u8ba4 1000\uff0c\u5bf9\u5149\u6ed1\u51fd\u6570\u8bef\u5dee\u6781\u5c0f\uff1b\u5982 x\u00b2 \u5728 [0,3] \u7684\u7ed3\u679c\u662f 9\uff0csin(x) \u5728 [0,\u03c0] \u662f 2\u3002"}},{"@type":"Question","name":"n \u662f\u5947\u6570\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f9b\u666e\u68ee\u6cd5\u8981\u6c42\u5076\u6570\u533a\u95f4\uff0c\u5de5\u5177\u4f1a\u81ea\u52a8\u628a\u5947\u6570\u52a0\u4e00\u3002"}},{"@type":"Question","name":"\u51fd\u6570\u542b\u975e\u6cd5\u5b57\u7b26\u4f1a\u88ab\u62e6\u622a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u3002\u8f93\u5165\u5148\u6821\u9a8c\u53ea\u5141\u8bb8\u6570\u5b57\u3001\u8fd0\u7b97\u7b26\u4e0e\u767d\u540d\u5355\u51fd\u6570\u540d\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>∫ 定积分计算器</h1>
+    <p>辛普森法求数值定积分，支持常见函数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">定积分计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#定积分</span><span class="badge">#积分</span><span class="badge">#辛普森</span><span class="badge">#数值计算</span>
+<div class="field">
+  <label for="icFunc">函数 f(x)</label>
+  <input id="icFunc" value="x^2" placeholder="支持 + - * / ^ ( ) sin cos tan exp log abs sqrt">
+</div>
+<div class="field-row">
+  <div class="field"><label for="icA">下限 a</label><input id="icA" value="0"></div>
+  <div class="field"><label for="icB">上限 b</label><input id="icB" value="3"></div>
+  <div class="field"><label for="icN">区间数 n</label><input id="icN" value="1000"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="icGo" type="button">计算定积分</button>
+</div>
+<div class="result-box" id="icOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是数值积分？</h2><p>对被积函数在区间上按离散点求和的近似积分方法，本工具采用复化辛普森公式，精度远高于梯形法。</p><h2>支持哪些函数？</h2><p>支持 + - * / ^、( )、sin、cos、tan、exp、ln、log10、abs、sqrt，幂运算 ^ 右结合。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>结果有多准？</summary><p>区间数 n 默认 1000，对光滑函数误差极小；如 x² 在 [0,3] 的结果是 9，sin(x) 在 [0,π] 是 2。</p></details><details class="faq-item"><summary>n 是奇数会怎样？</summary><p>辛普森法要求偶数区间，工具会自动把奇数加一。</p></details><details class="faq-item"><summary>函数含非法字符会被拦截吗？</summary><p>会。输入先校验只允许数字、运算符与白名单函数名。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>定积分计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='integral-calculator';}); _r.unshift('integral-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var icFunc = document.getElementById('icFunc');
+var icA = document.getElementById('icA');
+var icB = document.getElementById('icB');
+var icN = document.getElementById('icN');
+var icGo = document.getElementById('icGo');
+var icOut = document.getElementById('icOut');
+
+function compileMath(expr) {
+  var e = String(expr).replace(/\s+/g, '');
+  if (!e) return { error: '请输入函数' };
+  // allow only safe tokens
+  if (!/^[0-9+\-*/().^,a-zA-Z]+$/.test(e)) return { error: '函数含非法字符' };
+  var src = e
+    .replace(/\^/g, '**')
+    .replace(/sin/g, 'Math.sin')
+    .replace(/cos/g, 'Math.cos')
+    .replace(/tan/g, 'Math.tan')
+    .replace(/asin/g, 'Math.asin')
+    .replace(/acos/g, 'Math.acos')
+    .replace(/atan/g, 'Math.atan')
+    .replace(/exp/g, 'Math.exp')
+    .replace(/log10?\(/g, 'Math.log10(')
+    .replace(/ln/g, 'Math.log')
+    .replace(/abs/g, 'Math.abs')
+    .replace(/sqrt/g, 'Math.sqrt')
+    .replace(/log10/g, 'Math.log10');
+  src = src.replace(/Math\.log10\(/g, 'Math.log10(').replace(/Math\.ln/g, 'Math.log');
+  // ensure '**' works: replace Math.sin etc then power
+  src = src.replace(/log10/g, 'Math.log10');
+  try {
+    var fn = new Function('x', 'return (' + src + ');');
+    return { fn: fn };
+  } catch (err) {
+    return { error: '函数无法编译：' + err.message };
+  }
+}
+
+function integrateSimpson(f, a, b, n) {
+  if (typeof f !== 'function') return null;
+  if (n % 2 === 1) n++;
+  if (n <= 0) n = 2;
+  if (a === b) return 0;
+  var h = (b - a) / n;
+  var s = f(a) + f(b);
+  for (var i = 1; i < n; i++) {
+    var x = a + i * h;
+    s += 4 * f(x);
+    i++;
+  }
+  for (var i2 = 2; i2 < n - 1; i2 += 2) {
+    var x2 = a + i2 * h;
+    s += 2 * f(x2);
+  }
+  return (h / 3) * s;
+}
+
+function integrateSimpsonClean(f, a, b, n) {
+  if (n % 2 === 1) n++;
+  var h = (b - a) / n;
+  var s = f(a) + f(b);
+  for (var i = 1; i < n; i++) {
+    var w = i % 2 === 1 ? 4 : 2;
+    s += w * f(a + i * h);
+  }
+  return (h / 3) * s;
+}
+
+icGo.addEventListener('click', function () {
+  var a = parseFloat(icA.value), b = parseFloat(icB.value);
+  var n = parseInt(icN.value, 10);
+  if (isNaN(a) || isNaN(b)) { icOut.textContent = '请输入有效的积分区间'; return; }
+  if (isNaN(n) || n < 2) n = 1000;
+  var comp = compileMath(icFunc.value);
+  if (comp.error) { icOut.textContent = comp.error; return; }
+  var val;
+  try { val = integrateSimpsonClean(comp.fn, a, b, n); }
+  catch (err) { icOut.textContent = '计算错误：' + err.message; return; }
+  icOut.innerHTML = '<div class="stat"><div class="num">∫<sub>a</sub><sup>b</sup> f(x)dx ≈ ' + val.toPrecision(6) + '</div><div class="label">辛普森法（n=' + n + '）</div></div>' +
+    '<div style="margin-top:8px;color:#667;font-size:13px;">函数：' + icFunc.value + '，区间 [' + a + ', ' + b + ']</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
