@@ -111,6 +111,11 @@ var tdResult = document.getElementById('tdResult');
       '合计：' + totalMin + ' 分钟 / ' + totalSec + ' 秒';
   }
 
+  function fmtDateLocal(dt) {
+    var pad = function (n) { return String(n).padStart(2, '0'); };
+    return dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate()) + 'T' + pad(dt.getHours()) + ':' + pad(dt.getMinutes());
+  }
+
   document.getElementById('tdBtn').addEventListener('click', function () {
     var s = new Date(tdStart.value);
     var e = new Date(tdEnd.value);
@@ -125,10 +130,10 @@ var tdResult = document.getElementById('tdResult');
   });
 
   var now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  tdStart.value = now.toISOString().slice(0, 16);
-  now.setHours(now.getHours() + 1);
-  tdEnd.value = now.toISOString().slice(0, 16);
+  tdStart.value = fmtDateLocal(now);
+  var plus = new Date(now);
+  plus.setHours(plus.getHours() + 1);
+  tdEnd.value = fmtDateLocal(plus);
   window.toggleTheme = function () {
     var r = document.documentElement;
     if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
