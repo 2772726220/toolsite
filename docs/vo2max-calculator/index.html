@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VO2max 计算器 - 在线最大摄氧量有氧能力评估工具</title>
+  <meta name="description" content="在线 VO₂max（最大摄氧量）估算器，支持 Cooper 12 分钟跑、Rockport 1 英里步行、1.5 英里计时跑三种常用场测试方法，自动换算 ml/kg/min 并结合 Cooper 常模按年龄性别评估有氧能力等级。" />
+  <meta name="keywords" content="VO2max,最大摄氧量,心肺耐力,Cooper测试,有氧能力,健康评估">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫁</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e09\u79cd\u65b9\u6cd5\u9009\u54ea\u4e2a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5fc3\u80ba\u72b6\u51b5\u826f\u597d\u53ef\u9009 12 \u5206\u949f\u8dd1\u6216 1.5 \u82f1\u91cc\u8dd1\uff1b\u8f83\u5dee\u6216\u5e74\u957f\u8005\u5efa\u8bae Rockport \u6b65\u884c\u6cd5\uff0c\u5b89\u5168\u6027\u66f4\u9ad8\u3002"}},{"@type":"Question","name":"\u8bc4\u4f30\u7b49\u7ea7\u9760\u8c31\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53c2\u8003 Cooper Institute \u5206\u5e74\u9f84\u6027\u522b\u5e38\u6a21\uff0c\u7528\u4e8e\u65e5\u5e38\u53c2\u8003\u8db3\u591f\uff1b\u533b\u7597\u7ea7\u8bc4\u4f30\u9700\u5728\u5b9e\u9a8c\u5ba4\u505a\u9012\u589e\u8d1f\u8377\u6d4b\u8bd5\u3002"}},{"@type":"Question","name":"\u9700\u8981\u70ed\u8eab\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4b\u8bd5\u524d\u8bf7\u5145\u5206\u70ed\u8eab\uff0c\u6d4b\u8bd5\u8fc7\u7a0b\u91cf\u529b\u800c\u884c\uff0c\u611f\u5230\u4e0d\u9002\u7acb\u5373\u505c\u6b62\uff1b\u5b55\u5987\u3001\u5fc3\u810f\u75c5\u60a3\u8005\u54a8\u8be2\u533b\u751f\u540e\u518d\u6d4b\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u8ba1\u7b97\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🫁 VO₂max 计算器</h1>
+    <p>最大摄氧量与心肺耐力评估</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">VO₂max 计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#VO2max</span><span class="badge">#最大摄氧量</span><span class="badge">#心肺</span><span class="badge">#有氧</span>
+<div class="field">
+  <label>测试方法</label>
+  <select id="v2Method">
+    <option value="cooper" selected>Cooper 12 分钟跑</option>
+    <option value="rockport">Rockport 1 英里步行</option>
+    <option value="run15">1.5 英里计时跑</option>
+  </select>
+</div>
+<div class="field" id="v2SexRow">
+  <label>性别</label>
+  <select id="v2Sex"><option value="male" selected>男</option><option value="female">女</option></select>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;">
+  <div class="field" id="v2DistRow"><label for="v2Dist">12 分钟跑距离（米）</label><input type="number" id="v2Dist" value="2400" min="1"></div>
+  <div class="field" id="v2UwRow" style="display:none;"><label for="v2Uw">体重（kg）</label><input type="number" id="v2Uw" value="70" min="1"></div>
+  <div class="field" id="v2AgeRow"><label for="v2Age">年龄</label><input type="number" id="v2Age" value="30" min="10" max="90"></div>
+  <div class="field" id="v2MinRow" style="display:none;"><label for="v2Min">用时（分钟，可小数）</label><input type="number" id="v2Min" value="12" min="1"></div>
+  <div class="field" id="v2HrRow" style="display:none;"><label for="v2Hr">步行结束时心率</label><input type="number" id="v2Hr" value="140" min="1"></div>
+</div>
+<button class="btn btn-primary" id="v2Btn">计算 VO₂max</button>
+<div id="v2Out" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么快速测 VO₂max？</h2><p>最常用的是 12 分钟跑尽最大能力跑完全程后代入公式：VO₂max = (距离米 - 504.9) ÷ 44.73；也有 1.5 英里跑和 1 英里步行法更适合中老年人群。</p><h2>VO₂max 代表什么？</h2><p>表示每公斤体重每分钟消耗氧气的能力（ml/kg/min），是反映心肺功能与有氧耐力的黄金指标，越高通常心肺能力越强。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>三种方法选哪个？</summary><p>心肺状况良好可选 12 分钟跑或 1.5 英里跑；较差或年长者建议 Rockport 步行法，安全性更高。</p></details><details class="faq-item"><summary>评估等级靠谱吗？</summary><p>参考 Cooper Institute 分年龄性别常模，用于日常参考足够；医疗级评估需在实验室做递增负荷测试。</p></details><details class="faq-item"><summary>需要热身吗？</summary><p>测试前请充分热身，测试过程量力而行，感到不适立即停止；孕妇、心脏病患者咨询医生后再测。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，计算完全在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>VO₂max 计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='vo2max-calculator';}); _r.unshift('vo2max-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var v2Method = document.getElementById('v2Method');
+var v2Sex = document.getElementById('v2Sex');
+var v2Dist = document.getElementById('v2Dist');
+var v2Uw = document.getElementById('v2Uw');
+var v2Age = document.getElementById('v2Age');
+var v2Min = document.getElementById('v2Min');
+var v2Hr = document.getElementById('v2Hr');
+var v2Btn = document.getElementById('v2Btn');
+var v2Out = document.getElementById('v2Out');
+
+var V2_NORM = {
+  male: {
+    '20-29': [[55.4, '极优'], [51.1, '优秀'], [45.4, '良好'], [42.0, '中上'], [38.5, '中等'], [35.6, '中下'], [0, '差']],
+    '30-39': [[54.0, '极优'], [48.7, '优秀'], [44.5, '良好'], [41.0, '中上'], [37.8, '中等'], [35.1, '中下'], [0, '差']],
+    '40-49': [[52.5, '极优'], [46.4, '优秀'], [42.4, '良好'], [39.2, '中上'], [35.6, '中等'], [32.9, '中下'], [0, '差']],
+    '50-59': [[48.9, '极优'], [43.9, '优秀'], [39.7, '良好'], [36.7, '中上'], [33.6, '中等'], [30.7, '中下'], [0, '差']],
+    '60+': [[45.7, '极优'], [40.9, '优秀'], [36.7, '良好'], [33.8, '中上'], [30.9, '中等'], [28.1, '中下'], [0, '差']]
+  },
+  female: {
+    '20-29': [[49.6, '极优'], [43.9, '优秀'], [39.5, '良好'], [36.1, '中上'], [32.3, '中等'], [28.4, '中下'], [0, '差']],
+    '30-39': [[47.4, '极优'], [42.5, '优秀'], [38.0, '良好'], [34.6, '中上'], [30.9, '中等'], [27.5, '中下'], [0, '差']],
+    '40-49': [[45.9, '极优'], [39.4, '优秀'], [35.2, '良好'], [32.3, '中上'], [28.8, '中等'], [25.1, '中下'], [0, '差']],
+    '50-59': [[42.5, '极优'], [36.7, '优秀'], [32.3, '良好'], [29.4, '中上'], [25.5, '中等'], [22.8, '中下'], [0, '差']],
+    '60+': [[40.0, '极优'], [34.5, '优秀'], [30.5, '良好'], [27.5, '中上'], [24.4, '中等'], [20.3, '中下'], [0, '差']]
+  }
+};
+
+function v2Band(age) {
+  if (age >= 60) return '60+';
+  if (age >= 50) return '50-59';
+  if (age >= 40) return '40-49';
+  if (age >= 30) return '30-39';
+  return '20-29';
+}
+function v2Rating(vo2, sex, age) {
+  var band = V2_NORM[sex][v2Band(age)];
+  for (var i = 0; i < band.length; i++) {
+    if (vo2 >= band[i][0]) return band[i][1];
+  }
+  return '差';
+}
+
+function cooperVO2(distM) { return (distM - 504.9) / 44.73; }
+function rockportVO2(wKg, age, male, min, hr) {
+  var lb = wKg * 2.20462;
+  return 132.853 - 0.0769 * lb - 0.3877 * age + (male ? 6.315 : 0) - 3.2649 * min - 0.1565 * hr;
+}
+function run15VO2(min) { return 3.5 + 483 / min; }
+
+v2Method.addEventListener('change', function () {
+  var m = v2Method.value;
+  document.getElementById('v2DistRow').style.display = m === 'cooper' ? '' : 'none';
+  document.getElementById('v2UwRow').style.display = m === 'rockport' ? '' : 'none';
+  document.getElementById('v2MinRow').style.display = m === 'rockport' || m === 'run15' ? '' : 'none';
+  document.getElementById('v2HrRow').style.display = m === 'rockport' ? '' : 'none';
+});
+
+v2Btn.addEventListener('click', function () {
+  var m = v2Method.value;
+  var age = Number(v2Age.value);
+  var sex = v2Sex.value;
+  var vo2 = null;
+  var label = '';
+  if (m === 'cooper') {
+    var d = Number(v2Dist.value);
+    if (!isFinite(d) || d < 100) { showToast('请输入合理的跑步距离'); return; }
+    vo2 = cooperVO2(d);
+    label = 'Cooper 12 分钟跑 ' + d + ' 米';
+  } else if (m === 'rockport') {
+    var w = Number(v2Uw.value);
+    var min = Number(v2Min.value);
+    var hr = Number(v2Hr.value);
+    if (!isFinite(w) || w <= 0 || !isFinite(min) || min <= 0 || !isFinite(hr) || hr <= 0) { showToast('请输入有效数值'); return; }
+    vo2 = rockportVO2(w, age, sex === 'male', min, hr);
+    label = 'Rockport 1 英里步行（' + min + ' 分钟，心率 ' + hr + '）';
+  } else {
+    var t = Number(v2Min.value);
+    if (!isFinite(t) || t <= 0) { showToast('请输入有效用时'); return; }
+    vo2 = run15VO2(t);
+    label = '1.5 英里跑 ' + t + ' 分钟';
+  }
+  var rating = v2Rating(vo2, sex, age);
+  var color = rating === '差' ? '#dc2626' : (rating === '极优' || rating === '优秀' ? '#16a34a' : '#b45309');
+  v2Out.innerHTML =
+    '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:140px;"><div class="kpi-val" style="font-size:22px;font-weight:700;">' + vo2.toFixed(1) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">VO₂max（ml/kg/min）</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:140px;"><div class="kpi-val" style="font-size:22px;font-weight:700;color:' + color + ';">' + rating + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">同龄' + (sex === 'male' ? '男' : '女') + '性评估（Cooper 常模）</div></div>' +
+    '</div>' +
+    '<div class="result-box">' + label + ' 推算最大摄氧量约 <b>' + vo2.toFixed(1) + '</b> ml/kg/min。' +
+    'VO₂max 越高代表心肺耐力越强，一般成年男性 35-45、女性 28-38 属正常范围。</div>' +
+    '<div style="font-size:12px;color:var(--muted,#666);margin-top:8px;">评估常模参考 Cooper Institute 分龄数据，仅供参考；精准测量需在实验室做递增负荷测试。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
