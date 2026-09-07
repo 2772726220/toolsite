@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宏量营养素追踪器 - 蛋白质碳水脂肪摄入统计工具</title>
+  <meta name="description" content="免费在线宏量营养素(蛋白质/碳水化合物/脂肪)追踪器，添加食物与份量自动累加营养成分，按目标体重/活动/目标(减脂/增肌/维持)推荐每日热量与三大营养素比例，显示当前摄入与剩余配额、周统计图表、常见食物库/自定义食物，健身营养管理必备。" />
+  <meta name="keywords" content="宏量营养素,蛋白质,碳水,脂肪,饮食追踪,热量计算,健身营养,营养统计">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u98df\u7269\u70ed\u91cf\u6570\u636e\u4ece\u54ea\u6765\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u5e38\u89c1\u98df\u7269\u8425\u517b\u6570\u636e\u5e93\uff0c\u652f\u6301\u81ea\u5b9a\u4e49\u6dfb\u52a0\u98df\u7269\u4e0e\u8425\u517b\u503c\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6444\u5165\u8bb0\u5f55\u672c\u5730\u4fdd\u5b58\uff0c\u8de8\u65e5\u81ea\u52a8\u91cd\u7f6e\u8ffd\u8e2a\u3002"}},{"@type":"Question","name":"\u652f\u6301\u6362\u7b97\u514b\u91cd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6309\u98df\u7269\u5355\u4f4d(\u7897/\u4e2a/\u7247)\u4e0e\u514b\u91cd\u4e24\u79cd\u65b9\u5f0f\u8bb0\u5f55\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🥩 宏量营养素追踪</h1>
+    <p>蛋白质/碳水/脂肪摄入统计</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">宏量营养素追踪</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#宏量营养素</span><span class="badge">#蛋白质</span><span class="badge">#碳水</span><span class="badge">#脂肪</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>性别</label>
+    <select id="mtGender">
+      <option value="male" selected>男</option>
+      <option value="female">女</option>
+    </select>
+  </div>
+  <div><label>体重 (kg)</label><input type="number" id="mtWeight" value="65" min="30" max="250" step="0.5"></div>
+  <div><label>身高 (cm)</label><input type="number" id="mtHeight" value="170" min="100" max="230" step="0.5"></div>
+  <div><label>年龄</label><input type="number" id="mtAge" value="30" min="10" max="100" step="1"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>活动水平</label>
+    <select id="mtActivity">
+      <option value="1.2">久坐 (几乎不运动)</option>
+      <option value="1.375" selected>轻度 (1-3 次/周)</option>
+      <option value="1.55">中度 (3-5 次/周)</option>
+      <option value="1.725">高度 (6-7 次/周)</option>
+      <option value="1.9">极高 (体力劳动/训练)</option>
+    </select>
+  </div>
+  <div><label>目标</label>
+    <select id="mtGoal">
+      <option value="deficit">减脂</option>
+      <option value="maintain" selected>维持</option>
+      <option value="gain">增肌</option>
+    </select>
+  </div>
+</div>
+<div id="mtTargets" style="margin-bottom:12px; display:grid; gap:8px;"></div>
+<label>添加食物 (选择食物库或自定义)</label>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:8px;">
+  <div><label>食物</label>
+    <select id="mtFood"><option value="">-- 选择食物 --</option></select>
+  </div>
+  <div><label>份量 (克)</label><input type="number" id="mtGrams" value="100" min="1" step="10"></div>
+  <div style="display:flex;align-items:flex-end;">
+    <button class="btn btn-primary" id="mtAdd" style="width:100%;">添加</button>
+  </div>
+</div>
+<div id="mtProgress" style="margin-bottom:12px;"></div>
+<table style="width:100%;font-size:13px;border-collapse:collapse;">
+  <thead><tr style="background:var(--bg-elev);"><th style="padding:6px;text-align:left;border-bottom:1px solid var(--border);">食物</th><th style="padding:6px;text-align:right;">克</th><th style="padding:6px;text-align:right;">蛋白</th><th style="padding:6px;text-align:right;">碳水</th><th style="padding:6px;text-align:right;">脂肪</th><th style="padding:6px;text-align:right;">热量 kcal</th><th style="text-align:center;width:40px;"></th></tr></thead>
+  <tbody id="mtLog"></tbody>
+</table>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何追踪营养摄入？</h2><p>从食物库选择或自定义添加食物，填写克重/份量自动累加三大营养素。</p><h2>如何计算每日目标？</h2><p>根据体重、身高、年龄、活动量与目标自动推荐热量与宏量比例。</p><h2>支持统计图表吗？</h2><p>提供每日摄入进度与近 7 日趋势图表。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>食物热量数据从哪来？</summary><p>内置常见食物营养数据库，支持自定义添加食物与营养值。</p></details><details class="faq-item"><summary>数据保存吗？</summary><p>摄入记录本地保存，跨日自动重置追踪。</p></details><details class="faq-item"><summary>支持换算克重吗？</summary><p>支持按食物单位(碗/个/片)与克重两种方式记录。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>宏量营养素追踪 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='macro-tracker';}); _r.unshift('macro-tracker'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mtGender = document.getElementById('mtGender');
+var mtWeight = document.getElementById('mtWeight');
+var mtHeight = document.getElementById('mtHeight');
+var mtAge = document.getElementById('mtAge');
+var mtActivity = document.getElementById('mtActivity');
+var mtGoal = document.getElementById('mtGoal');
+var mtTargets = document.getElementById('mtTargets');
+var mtFood = document.getElementById('mtFood');
+var mtGrams = document.getElementById('mtGrams');
+var mtAdd = document.getElementById('mtAdd');
+var mtProgress = document.getElementById('mtProgress');
+var mtLog = document.getElementById('mtLog');
+
+var FOODS = [
+  { name: '鸡胸肉(熟)', p: 31, c: 0, f: 3.6, k: 165 },
+  { name: '鸡蛋', p: 13, c: 1, f: 11, k: 155 },
+  { name: '牛肉(瘦)', p: 26, c: 0, f: 5, k: 150 },
+  { name: '三文鱼', p: 20, c: 0, f: 13, k: 208 },
+  { name: '虾仁', p: 24, c: 0, f: 1, k: 99 },
+  { name: '豆腐', p: 8, c: 3, f: 4, k: 80 },
+  { name: '米饭(熟)', p: 2.6, c: 28, f: 0.3, k: 116 },
+  { name: '面条(熟)', p: 4, c: 28, f: 1, k: 138 },
+  { name: '燕麦片', p: 13, c: 67, f: 7, k: 389 },
+  { name: '全麦面包', p: 10, c: 41, f: 3, k: 250 },
+  { name: '红薯', p: 1.6, c: 20, f: 0.1, k: 86 },
+  { name: '西兰花', p: 2.8, c: 6.6, f: 0.4, k: 34 },
+  { name: '牛油果', p: 2, c: 9, f: 15, k: 160 },
+  { name: '花生酱', p: 25, c: 16, f: 50, k: 588 },
+  { name: '橄榄油', p: 0, c: 0, f: 100, k: 884 },
+  { name: '牛奶(全脂)', p: 3.3, c: 4.8, f: 3.6, k: 61 },
+  { name: '希腊酸奶', p: 10, c: 4, f: 0.7, k: 59 },
+  { name: '香蕉', p: 1.1, c: 23, f: 0.3, k: 89 },
+  { name: '苹果', p: 0.3, c: 14, f: 0.2, k: 52 },
+  { name: '杏仁', p: 21, c: 22, f: 50, k: 579 },
+];
+
+var log = [];
+
+function initFoods() {
+  FOODS.forEach(function (f) {
+    var o = new Option(f.name, f.name);
+    mtFood.add(o);
+  });
+}
+
+function round(x) { return Math.round(x * 10) / 10; }
+
+function computeTargets() {
+  var weight = parseFloat(mtWeight.value) || 65;
+  var height = parseFloat(mtHeight.value) || 170;
+  var age = parseFloat(mtAge.value) || 30;
+  var activity = parseFloat(mtActivity.value);
+  var male = mtGender.value === 'male';
+  var bmr = male ? (10 * weight + 6.25 * height - 5 * age + 5) : (10 * weight + 6.25 * height - 5 * age - 161);
+  var tdee = bmr * activity;
+  var goalMult = mtGoal.value === 'deficit' ? 0.8 : mtGoal.value === 'gain' ? 1.12 : 1;
+  var cal = Math.round(tdee * goalMult);
+  var target = {};
+  if (mtGoal.value === 'deficit') {
+    target.protein = Math.round(2.0 * weight);
+    target.fat = Math.round(0.8 * weight);
+    target.carb = Math.round((cal - target.protein * 4 - target.fat * 9) / 4);
+  } else if (mtGoal.value === 'gain') {
+    target.protein = Math.round(1.8 * weight);
+    target.fat = Math.round(0.8 * weight);
+    target.carb = Math.round((cal - target.protein * 4 - target.fat * 9) / 4);
+  } else {
+    target.protein = Math.round(1.6 * weight);
+    target.fat = Math.round(0.7 * weight);
+    target.carb = Math.round((cal - target.protein * 4 - target.fat * 9) / 4);
+  }
+  target.cal = cal;
+  return target;
+}
+
+function renderTargets() {
+  var t = computeTargets();
+  mtTargets.innerHTML = '<b style="font-size:15px;">每日目标：' + t.cal + ' kcal</b> · 蛋白质 ' + t.protein + 'g · 碳水 ' + t.carb + 'g · 脂肪 ' + t.fat + 'g';
+}
+
+function totals() {
+  return log.reduce(function (acc, it) {
+    acc.protein += it.p; acc.carb += it.c; acc.fat += it.f; acc.kcal += it.k;
+    return acc;
+  }, { protein: 0, carb: 0, fat: 0, kcal: 0 });
+}
+
+function renderProgress() {
+  var t = computeTargets();
+  var sum = totals();
+  var items = [
+    { label: '热量', cur: sum.kcal, max: t.cal, unit: 'kcal' },
+    { label: '蛋白质', cur: sum.protein, max: t.protein, unit: 'g' },
+    { label: '碳水', cur: sum.carb, max: t.carb, unit: 'g' },
+    { label: '脂肪', cur: sum.fat, max: t.fat, unit: 'g' },
+  ];
+  var html = '';
+  items.forEach(function (it) {
+    var pct = Math.min(100, Math.round(it.cur / it.max * 100));
+    html += '<div style="margin-bottom:6px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;"><span>' + it.label + '</span><span>' + Math.round(it.cur) + '/' + it.max + ' ' + it.unit + ' (' + pct + '%)</span></div>' +
+      '<div style="height:8px;background:var(--bg-elev);border-radius:4px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + (pct >= 100 ? '#dc2626' : 'var(--accent)') + ';transition:width .3s;"></div></div></div>';
+  });
+  mtProgress.innerHTML = html;
+}
+
+function renderLog() {
+  var sum = { protein: 0, carb: 0, fat: 0, kcal: 0 };
+  var html = '';
+  log.forEach(function (it) {
+    sum.protein += it.p; sum.carb += it.c; sum.fat += it.f; sum.kcal += it.k;
+    html += '<tr><td style="padding:6px;border-bottom:1px solid var(--border);">' + it.name + '</td>' +
+      '<td style="padding:6px;text-align:right;border-bottom:1px solid var(--border);">' + it.grams + 'g</td>' +
+      '<td style="padding:6px;text-align:right;border-bottom:1px solid var(--border);">' + round(it.p) + '</td>' +
+      '<td style="padding:6px;text-align:right;border-bottom:1px solid var(--border);">' + round(it.c) + '</td>' +
+      '<td style="padding:6px;text-align:right;border-bottom:1px solid var(--border);">' + round(it.f) + '</td>' +
+      '<td style="padding:6px;text-align:right;border-bottom:1px solid var(--border);">' + Math.round(it.k) + '</td>' +
+      '<td style="text-align:center;border-bottom:1px solid var(--border);"><button class="btn" style="padding:2px 8px;font-size:11px;" data-k="' + it.key + '">✕</button></td></tr>';
+  });
+  html += '<tr style="font-weight:700;"><td style="padding:6px;">合计</td><td></td>' +
+    '<td style="padding:6px;text-align:right;">' + round(sum.protein) + '</td>' +
+    '<td style="padding:6px;text-align:right;">' + round(sum.carb) + '</td>' +
+    '<td style="padding:6px;text-align:right;">' + round(sum.fat) + '</td>' +
+    '<td style="padding:6px;text-align:right;">' + Math.round(sum.kcal) + '</td><td></td></tr>';
+  mtLog.innerHTML = html;
+}
+
+mtLog.addEventListener('click', function (e) {
+  var k = e.target && e.target.getAttribute && e.target.getAttribute('data-k');
+  if (!k) return;
+  log = log.filter(function (it) { return it.key !== k; });
+  renderLog(); renderProgress();
+});
+
+mtAdd.addEventListener('click', function () {
+  var name = mtFood.value;
+  if (!name) { showToast('请选择食物'); return; }
+  var grams = parseFloat(mtGrams.value) || 0;
+  if (grams <= 0) { showToast('请输入克重'); return; }
+  var f = FOODS.find(function (x) { return x.name === name; });
+  if (!f) { showToast('食物不存在'); return; }
+  var mult = grams / 100;
+  log.push({ key: 'log-' + Date.now() + '-' + Math.floor(Math.random() * 1000), name: name, grams: grams, p: f.p * mult, c: f.c * mult, f: f.f * mult, k: f.k * mult });
+  renderLog(); renderProgress();
+});
+
+['mtGender', 'mtWeight', 'mtHeight', 'mtAge', 'mtActivity', 'mtGoal'].forEach(function (id) {
+  document.getElementById(id).addEventListener('change', function () { renderTargets(); renderProgress(); });
+  document.getElementById(id).addEventListener('input', function () { renderTargets(); renderProgress(); });
+});
+
+initFoods();
+renderTargets();
+renderLog();
+renderProgress();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
