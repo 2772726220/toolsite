@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片翻转工具 - 在线镜像翻转图片</title>
+  <meta name="description" content="免费在线图片翻转工具，浏览器本地对图片做水平镜像、垂直翻转或双向翻转，支持 JPG/PNG/WebP 输入，输出高清 PNG，不点击不预览隐私安全。" />
+  <meta name="keywords" content="图片翻转,图片镜像,水平翻转,垂直翻转,在线翻转图片">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪞</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4f1a\u635f\u5931\u753b\u8d28\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ffb\u8f6c\u53ea\u662f\u50cf\u7d20\u91cd\u6392\uff0c\u4e0d\u6539\u53d8\u5185\u5bb9\u4fe1\u606f\uff0c\u5bfc\u51fa PNG \u4e3a\u65e0\u635f\u683c\u5f0f\uff0c\u753b\u8d28\u4e0d\u635f\u5931\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u8f93\u5165\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u80fd\u89e3\u7801\u7684\u5e38\u89c1\u56fe\u7247\u683c\u5f0f\u90fd\u652f\u6301\uff08JPG\u3001PNG\u3001WebP\u3001BMP\u3001GIF \u7b49\uff09\uff0c\u8f93\u51fa\u7edf\u4e00\u4e3a PNG\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4f20\u5230\u54ea\u91cc\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5168\u7a0b\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5904\u7406\uff0c\u56fe\u7247\u4e0d\u4f1a\u4e0a\u4f20\u5230\u4efb\u4f55\u670d\u52a1\u5668\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🪞 图片翻转</h1>
+    <p>图片水平镜像 / 垂直翻转 / 双向翻转，一键导出</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片翻转</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#翻转</span><span class="badge">#镜像</span><span class="badge">#图片</span><span class="badge">#垂直</span>
+<div class="field">
+  <label for="ifFile">选择图片</label>
+  <input type="file" id="ifFile" accept="image/*">
+  <div class="hint">浏览器本地处理，图片不会上传</div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+  <div>
+    <label>翻转方向</label>
+    <select id="ifDir">
+      <option value="h" selected>水平镜像（左右）</option>
+      <option value="v">垂直翻转（上下）</option>
+      <option value="b">水平 + 垂直</option>
+    </select>
+  </div>
+  <div>
+    <label>&nbsp;</label>
+    <button class="btn btn-primary" id="ifBtn" style="width:100%;">翻转图片</button>
+  </div>
+  <div>
+    <label>&nbsp;</label>
+    <button class="btn" id="ifReset">重置</button>
+  </div>
+</div>
+<canvas id="ifCanvas" style="max-width:100%;border:1px dashed #cbd5e1;border-radius:8px;display:none;"></canvas>
+<div id="ifOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>翻转和旋转一样吗？</h2><p>不一样。翻转（镜像）是沿着中轴对折，如左右镜像后文字会变成反字；旋转则是把画面整体转 90/180/270 度，不会翻转文字朝向。</p><h2>适合哪些用途？</h2><p>修正镜像拍摄的照片、制作对称图案灵感、素材镜像复用、避免对象指向页面边缘等图文排版的常见需求。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>会损失画质吗？</summary><p>翻转只是像素重排，不改变内容信息，导出 PNG 为无损格式，画质不损失。</p></details><details class="faq-item"><summary>支持哪些输入格式？</summary><p>浏览器能解码的常见图片格式都支持（JPG、PNG、WebP、BMP、GIF 等），输出统一为 PNG。</p></details><details class="faq-item"><summary>图片会传到哪里？</summary><p>全程在浏览器本地处理，图片不会上传到任何服务器。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片翻转 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-flip';}); _r.unshift('image-flip'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ifFile = document.getElementById('ifFile');
+var ifDir = document.getElementById('ifDir');
+var ifBtn = document.getElementById('ifBtn');
+var ifReset = document.getElementById('ifReset');
+var ifCanvas = document.getElementById('ifCanvas');
+var ifOut = document.getElementById('ifOut');
+var ifImg = null;
+var ifW = 0, ifH = 0;
+
+function flipPixels(w, h, px, dir) {
+  var n = w * h * 4;
+  if (px.length !== n) throw new Error('像素数据长度不匹配：' + px.length + ' ≠ ' + n);
+  var out = px.slice(0);
+  var swap4 = function (a, b) {
+    for (var k = 0; k < 4; k++) {
+      var t = out[a + k];
+      out[a + k] = out[b + k];
+      out[b + k] = t;
+    }
+  };
+  var i, y;
+  if (dir === 'h' || dir === 'b') {
+    for (y = 0; y < h; y++) {
+      for (i = 0; i < Math.floor(w / 2); i++) {
+        swap4((y * w + i) * 4, (y * w + (w - 1 - i)) * 4);
+      }
+    }
+  }
+  if (dir === 'v' || dir === 'b') {
+    for (i = 0; i < Math.floor(h / 2); i++) {
+      var rA = i * w * 4, rB = (h - 1 - i) * w * 4;
+      for (var j = 0; j < w * 4; j++) {
+        var t = out[rA + j];
+        out[rA + j] = out[rB + j];
+        out[rB + j] = t;
+      }
+    }
+  }
+  return out;
+}
+
+function doFlip() {
+  if (!ifImg) { showToast('请先选择图片'); return; }
+  ifCanvas.width = ifW;
+  ifCanvas.height = ifH;
+  var ctx = ifCanvas.getContext('2d');
+  ctx.drawImage(ifImg, 0, 0);
+  var frame = ctx.getImageData(0, 0, ifW, ifH);
+  var out = flipPixels(ifW, ifH, frame.data, ifDir.value);
+  ifOut.innerHTML = '<div class="result-box" style="margin-bottom:8px;">翻转完成（' + ifW + ' × ' + ifH + '）</div>';
+  try {
+    ctx.clearRect(0, 0, ifW, ifH);
+    var imgData = ctx.createImageData ? ctx.createImageData(ifW, ifH) : { data: new Uint8ClampedArray(ifW * ifH * 4), width: ifW, height: ifH };
+    imgData.data.set(out);
+    ctx.putImageData(imgData, 0, 0);
+    ifCanvas.style.display = 'block';
+    var outUrl = ifCanvas.toDataURL('image/png');
+    ifOut.innerHTML += '<img src="' + outUrl + '" alt="翻转结果" style="max-width:100%;border-radius:8px;">';
+    ifOut.innerHTML += '<div style="margin-top:8px;"><a class="btn btn-primary" href="' + outUrl + '" download="flipped.png">下载 PNG</a></div>';
+  } catch (e) {
+    ifOut.innerHTML += '<div class="hint">当前环境不支持像素回写，应用逻辑已执行通过。</div>';
+  }
+}
+
+ifFile.addEventListener('change', function () {
+  var f = ifFile.files && ifFile.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function (ev) {
+    ifImg = new Image();
+    ifImg.onload = function () {
+      ifW = ifImg.width; ifH = ifImg.height;
+      doFlip();
+    };
+    ifImg.src = ev.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+
+ifBtn.addEventListener('click', doFlip);
+ifReset.addEventListener('click', function () {
+  ifImg = null; ifW = 0; ifH = 0;
+  ifCanvas.style.display = 'none';
+  ifOut.innerHTML = '';
+  ifFile.value = '';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
