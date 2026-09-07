@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 21 点小游戏 - Blackjack 趣味纸牌游戏</title>
+  <meta name="description" content="在线 21 点（Blackjack）小游戏，与庄家比点数，还提供基于庄家明牌的要牌建议，帮助你练习基本策略。纯浏览器本地运行。" />
+  <meta name="keywords" content="21点,Blackjack,纸牌游戏,在线游戏,21点游戏,Blackjack策略">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"A \u7b97 1 \u70b9\u8fd8\u662f 11 \u70b9\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u81ea\u52a8\u9009\u62e9\u6700\u6709\u5229\u7684\uff1aA=11 \u4e0d\u7206\u5219\u6309 11\uff0c\u5426\u5219\u6309 1\u3002\u4e24\u679a A \u8ba1 12 \u70b9\u3002"}},{"@type":"Question","name":"\u5e84\u5bb6\u4ec0\u4e48\u65f6\u5019\u8865\u724c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u62c9\u65af\u7ef4\u52a0\u65af\u89c4\u5219\uff0c\u5e84\u5bb6\u4e0d\u8db3 17 \u70b9\u5fc5\u987b\u8865\u724c\uff0c\u8fbe\u5230\u6216\u8d85\u8fc7 17 \u70b9\u505c\u724c\u3002"}},{"@type":"Question","name":"Blackjack \u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u624b\u724c\u6b63\u597d\u4e24\u5f20\u4e14\u70b9\u6570\u4e3a 21\uff08A+10 \u6216 A+\u82b1\u724c\uff09\uff0c\u662f\u6700\u5f3a\u7684\u724c\u578b\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🃏 21点</h1>
+    <p>经典 21 点小游戏，含专家要牌建议</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">21点</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#21点</span><span class="badge">#黑杰克</span><span class="badge">#纸牌</span><span class="badge">#游戏</span>
+<div class="tool-grid" style="grid-template-columns:1fr auto; gap:12px;">
+  <div>
+    <div id="bjTable" style="background:linear-gradient(160deg,#14532d,#166534);border-radius:14px;padding:16px;color:#fff;min-height:240px;">
+      <div style="font-size:12px;opacity:.8;">庄家 (<span id="bjDealerTotal">—</span>)</div>
+      <div id="bjDealer" style="margin:6px 0 14px;font-size:20px;min-height:46px;"></div>
+      <div style="font-size:12px;opacity:.8;">玩家 (<span id="bjPlayerTotal">—</span>)</div>
+      <div id="bjPlayer" style="margin:6px 0 10px;font-size:20px;min-height:46px;"></div>
+      <div id="bjStatus" style="min-height:22px;font-size:14px;"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="btn btn-primary" id="bjHit" style="flex:1;">要牌 Hit</button>
+      <button class="btn" id="bjStand" style="flex:1;">停牌 Stand</button>
+      <button class="btn" id="bjNew" style="flex:1;">新局</button>
+    </div>
+  </div>
+  <div style="display:none;">
+    <label>建议</label>
+    <div id="bjHint" style="width:220px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>21 点怎么玩？</h2><p>目标是手牌点数尽量接近 21 且不超过 21。J/Q/K 计 10 点，A 可计 1 或 11。比庄家点数大即获胜，双方 Blackjack 时平局。</p><h2>基本策略要点？</h2><p>点数 12~16 时，庄家明牌 2~6 建议停牌，庄家明牌 7 以上建议要牌；17 点以上通常停牌。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>A 算 1 点还是 11 点？</summary><p>自动选择最有利的：A=11 不爆则按 11，否则按 1。两枚 A 计 12 点。</p></details><details class="faq-item"><summary>庄家什么时候补牌？</summary><p>按拉斯维加斯规则，庄家不足 17 点必须补牌，达到或超过 17 点停牌。</p></details><details class="faq-item"><summary>Blackjack 是什么？</summary><p>手牌正好两张且点数为 21（A+10 或 A+花牌），是最强的牌型。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>21点 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='blackjack';}); _r.unshift('blackjack'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bjDealer = document.getElementById('bjDealer');
+var bjPlayer = document.getElementById('bjPlayer');
+var bjDealerTotal = document.getElementById('bjDealerTotal');
+var bjPlayerTotal = document.getElementById('bjPlayerTotal');
+var bjStatus = document.getElementById('bjStatus');
+var bjHint = document.getElementById('bjHint');
+var bjHit = document.getElementById('bjHit');
+var bjStand = document.getElementById('bjStand');
+var bjNew = document.getElementById('bjNew');
+
+var BJ_SUITS = ['♠', '♥', '♦', '♣'];
+var BJ_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+var bjDeck = [];
+var bjPlayerHand = [];
+var bjDealerHand = [];
+var bjDone = false;
+var bjStarted = false;
+
+function cardValue(rank) {
+  if (rank === 'A') return 1;
+  if (rank === 'J' || rank === 'Q' || rank === 'K') return 10;
+  var n = parseInt(rank, 10);
+  return isFinite(n) ? n : 0;
+}
+
+function handTotal(hand) {
+  var total = 0, aces = 0;
+  (hand || []).forEach(function (c) {
+    if (c === 'A') aces++;
+    else total += cardValue(c);
+  });
+  total += aces;
+  if (aces > 0 && total + 10 <= 21) total += 10;
+  return total;
+}
+
+function isBust(hand) {
+  return handTotal(hand) > 21;
+}
+
+function isBlackjack(hand) {
+  return hand.length === 2 && handTotal(hand) === 21;
+}
+
+function dealerDecision(total) {
+  return total < 17 ? 'hit' : 'stand';
+}
+
+function basicHint(hand, dealerUp) {
+  var total = handTotal(hand);
+  if (total > 21) return { action: 'bust', text: '已爆牌，这局出局' };
+  if (isBlackjack(hand)) return { action: 'stand', text: 'Blackjack！直接停牌' };
+  if (total >= 17) return { action: 'stand', text: '点数较高，建议停牌' };
+  if (total <= 11) return { action: 'hit', text: '点数低，建议要牌' };
+  var up = cardValue(dealerUp);
+  if (up >= 2 && up <= 6) return { action: 'stand', text: '庄家明牌较弱（' + up + '），建议停牌' };
+  return { action: 'hit', text: '庄家明牌较强（' + dealerUp + '），建议要牌' };
+}
+
+function buildDeck() {
+  var deck = [];
+  BJ_SUITS.forEach(function (suit) {
+    BJ_RANKS.forEach(function (rank) { deck.push({ suit: suit, rank: rank }); });
+  });
+  return deck;
+}
+
+function shuffleDeck(deck) {
+  var a = deck.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function cardHtml(c) {
+  var red = c.suit === '♥' || c.suit === '♦';
+  return '<span style="display:inline-block;background:#fff;color:' + (red ? '#dc2626' : '#0f172a') + ';border-radius:6px;padding:6px 10px;margin-right:6px;font-weight:bold;">' + c.rank + c.suit + '</span>';
+}
+
+function deal(showDealer) {
+  return {
+    player: bjPlayerHand.slice(),
+    dealer: bjDealerHand.slice(),
+    playerTotal: handTotal(bjPlayerHand),
+    dealerTotal: handTotal(bjDealerHand),
+    showDealer: !!showDealer,
+    deckLeft: bjDeck.length,
+  };
+}
+
+function render(showDealer) {
+  bjPlayer.innerHTML = bjPlayerHand.map(cardHtml).join('') || '—';
+  bjDealer.innerHTML = bjDealerHand.map(function (c, i) {
+    return !showDealer && i === bjDealerHand.length - 1 ? '<span style="display:inline-block;background:#334155;color:#94a3b8;border-radius:6px;padding:6px 10px;margin-right:6px;">?</span>' : cardHtml(c);
+  }).join('') || '—';
+  bjPlayerTotal.textContent = handTotal(bjPlayerHand);
+  bjDealerTotal.textContent = showDealer ? handTotal(bjDealerHand) : '?';
+  if (!bjDone && !showDealer) {
+    var h = basicHint(bjPlayerHand, bjDealerHand.length > 1 ? bjDealerHand[0].rank : '?');
+    bjHint.textContent = '建议：' + h.text;
+  } else if (!bjDone && showDealer) {
+    bjHint.textContent = '';
+  }
+}
+
+function newRound() {
+  bjDeck = shuffleDeck(buildDeck());
+  bjPlayerHand = [];
+  bjDealerHand = [];
+  bjDone = false;
+  bjPlayerHand.push(bjDeck.pop().rank, bjDeck.pop().rank);
+  bjDealerHand.push(bjDeck.pop().rank);
+  var hidden = bjDeck.pop();
+  bjDealerHand.push(hidden.rank);
+  bjStatus.textContent = '开局：请选择要牌或停牌。';
+  render(false);
+  if (isBlackjack(bjPlayerHand)) {
+    if (isBlackjack(bjDealerHand)) { bjStatus.textContent = '双方 Blackjack，平局！'; bjDone = true; render(true); }
+    else { bjStatus.textContent = '玩家 Blackjack 获胜！'; bjDone = true; render(true); }
+  } else if (isBlackjack(bjDealerHand)) {
+    bjStatus.textContent = '庄家 Blackjack 获胜。'; bjDone = true; render(true);
+  } else {
+    bjStatus.textContent = '开局：请选择要牌或停牌。';
+  }
+}
+
+function playerHit() {
+  if (bjDone) return;
+  bjPlayerHand.push(bjDeck.pop().rank);
+  if (isBust(bjPlayerHand)) {
+    bjStatus.textContent = '爆牌！庄家获胜。';
+    bjDone = true;
+  } else if (handTotal(bjPlayerHand) === 21) {
+    bjStatus.textContent = '21 点！';
+  } else {
+    bjStatus.textContent = '继续，请选择要牌或停牌。';
+  }
+  render(false);
+  if (bjDone) render(true);
+}
+
+function playerStand() {
+  if (bjDone) return;
+  while (!bjDone && (bjDealerHand.length === 1 || dealerDecision(handTotal(bjDealerHand)) === 'hit')) {
+    bjDealerHand.push(bjDeck.pop().rank);
+  }
+  var p = handTotal(bjPlayerHand);
+  var d = handTotal(bjDealerHand);
+  if (d > 21 || p > d) { bjStatus.textContent = '玩家获胜！'; bjDone = true; }
+  else if (p === d) { bjStatus.textContent = '平局，退还筹码。'; bjDone = true; }
+  else { bjStatus.textContent = '庄家获胜。'; bjDone = true; }
+  render(true);
+}
+
+bjHit.addEventListener('click', playerHit);
+bjStand.addEventListener('click', playerStand);
+bjNew.addEventListener('click', newRound);
+
+newRound();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
