@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>贷款还清计划计算器 - 信用卡/贷款几年能还清</title>
+  <meta name="description" content="免费贷款还清计划计算器：输入欠款、年利率（APR）与每月还款额，估算还清所需月数、累计利息与每月本金/利息明细，浏览器本地计算。" />
+  <meta name="keywords" content="贷款还清,还款计划,信用卡欠款,还清时间,利息计算,月供计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📉</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8ba1\u7b97\u7ed3\u679c\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528\u6807\u51c6\u7b49\u989d\u8fd8\u672c\u6cd5\uff08\u5148\u8fd8\u5229\u606f\u540e\u8fd8\u672c\u91d1\uff09\u9010\u6708\u6eda\u52a8\u8ba1\u7b97\uff0c\u4e0a\u9650 1200 \u4e2a\u6708\uff08100 \u5e74\uff09\u3002"}},{"@type":"Question","name":"\u5305\u542b\u624b\u7eed\u8d39\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u542b\u624b\u7eed\u8d39\uff0c\u4ec5\u6309\u5e74\u5229\u7387 APR \u6298\u7b97\u6708\u5229\u7387\u8ba1\u7b97\u7eaf\u5229\u606f\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u6240\u6709\u8ba1\u7b97\u90fd\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📉 贷款还清计划</h1>
+    <p>按欠款/利率/月供算还清时间与累计利息</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">贷款还清计划</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#还款</span><span class="badge">#贷款</span><span class="badge">#利息</span><span class="badge">#信用卡</span>
+<div class="field-row">
+  <div class="field"><label for="dpBalance">当前欠款（元）</label><input id="dpBalance" value="10000"></div>
+  <div class="field"><label for="dpApr">年利率 APR（%）</label><input id="dpApr" value="18"></div>
+  <div class="field"><label for="dpPay">每月还款（元）</label><input id="dpPay" value="400"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="dpGo" type="button">计算还清计划</button>
+</div>
+<div class="result-box" id="dpOut"></div>
+<div class="result-box" id="dpTable"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>还款额低于月利息会怎样？</h2><p>每月还款连当月利息都不足以覆盖时永远还不清余额，工具会给出提示并建议提高月供。</p><h2>如何尽快还清？</h2><p>提高每月还款额是最快路径；利率越高，多还的部分对冲利息的效果越明显。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>计算结果准确吗？</summary><p>采用标准等额还本法（先还利息后还本金）逐月滚动计算，上限 1200 个月（100 年）。</p></details><details class="faq-item"><summary>包含手续费吗？</summary><p>不含手续费，仅按年利率 APR 折算月利率计算纯利息。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会。所有计算都在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>贷款还清计划 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='debt-payoff';}); _r.unshift('debt-payoff'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dpBalance = document.getElementById('dpBalance');
+var dpApr = document.getElementById('dpApr');
+var dpPay = document.getElementById('dpPay');
+var dpGo = document.getElementById('dpGo');
+var dpOut = document.getElementById('dpOut');
+var dpTable = document.getElementById('dpTable');
+
+function debtPayoff(balance, aprPct, monthly) {
+  var B = parseFloat(balance), apr = parseFloat(aprPct), M = parseFloat(monthly);
+  if (!isFinite(B) || B <= 0) return { error: '欠款需大于 0' };
+  if (!isFinite(apr) || apr < 0 || apr > 1000) return { error: '年利率无效' };
+  if (!isFinite(M) || M <= 0) return { error: '每月还款需大于 0' };
+  var r = apr / 100 / 12;
+  if (M <= B * r) return { error: '每月还款低于当月利息（' + (B * r).toFixed(2) + ' 元），永远还不清，请提高还款额' };
+  var months = 0, bal = B, totalInterest = 0, paid = 0;
+  var rows = [];
+  while (bal > 0 && months < 1200) {
+    months++;
+    var interest = bal * r;
+    var principal = M - interest;
+    if (principal > bal) principal = bal;
+    totalInterest += interest;
+    paid += M;
+    bal -= principal;
+    if (months % 12 === 0 || bal <= 0) {
+      rows.push({ m: months, bal: Math.max(0, bal), principal: principal, interest: interest, paid: paid });
+    }
+  }
+  return {
+    months: months,
+    years: (months / 12).toFixed(1),
+    totalInterest: totalInterest,
+    totalPaid: B + totalInterest,
+    finalPayment: paid > 0 ? paid - (months - 1) * M + (bal <= 0 ? principal : 0) : 0,
+    rows: rows
+  };
+}
+
+dpGo.addEventListener('click', function () {
+  var res = debtPayoff(dpBalance.value, dpApr.value, dpPay.value);
+  if (res.error) { dpOut.textContent = res.error; dpTable.innerHTML = ''; return; }
+  var years = res.months >= 12 ? res.years + ' 年' : '';
+  dpOut.innerHTML =
+    '<div class="stat"><div class="num">' + res.months + ' 个月</div><div class="label">还清时间' + (years ? '（约 ' + years + '）' : '') + '</div></div>' +
+    '<div class="stat"><div class="num">¥' + res.totalInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</div><div class="label">累计利息</div></div>' +
+    '<div class="stat"><div class="num">¥' + res.totalPaid.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</div><div class="label">累计还款</div></div>';
+  var tb = '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;"><tr style="text-align:left"><th>月数</th><th>本金部分</th><th>利息部分</th><th>剩余欠款</th></tr>';
+  res.rows.forEach(function (r) {
+    tb += '<tr style="border-top:1px solid #eee"><td>' + r.m + '</td><td>¥' + r.principal.toFixed(2) + '</td><td>¥' + r.interest.toFixed(2) + '</td><td>¥' + r.bal.toFixed(2) + '</td></tr>';
+  });
+  tb += '</table>';
+  dpTable.innerHTML = tb;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
