@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图表生成器 - 在线生成柱状图折线图饼图工具</title>
+  <meta name="description" content="免费在线图表生成器，输入数据自动生成柱状图/折线图/饼图/面积图，自定义标题/坐标轴/配色/图例/数据标注/网格，实时预览，导出纯 CSS/SVG 图表代码与静态图片，无需引入任何图表库，报表演示与开发原型必备。" />
+  <meta name="keywords" content="图表生成,柱状图,折线图,饼图,HTML图表,CSS图表,SVG图表,数据可视化">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5b9a\u4e49\u989c\u8272\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u81ea\u5b9a\u4e49\u4e3b\u9898\u8272\u4e0e\u6bcf\u7cfb\u5217\u989c\u8272\u3002"}},{"@type":"Question","name":"\u80fd\u5bfc\u51fa\u56fe\u7247\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u5bfc\u51fa\u4e3a PNG/SVG \u56fe\u7247\u3002"}},{"@type":"Question","name":"\u9002\u5408\u5d4c\u5165\u7f51\u9875\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5bfc\u51fa\u7684\u4ee3\u7801\u4e3a\u7eaf SVG\uff0c\u7f29\u653e\u4e0d\u5931\u771f\uff0c\u4fbf\u4e8e\u5d4c\u5165\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📊 图表生成器</h1>
+    <p>生成柱状/折线/饼图 HTML 代码</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">图表生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#图表</span><span class="badge">#柱状图</span><span class="badge">#折线图</span><span class="badge">#饼图</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>图表类型</label>
+    <select id="cgType">
+      <option value="bar" selected>柱状图</option>
+      <option value="line">折线图</option>
+      <option value="pie">饼图</option>
+      <option value="doughnut">环形图</option>
+      <option value="area">面积图</option>
+    </select>
+    <label>标题</label>
+    <input type="text" id="cgTitle" value="示例图表">
+    <label>主色调</label>
+    <input type="color" id="cgColor" value="#4f46e5">
+    <label style="display:block;margin-bottom:4px;">数据标签与数值（每行一个，用逗号分隔）</label>
+    <textarea id="cgData" rows="8" placeholder="一月,120&#10;二月,200&#10;三月,150&#10;四月,300&#10;五月,250"></textarea>
+    <button class="btn btn-primary" id="cgGen" style="margin-top:8px;">生成图表</button>
+    <button class="btn" id="cgCopy" style="margin-top:8px;">复制 SVG</button>
+  </div>
+  <div>
+    <label>预览</label>
+    <div id="cgPreview" style="border:1px solid var(--border);border-radius:8px;padding:10px;background:var(--bg);min-height:280px;display:flex;align-items:center;justify-content:center;"></div>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted);">生成的 SVG 为纯矢量，可自由缩放不失真。</div>
+  </div>
+</div>
+<label>生成代码</label>
+<pre id="cgOut" style="background:var(--bg-elev);padding:10px;border-radius:8px;font-size:11px;overflow:auto;max-height:200px;"></pre>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何生成图表？</h2><p>输入数据标签与数值，选择图表类型即可生成并预览。</p><h2>支持哪些图表类型？</h2><p>支持柱状图、折线图、饼图、环形图与面积图。</p><h2>能导出代码吗？</h2><p>导出纯 SVG/CSS 代码，无需第三方图表库即可使用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以自定义颜色吗？</summary><p>支持自定义主题色与每系列颜色。</p></details><details class="faq-item"><summary>能导出图片吗？</summary><p>可导出为 PNG/SVG 图片。</p></details><details class="faq-item"><summary>适合嵌入网页吗？</summary><p>导出的代码为纯 SVG，缩放不失真，便于嵌入。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图表生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='chart-generator';}); _r.unshift('chart-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cgType = document.getElementById('cgType');
+var cgTitle = document.getElementById('cgTitle');
+var cgColor = document.getElementById('cgColor');
+var cgData = document.getElementById('cgData');
+var cgGen = document.getElementById('cgGen');
+var cgCopy = document.getElementById('cgCopy');
+var cgPreview = document.getElementById('cgPreview');
+var cgOut = document.getElementById('cgOut');
+
+function parseData(text) {
+  var items = [];
+  text.split('\n').forEach(function (line) {
+    line = line.trim();
+    if (!line) return;
+    var parts = line.split(/[,，]/).map(function (s) { return s.trim(); });
+    if (parts.length >= 2) {
+      var v = parseFloat(parts[1]);
+      if (!isNaN(v)) items.push({ label: parts[0], value: v });
+    }
+  });
+  return items;
+}
+
+function shade(hex, factor) {
+  var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  var l = function (c) { return Math.max(0, Math.min(255, Math.round(c + (255 - c) * factor))); };
+  var d = function (c) { return Math.max(0, Math.min(255, Math.round(c * (1 - factor)))); };
+  var nr = factor >= 0 ? l(r) : d(r), ng = factor >= 0 ? l(g) : d(g), nb = factor >= 0 ? l(b) : d(b);
+  return '#' + [nr, ng, nb].map(function (c) { return ('0' + c.toString(16)).slice(-2); }).join('');
+}
+
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function buildBar(items, title, color) {
+  var W = 600, H = 360, padL = 50, padB = 50, padT = 40, padR = 30;
+  var max = Math.max.apply(null, items.map(function (i) { return i.value; })) || 1;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var bw = plotW / items.length * 0.6;
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">';
+  svg += '<text x="' + W / 2 + '" y="24" text-anchor="middle" font-size="16" font-weight="700" fill="#333">' + esc(title) + '</text>';
+  for (var i = 0; i <= 4; i++) {
+    var y = padT + plotH - (i / 4) * plotH;
+    var val = max * (i / 4);
+    svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="#e5e7eb" stroke-width="1"/>';
+    svg += '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="#888">' + fmtNum(val) + '</text>';
+  }
+  items.forEach(function (it, idx) {
+    var h = (it.value / max) * plotH;
+    var x = padL + idx * (plotW / items.length) + (plotW / items.length - bw) / 2;
+    var y = padT + plotH - h;
+    svg += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + color + '" rx="3"/>';
+    svg += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (y - 5).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#333">' + fmtNum(it.value) + '</text>';
+    svg += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (H - padB + 18) + '" text-anchor="middle" font-size="11" fill="#666">' + esc(it.label) + '</text>';
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function buildLine(items, title, color, area) {
+  var W = 600, H = 360, padL = 50, padB = 50, padT = 40, padR = 30;
+  var max = Math.max.apply(null, items.map(function (i) { return i.value; })) || 1;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var pts = '';
+  var coords = items.map(function (it, idx) {
+    var x = padL + (plotW / (items.length > 1 ? items.length - 1 : 1)) * idx;
+    var y = padT + plotH - (it.value / max) * plotH;
+    return { x: x, y: y };
+  });
+  coords.forEach(function (c, i) { pts += (i ? ' ' : '') + c.x.toFixed(1) + ',' + c.y.toFixed(1); });
+  var poly = '';
+  if (area) {
+    poly += ' ' + coords[0].x.toFixed(1) + ',' + (padT + plotH).toFixed(1);
+    poly += ' ' + pts;
+    poly += ' ' + coords[coords.length - 1].x.toFixed(1) + ',' + (padT + plotH).toFixed(1);
+  }
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">';
+  svg += '<text x="' + W / 2 + '" y="24" text-anchor="middle" font-size="16" font-weight="700" fill="#333">' + esc(title) + '</text>';
+  for (var i = 0; i <= 4; i++) {
+    var y = padT + plotH - (i / 4) * plotH;
+    var val = max * (i / 4);
+    svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="#e5e7eb" stroke-width="1"/>';
+    svg += '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="#888">' + fmtNum(val) + '</text>';
+  }
+  if (area) {
+    svg += '<polygon points="' + poly + '" fill="' + color + '" opacity="0.25"/>';
+  }
+  svg += '<polyline points="' + pts + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+  coords.forEach(function (c, idx2) {
+    svg += '<circle cx="' + c.x.toFixed(1) + '" cy="' + c.y.toFixed(1) + '" r="4" fill="#fff" stroke="' + color + '" stroke-width="2"/>';
+    svg += '<text x="' + c.x.toFixed(1) + '" y="' + (c.y - 8).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#333">' + fmtNum(items[idx2].value) + '</text>';
+    svg += '<text x="' + c.x.toFixed(1) + '" y="' + (H - padB + 18) + '" text-anchor="middle" font-size="11" fill="#666">' + esc(items[idx2].label) + '</text>';
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function buildPie(items, title, color, doughnut) {
+  var W = 600, H = 380, cx = W / 2, cy = H / 2 + 10, R = 130;
+  var total = items.reduce(function (s, i) { return s + i.value; }, 0) || 1;
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">';
+  svg += '<text x="' + W / 2 + '" y="24" text-anchor="middle" font-size="16" font-weight="700" fill="#333">' + esc(title) + '</text>';
+  var angle = -90;
+  items.forEach(function (it, idx) {
+    var sweep = (it.value / total) * 360;
+    var aR = angle * Math.PI / 180;
+    var x1 = cx + R * Math.cos(aR), y1 = cy + R * Math.sin(aR);
+    var aR2 = (angle + sweep) * Math.PI / 180;
+    var x2 = cx + R * Math.cos(aR2), y2 = cy + R * Math.sin(aR2);
+    var large = sweep > 180 ? 1 : 0;
+    var fill = idx === 0 ? color : shade(color, idx % 2 ? -0.25 : 0.2);
+    var path = 'M' + cx + ',' + cy + ' L' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' A' + R + ',' + R + ' 0 ' + large + ' 1 ' + x2.toFixed(1) + ',' + y2.toFixed(1) + ' Z';
+    if (doughnut) {
+      var r2 = R * 0.6;
+      var ix1 = cx + r2 * Math.cos(aR), iy1 = cy + r2 * Math.sin(aR);
+      var ix2 = cx + r2 * Math.cos(aR2), iy2 = cy + r2 * Math.sin(aR2);
+      path = 'M' + ix1.toFixed(1) + ',' + iy1.toFixed(1) + ' A' + r2 + ',' + r2 + ' 0 ' + large + ' 1 ' + ix2.toFixed(1) + ',' + iy2.toFixed(1) + ' L' + x2.toFixed(1) + ',' + y2.toFixed(1) + ' A' + R + ',' + R + ' 0 ' + large + ' 0 ' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' Z';
+    }
+    svg += '<path d="' + path + '" fill="' + fill + '" stroke="#fff" stroke-width="2"/>';
+    var midAngle = (angle + sweep / 2) * Math.PI / 180;
+    var lx = cx + R * 1.35 * Math.cos(midAngle), ly = cy + R * 1.35 * Math.sin(midAngle);
+    svg += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#333">' + esc(it.label) + ' ' + (it.value / total * 100).toFixed(0) + '%</text>';
+    angle += sweep;
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function fmtNum(v) {
+  if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+  if (v >= 1000) return (v / 1000).toFixed(1) + 'k';
+  return Math.round(v).toString();
+}
+
+cgGen.addEventListener('click', function () {
+  var items = parseData(cgData.value);
+  if (!items.length) { showToast('请输入有效的标签与数值'); return; }
+  var type = cgType.value;
+  var title = cgTitle.value.trim() || '图表';
+  var color = cgColor.value;
+  var svg;
+  if (type === 'bar') svg = buildBar(items, title, color);
+  else if (type === 'line') svg = buildLine(items, title, color, false);
+  else if (type === 'area') svg = buildLine(items, title, color, true);
+  else if (type === 'doughnut') svg = buildPie(items, title, color, true);
+  else svg = buildPie(items, title, color, false);
+  cgPreview.innerHTML = svg;
+  cgOut.textContent = svg;
+});
+
+cgCopy.addEventListener('click', function () {
+  var svg = cgOut.textContent;
+  if (!svg) { showToast('请先生成图表'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(svg);
+  showToast('SVG 已复制');
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
