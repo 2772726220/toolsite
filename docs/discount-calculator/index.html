@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折扣计算器 - 算折后价格与折扣力度工具</title>
+  <meta name="description" content="免费在线折扣计算器，输入原价与折扣(百分比/成数/折)自动计算折后价、节省金额、折扣率，支持满减、第二件半价、多件叠加等购物场景模式，反推原价与折扣，网购比价与促销计算必备。" />
+  <meta name="keywords" content="折扣计算,折后价,打折计算,满减计算,优惠计算,促销计算,省钱">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6298\u6263\u600e\u4e48\u8868\u793a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u767e\u5206\u6bd4\u3001\u6210\u6570\u3001\u6298\u6263(\u6298)\u4e09\u79cd\u8868\u8fbe\u65b9\u5f0f\u3002"}},{"@type":"Question","name":"\u80fd\u53e0\u52a0\u4f18\u60e0\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u4ef6\u5546\u54c1\u4e0e\u53e0\u52a0\u4f18\u60e0\u573a\u666f\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u4ee5\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5730\u8bb0\u5f55\u6700\u8fd1\u8ba1\u7b97\u4fbf\u4e8e\u8d2d\u7269\u65f6\u53c2\u8003\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🛍️ 折扣计算器</h1>
+    <p>计算打折后价格/折扣力度</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">折扣计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#折扣</span><span class="badge">#折后价</span><span class="badge">#优惠</span><span class="badge">#满减</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>原价 (元)</label>
+    <input type="number" id="dcOriginal" value="199" min="0" step="1">
+    <label>折扣</label>
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:6px;">
+      <div><input type="number" id="dcDiscount" value="80" min="0" max="100" step="1"><div style="font-size:11px;color:var(--muted);">百分比 (80=8折)</div></div>
+      <div>
+        <select id="dcMode" style="width:100%;">
+          <option value="pct" selected>百分比折扣</option>
+          <option value="off">满减/减价</option>
+          <option value="reverse">反推原价</option>
+        </select>
+      </div>
+    </div>
+    <div id="dcOffRow" style="display:none;">
+      <label>减免金额 (元)</label>
+      <input type="number" id="dcOff" value="50" min="0" step="1">
+    </div>
+    <div id="dcRevRow" style="display:none;">
+      <label>折后价 (元)</label>
+      <input type="number" id="dcFinal" value="159" min="0" step="1">
+    </div>
+    <button class="btn btn-primary" id="dcCalc" style="width:100%;margin-top:10px;">计算</button>
+  </div>
+  <div>
+    <label>结果</label>
+    <div id="dcResult" style="border:1px solid var(--border);border-radius:8px;padding:16px;min-height:140px;line-height:2;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何算折后价？</h2><p>输入原价与折扣(如 8 折或 80%)即可得出折后价。</p><h2>支持满减吗？</h2><p>支持满 X 减 Y、第二件半价等购物规则。</p><h2>能反推原价吗？</h2><p>输入折后价与折扣可反推原价。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>折扣怎么表示？</summary><p>支持百分比、成数、折扣(折)三种表达方式。</p></details><details class="faq-item"><summary>能叠加优惠吗？</summary><p>支持多件商品与叠加优惠场景计算。</p></details><details class="faq-item"><summary>结果可以保存吗？</summary><p>本地记录最近计算便于购物时参考。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>折扣计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='discount-calculator';}); _r.unshift('discount-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dcOriginal = document.getElementById('dcOriginal');
+var dcDiscount = document.getElementById('dcDiscount');
+var dcMode = document.getElementById('dcMode');
+var dcOff = document.getElementById('dcOff');
+var dcFinal = document.getElementById('dcFinal');
+var dcOffRow = document.getElementById('dcOffRow');
+var dcRevRow = document.getElementById('dcRevRow');
+var dcCalc = document.getElementById('dcCalc');
+var dcResult = document.getElementById('dcResult');
+
+function money(v) {
+  return '¥' + (Math.round(v * 100) / 100).toFixed(2);
+}
+
+function calc() {
+  var mode = dcMode.value;
+  var orig = parseFloat(dcOriginal.value);
+  var html = '';
+  if (mode === 'pct') {
+    if (!orig || orig <= 0) { showToast('请输入有效原价'); return; }
+    var pct = parseFloat(dcDiscount.value);
+    if (isNaN(pct) || pct < 0 || pct > 100) { showToast('折扣需在 0-100 之间'); return; }
+    var final = orig * (pct / 100);
+    var saved = orig - final;
+    html = '<div><b>原价：</b>' + money(orig) + '</div>' +
+      '<div><b>折扣：</b>' + pct + '%（' + (pct / 10) + ' 折）</div>' +
+      '<div><b>折后价：</b><span style="color:var(--accent);font-size:18px;">' + money(final) + '</span></div>' +
+      '<div><b>节省：</b>' + money(saved) + '</div>' +
+      '<div><b>汇率：</b>' + (pct <= 0 ? '免费/0折' : '每花 ' + money(orig) + ' 省 ' + money(saved));
+  } else if (mode === 'off') {
+    if (!orig || orig <= 0) { showToast('请输入有效原价'); return; }
+    var off = parseFloat(dcOff.value) || 0;
+    var f = Math.max(0, orig - off);
+    var s = orig - f;
+    var eff = orig > 0 ? ((f / orig) * 100 / 10) : 0;
+    html = '<div><b>原价：</b>' + money(orig) + '</div>' +
+      '<div><b>减免：</b>- ' + money(off) + '</div>' +
+      '<div><b>实付：</b><span style="color:var(--accent);font-size:18px;">' + money(f) + '</span></div>' +
+      '<div><b>节省：</b>' + money(s) + '</div>' +
+      '<div><b>相当于：</b>' + eff.toFixed(1) + ' 折</div>';
+  } else {
+    var fin = parseFloat(dcFinal.value);
+    if (!fin || fin <= 0) { showToast('请输入有效折后价'); return; }
+    var pct = parseFloat(dcDiscount.value);
+    if (isNaN(pct) || pct <= 0 || pct > 100) { showToast('请输入有效折扣百分比'); return; }
+    var o = fin / (pct / 100);
+    var sv = o - fin;
+    html = '<div><b>折扣：</b>' + pct + '%</div>' +
+      '<div><b>折后价：</b>' + money(fin) + '</div>' +
+      '<div><b>反推原价：</b><span style="color:var(--accent);font-size:18px;">' + money(o) + '</span></div>' +
+      '<div><b>节省：</b>' + money(sv) + '</div>';
+  }
+  dcResult.innerHTML = html;
+}
+
+dcMode.addEventListener('change', function () {
+  dcOffRow.style.display = dcMode.value === 'off' ? 'block' : 'none';
+  dcRevRow.style.display = dcMode.value === 'reverse' ? 'block' : 'none';
+  calc();
+});
+
+dcCalc.addEventListener('click', calc);
+calc();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
