@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>词云生成 - 在线中文英文词云图工具</title>
+  <meta name="description" content="免费在线词云生成工具，粘贴文本自动分词统计词频，中文支持二字词、英文支持单词，剔除常见停用词，一键生成彩色词云图并可查看高频词排行，浏览器本地处理，内容分析必备。" />
+  <meta name="keywords" content="词云生成,词云图,词频统计,文本分析,标签云,中文分词">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e2d\u6587\u5206\u8bcd\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528\u4e8c\u5b57\u8bcd\u7edf\u8ba1\u5e76\u8fc7\u6ee4\u505c\u7528\u8bcd\uff0c\u9002\u5408\u5feb\u901f\u6d4f\u89c8\u5173\u952e\u8bcd\u5206\u5e03\uff1b\u5982\u9700\u7cbe\u786e\u5206\u8bcd\u5efa\u8bae\u4f7f\u7528\u4e13\u4e1a NLP \u5e73\u53f0\uff0c\u672c\u5de5\u5177\u5b9a\u4f4d\u662f\u8f7b\u91cf\u5feb\u901f\u7684\u8bcd\u9891\u53ef\u89c6\u5316\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u63a7\u5236\u663e\u793a\u591a\u5c11\u8bcd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u6700\u5927\u8bcd\u6570\u63d0\u4f9b 40/60/100 \u4e09\u6863\uff1b\u56fe\u5f62\u4e0b\u65b9\u540c\u65f6\u5c55\u793a TOP 20 \u9ad8\u9891\u8bcd\u5217\u8868\u53ca\u5360\u6bd4\u3002"}},{"@type":"Question","name":"\u8bcd\u4e91\u56fe\u80fd\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u9488\u5bf9\u753b\u5e03\u76f4\u63a5\u622a\u56fe\u4fdd\u5b58\uff0c\u6216\u53e6\u5b58\u4e3a\u56fe\u7247\uff1b\u6587\u4ef6\u5747\u5728\u6d4f\u89c8\u5668\u672c\u5730\u751f\u6210\uff0c\u4e0d\u4e0b\u4f20\u4efb\u4f55\u6570\u636e\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u6587\u672c\u7c7b\u578b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e2d\u82f1\u6587\u6df7\u5408\u6587\u672c\u5747\u53ef\uff0c\u82f1\u6587\u5355\u8bcd\u6570\u22652 \u4f1a\u7edf\u8ba1\uff0c\u4e2d\u6587\u4f18\u5148\u8bc6\u522b\u4e8c\u5b57\u8bcd\uff0c\u65e0\u9700\u9884\u5904\u7406\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>☁️ 词云生成</h1>
+    <p>中文英文文本自动生成词云图</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">词云生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#词云</span><span class="badge">#词频</span><span class="badge">#文本分析</span>
+<div class="field">
+  <label for="wcText">文本内容（支持中文与英文）</label>
+  <textarea id="wcText" rows="8" placeholder="粘贴一段文本，统计词频并生成词云..."></textarea>
+</div>
+<div class="field" style="max-width:220px;">
+  <label for="wcMax">最大词数</label>
+  <select id="wcMax">
+    <option value="60" selected>60</option>
+    <option value="40">40</option>
+    <option value="100">100</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="wcGo" type="button">生成词云</button>
+</div>
+<div id="wcSummary"></div>
+<div style="text-align:center;margin-top:10px;">
+  <canvas id="wcCanvas" width="640" height="400" style="max-width:100%;border:1px solid var(--border);border-radius:10px;background:#fff;display:none;"></canvas>
+</div>
+<div id="wcList" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>词云是怎么生成的？</h2><p>工具对文本分词并统计出现频次，中文按连续汉字切二字词、英文按单词统计，自动过滤常用停用词，频次越高字体越大、越靠近词云中心。</p><h2>词云有什么用途？</h2><p>把一篇文档、一份问卷或一段访谈浓缩成视觉标签，快速看出高频关键词，适合内容分析、汇报展示和社交媒体素材制作。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>中文分词准确吗？</summary><p>采用二字词统计并过滤停用词，适合快速浏览关键词分布；如需精确分词建议使用专业 NLP 平台，本工具定位是轻量快速的词频可视化。</p></details><details class="faq-item"><summary>可以控制显示多少词吗？</summary><p>可以，最大词数提供 40/60/100 三档；图形下方同时展示 TOP 20 高频词列表及占比。</p></details><details class="faq-item"><summary>词云图能保存吗？</summary><p>可以针对画布直接截图保存，或另存为图片；文件均在浏览器本地生成，不下传任何数据。</p></details><details class="faq-item"><summary>支持哪些文本类型？</summary><p>中英文混合文本均可，英文单词数≥2 会统计，中文优先识别二字词，无需预处理。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>词云生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='word-cloud';}); _r.unshift('word-cloud'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var wcText = document.getElementById('wcText');
+var wcMax = document.getElementById('wcMax');
+var wcGo = document.getElementById('wcGo');
+var wcSummary = document.getElementById('wcSummary');
+var wcCanvas = document.getElementById('wcCanvas');
+var wcList = document.getElementById('wcList');
+
+var EN_STOP = 'the a an and or but of to in on for with as at by from is are was were be been being this that these those it its they we you he she his her them their our not no nor so if then than very can could will would should may might do does did have has had there here which who whom what when where why how all any both each few more most some such only also too'.split(' ');
+var ZH_STOP = '的是了在和有就很我你一他她它们这那中不上也个都要都于及与或为被把让从到成为因为所以如果虽然但是不是没关系咋啥然后但是只是已经正在还是而且其中以及这样那样这些那些我们你们他们自己大家什么怎么为什么谁哪几一些许多很多没有可以应该能够可能要是那么'.split('');
+
+function wcFreq(text) {
+  var latin = (text.match(/[A-Za-z0-9]+/g) || []).map(function (w) { return w.toLowerCase(); });
+  var cjkSeq = text.match(/[\u4e00-\u9fff]{2,}/g) || [];
+  var bigrams = [];
+  cjkSeq.forEach(function (seq) {
+    for (var i = 0; i < seq.length - 1; i++) bigrams.push(seq.substr(i, 2));
+  });
+  var counts = {};
+  latin.forEach(function (w) {
+    if (w.length < 2 || EN_STOP.indexOf(w) !== -1) return;
+    counts[w] = (counts[w] || 0) + 1;
+  });
+  bigrams.forEach(function (b) {
+    if (ZH_STOP.indexOf(b) !== -1) return;
+    counts[b] = (counts[b] || 0) + 1;
+  });
+  var out = [];
+  Object.keys(counts).forEach(function (k) { out.push({ w: k, c: counts[k] }); });
+  out.sort(function (a, b) { return b.c - a.c || b.w.length - a.w.length; });
+  return out;
+}
+
+function hashColor(str) {
+  var h = 0;
+  for (var i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  var hue = Math.abs(h) % 360;
+  return 'hsl(' + hue + ',70%,42%)';
+}
+
+function escapeHTML(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function wcDraw(words, canvas) {
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  var maxC = words.length ? words[0].c : 1;
+  var minC = words.length ? words[words.length - 1].c : 1;
+  var placed = [];
+  function fontSize(c) {
+    var t = maxC === minC ? 1 : (c - minC) / (maxC - minC);
+    return Math.round(16 + t * 46);
+  }
+  var cx = canvas.width / 2, cy = canvas.height / 2;
+  words.forEach(function (item) {
+    var fs = fontSize(item.c);
+    ctx.font = '700 ' + fs + 'px "Microsoft YaHei",sans-serif';
+    var tw = ctx.measureText(item.w).width;
+    var th = Math.round(fs * 1.2);
+    var hit = false;
+    var angle = Math.random() * Math.PI * 2;
+    var rad = 0;
+    var da = 0.35, dr = 2.2;
+    for (var tries = 0; tries < 4000; tries++) {
+      angle += da;
+      rad += dr * (tries % 4 === 0 ? 1 : 0.5);
+      var x = cx + Math.cos(angle) * rad - tw / 2;
+      var y = cy + Math.sin(angle) * rad - th / 2;
+      if (x < 0 || y < 0 || x + tw > canvas.width || y + th > canvas.height) continue;
+      hit = true;
+      for (var p = 0; p < placed.length; p++) {
+        var b = placed[p];
+        if (!(x + tw <= b.x || b.x + b.w <= x || y + th <= b.y || b.y + b.h <= y)) { hit = false; break; }
+      }
+      if (hit) { placed.push({ x: x, y: y, w: tw, h: th }); break; }
+    }
+    if (hit) {
+      ctx.fillStyle = hashColor(item.w);
+      ctx.fillText(item.w, x, y + fs);
+    }
+  });
+}
+
+wcGo.addEventListener('click', function () {
+  var text = wcText.value.trim();
+  if (!text) { showToast('请输入文本'); return; }
+  var words = wcFreq(text);
+  if (!words.length) { showToast('未提取到可用的词语'); return; }
+  var limit = parseInt(wcMax.value, 10);
+  if (!limit || limit < 1) limit = 60;
+  var top = words.slice(0, limit);
+  var total = words.reduce(function (a, b) { return a + b.c; }, 0);
+  wcSummary.innerHTML = '<div class="stat" style="display:flex;justify-content:space-between;margin:0;padding:10px 12px;flex-wrap:wrap;"><span style="color:var(--muted);font-size:13px;">共提取 <b>' + words.length + '</b> 个词、总词次 <b>' + total + '</b></span><span style="font-size:13px;">图形展示前 ' + limit + ' 个</span></div>';
+  wcCanvas.style.display = 'block';
+  wcDraw(top, wcCanvas);
+  wcList.innerHTML = '<div class="result-box" style="padding:12px;"><div style="font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600;">高频词 TOP ' + Math.min(20, top.length) + '</div>' + top.slice(0, 20).map(function (w, i) {
+    var pct = Math.round(w.c / total * 1000) / 10;
+    return '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--border);"><span>' + (i + 1) + '. ' + escapeHTML(w.w) + '</span><b style="font-family:monospace;color:var(--muted);">' + w.c + ' 次 · ' + pct + '%</b></div>';
+  }).join('') + '</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
