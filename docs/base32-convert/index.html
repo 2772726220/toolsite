@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 BASE32 编码解码 - RFC 4648 BASE32转换器</title>
+  <meta name="description" content="免费在线 BASE32 编码解码工具，遵循 RFC 4648 标准（字母表 A-Z 与数字 2-7），支持批量编码、解码与复制结果，全部在浏览器本地完成。" />
+  <meta name="keywords" content="BASE32编码,BASE32解码,RFC4648,Base32转换,BASE32工具,编码转换">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002\u8f93\u5165\u6587\u672c\u4f1a\u5148\u6309 UTF-8 \u7f16\u7801\u4e3a\u5b57\u8282\u518d\u8f6c BASE32\uff0c\u89e3\u7801\u65f6\u4e5f\u80fd\u8fd8\u539f\u4e2d\u6587\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4e3a\u4ec0\u4e48\u6709\u7b49\u53f7\uff1f","acceptedAnswer":{"@type":"Answer","text":"BASE32 \u8f93\u51fa\u6309 8 \u5b57\u7b26\u4e00\u7ec4\u8865\u8db3 = \u586b\u5145\uff0c\u8fd9\u4e0e BASE64 \u7684 4 \u5b57\u7b26\u7ec4\u7c7b\u4f3c\uff0c\u5c5e\u4e8e\u6807\u51c6\u884c\u4e3a\u3002"}},{"@type":"Question","name":"\u8f93\u5165\u53ef\u4ee5\u5e26\u7a7a\u683c\u6216\u5c0f\u5199\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u3002\u89e3\u7801\u65f6\u81ea\u52a8\u53bb\u9664\u7a7a\u683c\u4e0e\u7b49\u53f7\uff0c\u5e76\u7edf\u4e00\u8f6c\u4e3a\u5927\u5199\u5b57\u7b26\u3002"}},{"@type":"Question","name":"\u89e3\u7801\u7ed3\u679c\u4e0d\u53ef\u8bfb\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5982\u679c\u89e3\u7801\u5f97\u5230\u7684\u662f\u4e8c\u8fdb\u5236\u5185\u5bb9\uff08\u975e UTF-8 \u6587\u672c\uff09\uff0c\u5de5\u5177\u4f1a\u4ee5\u5341\u516d\u8fdb\u5236\u5f62\u5f0f\u5c55\u793a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔤 BASE32 编码</h1>
+    <p>RFC 4648 BASE32 编解码，A-Z 2-7 去空格</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">BASE32 编码</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#base32</span><span class="badge">#编码</span><span class="badge">#RFC4648</span><span class="badge">#转换</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>输入内容</label>
+    <textarea id="b32In" rows="8" style="width:100%;font-family:Consolas,Menlo,monospace;font-size:13px;" placeholder="文本或 BASE32 字符串">你好，World 2024!</textarea>
+    <div class="tool-grid" style="grid-template-columns:auto 1fr; gap:10px;margin-top:8px;">
+      <select id="b32Mode" style="width:100%;">
+        <option value="enc" selected>文本 → BASE32</option>
+        <option value="dec">BASE32 → 文本</option>
+      </select>
+      <label style="font-size:12px;color:var(--muted);align-self:center;">RFC 4648，A-Z 2-7，支持去空格/小写</label>
+    </div>
+    <button class="btn btn-primary" id="b32Go" style="width:100%;margin-top:10px;">转换</button>
+  </div>
+  <div>
+    <label>结果</label>
+    <textarea id="b32Out" rows="10" style="width:100%;font-family:Consolas,Menlo,monospace;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:12px;" readonly></textarea>
+    <button class="btn" id="b32Copy" style="width:100%;margin-top:8px;">复制结果</button>
+    <div class="hint" style="margin-top:8px;">解码结果可读文本时直接显示文本；不可读时显示十六进制。</div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>BASE32 是什么？</h2><p>BASE32 用 32 个可打印字符（A-Z 和 2-7）表示二进制数据，每 5 个比特编码为一个字符。相比 BASE64 字母表更大、更易读，常用于密钥交换和某些系统的标识符编码。</p><h2>和 BASE64 有什么区别？</h2><p>BASE32 字符集只含字母和数字，不含 +、/、= 等易混淆符号以外的特殊字符，更利于人工抄写和语音传输。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持中文吗？</summary><p>支持。输入文本会先按 UTF-8 编码为字节再转 BASE32，解码时也能还原中文。</p></details><details class="faq-item"><summary>结果为什么有等号？</summary><p>BASE32 输出按 8 字符一组补足 = 填充，这与 BASE64 的 4 字符组类似，属于标准行为。</p></details><details class="faq-item"><summary>输入可以带空格或小写吗？</summary><p>可以。解码时自动去除空格与等号，并统一转为大写字符。</p></details><details class="faq-item"><summary>解码结果不可读怎么办？</summary><p>如果解码得到的是二进制内容（非 UTF-8 文本），工具会以十六进制形式展示。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>BASE32 编码 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='base32-convert';}); _r.unshift('base32-convert'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var b32In = document.getElementById('b32In');
+var b32Mode = document.getElementById('b32Mode');
+var b32Go = document.getElementById('b32Go');
+var b32Out = document.getElementById('b32Out');
+var b32Copy = document.getElementById('b32Copy');
+
+var B32_ALPH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+function utf8Bytes(s) {
+  if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(s);
+  var out = [];
+  for (var i = 0; i < s.length; i++) {
+    var c = s.charCodeAt(i);
+    if (c < 0x80) out.push(c);
+    else if (c < 0x800) { out.push(0xc0 | (c >> 6), 0x80 | (c & 63)); }
+    else { out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63)); }
+  }
+  return Uint8Array.from(out);
+}
+
+function bytesToUtf8(b) {
+  try {
+    if (typeof TextDecoder !== 'undefined') return new TextDecoder('utf-8', { fatal: true }).decode(b);
+  } catch (e) { return null; }
+  return null;
+}
+
+function bytesToHex(b) {
+  var s = '';
+  for (var i = 0; i < b.length; i++) s += ('0' + b[i].toString(16)).slice(-2);
+  return s;
+}
+
+function base32EncodeBytes(bytes) {
+  var out = '';
+  var buffer = 0, bits = 0;
+  for (var i = 0; i < bytes.length; i++) {
+    buffer = (buffer << 8) | (bytes[i] & 255);
+    bits += 8;
+    while (bits >= 5) {
+      out += B32_ALPH[(buffer >>> (bits - 5)) & 31];
+      bits -= 5;
+    }
+  }
+  if (bits > 0) out += B32_ALPH[(buffer << (5 - bits)) & 31];
+  while (out.length % 8 !== 0) out += '=';
+  return out;
+}
+
+function base32Encode(str) {
+  return base32EncodeBytes(utf8Bytes(str));
+}
+
+function base32Decode(str) {
+  if (typeof str !== 'string') return null;
+  var map = {};
+  for (var i = 0; i < 32; i++) map[B32_ALPH[i]] = i;
+  var clean = str.replace(/[=\s]/g, '').toUpperCase();
+  if (!clean) return new Uint8Array(0);
+  var out = [];
+  var buffer = 0, bits = 0;
+  for (var j = 0; j < clean.length; j++) {
+    var c = map[clean[j]];
+    if (c === undefined) return null;
+    buffer = (buffer << 5) | c;
+    bits += 5;
+    if (bits >= 8) {
+      out.push((buffer >>> (bits - 8)) & 255);
+      bits -= 8;
+    }
+  }
+  return Uint8Array.from(out);
+}
+
+function base32DecodeStr(str) {
+  var b = base32Decode(str);
+  if (b === null) return { ok: false, error: '包含非 BASE32 字符' };
+  if (b.length === 0) return { ok: true, text: '', hex: '' };
+  var t = bytesToUtf8(b);
+  if (t !== null) return { ok: true, text: t, hex: bytesToHex(b) };
+  return { ok: true, text: null, hex: bytesToHex(b) };
+}
+
+b32Go.addEventListener('click', function () {
+  var v = b32In.value;
+  if (b32Mode.value === 'enc') {
+    b32Out.value = base32Encode(v);
+  } else {
+    var r = base32DecodeStr(v);
+    if (!r.ok) { showToast(r.error); b32Out.value = ''; return; }
+    if (r.text !== null) b32Out.value = r.text;
+    else { b32Out.value = r.hex; showToast('内容不可读，输出为十六进制'); }
+  }
+});
+
+b32Copy.addEventListener('click', function () {
+  if (!b32Out.value) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(b32Out.value).then(function () { showToast('已复制'); }, function () { showToast('复制失败'); });
+  } else {
+    try { b32Out.select(); document.execCommand('copy'); showToast('已复制'); } catch (e) { showToast('复制失败'); }
+  }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
