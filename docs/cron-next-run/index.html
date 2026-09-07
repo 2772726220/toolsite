@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron下次运行时间计算器 - 在线cron表达式解析</title>
+  <meta name="description" content="在线 cron 表达式解析工具：输入标准 5 字段 cron（分 时 日 月 周），立即算未来 N 次执行时间与距离现在多久，支持区间、步长、列表与日月或逻辑。" />
+  <meta name="keywords" content="cron表达式,下次运行,cron解析,定时任务计算,Linux crontab">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b cron \u5199\u6cd5\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 * \u4efb\u610f\u30011-5 \u533a\u95f4\u3001*/15 \u6b65\u957f\u30011,3,5 \u5217\u8868\u30011-30/5 \u5e26\u6b65\u957f\u533a\u95f4\uff1b\u5468\u5b57\u6bb5\u652f\u6301 0-7\uff0c7 \u7b49\u4ef7\u4e8e 0\uff08\u5468\u65e5\uff09\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u5206\u949f\u7ea7\u7cbe\u786e\u5339\u914d\uff0c\u4f1a\u5217\u51fa\u4ece\u5c0f\u5230\u5927\u6700\u8fd1\u7684 N \u6b21\uff08\u9ed8\u8ba4 5 \u6b21\u3001\u53ef\u9009 3/10\uff09\uff0c\u5e76\u663e\u793a\u8ddd\u8d77\u59cb\u65f6\u523b\u7684\u5929\u65f6\u5206\u3002"}},{"@type":"Question","name":"\u5b58\u5728\u65e0\u6cd5\u6267\u884c\u7684\u60c5\u51b5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6709\u3002\u4f8b\u5982 2 \u6708 29 \u65e5\u8fd9\u7c7b\u6781\u7a00\u758f\u8868\u8fbe\u5f0f\u5728\u515c\u5e95\u641c\u7d22\u7a97\u53e3\uff08\u7ea6 4 \u5e74\uff09\u5185\u627e\u4e0d\u5230\u65f6\u4f1a\u660e\u786e\u63d0\u793a\uff0c\u800c\u4e0d\u662f\u9759\u9ed8\u51fa\u9519\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⏰ Cron 下次运行</h1>
+    <p>解析 cron 表达式，计算未来 N 次执行的确切时间</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">Cron 下次运行</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Cron</span><span class="badge">#定时任务</span><span class="badge">#下次运行</span><span class="badge">#调度</span>
+<div class="field">
+  <label for="cnExpr">Cron 表达式（分 时 日 月 周）</label>
+  <input id="cnExpr" type="text" value="0 9 * * 1" placeholder="0 9 * * 1" />
+  <div class="hint">支持：* 任意、1-5 区间、*/15 步长、1,3,5 列表、5 一 7（周字段 0/7 均表示周日）；日与周同时受限时按「或」匹配</div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+  <div>
+    <label>计算 N 次</label>
+    <select id="cnCount">
+      <option>3</option><option selected>5</option><option>10</option>
+    </select>
+  </div>
+  <div>
+    <label>起始时间（留空为当前时间）</label>
+    <input id="cnFrom" type="text" placeholder="2026-01-01 00:00" />
+  </div>
+  <div>
+    <label>&nbsp;</label>
+    <button class="btn btn-primary" id="cnBtn" style="width:100%;">计算下次运行</button>
+  </div>
+</div>
+<div id="cnOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>cron 的日与周字段冲突怎么办？</h2><p>标准 crontab 中当日与周同时受限时按“或”逻辑匹配（任一满足即执行）。本工具严格遵循该语义，如 0 0 13 * 5 表示每月 13 号或每周五执行。</p><h2>x 月没有 31 号怎么办？</h2><p>月份只有 30 天的日子不会匹配 31 号，属于正常现象，查找会跳过；日期永远以“所在那个月”的有效天数为准。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些 cron 写法？</summary><p>支持 * 任意、1-5 区间、*/15 步长、1,3,5 列表、1-30/5 带步长区间；周字段支持 0-7，7 等价于 0（周日）。</p></details><details class="faq-item"><summary>结果精度如何？</summary><p>按分钟级精确匹配，会列出从小到大最近的 N 次（默认 5 次、可选 3/10），并显示距起始时刻的天时分。</p></details><details class="faq-item"><summary>存在无法执行的情况吗？</summary><p>有。例如 2 月 29 日这类极稀疏表达式在兜底搜索窗口（约 4 年）内找不到时会明确提示，而不是静默出错。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Cron 下次运行 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='cron-next-run';}); _r.unshift('cron-next-run'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cnExpr = document.getElementById('cnExpr');
+var cnCount = document.getElementById('cnCount');
+var cnFrom = document.getElementById('cnFrom');
+var cnBtn = document.getElementById('cnBtn');
+var cnOut = document.getElementById('cnOut');
+
+function escN(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function parseCronField(field, min, max) {
+  var out = { values: null, wildcard: false };
+  var parts = String(field).split(',');
+  var set = [];
+  parts.forEach(function (p) {
+    p = p.trim();
+    if (!p) throw new Error('存在空字段');
+    if (p === '*') { out.wildcard = true; return; }
+    var step = 1, body = p;
+    var sl = body.indexOf('/');
+    if (sl >= 0) {
+      step = parseInt(body.slice(sl + 1), 10);
+      body = body.slice(0, sl);
+      if (!(step >= 1)) throw new Error('步长必须为正整数：' + p);
+    }
+    var rng;
+    if (body === '*') rng = [min, max];
+    else if (body.indexOf('-') >= 0) rng = body.split('-').map(Number);
+    else rng = [Number(body), Number(body)];
+    if (rng.some(isNaN)) throw new Error('无法解析字段：' + p);
+    if (rng[0] < min || rng[1] > max || rng[0] > rng[1]) throw new Error('数值超出范围（' + min + '-' + max + '）：' + p);
+    for (var v = rng[0]; v <= rng[1]; v += step) if (set.indexOf(v) < 0) set.push(v);
+  });
+  if (out.wildcard) { for (var vv = min; vv <= max; vv++) if (set.indexOf(vv) < 0) set.push(vv); }
+  set.sort(function (a, b) { return a - b; });
+  out.values = set;
+  return out;
+}
+
+function parseCron(expr) {
+  var f = String(expr).trim().split(/\s+/);
+  if (f.length !== 5) throw new Error('需要 5 个字段（分 时 日 月 周），实际 ' + f.length + ' 个');
+  var min = parseCronField(f[0], 0, 59);
+  var hour = parseCronField(f[1], 0, 23);
+  var dom = parseCronField(f[2], 1, 31);
+  var mon = parseCronField(f[3], 1, 12);
+  var dow = parseCronField(f[4], 0, 7);
+  dow.values = dow.values.map(function (v) { return v === 7 ? 0 : v; });
+  dow.values = dow.values.filter(function (v, i, a) { return a.indexOf(v) === i; }).sort(function (a, b) { return a - b; });
+  return { min: min, hour: hour, dom: dom, mon: mon, dow: dow };
+}
+
+function cronMatches(c, d) {
+  var domRestricted = !c.dom.wildcard;
+  var dowRestricted = !c.dow.wildcard;
+  var domMatch = c.dom.values.indexOf(d.getDate()) >= 0;
+  var dowMatch = c.dow.values.indexOf(d.getDay()) >= 0;
+  var dayOk;
+  if (domRestricted && dowRestricted) dayOk = domMatch || dowMatch;
+  else if (domRestricted) dayOk = domMatch;
+  else if (dowRestricted) dayOk = dowMatch;
+  else dayOk = true;
+  return dayOk &&
+    c.min.values.indexOf(d.getMinutes()) >= 0 &&
+    c.hour.values.indexOf(d.getHours()) >= 0 &&
+    c.mon.values.indexOf(d.getMonth() + 1) >= 0;
+}
+
+function nextRuns(expr, from, count) {
+  var c = parseCron(expr);
+  count = count || 5;
+  var d = new Date(from);
+  d.setSeconds(0, 0);
+  var base = d.getTime() + 60000;
+  var results = [];
+  var limit = 2000000;
+  for (var i = 0; i < limit && results.length < count; i++) {
+    var t = new Date(base + i * 60000);
+    if (cronMatches(c, t)) results.push(t);
+  }
+  return { times: results, truncated: results.length < count };
+}
+
+function fmtCn(d) {
+  var w = ['日', '一', '二', '三', '四', '五', '六'];
+  var pad = function (x) { return x < 10 ? '0' + x : '' + x; };
+  return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + '（周' + w[d.getDay()] + '）';
+}
+
+function parseFromStr(s) {
+  if (!s || !s.trim()) return { ok: false };
+  var m = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/.exec(s.trim());
+  if (!m) return { ok: false, error: '起始时间格式应为 YYYY-MM-DD HH:MM' };
+  var y = +m[1], mo = +m[2], da = +m[3], h = m[4] ? +m[4] : 0, mi = m[5] ? +m[5] : 0, se = m[6] ? +m[6] : 0;
+  return { ok: true, d: new Date(y, mo - 1, da, h, mi, se) };
+}
+
+cnBtn.addEventListener('click', function () {
+  var expr = cnExpr.value;
+  var count = parseInt(cnCount.value, 10) || 5;
+  var f = parseFromStr(cnFrom.value);
+  var from = f.ok ? f.d.getTime() : Date.now();
+  var c;
+  try {
+    c = parseCron(expr);
+  } catch (e) {
+    cnOut.innerHTML = '<div class="result-box" style="color:#dc2626;">表达式错误：' + escN(e.message) + '</div>';
+    return;
+  }
+  var r = nextRuns(expr, from, count);
+  var head = '<div class="result-box" style="margin-bottom:8px;">表达式剖析：' + c.min.values.length + ' 分钟值 / ' + c.hour.values.length + ' 小时值 / 日' + (c.dom.wildcard ? '*' : '=' + c.dom.values.length) + '/月' + (c.mon.wildcard ? '*' : '=' + c.mon.values.length) + '/周' + (c.dow.wildcard ? '*' : '=' + c.dow.values.length) + '</div>';
+  if (!r.times.length) {
+    cnOut.innerHTML = head + '<div class="result-box" style="color:#dc2626;">在约 4 年内未找到下一次执行时间（常见于 2 月 29 日这类极稀疏表达式）</div>';
+    return;
+  }
+  var rows = r.times.map(function (t, idx) {
+    var label = idx === 0 ? '（下一次）' : '';
+    var gap = '';
+    if (idx === 0 && f.ok) {
+      var ms = t.getTime() - f.d.getTime();
+      var dGap = Math.floor(ms / 86400000), hGap = Math.floor(ms % 86400000 / 3600000), miGap = Math.floor(ms % 3600000 / 60000);
+      gap = '｜距今 ' + dGap + ' 天 ' + hGap + ' 小时 ' + miGap + ' 分';
+    }
+    return '<div>' + (idx + 1) + '. ' + fmtCn(t) + label + ' ' + gap + '</div>';
+  }).join('');
+  cnOut.innerHTML = head + '<div class="result-box">' + rows + (r.truncated ? '<div style="margin-top:6px;color:#dc2626;">已达搜索上限，结果可能不完整</div>' : '') + '</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
