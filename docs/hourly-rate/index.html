@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时薪计算器 - 月薪换算时薪与加班费率在线工具</title>
+  <meta name="description" content="在线时薪计算器：按月薪、每周工作天数与每天工作时长换算出实际时薪、日薪、周薪与年薪，并给出平日 1.5 倍、休息日 2 倍、节假日 3 倍的加班费率。" />
+  <meta name="keywords" content="时薪计算,月薪换算,时薪对比,加班费计算,薪资换算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6708\u5de5\u4f5c\u65f6\u957f\u600e\u4e48\u6765\u7684\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u300c\u6bcf\u5468\u5de5\u4f5c\u5929\u6570 \u00d7 \u6bcf\u5929\u5c0f\u65f6\u6570 \u00d7 52 \u5468 \u00f7 12 \u4e2a\u6708\u300d\u8ba1\u7b97\u5168\u5e74\u5e73\u5747\u6bcf\u6708\u51fa\u52e4\u5de5\u65f6\uff0c\u6bd4\u7b80\u5355\u7528 21.75 \u5929\u66f4\u8d34\u5408\u5b9e\u9645\u6392\u73ed\u3002"}},{"@type":"Question","name":"\u5e74\u7ec8\u5956\u600e\u4e48\u8ba1\u5165\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u5165\u5e74\u7ec8\u5956\u5bf9\u5e94\u7684\u6708\u6570\uff08\u5982 13 \u85aa\u586b 1\uff09\uff0c\u603b\u5e74\u85aa = \u6708\u85aa\u00d712 + \u6708\u85aa\u00d7\u5e74\u7ec8\u6708\u6570\uff0c\u7528\u4e8e\u89c2\u5bdf\u5e74\u5316\u62a5\u916c\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u5bf9\u6bd4\u4e24\u4efd\u5de5\u4f5c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u5728\u300c\u76ee\u6807\u5de5\u4f5c\u300d\u586b\u53e6\u4e00\u4efd\u5de5\u4f5c\u7684\u6bcf\u5929\u65f6\u957f\uff0c\u7acb\u5373\u7ed9\u51fa\u540c\u6837\u6708\u85aa\u4e0b\u7684\u65f6\u85aa\u5dee\u4e0e\u767e\u5206\u6bd4\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⏱️ 时薪计算器</h1>
+    <p>月薪/年薪换算成时薪，对比不同工作时长的真实报酬</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">时薪计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#时薪</span><span class="badge">#年薪</span><span class="badge">#加班费</span><span class="badge">#薪资</span>
+<div class="field">
+  <label>当前工作</label>
+  <div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
+    <div><label>月薪（元）</label><input id="hrSalary" type="number" value="8000" min="0" step="100"></div>
+    <div><label>每周工作（天）</label><input id="hrDays" type="number" value="5" min="1" max="7" step="1"></div>
+    <div><label>每天工作（小时）</label><input id="hrHours" type="number" value="8" min="1" max="16" step="0.5"></div>
+    <div><label>年终奖/13薪（月）</label><input id="hrBonus" type="number" value="1" min="0" max="24" step="0.5"></div>
+  </div>
+</div>
+<div class="field" style="margin-bottom:12px;">
+  <label>目标工作（小时/天，留空则按当前工作输入）</label>
+  <input id="hrHours2" type="number" placeholder="8" min="1" max="16" step="0.5" style="width:180px;">
+  <div class="hint">对比两份工作的实际时薪（考虑加班费率 1.5/2/3 倍）</div>
+</div>
+<button class="btn btn-primary" id="hrBtn">计算时薪</button>
+<div id="hrOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>为什么同样的月薪时薪不同？</h2><p>时薪 = 月薪 ÷ 月工作时长，月工作时长又是每周天数×每天小时×52/12。工作时长越长，时薪越低，这是横向对比职位性价比的关键。</p><h2>加班费率怎么算？</h2><p>月薪换算出的标准时薪是加班费基点：平日加班按 1.5 倍、休息日 2 倍、法定节假日 3 倍支付，直接乘即可。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>月工作时长怎么来的？</summary><p>按「每周工作天数 × 每天小时数 × 52 周 ÷ 12 个月」计算全年平均每月出勤工时，比简单用 21.75 天更贴合实际排班。</p></details><details class="faq-item"><summary>年终奖怎么计入？</summary><p>输入年终奖对应的月数（如 13 薪填 1），总年薪 = 月薪×12 + 月薪×年终月数，用于观察年化报酬。</p></details><details class="faq-item"><summary>可以对比两份工作吗？</summary><p>可以，在「目标工作」填另一份工作的每天时长，立即给出同样月薪下的时薪差与百分比。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>时薪计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='hourly-rate';}); _r.unshift('hourly-rate'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var hrSalary = document.getElementById('hrSalary');
+var hrDays = document.getElementById('hrDays');
+var hrHours = document.getElementById('hrHours');
+var hrBonus = document.getElementById('hrBonus');
+var hrHours2 = document.getElementById('hrHours2');
+var hrBtn = document.getElementById('hrBtn');
+var hrOut = document.getElementById('hrOut');
+
+function money(x) {
+  if (!isFinite(x)) return '—';
+  return Number(x).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calcHourly(monthlySalary, daysPerWeek, hoursPerDay, bonusMonths) {
+  monthlySalary = Number(monthlySalary) || 0;
+  daysPerWeek = Number(daysPerWeek) || 5;
+  hoursPerDay = Number(hoursPerDay) || 8;
+  bonusMonths = Number(bonusMonths) || 0;
+  var weeklyHours = daysPerWeek * hoursPerDay;
+  var monthlyHours = weeklyHours * 52 / 12;
+  var hourly = monthlyHours > 0 ? monthlySalary / monthlyHours : 0;
+  var daily = hourly * hoursPerDay;
+  var weekly = hourly * weeklyHours;
+  var annualBase = monthlySalary * 12;
+  var annual = annualBase + monthlySalary * bonusMonths;
+  return {
+    monthlySalary: monthlySalary, daysPerWeek: daysPerWeek, hoursPerDay: hoursPerDay, bonusMonths: bonusMonths,
+    weeklyHours: weeklyHours, monthlyHours: monthlyHours,
+    hourly: hourly, daily: daily, weekly: weekly, annualBase: annualBase, annual: annual
+  };
+}
+
+hrBtn.addEventListener('click', function () {
+  var s = calcHourly(hrSalary.value, hrDays.value, hrHours.value, hrBonus.value);
+  if (!(s.monthlySalary >= 0) || !(s.daysPerWeek >= 1 && s.daysPerWeek <= 7) || !(s.hoursPerDay >= 1 && s.hoursPerDay <= 16) || !(s.bonusMonths >= 0 && s.bonusMonths <= 24)) {
+    hrOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请检查输入范围：月薪≥0，每周 1-7 天，每天 1-16 小时，年终 0-24 个月</div>';
+    return;
+  }
+  var html = '<div class="result-box">' +
+    '<div>月工作时长 ≈ <b>' + s.monthlyHours.toFixed(1) + '</b> 小时（' + s.daysPerWeek + ' 天/周 × ' + s.hoursPerDay + ' 小时/天 × 52/12）</div>' +
+    '<div>时薪 = <b>¥' + money(s.hourly) + '</b>/小时　日薪 ¥' + money(s.daily) + '　周薪 ¥' + money(s.weekly) + '</div>' +
+    '<div>年薪（含' + s.bonusMonths + '个月年终）= ¥' + money(s.annual) + '</div>' +
+    '<div style="margin-top:6px;border-top:1px dashed #e2e8f0;padding-top:6px;">' +
+    '平日加班 1.5 倍：¥' + money(s.hourly * 1.5) + '/h　周末 2 倍：¥' + money(s.hourly * 2) + '/h　节假日 3 倍：¥' + money(s.hourly * 3) + '/h' +
+    '</div></div>';
+  var h2 = Number(hrHours2.value);
+  if (h2 >= 1 && h2 <= 16) {
+    var s2 = calcHourly(hrSalary.value, hrDays.value, h2, hrBonus.value);
+    var diff = s2.hourly - s.hourly;
+    var pct = s.hourly > 0 ? (diff / s.hourly * 100) : 0;
+    html += '<div class="result-box" style="margin-top:8px;">' +
+      '同样月薪、每天工作 ' + h2 + ' 小时 → 时薪 ¥' + money(s2.hourly) + '/h，较当前' +
+      (diff >= 0 ? '高' : '低') + ' ¥' + money(Math.abs(diff)) + '（' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%）' +
+      '</div>';
+  }
+  hrOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
