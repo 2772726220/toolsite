@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线婴幼儿生长曲线评估</title>
+  <meta name="description" content="婴幼儿生长曲线（0-24 个月）：对照 WHO 中位数参考值，评估体重与身高所处百分比区间，按月中位数线性插值。" />
+  <meta name="keywords" content="婴儿,幼儿,生长曲线,体重,身高,月龄,WHO">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>👶 婴幼儿生长曲线</h1>
+    <p>0-24 个月 WHO 中位数对照评估</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">婴幼儿生长曲线</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#婴儿</span><span class="badge">#生长</span><span class="badge">#月龄</span>
+<div class="field-row">
+  <div class="field"><label for="bgMonth">月龄（0-24）</label><input id="bgMonth" value="12"></div>
+  <div class="field"><label for="bgSex">性别</label>
+    <select id="bgSex">
+      <option value="boy">男童</option>
+      <option value="girl">女童</option>
+    </select>
+  </div>
+</div>
+<div class="field-row">
+  <div class="field"><label for="bgW">体重（kg）</label><input id="bgW" value="10"></div>
+  <div class="field"><label for="bgH">身高 / 身长（cm）</label><input id="bgH" value="75"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="bgGo" type="button">评估</button>
+</div>
+<div class="result-box" id="bgOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+
+    <h2>常见问题</h2>
+    <div class="faq"></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>婴幼儿生长曲线 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='baby-growth';}); _r.unshift('baby-growth'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bgMonth = document.getElementById('bgMonth');
+var bgW = document.getElementById('bgW');
+var bgH = document.getElementById('bgH');
+var bgSex = document.getElementById('bgSex');
+var bgGo = document.getElementById('bgGo');
+var bgOut = document.getElementById('bgOut');
+
+var BOY_W = [3.3, 4.5, 5.6, 6.4, 7.0, 7.5, 7.9, 8.3, 8.6, 8.9, 9.2, 9.4, 9.6, 9.9, 10.1, 10.3, 10.5, 10.7, 10.9, 11.1, 11.3, 11.5, 11.8, 12.0, 12.2];
+var BOY_H = [49.9, 54.7, 58.4, 61.4, 63.9, 66.0, 67.6, 69.2, 70.6, 71.9, 73.3, 74.5, 75.7, 76.9, 78.0, 79.1, 80.2, 81.2, 82.3, 83.2, 84.2, 85.1, 86.0, 86.9, 87.8];
+var GIRL_W = [3.2, 4.2, 5.1, 5.8, 6.4, 6.9, 7.3, 7.6, 7.9, 8.2, 8.5, 8.7, 8.9, 9.2, 9.4, 9.6, 9.8, 10.0, 10.2, 10.4, 10.6, 10.9, 11.1, 11.3, 11.5];
+var GIRL_H = [49.1, 53.7, 57.1, 59.8, 62.1, 64.0, 65.7, 67.3, 68.7, 70.1, 71.5, 72.8, 74.0, 75.2, 76.4, 77.5, 78.6, 79.7, 80.7, 81.7, 82.7, 83.7, 84.6, 85.5, 86.4];
+
+function linInterp(arr, m) {
+  if (m <= 0) return arr[0];
+  if (m >= 24) return arr[24];
+  var i = Math.floor(m);
+  var f = m - i;
+  return arr[i] + (arr[i + 1] - arr[i]) * f;
+}
+
+function bandForW(ratio) {
+  if (ratio < 76) return '明显偏低';
+  if (ratio < 90) return '偏低';
+  if (ratio <= 110) return '正常范围';
+  if (ratio <= 131) return '偏高';
+  return '明显偏高';
+}
+
+function bandForH(ratio) {
+  if (ratio < 93) return '明显偏矮';
+  if (ratio < 97) return '偏矮';
+  if (ratio <= 103) return '正常范围';
+  if (ratio <= 107) return '偏高';
+  return '明显偏高';
+}
+
+function growthAssess(months, wkg, hcm, sex) {
+  var m = parseFloat(months);
+  var w = parseFloat(wkg);
+  var h = parseFloat(hcm);
+  if (!isFinite(m) || !isFinite(w) || !isFinite(h)) return { error: '请输入有效的月龄、体重与身高。' };
+  if (m < 0 || m > 24) return { error: '月龄需在 0-24 个月之间。' };
+  if (w < 0.5 || w > 30 || h < 30 || h > 120) return { error: '体重（0.5-30kg）或身高（30-120cm）不在合理范围。' };
+  var wt = sex === 'girl' ? GIRL_W : BOY_W;
+  var ht = sex === 'girl' ? GIRL_H : BOY_H;
+  var mw = linInterp(wt, m);
+  var mh = linInterp(ht, m);
+  var wRatio = w / mw * 100;
+  var hRatio = h / mh * 100;
+  return {
+    medianW: mw,
+    medianH: mh,
+    wRatio: wRatio,
+    wBand: bandForW(wRatio),
+    hRatio: hRatio,
+    hBand: bandForH(hRatio)
+  };
+}
+
+bgGo.addEventListener('click', function () {
+  var r = growthAssess(bgMonth.value, bgW.value, bgH.value, bgSex.value);
+  if (r.error) { bgOut.textContent = r.error; return; }
+  var sexLabel = bgSex.value === 'girl' ? '女童' : '男童';
+  bgOut.innerHTML =
+    '<div class="stat"><div class="num">' + r.wRatio.toFixed(1) + ' %</div><div class="label">体重为中位数的 ' + r.wRatio.toFixed(1) + '%（' + r.wBand + '）' + '</div></div>' +
+    '<div class="stat"><div class="num">' + r.hRatio.toFixed(1) + ' %</div><div class="label">身高为中位数的 ' + r.hRatio.toFixed(1) + '%（' + r.hBand + '）' + '</div></div>' +
+    '<div class="stat"><div class="num">' + r.medianW.toFixed(1) + ' kg / ' + r.medianH.toFixed(1) + ' cm</div><div class="label">当月 ' + sexLabel + ' 中位数（体重 / 身高）</div></div>' +
+    '<div style="margin-top:8px;color:#667;font-size:13px;">参考 WHO 0-24 个月生长中位数（近似值），按月龄线性插值。个体差异大，生长曲线应结合儿保医生连续评估，单次数据仅供参考。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
