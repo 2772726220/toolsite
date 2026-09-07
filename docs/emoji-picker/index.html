@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji 搜索复制工具 - 在线 Emoji 表情大全</title>
+  <meta name="description" content="免费在线 Emoji 搜索复制工具，按分类(笑脸/手势/动物/食物/出行/符号等)浏览数千个 Emoji，支持中文/英文关键词搜索、点击即复制、查看 Unicode 代码点与 HTML 实体、收藏常用,一键复制多个，文案编辑与聊天必备。" />
+  <meta name="keywords" content="Emoji,表情符号,Emoji大全,Emoji搜索,Emoji复制,Unicode表情,颜文字">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😀</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5305\u542b\u591a\u5c11\u4e2a Emoji\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6536\u5f55\u5e38\u89c1\u4e0e\u6269\u5c55\u5206\u7c7b\u5171\u4e0a\u5343\u4e2a Emoji\u3002"}},{"@type":"Question","name":"\u652f\u6301\u591a\u9009\u590d\u5236\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6536\u85cf\u5e76\u4e00\u952e\u6279\u91cf\u590d\u5236\u591a\u4e2a\u3002"}},{"@type":"Question","name":"\u8de8\u8bbe\u5907\u663e\u793a\u4e00\u81f4\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u663e\u793a\u6548\u679c\u53d6\u51b3\u4e8e\u7cfb\u7edf\u5b57\u4f53\uff0c\u5e38\u89c1 Emoji \u5168\u5e73\u53f0\u53ef\u89c1\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>😀 Emoji 搜索复制</h1>
+    <p>搜索/筛选/复制 Emoji 表情</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">Emoji 搜索复制</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Emoji</span><span class="badge">#表情</span><span class="badge">#复制</span>
+<div class="controls">
+  <input type="text" id="epSearch" placeholder="搜索 Emoji（如 笑脸 / smile / 动物 / food）" style="flex:1;min-width:160px;">
+  <button class="btn btn-primary" id="epCopyAll">复制全部收藏</button>
+  <select id="epCat" style="width:auto;padding:8px 12px;">
+    <option value="all">全部分类</option>
+    <option value="smile">笑脸</option>
+    <option value="people">人物手势</option>
+    <option value="animal">动物</option>
+    <option value="food">食物</option>
+    <option value="travel">出行</option>
+    <option value="symbol">符号</option>
+    <option value="activity">活动</option>
+  </select>
+</div>
+<label>Emoji 列表（点击复制，⭐ 收藏）</label>
+<div id="epGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:6px;margin-top:8px;"></div>
+<div id="epInfo" style="margin-top:8px;font-size:13px;color:var(--muted);"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何搜索 Emoji？</h2><p>输入中文或英文关键词(如 开心/笑脸/smile)实时筛选。</p><h2>能复制到剪贴板吗？</h2><p>点击任意 Emoji 立即复制到剪贴板。</p><h2>能查看编码吗？</h2><p>每个 Emoji 显示 Unicode 代码点与 HTML 实体。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>包含多少个 Emoji？</summary><p>收录常见与扩展分类共上千个 Emoji。</p></details><details class="faq-item"><summary>支持多选复制吗？</summary><p>支持收藏并一键批量复制多个。</p></details><details class="faq-item"><summary>跨设备显示一致吗？</summary><p>显示效果取决于系统字体，常见 Emoji 全平台可见。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Emoji 搜索复制 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='emoji-picker';}); _r.unshift('emoji-picker'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var epSearch = document.getElementById('epSearch');
+var epCopyAll = document.getElementById('epCopyAll');
+var epCat = document.getElementById('epCat');
+var epGrid = document.getElementById('epGrid');
+var epInfo = document.getElementById('epInfo');
+
+var EMOJIS = [
+  ['😀', 'smile', '笑脸'], ['😁', 'smile', '咧嘴笑'], ['😂', 'smile', '笑哭'], ['🤣', 'smile', '笑到滚动'],
+  ['😊', 'smile', '微笑'], ['😇', 'smile', '天使'], ['🙂', 'smile', '微笑略'], ['😉', 'smile', '眨眼'],
+  ['😍', 'smile', '爱心眼'], ['🥰', 'smile', '爱意'], ['😘', 'smile', '亲亲'], ['😜', 'smile', '吐舌眨眼'],
+  ['🤪', 'smile', '搞怪'], ['🤔', 'smile', '思考'], ['😴', 'smile', '睡觉'], ['😭', 'smile', '大哭'],
+  ['😡', 'smile', '生气'], ['🤯', 'smile', '爆炸头'], ['🥳', 'smile', '庆祝'], ['😎', 'smile', '酷'],
+  ['😢', 'smile', '悲伤'], ['😨', 'smile', '惊吓'], ['😱', 'smile', '尖叫'], ['🤗', 'smile', '拥抱'],
+  ['👍', 'people', '点赞'], ['👎', 'people', '点踩'], ['👏', 'people', '鼓掌'], ['🙏', 'people', '双手合十'],
+  ['👌', 'people', 'OK手'], ['✌️', 'people', '胜利'], ['🤞', 'people', '祝福'], ['🤙', 'people', '电话手'],
+  ['👋', 'people', '挥手'], ['🤝', 'people', '握手'], ['👊', 'people', '拳头'], ['✊', 'people', '举起拳'],
+  ['💪', 'people', '肌肉'], ['🖐️', 'people', '手掌'], ['👆', 'people', '食指'], ['👇', 'people', '食指下'],
+  ['🙌', 'people', '举手庆祝'], ['🤲', 'people', '捧起'], ['🫶', 'people', '爱心手'], ['💅', 'people', '美甲'],
+  ['🐶', 'animal', '狗'], ['🐱', 'animal', '猫'], ['🐭', 'animal', '鼠'], ['🐹', 'animal', '仓鼠'],
+  ['🐰', 'animal', '兔子'], ['🦊', 'animal', '狐狸'], ['🐻', 'animal', '熊'], ['🐼', 'animal', '熊猫'],
+  ['🐨', 'animal', '考拉'], ['🐯', 'animal', '老虎'], ['🦁', 'animal', '狮子'], ['🐮', 'animal', '牛'],
+  ['🐷', 'animal', '猪'], ['🐸', 'animal', '青蛙'], ['🐵', 'animal', '猴子'], ['🦄', 'animal', '独角兽'],
+  ['🐝', 'animal', '蜜蜂'], ['🦋', 'animal', '蝴蝶'], ['🐢', 'animal', '乌龟'], ['🐙', 'animal', '章鱼'],
+  ['🐬', 'animal', '海豚'], ['🐳', 'animal', '鲸鱼'], ['🦈', 'animal', '鲨鱼'], ['🐧', 'animal', '企鹅'],
+  ['🦉', 'animal', '猫头鹰'], ['🐤', 'animal', '小鸡'], ['🦅', 'animal', '鹰'], ['🐍', 'animal', '蛇'],
+  ['🍎', 'food', '苹果'], ['🍊', 'food', '橘子'], ['🍋', 'food', '柠檬'], ['🍌', 'food', '香蕉'],
+  ['🍉', 'food', '西瓜'], ['🍇', 'food', '葡萄'], ['🍓', 'food', '草莓'], ['🍑', 'food', '桃子'],
+  ['🥑', 'food', '牛油果'], ['🍞', 'food', '面包'], ['🍔', 'food', '汉堡'], ['🍟', 'food', '薯条'],
+  ['🍕', 'food', '披萨'], ['🥗', 'food', '沙拉'], ['🍜', 'food', '拉面'], ['🍣', 'food', '寿司'],
+  ['🍦', 'food', '冰淇淋'], ['🍰', 'food', '蛋糕'], ['🍩', 'food', '甜甜圈'], ['☕', 'food', '咖啡'],
+  ['🍵', 'food', '茶'], ['🥤', 'food', '饮料'], ['🍺', 'food', '啤酒'], ['🍷', 'food', '红酒'],
+  ['🚗', 'travel', '汽车'], ['🚕', 'travel', '出租车'], ['🚌', 'travel', '巴士'], ['🚲', 'travel', '单车'],
+  ['✈️', 'travel', '飞机'], ['🚀', 'travel', '火箭'], ['⛵', 'travel', '帆船'], ['🚂', 'travel', '火车'],
+  ['🚄', 'travel', '高铁'], ['🚁', 'travel', '直升机'], ['🗺️', 'travel', '地图'], ['🏝️', 'travel', '海岛'],
+  ['⛰️', 'travel', '山'], ['🌊', 'travel', '海浪'], ['🌅', 'travel', '日出'], ['🌙', 'travel', '月亮'],
+  ['🏠', 'travel', '房子'], ['🏢', 'travel', '大楼'], ['🏫', 'travel', '学校'], ['🏥', 'travel', '医院'],
+  ['❤️', 'symbol', '红心'], ['🧡', 'symbol', '橙心'], ['💛', 'symbol', '黄心'], ['💚', 'symbol', '绿心'],
+  ['💙', 'symbol', '蓝心'], ['💜', 'symbol', '紫心'], ['🖤', 'symbol', '黑心'], ['💔', 'symbol', '破碎心'],
+  ['⭐', 'symbol', '星星'], ['🌟', 'symbol', '闪耀星'], ['✨', 'symbol', '闪光'], ['🔥', 'symbol', '火'],
+  ['⚡', 'symbol', '闪电'], ['💧', 'symbol', '水滴'], ['🌈', 'symbol', '彩虹'], ['❄️', 'symbol', '雪花'],
+  ['🎈', 'symbol', '气球'], ['🎉', 'symbol', '彩带'], ['🎊', 'symbol', '彩球'], ['🎁', 'symbol', '礼物'],
+  ['⚽', 'activity', '足球'], ['🏀', 'activity', '篮球'], ['🏈', 'activity', '橄榄球'], ['⚾', 'activity', '棒球'],
+  ['🎾', 'activity', '网球'], ['🏐', 'activity', '排球'], ['🏓', 'activity', '乒乓'], ['🎱', 'activity', '台球'],
+  ['🏆', 'activity', '奖杯'], ['🥇', 'activity', '金牌'], ['🥈', 'activity', '银牌'], ['🥉', 'activity', '铜牌'],
+  ['🎮', 'activity', '游戏'], ['🎲', 'activity', '骰子'], ['🎧', 'activity', '耳机'], ['🎵', 'activity', '音符'],
+  ['🎬', 'activity', '电影'], ['🎨', 'activity', '调色板'], ['📚', 'activity', '书籍'], ['📝', 'activity', '笔记'],
+];
+
+var favorites = {};
+
+function codePoint(emoji) {
+  var arr = Array.from(emoji);
+  return arr.map(function (c) { return 'U+' + c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0'); }).join(' ');
+}
+
+function render() {
+  var q = epSearch.value.trim().toLowerCase();
+  var cat = epCat.value;
+  var list = EMOJIS.filter(function (e) {
+    if (cat !== 'all' && e[1] !== cat) return false;
+    if (q) {
+      var found = e[0].indexOf(q) > -1 || e[1].indexOf(q) > -1 || e[2].indexOf(q) > -1;
+      if (!found) return false;
+    }
+    return true;
+  });
+  if (!list.length) { epGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:20px;">未找到匹配的 Emoji</div>'; epInfo.textContent = '0 个结果'; return; }
+  var html = '';
+  list.forEach(function (e) {
+    var fav = favorites[e[0]] ? 'background:var(--accent);color:#fff;' : '';
+    html += '<div class="ep-item" data-emoji="' + e[0] + '" data-k="' + e[0] + '" title="' + e[2] + ' ' + codePoint(e[0]) + '" style="position:relative;display:flex;align-items:center;justify-content:center;font-size:26px;min-height:48px;border:1px solid var(--border);border-radius:8px;cursor:pointer;">' + e[0] + '<button class="ep-fav" data-fav="' + e[0] + '" style="position:absolute;top:2px;right:2px;font-size:10px;border:none;background:transparent;color:var(--muted);cursor:pointer;" title="收藏">' + (favorites[e[0]] ? '★' : '☆') + '</button></div>';
+  });
+  epGrid.innerHTML = html;
+  epInfo.textContent = list.length + ' 个 Emoji';
+}
+
+epGrid.addEventListener('click', function (e) {
+  var el = e.target;
+  var favBtn = el.getAttribute && el.getAttribute('data-fav');
+  if (favBtn) {
+    if (favorites[favBtn]) delete favorites[favBtn];
+    else favorites[favBtn] = true;
+    render();
+    return;
+  }
+  var item = el.getAttribute && el.getAttribute('data-emoji');
+  if (!item) {
+    var parent = el.closest && el.closest('.ep-item');
+    item = parent && parent.getAttribute('data-emoji');
+  }
+  if (item) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(item);
+    showToast('已复制 ' + item);
+  }
+});
+
+epSearch.addEventListener('input', render);
+epCat.addEventListener('change', render);
+
+epCopyAll.addEventListener('click', function () {
+  var keys = Object.keys(favorites);
+  if (!keys.length) { showToast('还没有收藏的 Emoji'); return; }
+  var text = keys.join(' ');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text);
+  showToast('已复制 ' + keys.length + ' 个收藏');
+});
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
