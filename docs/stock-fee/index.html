@@ -41,10 +41,12 @@
 </div>
 <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
   <div><label>过户费率 %</label><input type="number" id="sfTrans" value="0.001" step="any"></div>
-  <div><label>沪深</label>
+  <div><label>市场</label>
     <select id="sfMarket">
-      <option value="sh" selected>沪市</option>
-      <option value="sz">深市</option>
+      <option value="sh" selected>沪市 A股</option>
+      <option value="sz">深市 A股</option>
+      <option value="hk">港股</option>
+      <option value="us">美股</option>
     </select>
   </div>
 </div>
@@ -106,6 +108,13 @@ var sfMarket = document.getElementById('sfMarket');
 var sfGo = document.getElementById('sfGo');
 var sfOut = document.getElementById('sfOut');
 
+var MARKETS = {
+  sh: { label: '¥', comm: '0.025', commMin: '5', stamp: '0.05', trans: '0.001', stampBoth: false, note: 'A股（¥）：印花税仅卖出收取（单边 0.05%）；过户费双边 0.001%；佣金不足 5 元按最低 5 元收取。' },
+  sz: { label: '¥', comm: '0.025', commMin: '5', stamp: '0.05', trans: '0.001', stampBoth: false, note: 'A股（¥）：印花税仅卖出收取（单边 0.05%）；过户费双边 0.001%；佣金不足 5 元按最低 5 元收取。' },
+  hk: { label: 'HK$', comm: '0.03', commMin: '100', stamp: '0.1', trans: '0.0085', stampBoth: true, note: '港股（HK$）：印花税 0.1% 买卖双边；交易费约 0.0085% 双边；佣金不足 100 港元按最低 100 港元收取。' },
+  us: { label: '$', comm: '0', commMin: '0', stamp: '0', trans: '0.00278', stampBoth: false, note: '美股（$）：无印花税；SEC 卖出费约卖出金额的 0.00278%（仅卖出）；佣金多数券商为 $0，以实际券商为准。' }
+};
+
 function fmt(x) { return x.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
 function row(label, val) {
@@ -119,28 +128,40 @@ function calc() {
   var commMin = parseFloat(sfCommMin.value) || 0;
   var stampRate = (parseFloat(sfStamp.value) || 0) / 100;
   var transRate = (parseFloat(sfTrans.value) || 0) / 100;
+  var mk = MARKETS[sfMarket.value] || MARKETS.sh;
   if (!(buy > 0 && sell > 0 && shares > 0)) { sfOut.innerHTML = '<div class="result-box">请输入有效数值</div>'; return; }
   var buyAmt = buy * shares, sellAmt = sell * shares;
   var buyComm = Math.max(buyAmt * commRate, commMin);
   var sellComm = Math.max(sellAmt * commRate, commMin);
-  var stamp = sellAmt * stampRate;
+  var stampBuy = mk.stampBoth ? buyAmt * stampRate : 0;
+  var stamp = sellAmt * stampRate + stampBuy;
   var transBuy = buyAmt * transRate;
   var transSell = sellAmt * transRate;
   var total = buyComm + sellComm + stamp + transBuy + transSell;
   var profit = sellAmt - buyAmt - total;
+  var c = mk.label;
   var html = '';
-  html += row('买入金额', '¥' + fmt(buyAmt));
-  html += row('卖出金额', '¥' + fmt(sellAmt));
-  html += row('买入佣金', '¥' + fmt(buyComm));
-  html += row('卖出佣金', '¥' + fmt(sellComm));
-  html += row('印花税（卖出）', '¥' + fmt(stamp));
-  html += row('过户费（双边）', '¥' + fmt(transBuy + transSell));
-  html += row('交易费用合计', '¥' + fmt(total));
-  html += row('本次交易净盈亏', (profit >= 0 ? '+' : '') + '¥' + fmt(profit));
+  html += row('买入金额', c + fmt(buyAmt));
+  html += row('卖出金额', c + fmt(sellAmt));
+  html += row('买入佣金', c + fmt(buyComm));
+  html += row('卖出佣金', c + fmt(sellComm));
+  html += row(mk.stampBoth ? '印花税（双边）' : '印花税（卖出）', c + fmt(stamp));
+  html += row('过户费/交易费（双边）', c + fmt(transBuy + transSell));
+  html += row('交易费用合计', c + fmt(total));
+  html += row('本次交易净盈亏', (profit >= 0 ? '+' : '') + c + fmt(profit));
   html += row('费用占比（相对卖出额）', fmt(total / sellAmt * 100) + '%');
-  html += '<div class="result-box" style="margin-top:6px;">费率可自定义测算。实际费率以券商为准，佣金不足最低值按最低佣金收取。</div>';
+  html += '<div class="result-box" style="margin-top:6px;">' + mk.note + '费率可自定义测算，实际费率以券商为准。</div>';
   sfOut.innerHTML = html;
 }
+
+sfMarket.addEventListener('change', function () {
+  var mk = MARKETS[sfMarket.value] || MARKETS.sh;
+  sfComm.value = mk.comm;
+  sfCommMin.value = mk.commMin;
+  sfStamp.value = mk.stamp;
+  sfTrans.value = mk.trans;
+  calc();
+});
 
 sfGo.addEventListener('click', calc);
   window.toggleTheme = function () {
