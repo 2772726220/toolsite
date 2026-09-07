@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS背景图案生成器 - 条纹棋盘格圆点网格</title>
+  <meta name="description" content="在线 CSS 背景图案生成器：纯 CSS 生成条纹、棋盘格、圆点或网格背景图，可调颜色、单元大小与角度，一键复制 gradient 代码，免维护图片文件。" />
+  <meta name="keywords" content="CSS背景,背景图案,repeating-linear-gradient,棋盘格,圆点背景">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u6d4f\u89c8\u5668\u517c\u5bb9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"repeating-linear-gradient\u3001conic-gradient \u7b49\u5728\u4e3b\u6d41\u73b0\u4ee3\u6d4f\u89c8\u5668\u90fd\u80fd\u8fd0\u884c\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u7528\u4ee3\u7801\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u70b9\u51fb\u590d\u5236\uff0c\u7c98\u8d34\u8fdb CSS \u7684 background-image \u4e0e background-size\uff0c\u6216\u76f4\u63a5\u8d34\u5230\u80cc\u666f\u56fe\u63a5\u53e3\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧩 背景图案生成</h1>
+    <p>纯 CSS 生成条纹/棋盘格/圆点/网格背景</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">背景图案生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#背景</span><span class="badge">#图案</span><span class="badge">#gradient</span><span class="badge">#CSS</span>
+<h3>CSS 背景图案生成器</h3>
+<p class="muted">快速生成纯 CSS 的条纹、棋盘格、圆点或网格背景图案，免去手写 gradient 的麻烦。</p>
+<div class="row">
+  <div class="col">
+    <label>图案类型</label>
+    <select id="pgType">
+      <option value="stripes">条纹</option>
+      <option value="checker">棋盘格</option>
+      <option value="dots">圆点</option>
+      <option value="grid">网格</option>
+    </select>
+    <label>颜色 1</label>
+    <input id="pgC1" type="color" value="#0f172a">
+    <label>颜色 2</label>
+    <input id="pgC2" type="color" value="#f1f5f9">
+    <label>单元大小 <span id="pgSizeVal">16px</span></label>
+    <input id="pgSize" type="range" min="4" max="64" value="16">
+    <label>圆点直径</label>
+    <input id="pgThick" type="range" min="1" max="16" value="4" style="display:none;">
+    <label id="pgAngle">条纹角度（°）</label>
+    <input id="pgAngle" type="range" min="0" max="360" value="45" style="display:none;">
+  </div>
+  <div class="col">
+    <label>预览</label>
+    <div id="pgPreview" style="width:100%;height:180px;border:1px solid #e2e8f0;border-radius:10px;"></div>
+    <label style="margin-top:8px;">CSS 代码</label>
+    <pre id="pgCode" style="margin:0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:12px;overflow:auto;"></pre>
+    <button id="pgCopy">复制 CSS</button>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>纯 CSS 背景图有什么好处？</h2><p>不依赖图片文件、无限平铺不重复、零加载成本，SVG 小图标也常用这种技巧。</p><h2>能调整哪些参数？</h2><p>颜色两色、单元大小、圆点直径、条纹角度都可实时预览调节。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>生成的代码浏览器兼容吗？</summary><p>repeating-linear-gradient、conic-gradient 等在主流现代浏览器都能运行。</p></details><details class="faq-item"><summary>怎么用代码？</summary><p>点击复制，粘贴进 CSS 的 background-image 与 background-size，或直接贴到背景图接口。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>背景图案生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='pattern-generator';}); _r.unshift('pattern-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var pgType = document.getElementById('pgType');
+var pgC1 = document.getElementById('pgC1');
+var pgC2 = document.getElementById('pgC2');
+var pgSize = document.getElementById('pgSize');
+var pgSizeVal = document.getElementById('pgSizeVal');
+var pgThick = document.getElementById('pgThick');
+var pgAngle = document.getElementById('pgAngle');
+var pgPreview = document.getElementById('pgPreview');
+var pgCode = document.getElementById('pgCode');
+var pgCopy = document.getElementById('pgCopy');
+
+function buildPattern(t) {
+  t = t || {};
+  var c1 = t.c1 || '#0f172a';
+  var c2 = t.c2 || '#f1f5f9';
+  var size = Math.max(2, Number(t.size) || 16);
+  var thick = Math.min(size, Math.max(1, Math.round(Number(t.thick) || size / 4)));
+  var angle = (Number(t.angle) || 45) % 360;
+  switch (t.type) {
+    case 'stripes':
+      return { image: 'repeating-linear-gradient(' + angle + 'deg, ' + c1 + ' 0px, ' + c1 + ' ' + thick + 'px, ' + c2 + ' ' + thick + 'px, ' + c2 + ' ' + size + 'px)', size: 'auto' };
+    case 'checker':
+      return { image: 'repeating-conic-gradient(' + c1 + ' 0% 25%, ' + c2 + ' 0% 50%)', size: size + 'px ' + size + 'px' };
+    case 'dots': {
+      var r = Math.max(1, thick / 2);
+      return { image: 'radial-gradient(circle, ' + c1 + ' ' + r + 'px, transparent ' + r + 'px)', size: size + 'px ' + size + 'px' };
+    }
+    case 'grid':
+      return { image: 'linear-gradient(' + c1 + ' 1px, transparent 1px), linear-gradient(90deg, ' + c1 + ' 1px, transparent 1px)', size: size + 'px ' + size + 'px' };
+  }
+  return null;
+}
+
+function patternCss(t) {
+  var r = buildPattern(t);
+  if (!r) return '';
+  return r.image + '; background-size:' + r.size + ';';
+}
+
+function pgRender() {
+  var t = {
+    type: pgType.value,
+    c1: pgC1.value,
+    c2: pgC2.value,
+    size: Number(pgSize.value),
+    thick: Number(pgThick.value),
+    angle: Number(pgAngle.value)
+  };
+  pgSizeVal.textContent = pgSize.value + 'px';
+  var shown = t.type === 'dots' || t.type === 'checker';
+  pgThick.style.display = t.type === 'dots' ? '' : 'none';
+  pgAngle.style.display = t.type === 'stripes' ? '' : 'none';
+  if (!shown) t.thick = 0;
+  var css = patternCss(t);
+  pgPreview.style.backgroundImage = css;
+  pgPreview.style.backgroundSize = (buildPattern(t) || {}).size || 'auto';
+  pgCode.textContent = 'background-image: ' + css.replace(/;\s*background-size:/, '\nbackground-size: ') + ';';
+}
+
+pgType.addEventListener('change', pgRender);
+pgC1.addEventListener('input', pgRender);
+pgC2.addEventListener('input', pgRender);
+pgSize.addEventListener('input', pgRender);
+pgThick.addEventListener('input', pgRender);
+pgAngle.addEventListener('input', pgRender);
+
+pgCopy.addEventListener('click', function () {
+  var ta = document.createElement('textarea');
+  ta.value = pgCode.textContent;
+  try {
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); pgCopy.textContent = '已复制 ✓'; } catch (e) { }
+    document.body.removeChild(ta);
+  } catch (e) { }
+  setTimeout(function () { pgCopy.textContent = '复制 CSS'; }, 1200);
+});
+
+pgRender();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
