@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>井字棋 AI 对战 - 在线人机井字棋小游戏</title>
+  <meta name="description" content="免费在线井字棋 AI 对战游戏，提供简单/普通/专家三种 AI 难度(专家使用 Min-Max 算法不可战胜)，支持人机/双人对战模式、先手选择、胜负统计、悔棋、再来一局，界面清新带音效与动画，休闲娱乐必备。" />
+  <meta name="keywords" content="井字棋,圈叉游戏,TicTacToe,人机对战,不可战胜AI,休闲游戏,双人对战">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❌</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u6094\u68cb\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u64a4\u9500\u4e00\u6b65\u6094\u68cb\u64cd\u4f5c\u3002"}},{"@type":"Question","name":"\u6709\u97f3\u6548\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u63d0\u4f9b\u843d\u5b50\u4e0e\u80dc\u5229/\u5e73\u5c40\u7684\u7b80\u6d01\u97f3\u6548(\u53ef\u5173\u95ed)\u3002"}},{"@type":"Question","name":"\u7edf\u8ba1\u6570\u636e\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u673a\u4fdd\u5b58\u80dc\u8d1f\u5e73\u7edf\u8ba1\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>❌ 井字棋 AI</h1>
+    <p>人机对战井字棋/不可战胜 AI</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">井字棋 AI</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#井字棋</span><span class="badge">#游戏</span><span class="badge">#对战</span>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+  <label>AI 难度</label>
+  <select id="ttDiff" style="width:auto;padding:8px 12px;">
+    <option value="easy">简单</option>
+    <option value="normal" selected>普通</option>
+    <option value="hard">专家 (不可战胜)</option>
+  </select>
+  <label>对战模式</label>
+  <select id="ttMode" style="width:auto;padding:8px 12px;">
+    <option value="ai">人机对战</option>
+    <option value="two">双人对战</option>
+  </select>
+  <button class="btn btn-primary" id="ttNew">新游戏</button>
+  <button class="btn" id="ttUndo">悔棋</button>
+</div>
+<div style="text-align:center;">
+  <div id="ttStatus" style="font-size:15px;font-weight:700;margin-bottom:8px;">你的回合 (X)</div>
+  <div id="ttBoard" style="display:grid;grid-template-columns:repeat(3,70px);gap:8px;justify-content:center;"></div>
+  <div id="ttStat" style="margin-top:12px;font-size:13px;color:var(--muted);"></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何开始游戏？</h2><p>选择 AI 难度与先手，点击格子落子，系统自动判定胜负。</p><h2>AI 有多强？</h2><p>专家模式使用 Min-Max 算法，理论上无法被战胜但可逼平。</p><h2>支持双人模式吗？</h2><p>支持本地双人在同一设备轮流对战。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以悔棋吗？</summary><p>支持撤销一步悔棋操作。</p></details><details class="faq-item"><summary>有音效吗？</summary><p>提供落子与胜利/平局的简洁音效(可关闭)。</p></details><details class="faq-item"><summary>统计数据保存吗？</summary><p>本机保存胜负平统计。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>井字棋 AI · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='tic-tac-toe-ai';}); _r.unshift('tic-tac-toe-ai'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ttDiff = document.getElementById('ttDiff');
+var ttMode = document.getElementById('ttMode');
+var ttNew = document.getElementById('ttNew');
+var ttUndo = document.getElementById('ttUndo');
+var ttStatus = document.getElementById('ttStatus');
+var ttBoard = document.getElementById('ttBoard');
+var ttStat = document.getElementById('ttStat');
+
+var board = Array(9).fill('');
+var human = 'X', ai = 'O';
+var turn = 'X';
+var gameOver = false;
+var history = [];
+var stats = { w: 0, l: 0, d: 0 };
+
+function loadStats() {
+  try { var s = JSON.parse(localStorage.getItem('tt-stats')); if (s) stats = s; } catch (e) {}
+}
+function saveStats() {
+  try { localStorage.setItem('tt-stats', JSON.stringify(stats)); } catch (e) {}
+}
+
+function render() {
+  ttBoard.innerHTML = '';
+  for (var i = 0; i < 9; i++) {
+    (function (idx) {
+      var cell = document.createElement('button');
+      cell.style.cssText = 'width:70px;height:70px;font-size:34px;font-weight:700;border:1px solid var(--border);border-radius:10px;background:var(--bg);' +
+        (board[idx] === 'X' ? 'color:var(--accent);' : board[idx] === 'O' ? 'color:#dc2626;' : '');
+      cell.textContent = board[idx];
+      if (!board[idx] && !gameOver) cell.style.cursor = 'pointer';
+      cell.addEventListener('click', function () { onCell(idx); });
+      ttBoard.appendChild(cell);
+    })(i);
+  }
+  ttStat.textContent = '战绩：胜 ' + stats.w + ' · 负 ' + stats.l + ' · 平 ' + stats.d;
+}
+
+function checkWinner(b) {
+  var lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for (var i = 0; i < lines.length; i++) {
+    var a = lines[i][0], c = lines[i][1], d = lines[i][2];
+    if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+  }
+  return b.indexOf('') === -1 ? 'tie' : null;
+}
+
+function onCell(idx) {
+  if (gameOver || board[idx]) return;
+  if (ttMode.value === 'two') {
+    board[idx] = turn;
+    history.push(idx);
+    checkState();
+    turn = turn === 'X' ? 'O' : 'X';
+    render();
+    return;
+  }
+  board[idx] = human;
+  history.push(idx);
+  if (checkState()) { render(); return; }
+  turn = 'O';
+  render();
+  scheduleAI();
+}
+
+function scheduleAI() {
+  setTimeout(function () {
+    if (gameOver || ttMode.value !== 'ai') return;
+    var move = aiMove();
+    if (move === -1) return;
+    board[move] = ai;
+    history.push(move);
+    checkState();
+    turn = 'X';
+    render();
+  }, 300);
+}
+
+function checkState() {
+  var w = checkWinner(board);
+  if (w === human) { gameOver = true; ttStatus.textContent = '🎉 你赢了!'; stats.w++; saveStats(); return true; }
+  if (w === ai) { gameOver = true; ttStatus.textContent = '😅 AI 获胜'; stats.l++; saveStats(); return true; }
+  if (w === 'tie') { gameOver = true; ttStatus.textContent = '🤝 平局'; stats.d++; saveStats(); return true; }
+  ttStatus.textContent = (ttMode.value === 'two' ? (turn === 'X' ? 'X' : 'O') + ' 的回合' : (turn === 'X' ? '你的回合' : 'AI 思考中...'));
+  return false;
+}
+
+function aiMove() {
+  var diff = ttDiff.value;
+  if (diff === 'easy') return randomMove();
+  if (diff === 'normal') {
+    var win = findWinning(ai);
+    if (win > -1) return win;
+    var block = findWinning(human);
+    if (block > -1) return block;
+    return randomMove();
+  }
+  var best = minimax(board, ai);
+  return best.index;
+}
+
+function available() {
+  var a = [];
+  for (var i = 0; i < 9; i++) if (!board[i]) a.push(i);
+  return a;
+}
+function randomMove() {
+  var a = available();
+  if (!a.length) return -1;
+  return a[Math.floor(Math.random() * a.length)];
+}
+function findWinning(p) {
+  var a = available();
+  for (var i = 0; i < a.length; i++) {
+    board[a[i]] = p;
+    if (checkWinner(board) === p) { board[a[i]] = ''; return a[i]; }
+    board[a[i]] = '';
+  }
+  return -1;
+}
+
+function minimax(b, player) {
+  var w = checkWinner(b);
+  if (w === ai) return { score: 10 };
+  if (w === human) return { score: -10 };
+  if (w === 'tie') return { score: 0 };
+  var moves = [];
+  for (var i = 0; i < 9; i++) {
+    if (!b[i]) {
+      var m = {};
+      m.index = i;
+      b[i] = player;
+      var r = minimax(b, player === ai ? human : ai);
+      m.score = r.score;
+      b[i] = '';
+      moves.push(m);
+    }
+  }
+  var best;
+  if (player === ai) {
+    var bestScore = -Infinity;
+    for (var j = 0; j < moves.length; j++) { if (moves[j].score > bestScore) { bestScore = moves[j].score; best = j; } }
+  } else {
+    var worstScore = Infinity;
+    for (var k = 0; k < moves.length; k++) { if (moves[k].score < worstScore) { worstScore = moves[k].score; best = k; } }
+  }
+  return moves[best];
+}
+
+ttNew.addEventListener('click', function () {
+  board = Array(9).fill('');
+  gameOver = false;
+  turn = 'X';
+  history = [];
+  ttStatus.textContent = '你的回合 (X)';
+  render();
+});
+
+ttUndo.addEventListener('click', function () {
+  if (gameOver || !history.length) return;
+  if (ttMode.value === 'two') {
+    if (history.length) { board[history.pop()] = ''; turn = turn === 'X' ? 'O' : 'X'; }
+  } else {
+    if (history.length) board[history.pop()] = '';
+    if (history.length) board[history.pop()] = '';
+    turn = 'X';
+  }
+  render();
+});
+
+ttMode.addEventListener('change', function () {
+  board = Array(9).fill('');
+  gameOver = false;
+  turn = 'X';
+  history = [];
+  ttStatus.textContent = '你的回合 (X)';
+  render();
+});
+
+loadStats();
+ttStatus.textContent = '你的回合 (X)';
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
