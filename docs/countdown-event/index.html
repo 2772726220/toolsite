@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件倒计时 - 纪念日节日活动倒计时工具</title>
+  <meta name="description" content="免费在线事件倒计时工具，添加生日/纪念日/节日/发布日等事件，实时显示剩余天/时/分/秒，支持将来/过去日期、周年计算、重复年事件、本地保存多个事件、置顶显示下一个即将到来的事件，重要日子提醒必备。" />
+  <meta name="keywords" content="倒计时,纪念日,节日倒计时,生日倒数,活动提醒,周年计算,事件管理">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏳</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6bcf\u5e74\u7684\u8282\u65e5\u9700\u8981\u91cd\u65b0\u8bbe\u7f6e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u6807\u8bb0\u4e3a\u6bcf\u5e74\u91cd\u590d\uff0c\u81ea\u52a8\u5207\u6362\u4e3a\u4e0b\u4e00\u8f6e\u5012\u8ba1\u65f6\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4fdd\u5b58\u5728\u54ea\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e8b\u4ef6\u672c\u5730\u5b58\u50a8\uff0c\u4e0d\u4e0a\u4f20\u670d\u52a1\u5668\u3002"}},{"@type":"Question","name":"\u80fd\u8ba1\u7b97\u5468\u5e74\u7eaa\u5ff5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u81ea\u52a8\u8ba1\u7b97\u4e8b\u4ef6\u53d1\u751f\u4ee5\u6765\u7684\u5e74/\u6708/\u65e5\u5929\u6570\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⏳ 事件倒计时</h1>
+    <p>纪念日/节日/活动倒计时与提醒</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">事件倒计时</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#倒计时</span><span class="badge">#纪念日</span><span class="badge">#节日</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;">
+  <div><label>事件名称</label><input type="text" id="cevName" placeholder="如 生日 / 纪念日 / 发布日"></div>
+  <div><label>日期</label><input type="date" id="cevDate"></div>
+  <div><label>每年重复</label>
+    <select id="cevRepeat">
+      <option value="0">不重复</option>
+      <option value="1" selected>每年</option>
+    </select>
+  </div>
+  <div style="display:flex;align-items:flex-end;">
+    <button class="btn btn-primary" id="cevAdd" style="width:100%;">添加事件</button>
+  </div>
+</div>
+<div id="cevEvents" style="display:grid; gap:10px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何创建倒计时？</h2><p>输入事件名称与目标日期即可生成实时倒计时。</p><h2>支持过去日期吗？</h2><p>支持已过去日期显示已过天数与本周年数。</p><h2>能保存多个事件吗？</h2><p>支持本地保存多个事件与置顶近期事件。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>每年的节日需要重新设置吗？</summary><p>可标记为每年重复，自动切换为下一轮倒计时。</p></details><details class="faq-item"><summary>数据保存在哪？</summary><p>事件本地存储，不上传服务器。</p></details><details class="faq-item"><summary>能计算周年纪念吗？</summary><p>自动计算事件发生以来的年/月/日天数。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>事件倒计时 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='countdown-event';}); _r.unshift('countdown-event'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cevName = document.getElementById('cevName');
+var cevDate = document.getElementById('cevDate');
+var cevRepeat = document.getElementById('cevRepeat');
+var cevAdd = document.getElementById('cevAdd');
+var cevEvents = document.getElementById('cevEvents');
+
+var events = [];
+var tickTimer = 0;
+
+function load() {
+  try { events = JSON.parse(localStorage.getItem('cev-events') || '[]'); } catch (e) { events = []; }
+}
+function save() {
+  try { localStorage.setItem('cev-events', JSON.stringify(events)); } catch (e) {}
+}
+
+function targetFor(ev) {
+  if (ev.repeat) {
+    var now = new Date();
+    var thisYear = new Date(now.getFullYear(), ev.month - 1, ev.day);
+    if (thisYear < now) thisYear = new Date(now.getFullYear() + 1, ev.month - 1, ev.day);
+    return thisYear;
+  }
+  return new Date(ev.year, ev.month - 1, ev.day);
+}
+
+function diff(target) {
+  var now = new Date();
+  var t = target.getTime() - now.getTime();
+  var future = t > 0;
+  var abs = Math.abs(t);
+  var days = Math.floor(abs / 86400000);
+  var hours = Math.floor((abs % 86400000) / 3600000);
+  var mins = Math.floor((abs % 3600000) / 60000);
+  var secs = Math.floor((abs % 60000) / 1000);
+  return { future: future, days: days, hours: hours, mins: mins, secs: secs };
+}
+
+function yearDiff(target) {
+  var now = new Date();
+  var y = target.getFullYear() - now.getFullYear();
+  if (target.getMonth() < now.getMonth() || (target.getMonth() === now.getMonth() && target.getDate() < now.getDate())) y--;
+  var totalDays = Math.floor((target - now) / 86400000);
+  return { years: Math.max(0, y), days: totalDays };
+}
+
+function render() {
+  if (!events.length) {
+    cevEvents.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">尚未添加事件，填入上方信息并点击「添加事件」。</div>';
+    return;
+  }
+  var now = new Date();
+  var items = events.map(function (ev) {
+    var target = targetFor(ev);
+    return { ev: ev, target: target, d: diff(target) };
+  }).sort(function (a, b) {
+    var af = a.d.future ? a.target.getTime() : Infinity;
+    var bf = b.d.future ? b.target.getTime() : Infinity;
+    return af - bf;
+  });
+  var html = '';
+  items.forEach(function (it) {
+    var ev = it.ev, target = it.target, d = it.d;
+    var head = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><b style="flex:1;">' + ev.name + '</b><span style="font-size:12px;color:var(--muted);">' + formatDate(target) + ' · ' + (ev.repeat ? '每年' : '单次') + '</span><button class="btn" style="padding:2px 10px;font-size:12px;" data-del="' + ev.id + '">删除</button></div>';
+    var big = d.future ? '<div style="font-size:26px;font-weight:800;color:var(--accent);">' + d.days + '<span style="font-size:13px;color:var(--muted);font-weight:400;"> 天 </span>' + d.hours + '<span style="font-size:13px;color:var(--muted);font-weight:400;">: </span>' + String(d.mins).padStart(2, '0') + '<span style="font-size:13px;color:var(--muted);font-weight:400;">:</span>' + String(d.secs).padStart(2, '0') + '</div>' : '<div style="font-size:20px;font-weight:700;color:#16a34a;">已过 ' + Math.abs(d.days) + ' 天</div>';
+    var meta = d.future ? '<div style="font-size:12px;color:var(--muted);margin-top:4px;">距今 ' + d.days + ' 天 ' + d.hours + ' 小时</div>' : yearInfo(ev);
+    html += '<div style="border:1px solid var(--border);border-radius:10px;padding:14px;">' + head + big + meta + '</div>';
+  });
+  cevEvents.innerHTML = html;
+}
+
+cevEvents.addEventListener('click', function (e) {
+  var btn = e.target && e.target.getAttribute && e.target.getAttribute('data-del');
+  if (!btn) return;
+  events = events.filter(function (ev) { return ev.id !== btn; });
+  save();
+  render();
+});
+
+function yearInfo(ev) {
+  var years = Math.floor((new Date().getFullYear() - ev.year));
+  return '<div style="font-size:12px;color:var(--muted);margin-top:4px;">自 ' + ev.year + ' 年以来第 ' + (years + 1) + ' 年</div>';
+}
+
+function formatDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function startTick() {
+  if (tickTimer) clearInterval(tickTimer);
+  tickTimer = setInterval(render, 1000);
+}
+
+cevAdd.addEventListener('click', function () {
+  var name = cevName.value.trim();
+  var dateVal = cevDate.value;
+  if (!name) { showToast('请输入事件名称'); return; }
+  if (!dateVal) { showToast('请选择日期'); return; }
+  var parts = dateVal.split('-');
+  events.push({
+    id: 'ev-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+    name: name,
+    year: parseInt(parts[0], 10),
+    month: parseInt(parts[1], 10),
+    day: parseInt(parts[2], 10),
+    repeat: cevRepeat.value === '1'
+  });
+  save();
+  cevName.value = '';
+  render();
+  showToast('已添加事件');
+});
+
+load();
+if (!events.length) {
+  events.push({ id: 'ev-default-1', name: '示例：新年', year: new Date().getFullYear(), month: 1, day: 1, repeat: 1 });
+  save();
+}
+render();
+startTick();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
