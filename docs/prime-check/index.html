@@ -114,22 +114,102 @@ var pcResult = document.getElementById('pcResult');
     return out;
   }
 
+  function modPowB(a, e, m) {
+    var r = 1n; a %= m;
+    while (e > 0n) {
+      if (e & 1n) r = (r * a) % m;
+      a = (a * a) % m;
+      e >>= 1n;
+    }
+    return r;
+  }
+
+  function mrPrimeB(n) {
+    if (n < 2n) return false;
+    if (n === 2n || n === 3n) return true;
+    if (n % 2n === 0n) return false;
+    var d = n - 1n, s = 0;
+    while (d % 2n === 0n) { d /= 2n; s++; }
+    var bases = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n];
+    outer:
+    for (var bi = 0; bi < bases.length; bi++) {
+      var a = bases[bi] % n;
+      if (a === 0n) continue;
+      var x = modPowB(a, d, n);
+      if (x === 1n || x === n - 1n) continue;
+      for (var ri = 1; ri < s; ri++) {
+        x = (x * x) % n;
+        if (x === n - 1n) continue outer;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  function gcdB(a, b) { while (b) { var t = a % b; a = b; b = t; } return a; }
+  function absB(x) { return x < 0n ? -x : x; }
+
+  function pollardRhoB(n) {
+    if (n % 2n === 0n) return 2n;
+    for (;;) {
+      var c = (BigInt(Math.floor(Math.random() * 9007199254740991)) + 1n) % n;
+      var x = (BigInt(Math.floor(Math.random() * 9007199254740991)) + 1n) % n;
+      var y = x, d = 1n;
+      while (d === 1n) {
+        x = (x * x + c) % n;
+        y = (y * y + c) % n;
+        y = (y * y + c) % n;
+        d = gcdB(absB(x - y), n);
+      }
+      if (d !== n) return d;
+    }
+  }
+
+  function factorizeBig(n) {
+    var out = [];
+    (function rec(m) {
+      if (m === 1n) return;
+      if (mrPrimeB(m)) { out.push(m); return; }
+      var d = pollardRhoB(m);
+      rec(d);
+      rec(m / d);
+    })(n);
+    out.sort(function (a, b) { return a < b ? -1 : 1; });
+    return out;
+  }
+
+  function groupedBig(factors) {
+    var out = [];
+    factors.forEach(function (f) {
+      var last = out[out.length - 1];
+      if (last && last.f === f) last.c++;
+      else out.push({ f: f.toString(), c: 1 });
+    });
+    return out;
+  }
+
   document.getElementById('pcBtn').addEventListener('click', function () {
     var raw = document.getElementById('pcInput').value.trim();
     if (!/^\d+$/.test(raw)) { showToast('请输入正整数'); return; }
     if (raw.length > 18) { showToast('最大支持 18 位整数'); return; }
-    var n = parseInt(raw, 10);
-    if (n < 2) {
+    var clean = raw.replace(/^0+/, '') || '0';
+    if (clean === '0' || clean === '1') {
       pcResult.hidden = false;
       pcResult.innerHTML = '1 及以下不是素数。';
       return;
     }
-    var prime = isPrime(n);
-    var html = '判断结果：<b style="font-size:22px;">' + (prime ? '是素数 ✅' : '不是素数 ❌') + '</b>';
+    var big = BigInt(clean);
+    var prime, html;
+    if (big > 9007199254740991n) {
+      prime = mrPrimeB(big);
+    } else {
+      prime = isPrime(Number(big));
+    }
+    html = '判断结果：<b style="font-size:22px;">' + (prime ? '是素数 ✅' : '不是素数 ❌') + '</b>';
     if (prime) {
       html += '<br><span style="font-size:12px;color:var(--muted);">只被 1 和自身整除</span>';
     } else {
-      var g = grouped(factorize(n));
+      var g = big > 9007199254740991n ? groupedBig(factorizeBig(big)) : grouped(factorize(Number(big)));
       html += '<br>质因数分解：<b>' + g.map(function (x) { return x.f + (x.c > 1 ? '^' + x.c : ''); }).join(' × ') + '</b>';
     }
     pcResult.hidden = false;
