@@ -98,6 +98,17 @@ function fmtDate(d) {
   return y + '-' + (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
 }
 
+var FETAL_WEIGHT = { 12: 20, 13: 30, 14: 45, 15: 70, 16: 100, 17: 130, 18: 170, 19: 215, 20: 265, 21: 325, 22: 390, 23: 470, 24: 560, 25: 660, 26: 770, 27: 890, 28: 1020, 29: 1170, 30: 1330, 31: 1500, 32: 1680, 33: 1870, 34: 2070, 35: 2280, 36: 2500, 37: 2720, 38: 2950, 39: 3170, 40: 3400, 41: 3600, 42: 3720 };
+
+function fetalWeight(weeks) {
+  if (weeks < 12) return 0;
+  if (weeks >= 42) return FETAL_WEIGHT[42];
+  var lo = Math.floor(weeks), hi = lo + 1;
+  if (FETAL_WEIGHT[lo] === undefined) return FETAL_WEIGHT[12];
+  var frac = weeks - lo;
+  return Math.round(FETAL_WEIGHT[lo] + (FETAL_WEIGHT[hi] - FETAL_WEIGHT[lo]) * frac);
+}
+
 function row(label, val, extra) {
   return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:600;">' + val + '</span></div>';
 }
@@ -117,13 +128,16 @@ pdCalc.addEventListener('click', function () {
   var days = Math.max(0, passedDays % 7);
   var daysLeft = Math.max(0, Math.round((due - today) / 86400000));
   var trimester = passedDays < 98 ? '孕早期（1-13 周）' : passedDays < 196 ? '孕中期（14-27 周）' : '孕晚期（28 周后）';
+  var weeksFloat = passedDays / 7;
+  var fw = fetalWeight(weeksFloat);
   pdResult.innerHTML =
     row('末次月经 (LMP)', fmtDate(lmp)) +
     row('预产期（40 周整）', fmtDate(due)) +
     row('当前孕周', weeks + ' 周 ' + days + ' 天') +
     row('孕期阶段', trimester) +
     row('距预产期剩余', daysLeft + ' 天') +
-    row('预计胎儿大小参考', '约 ' + (weeks >= 4 ? (weeks * 25) : weeks * 8) + ' g（估算值）');
+    row('预计胎儿体重参考', weeks >= 12 ? '约 ' + fw + ' g（孕周体重中位参考）' : '孕早期体重过小，建议以超声为准') +
+    '<div class="result-box" style="margin-top:8px;">胎儿体重为常见生长曲线中位参考，个体差异大，请以 B 超估测为准。</div>';
 });
 
 pdClear.addEventListener('click', function () {
