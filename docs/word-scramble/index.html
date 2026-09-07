@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线乱序猜词游戏 - 字母打乱猜单词</title>
+  <meta name="description" content="在线乱序猜词游戏：把单词字母打乱，看你能不能拼回原词。支持简单/中等/困难三档英文词汇，答错立即揭晓答案并计分。" />
+  <meta name="keywords" content="猜词游戏,字母打乱,拼单词,乱序单词,背单词,词汇游戏">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7b54\u9519\u4e86\u4f1a\u600e\u6837\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7acb\u5373\u663e\u793a\u6b63\u786e\u7b54\u6848\u5e76\u8ba1\u5165\u603b\u6570\uff0c\u7136\u540e\u70b9\u300c\u65b0\u8bcd\u300d\u7ee7\u7eed\u3002"}},{"@type":"Question","name":"\u5927\u5c0f\u5199\u654f\u611f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u654f\u611f\uff0c\u56de\u7b54\u65f6\u4f1a\u81ea\u52a8\u5ffd\u7565\u5927\u5c0f\u5199\u4e0e\u9996\u5c3e\u7a7a\u683c\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5df1\u52a0\u8bcd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u76ee\u524d\u63d0\u4f9b\u5185\u7f6e\u8bcd\u5e93\uff08\u7b80\u5355/\u4e2d\u7b49/\u56f0\u96be\uff09\uff0c\u6682\u4e0d\u652f\u6301\u81ea\u5b9a\u4e49\u8bcd\u5e93\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧩 乱序猜词</h1>
+    <p>打乱字母猜原词：趣味英文/中文单词闯关</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">乱序猜词</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#猜词</span><span class="badge">#乱序</span><span class="badge">#单词</span><span class="badge">#游戏</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>单词乱序猜词</title>
+<style>
+#wsWord { font-size: 30px; letter-spacing: 8px; font-family: monospace; margin: 10px 0; }
+#wsGuess { font-size: 18px; padding: 6px; width: 240px; }
+button { margin: 4px 4px 4px 0; padding: 6px 14px; }
+select { padding: 4px; }
+#wsMsg { margin-top: 10px; font-size: 14px; min-height: 20px; }
+.hint { font-size: 12px; color: #888; }
+#wsScore { font-size: 13px; color: #555; margin-top: 6px; }
+</style>
+</head>
+<body>
+<p>打乱单词字母，猜出原词。支持中文词语；按回车或点「提交」作答。</p>
+<select id="wsLevel">
+  <option value="easy">简单</option>
+  <option value="medium">中等</option>
+  <option value="hard">困难</option>
+</select>
+<button id="wsNew">新词</button>
+<div id="wsWord">-</div>
+<input id="wsGuess" placeholder="输入答案">
+<button id="wsSubmit">提交</button>
+<div id="wsMsg"></div>
+<div id="wsScore">正确 0 · 总 0</div>
+<p class="hint">可忽略大小写与首尾空格。</p>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么玩？</h2><p>点击「新词」，系统打乱一个单词的字母（较长词可能重新洗牌数次保证不还原成原词），输入答案后提交。</p><h2>对学英语有帮助吗？</h2><p>有帮助。观察字母组合结构能加深对拼写的记忆，适合碎片时间练习。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>答错了会怎样？</summary><p>会立即显示正确答案并计入总数，然后点「新词」继续。</p></details><details class="faq-item"><summary>大小写敏感吗？</summary><p>不敏感，回答时会自动忽略大小写与首尾空格。</p></details><details class="faq-item"><summary>可以自己加词吗？</summary><p>目前提供内置词库（简单/中等/困难），暂不支持自定义词库。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>乱序猜词 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='word-scramble';}); _r.unshift('word-scramble'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var wsLevel = document.getElementById('wsLevel');
+var wsNew = document.getElementById('wsNew');
+var wsWord = document.getElementById('wsWord');
+var wsGuess = document.getElementById('wsGuess');
+var wsSubmit = document.getElementById('wsSubmit');
+var wsMsg = document.getElementById('wsMsg');
+var wsScore = document.getElementById('wsScore');
+
+var WS_WORDS = {
+  easy: ['apple', 'water', 'orange', 'happy', 'music', 'cloud', 'light', 'dream', 'bread', 'green',
+    'sunny', 'river', 'house', 'smile', 'stone', 'sugar', 'train', 'table', 'chair', 'grass'],
+  medium: ['banana', 'planet', 'garden', 'window', 'pencil', 'basket', 'candle', 'dragon', 'elephant', 'forest',
+    'kitchen', 'library', 'mountain', 'octopus', 'picture', 'umbrella', 'volcano', 'whisper', 'yesterday', 'midnight'],
+  hard: ['algorithm', 'blueprint', 'cryptography', 'decorative', 'encapsulate', 'flamboyant', 'grenadine',
+    'harmonious', 'illuminated', 'juxtaposition', 'kilometer', 'luminous', 'miraculous', 'notorious',
+    'obliterate', 'paradigm', 'quarantine', 'revolutionary', 'symphony', 'turquoise']
+};
+
+function shuffleArr(arr, rng) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = rng() % (i + 1);
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function scrambleWord(word, seed) {
+  var rng = makeRng(seed);
+  var trials = 0;
+  while (trials < 20) {
+    trials++;
+    var s = Array.from(word);
+    shuffleArr(s, rng);
+    if (s.join('') !== word) return s.join('');
+  }
+  return Array.from(word).reverse().join('');
+}
+
+function makeRng(seed) {
+  var a = (seed === undefined ? (Date.now() & 0x7fffffff) : seed) >>> 0;
+  return function () {
+    a = (a * 1664525 + 1013904223) >>> 0;
+    return a;
+  };
+}
+
+function normalize(s) {
+  return String(s).replace(/^\s+|\s+$/g, '').toLowerCase();
+}
+
+function checkGuess(original, guess) {
+  return normalize(guess) === normalize(original);
+}
+
+var current = '';
+var correct = 0, total = 0;
+var currentRng = makeRng(1);
+
+function newWord() {
+  var list = WS_WORDS[wsLevel.value] || WS_WORDS.easy;
+  var idx = currentRng() % list.length;
+  current = list[idx];
+  var seed = currentRng();
+  var scrambled = scrambleWord(current, seed);
+  if (scrambled.length > 1 && scrambled === current) scrambled = current.split('').reverse().join('');
+  wsWord.textContent = scrambled;
+  wsMsg.textContent = '';
+  wsGuess.value = '';
+  wsGuess.focus && wsGuess.focus();
+}
+
+function submit() {
+  if (!current) return;
+  total++;
+  var ok = checkGuess(current, wsGuess.value);
+  if (ok) { correct++; wsMsg.textContent = '✓ 正确！答案是 ' + current; wsMsg.style.color = '#16a34a'; }
+  else { wsMsg.textContent = '✗ 答错了，答案是 ' + current; wsMsg.style.color = '#dc2626'; }
+  wsScore.textContent = '正确 ' + correct + ' · 总 ' + total;
+  current = '';
+}
+
+wsNew.addEventListener('click', function () { newWord(); });
+wsSubmit.addEventListener('click', submit);
+wsGuess.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+newWord();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
