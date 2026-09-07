@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 BASE58 编码解码 - 比特币字母表 BASE58 转换</title>
+  <meta name="description" content="免费在线 BASE58 编码解码工具（比特币字母表 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz，去除了易混淆的 0/O/I/l），支持中文与二进制，浏览器本地完成。" />
+  <meta name="keywords" content="BASE58,Bitcoin地址,Base58编码,Base58解码,加密编码,字母表">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍆</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u89e3\u7801\u51fa\u73b0\u975e\u6cd5\u5b57\u7b26\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"BASE58 \u5b57\u6bcd\u8868\u4e0d\u5305\u542b 0/O/I/l\uff0c\u8f93\u5165\u8fd9\u4e9b\u5b57\u7b26\u4f1a\u88ab\u5224\u5b9a\u4e3a\u975e\u6cd5\u5e76\u7ed9\u51fa\u63d0\u793a\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u91cc\u7684 1 \u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f00\u5934\u7684 1 \u8868\u793a\u4e8c\u8fdb\u5236\u524d\u5bfc\u96f6\u5b57\u8282\uff08\u6bcf\u5b57\u8282\u4e00\u4e2a 1\uff09\uff0c\u7f16\u7801\u89c4\u5219\u7684\u4e00\u90e8\u5206\uff0c\u89e3\u7801\u65f6\u4f1a\u8fd8\u539f\u4e3a 0x00\u3002"}},{"@type":"Question","name":"\u80fd\u5426\u7528\u4e8e\u52a0\u5bc6\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\u3002BASE58 \u53ea\u662f\u7f16\u7801\uff0c\u4e0d\u63d0\u4f9b\u4fdd\u5bc6\u6027\uff1b\u6d89\u53ca\u5bc6\u94a5\u8bf7\u914d\u5408\u52a0\u5bc6\u65b9\u6848\u4f7f\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🍆 BASE58 编码</h1>
+    <p>BASE58（比特币字母表）编解码，无 0/O/I/l</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">BASE58 编码</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Base58</span><span class="badge">#编码</span><span class="badge">#比特币</span><span class="badge">#字母表</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BASE58 编码/解码工具</title>
+<style>
+textarea { width: 100%; box-sizing: border-box; font-family: monospace; min-height: 80px; resize: vertical; }
+label { font-size: 13px; color: #555; }
+button { margin: 4px 4px 4px 0; }
+#b58Out { word-break: break-all; font-family: monospace; font-size: 13px; }
+.hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<p>BASE58 编码（比特币字母表，去除了易混淆的 0/O/I/l），常用于密钥与地址文本化。全程浏览器本地运行。</p>
+<textarea id="b58Input" placeholder="输入文本（编码）或 BASE58 字符串（解码）…"></textarea>
+<button id="b58Encode">编码 (UTF-8 → BASE58)</button>
+<button id="b58Decode">解码 (BASE58 → 文本/十六进制)</button>
+<button id="b58Copy">复制结果</button>
+<p class="hint">解码时自动忽略空格；若结果为二进制内容则以十六进制显示。</p>
+<div id="b58Out"></div>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>BASE58 和 BASE64 的区别？</h2><p>BASE58 去掉了 0（数字零）、大写 I、大写 O、小写 l（小写 L）这四个易混淆字符，适合手写与语音传递，常配合校验和用于比特币地址。</p><h2>支持哪些内容？</h2><p>编码支持任意文本（含中文，按 UTF-8）；解码支持标准 BASE58 字符串，自动忽略空格。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>解码出现非法字符怎么办？</summary><p>BASE58 字母表不包含 0/O/I/l，输入这些字符会被判定为非法并给出提示。</p></details><details class="faq-item"><summary>结果里的 1 是什么？</summary><p>开头的 1 表示二进制前导零字节（每字节一个 1），编码规则的一部分，解码时会还原为 0x00。</p></details><details class="faq-item"><summary>能否用于加密？</summary><p>不能。BASE58 只是编码，不提供保密性；涉及密钥请配合加密方案使用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>BASE58 编码 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='base58-convert';}); _r.unshift('base58-convert'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var b58Input = document.getElementById('b58Input');
+var b58Encode = document.getElementById('b58Encode');
+var b58Decode = document.getElementById('b58Decode');
+var b58Copy = document.getElementById('b58Copy');
+var b58Out = document.getElementById('b58Out');
+
+var B58_ALPHA = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+var B58_INDEX = (function () {
+  var m = {};
+  for (var i = 0; i < B58_ALPHA.length; i++) m[B58_ALPHA.charAt(i)] = i;
+  return m;
+})();
+
+function utf8Bytes(str) {
+  var enc = new TextEncoder();
+  return enc.encode(str);
+}
+
+function bytesToBigInt(bytes) {
+  var b = 0n;
+  for (var i = 0; i < bytes.length; i++) b = (b << 8n) | BigInt(bytes[i]);
+  return b;
+}
+
+function bigIntToBytes(n) {
+  if (n === 0n) return new Uint8Array(0);
+  var out = [];
+  while (n > 0n) { out.unshift(Number(n & 255n)); n >>= 8n; }
+  return Uint8Array.from(out);
+}
+
+function base58EncodeBytes(bytes) {
+  if (!bytes || !bytes.length) return '';
+  var zeros = 0;
+  while (zeros < bytes.length && bytes[zeros] === 0) zeros++;
+  var n = bytesToBigInt(bytes);
+  var s = '';
+  while (n > 0n) {
+    s = B58_ALPHA.charAt(Number(n % 58n)) + s;
+    n = n / 58n;
+  }
+  var prefix = '';
+  for (var i = 0; i < zeros; i++) prefix += '1';
+  return prefix + s;
+}
+
+function base58Encode(str) {
+  return base58EncodeBytes(utf8Bytes(str));
+}
+
+function base58Decode(str) {
+  if (typeof str !== 'string') return null;
+  var clean = str.replace(/\s+/g, '');
+  var zeros = 0;
+  while (zeros < clean.length && clean.charAt(zeros) === '1') zeros++;
+  var n = 0n;
+  for (var i = zeros; i < clean.length; i++) {
+    var d = B58_INDEX[clean.charAt(i)];
+    if (d === undefined) return null;
+    n = n * 58n + BigInt(d);
+  }
+  var bytes = bigIntToBytes(n);
+  if (zeros > 0) {
+    var prefix = new Uint8Array(zeros);
+    var joined = new Uint8Array(zeros + bytes.length);
+    joined.set(prefix, 0);
+    joined.set(bytes, zeros);
+    bytes = joined;
+  }
+  return bytes;
+}
+
+function base58DecodeStr(str) {
+  var bytes = base58Decode(str);
+  if (bytes === null) return { valid: false };
+  try {
+    var dec = new TextDecoder('utf-8', { fatal: true });
+    return { valid: true, text: dec.decode(bytes), hex: bytesToHex(bytes) };
+  } catch (e) {
+    return { valid: true, binary: true, hex: bytesToHex(bytes) };
+  }
+}
+
+function bytesToHex(bytes) {
+  var s = '';
+  for (var i = 0; i < bytes.length; i++) {
+    s += ('0' + bytes[i].toString(16)).slice(-2);
+  }
+  return s;
+}
+
+function copyText(t) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(function () { b58Out.textContent = '已复制'; }, function () { });
+  } else {
+    b58Out.textContent = t;
+  }
+}
+
+b58Encode.addEventListener('click', function () {
+  var v = b58Input.value;
+  if (!v) { b58Out.textContent = '请先输入文本。'; return; }
+  b58Out.textContent = base58Encode(v);
+});
+
+b58Decode.addEventListener('click', function () {
+  var v = b58Input.value;
+  if (!v) { b58Out.textContent = '请先输入 BASE58 字符串。'; return; }
+  var r = base58DecodeStr(v);
+  if (!r.valid) { b58Out.textContent = '包含非法字符（BASE58 不含 0/O/I/l）。'; return; }
+  b58Out.textContent = r.binary ? ('二进制内容（hex）：' + r.hex) : r.text;
+});
+
+b58Copy.addEventListener('click', function () { copyText(b58Out.textContent); });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
