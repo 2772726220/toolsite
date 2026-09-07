@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>纪念日日历生成器 - 周年纪念日与里程碑日期计算</title>
+  <meta name="description" content="在线纪念日计算工具：输入开始日期，自动生成 100 天、1000 天、10000 天与每年 1-10 周年的所有纪念日公历日期与星期，并列出未来最近的每年周年倒计时。" />
+  <meta name="keywords" content="纪念日,周年纪念,恋爱纪念日,里程碑,结婚纪念日,纪念日计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💞</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u65e5\u671f\u8ba1\u7b97\u53d7\u65f6\u533a\u5f71\u54cd\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5168\u90e8\u6309\u6d4f\u89c8\u5668\u672c\u5730\u65f6\u533a\u7684\u65e5\u5386\u65e5\u8ba1\u7b97\uff0c\u907f\u514d\u8de8\u65f6\u533a\u5dee\u4e00\u5929\u7684\u56f0\u60d1\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u770b\u672a\u6765\u591a\u4e45\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u7ed9\u51fa\u672a\u6765 10 \u6b21\u6bcf\u5e74\u5468\u5e74\u53ca\u5404\u81ea\u8ddd\u4eca\u5929\u6570\uff0c\u91cc\u7a0b\u7891\u533a\u4e5f\u4f1a\u6309\u65f6\u95f4\u987a\u5e8f\u5217\u51fa\u5c1a\u672a\u5230\u6765\u6216\u6700\u8fd1\u7684\u6863\u4f4d\u3002"}},{"@type":"Question","name":"\u652f\u6301\u81ea\u5b9a\u4e49\u65e5\u671f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u65e5\u671f\u8f93\u5165\u6846\u81ea\u7531\u9009\u62e9\uff1b\u4e5f\u53ef\u501f\u300c\u91cc\u7a0b\u7891\u9009\u9879\u300d\u5173\u95ed\u4e0d\u9700\u8981\u7684\u6863\u4f4d\u53ea\u7b97\u60f3\u8981\u7684\u7eaa\u5ff5\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💞 纪念日日历</h1>
+    <p>生成恋爱/结婚/生日等纪念日的每年周年与里程碑日期</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">纪念日日历</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#纪念日</span><span class="badge">#周年</span><span class="badge">#里程碑</span><span class="badge">#倒计时</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+  <div>
+    <label for="adStart">开始日期（纪念日起点）</label>
+    <input id="adStart" type="date">
+  </div>
+  <div>
+    <label for="adType">类型</label>
+    <select id="adType">
+      <option value="anniv" selected>周年纪念</option>
+      <option value="birth">生日</option>
+      <option value="custom">自定义</option>
+    </select>
+  </div>
+</div>
+<div class="field" id="adOpts" style="margin-bottom:12px;">
+  <label>里程碑选项</label>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:13px;margin-top:6px;">
+    <label style="display:inline-flex;gap:4px;"><input type="checkbox" id="adMil100" checked> 100 天</label>
+    <label style="display:inline-flex;gap:4px;"><input type="checkbox" id="adMil1000" checked> 1000 天</label>
+    <label style="display:inline-flex;gap:4px;"><input type="checkbox" id="adMil10000"> 10000 天</label>
+    <label style="display:inline-flex;gap:4px;"><input type="checkbox" id="adMilY" checked> 每年周年（1-10 年）</label>
+    <select id="adCount"><option>5</option><option selected>10</option><option>20</option></select>
+  </div>
+  <div class="hint" style="margin-top:6px;">计算结果中的日期均以浏览器本地时区为准。</div>
+</div>
+<button class="btn btn-primary" id="adBtn">生成纪念日清单</button>
+<div id="adOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>能算哪些纪念日？</h2><p>从任意开始日期出发：100/1000/10000 天里程碑与每年 1-10 周年，也可用于生日、结婚纪念、入职周年等任意纪念场景。</p><h2>闰年 2 月 29 日怎么办？</h2><p>平年没有 2 月 29 日，本工具自动顺延为 2 月 28 日，保证每年周年都有对应的公历日期。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>日期计算受时区影响吗？</summary><p>全部按浏览器本地时区的日历日计算，避免跨时区差一天的困惑。</p></details><details class="faq-item"><summary>可以看未来多久？</summary><p>默认给出未来 10 次每年周年及各自距今天数，里程碑区也会按时间顺序列出尚未到来或最近的档位。</p></details><details class="faq-item"><summary>支持自定义日期吗？</summary><p>支持，日期输入框自由选择；也可借「里程碑选项」关闭不需要的档位只算想要的纪念。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>纪念日日历 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='anniversary-dates';}); _r.unshift('anniversary-dates'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var adStart = document.getElementById('adStart');
+var adType = document.getElementById('adType');
+var adMil100 = document.getElementById('adMil100');
+var adMil1000 = document.getElementById('adMil1000');
+var adMil10000 = document.getElementById('adMil10000');
+var adMilY = document.getElementById('adMilY');
+var adCount = document.getElementById('adCount');
+var adBtn = document.getElementById('adBtn');
+var adOut = document.getElementById('adOut');
+
+function escA(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function parseDateA(s) {
+  var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(String(s).trim());
+  if (!m) return null;
+  var y = +m[1], mo = +m[2], d = +m[3];
+  var dt = new Date(y, mo - 1, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  return dt;
+}
+
+function fmtDateA(d) {
+  var pad = function (x) { return x < 10 ? '0' + x : '' + x; };
+  return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+}
+
+function weekdayA(d) {
+  return '日一二三四五六'.charAt(d.getDay());
+}
+
+function addYearsA(d, years) {
+  var y = d.getFullYear() + years;
+  var m = d.getMonth();
+  var day = d.getDate();
+  var dt = new Date(y, m, Math.min(day, 28));
+  if (day > 28) {
+    var last = new Date(y, m + 1, 0).getDate();
+    dt.setDate(Math.min(day, last));
+  }
+  return dt;
+}
+
+function addDaysA(d, n) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+}
+
+function listMilestones(start, opts) {
+  var out = [];
+  opts = opts || {};
+  var push = function (label, d) {
+    d.setHours(0, 0, 0, 0);
+    out.push({ label: label, date: d, days: Math.round((d - start) / 86400000) });
+  };
+  if (opts.d100) push('100 天', addDaysA(start, 100));
+  if (opts.d1000) push('1000 天', addDaysA(start, 1000));
+  if (opts.d10000) push('10000 天', addDaysA(start, 10000));
+  if (opts.years) {
+    for (var y = 1; y <= opts.years; y++) push(y + ' 周年', addYearsA(start, y));
+  }
+  out.sort(function (a, b) { return a.date - b.date; });
+  return out;
+}
+
+function nextAnniversaries(start, from, count) {
+  var now = new Date(from);
+  now.setHours(0, 0, 0, 0);
+  var out = [];
+  for (var y = 1; out.length < count && y <= 200; y++) {
+    var d = addYearsA(start, y);
+    d.setHours(0, 0, 0, 0);
+    if (d >= now) out.push({ label: y + ' 周年', date: d });
+  }
+  return out;
+}
+
+adBtn.addEventListener('click', function () {
+  var start = parseDateA(adStart.value);
+  if (!start) { showToast('请选择有效开始日期'); return; }
+  var next = nextAnniversaries(start, Date.now(), parseInt(adCount.value, 10) || 10);
+  var mk = listMilestones(start, {
+    d100: adMil100.checked,
+    d1000: adMil1000.checked,
+    d10000: adMil10000.checked,
+    years: adMilY.checked ? 10 : 0
+  });
+  var now = new Date();
+  var up1 = mk.filter(function (m) { return m.date.getTime() >= now.getTime(); });
+  var past = mk.filter(function (m) { return m.date.getTime() < now.getTime(); });
+  var html = '<div class="result-box" style="margin-bottom:8px;">起点 ' + fmtDateA(start) + '（周' + weekdayA(start) + '）距今已 ' + Math.round((now.getTime() - start.getTime()) / 86400000) + ' 天</div>';
+  if (past.length) {
+    html += '<div class="result-box" style="margin-bottom:8px;"><b>已过去的里程碑（' + past.length + ' 个）</b><div style="margin-top:4px;">' +
+      past.slice(-5).map(function (m) { return '<div>' + m.label + '：' + fmtDateA(m.date) + '（周' + weekdayA(m.date) + '）' + '</div>'; }).join('') +
+      '</div></div>';
+  }
+  html += '<div class="result-box" style="margin-bottom:8px;"><b>下一次的每年周年</b><div style="margin-top:4px;">' +
+    next.map(function (m) {
+      var gap = Math.round((m.date - now) / 86400000);
+      return '<div>' + m.label + '：' + fmtDateA(m.date) + '（周' + weekdayA(m.date) + '）｜距今 ' + gap + ' 天</div>';
+    }).join('') +
+    '</div></div>';
+  if (up1.length) {
+    html += '<div class="result-box"><b>各里程碑最近一次（' + up1.length + ' 个）</b><div style="margin-top:4px;">' +
+      up1.slice(0, 8).map(function (m) { return '<div>' + m.label + '：' + fmtDateA(m.date) + '（周' + weekdayA(m.date) + '）</div>'; }).join('') +
+      '</div></div>';
+  }
+  adOut.innerHTML = html;
+});
+
+(function () {
+  var t = new Date();
+  var pad = function (x) { return x < 10 ? '0' + x : '' + x; };
+  adStart.value = t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
+})();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
