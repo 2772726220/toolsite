@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线复数计算器 - 虚数运算</title>
+  <meta name="description" content="复数计算器：支持 a+bi 输入，计算加减乘除、模、共轭、倒数与整数次幂。" />
+  <meta name="keywords" content="复数,虚数,complex,共轭,模,实部,虚部,i">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔢 复数计算器</h1>
+    <p>复数加减乘除、模、共轭与幂运算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">复数计算器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#复数</span><span class="badge">#虚数</span><span class="badge">#欧拉</span>
+<div class="field-row">
+  <div class="field"><label for="cxA">复数 A</label><input id="cxA" value="1+2i"></div>
+  <div class="field"><label for="cxB">复数 B</label><input id="cxB" value="3-4i"></div>
+</div>
+<div class="field">
+  <label for="cxOp">运算</label>
+  <select id="cxOp">
+    <option value="0">A + B</option>
+    <option value="1">A - B</option>
+    <option value="2">A × B</option>
+    <option value="3">A ÷ B</option>
+    <option value="4">A²</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="cxGo" type="button">计算</button>
+</div>
+<div class="result-box" id="cxOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+
+    <h2>常见问题</h2>
+    <div class="faq"></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>复数计算器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='complex-number';}); _r.unshift('complex-number'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cxA = document.getElementById('cxA');
+var cxB = document.getElementById('cxB');
+var cxOp = document.getElementById('cxOp');
+var cxGo = document.getElementById('cxGo');
+var cxOut = document.getElementById('cxOut');
+
+function parseComplex(s) {
+  if (typeof s !== 'string') return null;
+  s = s.replace(/\s+/g, '');
+  if (s === '') return null;
+  var re = 0;
+  var im = 0;
+  if (/i/i.test(s)) {
+    var m1 = /^([+-]?)(?:(\d+(?:\.\d+)?|\.\d+))?i$/.exec(s);
+    if (m1) {
+      if (m1[2] === undefined) im = (m1[1] === '-' ? -1 : 1);
+      else im = (m1[1] === '-' ? -1 : 1) * parseFloat(m1[2]);
+    } else {
+      var m2 = /^([+-]?(?:\d+(?:\.\d+)?|\.\d+))([+-])(?:(\d+(?:\.\d+)?|\.\d+))?i$/.exec(s);
+      if (!m2) return null;
+      re = parseFloat(m2[1]);
+      var f = m2[3] === undefined ? 1 : parseFloat(m2[3]);
+      im = (m2[2] === '-' ? -1 : 1) * f;
+    }
+  } else {
+    if (!/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(s)) return null;
+    re = parseFloat(s);
+  }
+  if (!isFinite(re) || !isFinite(im)) return null;
+  return { re: re, im: im };
+}
+
+function cAdd(a, b) { return { re: a.re + b.re, im: a.im + b.im }; }
+function cSub(a, b) { return { re: a.re - b.re, im: a.im - b.im }; }
+function cMul(a, b) { return { re: a.re * b.re - a.im * b.im, im: a.re * b.im + a.im * b.re }; }
+function cMod(z) { return Math.sqrt(z.re * z.re + z.im * z.im); }
+function cConj(z) { return { re: z.re, im: -z.im }; }
+function cInv(z) {
+  var d = z.re * z.re + z.im * z.im;
+  if (d === 0) return null;
+  return { re: z.re / d, im: -z.im / d };
+}
+function cDiv(a, b) {
+  var inv = cInv(b);
+  if (inv === null) return null;
+  return cMul(a, inv);
+}
+function cPow(z, n) {
+  n = Math.round(n);
+  if (n < 0) {
+    var inv = cInv(z);
+    if (inv === null) return null;
+    return cPow(inv, -n);
+  }
+  if (n === 0) return { re: 1, im: 0 };
+  var r = { re: 1, im: 0 };
+  for (var i = 0; i < n; i++) r = cMul(r, z);
+  return r;
+}
+
+function fmtComplex(z, digits) {
+  digits = digits || 6;
+  var re = +z.re.toFixed(digits);
+  var im = +z.im.toFixed(digits);
+  if (im === 0) return String(re);
+  if (re === 0) {
+    if (im === 1) return 'i';
+    if (im === -1) return '-i';
+    return im + 'i';
+  }
+  return re + (im < 0 ? ' - ' : ' + ') + Math.abs(im) + 'i';
+}
+
+cxGo.addEventListener('click', function () {
+  var a = parseComplex(cxA.value);
+  var b = parseComplex(cxB.value);
+  if (a === null || b === null) {
+    cxOut.textContent = '请输入合法的复数，例如：3+4i、2-3i、i、5。';
+    return;
+  }
+  var n = parseInt(cxOp.value, 10);
+  var z, label;
+  if (n === 0) { z = cAdd(a, b); label = 'A + B'; }
+  else if (n === 1) { z = cSub(a, b); label = 'A - B'; }
+  else if (n === 2) { z = cMul(a, b); label = 'A × B'; }
+  else if (n === 3) { z = cDiv(a, b); label = 'A ÷ B'; }
+  else { z = cPow(a, 2); label = 'A²'; }
+  cxOut.innerHTML =
+    '<div class="stat"><div class="num">' + fmtComplex(z, 8) + '</div><div class="label">' + label + '</div></div>' +
+    '<div class="stat"><div class="num">' + cMod(a).toPrecision(10) + ' / ' + cMod(b).toPrecision(10) + '</div><div class="label">模长 |A| / |B|</div></div>' +
+    '<div class="stat"><div class="num">' + fmtComplex(cConj(a), 6) + ' / ' + fmtComplex(cInv(a), 6) + '</div><div class="label">A 的共轭 / 倒数</div></div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
