@@ -87,26 +87,52 @@ var dyResult = document.getElementById('dyResult');
   function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
   var WEEK = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 
+  // 通用 ISO 规则：某年第 1 周 = 包含该年 1 月 4 日的周（周一起始）
+  function firstWeekStart(year) {
+    var jan4 = new Date(year, 0, 4);
+    var diff = (jan4.getDay() - 1 + 7) % 7;
+    var start = new Date(year, 0, 4);
+    start.setDate(jan4.getDate() - diff);
+    return start;
+  }
+  function calcISOWeek(date) {
+    var y = date.getFullYear();
+    for (var off = -1; off <= 1; off++) {
+      var cand = y + off;
+      var fs = firstWeekStart(cand);
+      var week = Math.floor((date - fs) / 86400000 / 7) + 1;
+      if (week >= 1 && week <= 53) {
+        var weekCount = Math.round((firstWeekStart(cand + 1) - fs) / 86400000 / 7);
+        if (week <= weekCount) return { year: cand, week: week };
+      }
+    }
+    return { year: y, week: 1 };
+  }
+
   document.getElementById('dyBtn').addEventListener('click', function () {
     var val = document.getElementById('dyDate').value;
     if (!val) { showToast('请选择日期'); return; }
     var d = new Date(val + 'T00:00:00');
+    if (isNaN(d)) { showToast('日期无效'); return; }
     var y = d.getFullYear();
     var start = new Date(y, 0, 1);
     var daysInYear = isLeap(y) ? 366 : 365;
     var dayOfYear = Math.round((d - start) / 86400000) + 1;
     var remain = daysInYear - dayOfYear;
-    var isoWeek = Math.ceil(((d - new Date(d.getFullYear(), 0, 1)) / 86400000 + new Date(d.getFullYear(), 0, 1).getDay() + 1) / 7);
+    var iso = calcISOWeek(d);
+    var isoLabel = 'ISO ' + iso.year + '年第 ' + iso.week + ' 周';
     dyResult.hidden = false;
     dyResult.innerHTML =
       y + ' 年是<b style="color:var(--primary);">' + (isLeap(y) ? '闰年' : '平年') + '</b>（共 ' + daysInYear + ' 天）<br>' +
       '这是今年第：<b style="font-size:26px;">' + dayOfYear + '</b> 天<br>' +
       '距离年底还剩：<b>' + remain + '</b> 天<br>' +
-      '今天：<b>' + WEEK[d.getDay()] + '</b>（ISO 第 ' + isoWeek + ' 周）<br>' +
+      '今天：<b>' + WEEK[d.getDay()] + '</b>（' + isoLabel + '）<br>' +
       '今年已过：<b>' + (dayOfYear / daysInYear * 100).toFixed(1) + '%</b>';
   });
 
-  document.getElementById('dyDate').value = new Date().toISOString().slice(0, 10);
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  var now = new Date();
+  document.getElementById('dyDate').value = now.getFullYear() + '-' + pad2(now.getMonth() + 1) + '-' + pad2(now.getDate());
   document.getElementById('dyBtn').click();
   window.toggleTheme = function () {
     var r = document.documentElement;
