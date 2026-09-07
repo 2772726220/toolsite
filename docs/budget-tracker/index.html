@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线记账本 - 收支流水与支出分类统计</title>
+  <meta name="description" content="简洁的在线记账本：快速添加收入/支出、按分类自动汇总、计算结余与储蓄率。所有数据仅在浏览器本地，不上传服务器，适合个人月度预算管理。" />
+  <meta name="keywords" content="记账本,在线记账,收支管理,预算,支出分类,储蓄率">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u600e\u4e48\u6dfb\u52a0\u8bb0\u5f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9009\u62e9\u6536\u5165\u6216\u652f\u51fa\u3001\u586b\u5199\u91d1\u989d\u4e0e\u5206\u7c7b\uff08\u6216\u81ea\u5b9a\u4e49\u5206\u7c7b\uff09\uff0c\u70b9\u51fb\u300c\u6dfb\u52a0\u8bb0\u5f55\u300d\u5373\u8fdb\u5165\u4e0b\u65b9\u660e\u7ec6\u3002"}},{"@type":"Question","name":"\u50a8\u84c4\u7387\u600e\u4e48\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u50a8\u84c4\u7387 = (\u603b\u6536\u5165 - \u603b\u652f\u51fa) \u00f7 \u603b\u6536\u5165 \u00d7 100%\u3002\u5b83\u53cd\u6620\u6536\u5165\u7684\u7559\u5b58\u6bd4\u4f8b\uff0c\u8d8a\u9ad8\u8bf4\u660e\u7ed3\u4f59\u8d8a\u5145\u8db3\u3002"}},{"@type":"Question","name":"\u80fd\u4fdd\u5b58\u6570\u636e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e3a\u4fdd\u62a4\u9690\u79c1\uff0c\u660e\u7ec6\u53ea\u4fdd\u5b58\u5728\u5f53\u524d\u9875\u9762\u5185\u5b58\u4e2d\uff0c\u5173\u95ed\u6216\u5237\u65b0\u9875\u9762\u4f1a\u6e05\u7a7a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>💰 记账本</h1>
+    <p>月度收支记账，自动汇总支出分类与储蓄率</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">记账本</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#记账</span><span class="badge">#预算</span><span class="badge">#支出</span><span class="badge">#储蓄率</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1.3fr; gap:12px;">
+  <div>
+    <label>新增收支</label>
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:6px;">
+      <select id="btType" style="width:100%;">
+        <option value="in">收入</option>
+        <option value="out" selected>支出</option>
+      </select>
+      <input type="number" id="btAmount" value="300" min="0" step="0.01" style="width:100%;">
+    </div>
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:6px;margin-top:6px;">
+      <select id="btCat" style="width:100%;">
+        <option>餐饮</option><option>交通</option><option>购物</option><option>房租</option><option>娱乐</option><option>医疗</option><option>教育</option><option>水电</option><option>其他</option>
+      </select>
+      <div><input type="text" id="btCatCustom" placeholder="自定义分类" style="width:100%;"></div>
+    </div>
+    <input type="text" id="btNote" placeholder="备注（可留空）" style="width:100%;margin-top:6px;">
+    <button class="btn btn-primary" id="btAdd" style="width:100%;margin-top:8px;">添加记录</button>
+    <label style="margin-top:12px;">预设示例</label>
+    <button class="btn" id="btSample" style="width:100%;margin-top:6px;">填入示例数据</button>
+    <button class="btn" id="btClear" style="width:100%;margin-top:6px;">清空全部</button>
+  </div>
+  <div>
+    <label>本月明细与汇总</label>
+    <div id="btSummary" style="border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;line-height:1.9;"></div>
+    <div id="btRows" style="max-height:260px;overflow:auto;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>记账有什么用？</h2><p>记录每一笔收支并分类汇总，能直观看到钱花在哪里，帮你在预算内控制开销、提高储蓄率。</p><h2>数据安全吗？</h2><p>本工具完全在浏览器本地运行，不连接任何服务器，记录不会上传，刷新页面即清空（如需长期保存请自行导出记账）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>怎么添加记录？</summary><p>选择收入或支出、填写金额与分类（或自定义分类），点击「添加记录」即进入下方明细。</p></details><details class="faq-item"><summary>储蓄率怎么算？</summary><p>储蓄率 = (总收入 - 总支出) ÷ 总收入 × 100%。它反映收入的留存比例，越高说明结余越充足。</p></details><details class="faq-item"><summary>能保存数据吗？</summary><p>为保护隐私，明细只保存在当前页面内存中，关闭或刷新页面会清空。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>记账本 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='budget-tracker';}); _r.unshift('budget-tracker'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var btType = document.getElementById('btType');
+var btAmount = document.getElementById('btAmount');
+var btCat = document.getElementById('btCat');
+var btCatCustom = document.getElementById('btCatCustom');
+var btNote = document.getElementById('btNote');
+var btAdd = document.getElementById('btAdd');
+var btSample = document.getElementById('btSample');
+var btClear = document.getElementById('btClear');
+var btSummary = document.getElementById('btSummary');
+var btRows = document.getElementById('btRows');
+
+var btData = [];
+
+function fmtMoney(x) {
+  var neg = x < 0;
+  var v = Math.abs(x);
+  var s = v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + '¥' + s;
+}
+
+function calcBudget(rows) {
+  var income = 0, expense = 0, byCat = {};
+  var out = [];
+  (rows || []).forEach(function (r) {
+    var amt = Number(r && r.amount);
+    if (!isFinite(amt) || amt <= 0) return;
+    var cat = String(r.cat || '其他').trim() || '其他';
+    if (r.type === 'in') income += amt;
+    else if (r.type === 'out') { expense += amt; byCat[cat] = (byCat[cat] || 0) + amt; }
+    out.push({ type: r.type, amount: amt, cat: cat, note: String(r.note || '') });
+  });
+  var net = income - expense;
+  var rate = income > 0 ? (net / income) * 100 : 0;
+  return { income: income, expense: expense, net: net, rate: rate, byCat: byCat, rows: out };
+}
+
+function catOf() {
+  var c = btCatCustom.value.trim();
+  return c || btCat.value;
+}
+
+function render() {
+  var s = calcBudget(btData);
+  var sumHtml = '<div style="display:flex;justify-content:space-between;"><b>总收入</b><span style="color:#16a34a;">' + fmtMoney(s.income) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;"><b>总支出</b><span style="color:#dc2626;">' + fmtMoney(s.expense) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;border-top:1px dashed var(--border);margin-top:4px;padding-top:4px;"><b>结余</b><b>' + fmtMoney(s.net) + '</b></div>' +
+    '<div style="display:flex;justify-content:space-between;"><b>储蓄率</b><span>' + (s.rate === 0 && s.income === 0 ? '—' : s.rate.toFixed(1) + '%') + '</span></div>';
+  var cats = Object.keys(s.byCat).sort(function (a, b) { return s.byCat[b] - s.byCat[a]; });
+  if (cats.length) {
+    sumHtml += '<div style="margin-top:6px;font-size:12px;color:var(--muted);">支出分类：' +
+      cats.map(function (c) { return c + ' ' + fmtMoney(s.byCat[c]); }).join(' · ') + '</div>';
+  }
+  btSummary.innerHTML = sumHtml;
+  if (!s.rows.length) { btRows.innerHTML = '<div class="hint">暂无记录，点「填入示例数据」试试。</div>'; return; }
+  var html = '';
+  s.rows.forEach(function (r, i) {
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;">' +
+      '<div><span style="' + (r.type === 'in' ? 'color:#16a34a;' : 'color:#dc2626;') + '">' + (r.type === 'in' ? '收' : '支') + '</span> ' +
+      '<b>' + esc(r.cat) + '</b>' + (r.note ? ' <span style="color:var(--muted);font-size:12px;">' + esc(r.note) + '</span>' : '') + '</div>' +
+      '<div style="display:flex;align-items:center;gap:10px;">' +
+      '<span ' + (r.type === 'in' ? 'style="color:#16a34a;"' : 'style="color:#dc2626;"') + '>' + (r.type === 'in' ? '+' : '-') + fmtMoney(r.amount) + '</span>' +
+      '<button class="btn btn-sm" style="padding:2px 8px;" data-i="' + i + '">删除</button></div></div>';
+  });
+  btRows.innerHTML = html;
+  Array.prototype.forEach.call(btRows.querySelectorAll('[data-i]'), function (b) {
+    b.addEventListener('click', function () {
+      btData.splice(parseInt(b.getAttribute('data-i'), 10), 1);
+      render();
+    });
+  });
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+btAdd.addEventListener('click', function () {
+  var amt = parseFloat(btAmount.value);
+  if (!isFinite(amt) || amt <= 0) { showToast('请输入有效金额'); return; }
+  btData.push({ type: btType.value, amount: amt, cat: catOf(), note: btNote.value.trim() });
+  btAmount.value = '';
+  btNote.value = '';
+  btCatCustom.value = '';
+  render();
+});
+
+btSample.addEventListener('click', function () {
+  btData = [
+    { type: 'in', amount: 5000, cat: '工资', note: '' },
+    { type: 'out', amount: 1200, cat: '房租', note: '' },
+    { type: 'out', amount: 300, cat: '餐饮', note: '' },
+    { type: 'out', amount: 100, cat: '交通', note: '' },
+  ];
+  render();
+});
+
+btClear.addEventListener('click', function () { btData = []; render(); });
+
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
