@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线日期格式化工具 - 自定义日期时间格式转换</title>
+  <meta name="description" content="在线日期时间格式化器：按模板把日期转换成任意格式（YYYY-MM-DD、HH:mm、hh:mm A、时间戳等），支持常用预设与星期、季度信息展示。" />
+  <meta name="keywords" content="日期格式化,时间格式化,日期转换,时间戳转换,日期模板,formatDate">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📆</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u65f6\u533a\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u4f7f\u7528\u60a8\u7535\u8111\u7684\u672c\u5730\u65f6\u533a\u89e3\u6790\u4e0e\u683c\u5f0f\u5316\uff0c\u5c55\u793a\u7684\u662f\u60a8\u6240\u5728\u65f6\u533a\u7684\u65f6\u95f4\u3002"}},{"@type":"Question","name":"\u8f6c\u5316\u65f6\u95f4\u6233\u6709\u4ec0\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"X \u4ee4\u724c\u8f93\u51fa Unix \u79d2\u7ea7\u65f6\u95f4\u6233\uff0c\u65b9\u4fbf\u4e0e\u540e\u7aef\u63a5\u53e3\u3001\u4ee3\u7801\u8c03\u8bd5\u5bf9\u9f50\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48 hh \u663e\u793a 12\uff1f","acceptedAnswer":{"@type":"Answer","text":"12 \u5c0f\u65f6\u5236\u7684 12 \u70b9\u663e\u793a\u4e3a 12\uff080 \u70b9\u4e5f\u663e\u793a 12\uff09\uff0c\u7b26\u5408\u5e38\u89c1\u65f6\u949f\u4e60\u60ef\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📆 日期格式化</h1>
+    <p>自定义日期格式，YYYY-MM-DD/hh:mm A/时间戳一键转换</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">日期格式化</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#日期</span><span class="badge">#格式化</span><span class="badge">#时间戳</span><span class="badge">#模板</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1.4fr; gap:12px;">
+  <div>
+    <label>日期时间</label>
+    <input type="datetime-local" id="dfInput">
+    <button class="btn" id="dfNow" style="width:100%;margin-top:6px;">使用当前时间</button>
+    <label style="margin-top:10px;">格式模式</label>
+    <input type="text" id="dfPattern" value="YYYY-MM-DD HH:mm:ss" style="width:100%;font-family:Consolas,Menlo,monospace;">
+    <div class="hint" style="margin-top:6px;line-height:1.9;">YYYY=年 YY=两位年 MM=月 DD=日 HH=24时 hh=12时 mm=分 ss=秒 SSS=毫秒 A=上下午 ddd=星期 Q=季度 X=时间戳(秒)</div>
+    <label style="margin-top:10px;">常用预设</label>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;" id="dfPresets"></div>
+  </div>
+  <div>
+    <label>结果</label>
+    <textarea id="dfOut" rows="3" style="width:100%;font-family:Consolas,Menlo,monospace;font-size:15px;border:1px solid var(--border);border-radius:8px;padding:12px;" readonly></textarea>
+    <div id="dfTokens" style="margin-top:8px;font-family:Consolas,Menlo,monospace;font-size:13px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么自定义格式？</h2><p>在格式框输入组合令牌即可，如 YYYY 年、MM 月、DD 日、HH 24小时、hh 12小时、A 上下午、X 时间戳。令牌按从长到短顺序解析。</p><h2>格式令牌有哪些？</h2><p>YYYY/YY=年，MM/M=月，DD/D=日，HH/H=24小时，hh/h=12小时，mm=分，ss=秒，SSS=毫秒，ddd=星期，Q=季度，X=Unix 时间戳。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>时区怎么处理？</summary><p>本工具使用您电脑的本地时区解析与格式化，展示的是您所在时区的时间。</p></details><details class="faq-item"><summary>转化时间戳有什么用？</summary><p>X 令牌输出 Unix 秒级时间戳，方便与后端接口、代码调试对齐。</p></details><details class="faq-item"><summary>为什么 hh 显示 12？</summary><p>12 小时制的 12 点显示为 12（0 点也显示 12），符合常见时钟习惯。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>日期格式化 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='date-format';}); _r.unshift('date-format'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dfInput = document.getElementById('dfInput');
+var dfNowBtn = document.getElementById('dfNow');
+var dfPattern = document.getElementById('dfPattern');
+var dfOut = document.getElementById('dfOut');
+var dfTokens = document.getElementById('dfTokens');
+var dfPresets = document.getElementById('dfPresets');
+
+var DF_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var DF_NAMES_CN = ['日', '一', '二', '三', '四', '五', '六'];
+
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function pad3(n) { return (n < 100 ? (n < 10 ? '00' : '0') : '') + n; }
+
+function formatDate(d, pattern) {
+  if (!d || isNaN(d.getTime())) return null;
+  var y = d.getFullYear();
+  var mo = d.getMonth() + 1;
+  var day = d.getDate();
+  var h = d.getHours();
+  var h12 = h % 12;
+  if (h12 === 0) h12 = 12;
+  var mi = d.getMinutes();
+  var s = d.getSeconds();
+  var ms = d.getMilliseconds();
+  var tokens = {
+    YYYY: String(y), YY: pad2(y % 100),
+    MM: pad2(mo), M: String(mo),
+    DD: pad2(day), D: String(day),
+    HH: pad2(h), H: String(h),
+    hh: pad2(h12), h: String(h12),
+    mm: pad2(mi), ss: pad2(s), SSS: pad3(ms),
+    A: h < 12 ? 'AM' : 'PM',
+    ddd: DF_NAMES[d.getDay()], dd: '周' + DF_NAMES_CN[d.getDay()],
+    Q: String(Math.floor((mo - 1) / 3) + 1),
+    X: String(Math.floor(d.getTime() / 1000)),
+  };
+  return String(pattern).replace(/YYYY|YY|MM|M|DD|D|HH|H|hh|h|mm|ss|SSS|A|ddd|dd|Q|X/g, function (tk) { return tokens[tk] !== undefined ? tokens[tk] : tk; });
+}
+
+function parseDateTimeLocal(v) {
+  if (!v) return null;
+  var d = new Date(v);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+var DF_PRESETS = [
+  'YYYY-MM-DD', 'YYYY/MM/DD', 'YYYY年MM月DD日', 'YYYY-MM-DD HH:mm:ss',
+  'MM/DD/YYYY', 'HH:mm:ss', 'hh:mm A', 'YYYY-MM-DD HH:mm', 'ddd, YYYY-MM-DD', 'Q季度 X',
+];
+
+DF_PRESETS.forEach(function (p) {
+  var btn = document.createElement('button');
+  btn.className = 'btn btn-sm';
+  btn.textContent = p;
+  btn.addEventListener('click', function () {
+    dfPattern.value = p;
+    render();
+  });
+  dfPresets.appendChild(btn);
+});
+
+function render() {
+  var d = dfInput.value ? parseDateTimeLocal(dfInput.value) : null;
+  if (!d) { dfOut.value = ''; dfTokens.textContent = '请输入或选择有效的时间'; return; }
+  var pat = dfPattern.value || 'YYYY-MM-DD';
+  dfOut.value = formatDate(d, pat);
+  dfTokens.textContent = '时间戳：' + Math.floor(d.getTime() / 1000) + ' 秒\n星期：' + DF_NAMES[d.getDay()] + '（周' + DF_NAMES_CN[d.getDay()] + '）\n季度：Q' + (Math.floor((d.getMonth()) / 3) + 1);
+}
+
+function dfNow() {
+  var now = new Date();
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  dfInput.value = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + 'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+  render();
+}
+
+dfNowBtn.addEventListener('click', dfNow);
+dfInput.addEventListener('change', render);
+dfPattern.addEventListener('input', render);
+
+dfNow();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
