@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel日期序列号转换 - 日期与序列号互转工具</title>
+  <meta name="description" content="免费在线 Excel 日期序列号转换工具：日期转序列号、序列号转日期，遵循 Excel 的 1900 系统（含 1900-02-29 假日期坑），浏览器本地计算，适合 VLOOKUP、写代码与数据清洗。" />
+  <meta name="keywords" content="Excel日期,日期序列号,序列号转日期,日期转换,Excel序列号">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5e8f\u5217\u53f7 60 \u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"Excel \u7684 bug \u628a 1900 \u5e74\u5f53\u6210\u95f0\u5e74\uff0c\u5e8f\u5217\u53f7 60 \u5bf9\u5e94\u4e0d\u5b58\u5728\u7684 1900-02-29\u3002\u672c\u5de5\u5177\u4f1a\u660e\u786e\u63d0\u793a\uff0c1899 \u5e74\u4e4b\u540e\u7684\u65e5\u671f\u8f6c\u6362\u4e0d\u53d7\u5f71\u54cd\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5230\u591a\u8fdc\u7684\u65e5\u671f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 1900-01-01 \u5230 9999-12-31\uff0c\u5bf9\u5e94\u5e8f\u5217\u53f7 1 \u5230 2958465\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5230\u670d\u52a1\u5668\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6574\u4e2a\u8f6c\u6362\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📅 Excel日期串号</h1>
+    <p>日期与 Excel 序列号互转，办公/导入导出必备</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/date/">📅 日期时间</a><span class="crumb-sep">›</span><span class="crumb-cur">Excel日期串号</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#Excel</span><span class="badge">#日期</span><span class="badge">#序列号</span><span class="badge">#转换</span>
+<h3>Excel 日期序列号转换</h3>
+<p class="muted">Excel 把日期存成从 1900 年开始的天数（整数序列号），本工具在日期和序列号之间一键互转，全程本地计算。</p>
+<div class="row">
+  <div class="col">
+    <label>日期</label>
+    <input id="edDate" type="date">
+    <button id="edToSerial">日期 → 序列号</button>
+  </div>
+  <div class="col">
+    <label>Excel 序列号</label>
+    <input id="edSerial" type="number" placeholder="例如 45292" min="0" max="2958465">
+    <button id="edToDate">序列号 → 日期</button>
+  </div>
+</div>
+<div id="edDateOut"></div>
+<div id="edSerialOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Excel 日期序列号是什么？</h2><p>Excel 用从 1900-01-00 开始的连续天数保存日期，序列号 1 表示 1900-01-01，45292 表示 2024-01-01。理解序列号有助于排查 VLOOKUP 与日期比较的坑。</p><h2>这个工具和普通日期换算有什么不同？</h2><p>本工具严格按 Excel 的 1900 日期系统计算，并处理了著名的 1900-02-29 假日期 bug，保证 1900-03-01 之后的序列号与办公软件完全一致。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>序列号 60 是什么？</summary><p>Excel 的 bug 把 1900 年当成闰年，序列号 60 对应不存在的 1900-02-29。本工具会明确提示，1899 年之后的日期转换不受影响。</p></details><details class="faq-item"><summary>支持到多远的日期？</summary><p>支持 1900-01-01 到 9999-12-31，对应序列号 1 到 2958465。</p></details><details class="faq-item"><summary>数据会上传到服务器吗？</summary><p>不会，整个转换在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多日期时间工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../date-calculator/" class="t-card" data-cat="date" data-tags="日期 计算" data-name="日期计算器 日期差、加减天数、星期推算 日期 计算"><div class="t-icon">📅</div><div class="t-name">日期计算器</div><div class="t-desc">日期差、加减天数、星期推算</div><div class="t-tags"><span class="tt">#日期</span><span class="tt">#计算</span></div></a><a href="../stopwatch/" class="t-card" data-cat="date" data-tags="秒表 计时" data-name="在线秒表 计时器、秒表、记次计时 秒表 计时"><div class="t-icon">⏱️</div><div class="t-name">在线秒表</div><div class="t-desc">计时器、秒表、记次计时</div><div class="t-tags"><span class="tt">#秒表</span><span class="tt">#计时</span></div></a><a href="../time-diff/" class="t-card" data-cat="date" data-tags="时间差 计算" data-name="时间差计算 计算两个时间点相差多少 时间差 计算"><div class="t-icon">⏳</div><div class="t-name">时间差计算</div><div class="t-desc">计算两个时间点相差多少</div><div class="t-tags"><span class="tt">#时间差</span><span class="tt">#计算</span></div></a><a href="../countdown-timer/" class="t-card" data-cat="date" data-tags="倒计时 计时" data-name="倒计时器 分钟级倒计时，到点提醒 倒计时 计时"><div class="t-icon">⏰</div><div class="t-name">倒计时器</div><div class="t-desc">分钟级倒计时，到点提醒</div><div class="t-tags"><span class="tt">#倒计时</span><span class="tt">#计时</span></div></a><a href="../week-number/" class="t-card" data-cat="date" data-tags="周数 日期" data-name="日期第几周 计算日期是当年的第几周 周数 日期"><div class="t-icon">📅</div><div class="t-name">日期第几周</div><div class="t-desc">计算日期是当年的第几周</div><div class="t-tags"><span class="tt">#周数</span><span class="tt">#日期</span></div></a><a href="../age-calculator/" class="t-card" data-cat="date" data-tags="年龄 周岁" data-name="年龄计算器 精确计算出生到现在的年龄 年龄 周岁"><div class="t-icon">🎂</div><div class="t-name">年龄计算器</div><div class="t-desc">精确计算出生到现在的年龄</div><div class="t-tags"><span class="tt">#年龄</span><span class="tt">#周岁</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>Excel日期串号 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='excel-date';}); _r.unshift('excel-date'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var edDate = document.getElementById('edDate');
+var edSerial = document.getElementById('edSerial');
+var edToSerial = document.getElementById('edToSerial');
+var edToDate = document.getElementById('edToDate');
+var edDateOut = document.getElementById('edDateOut');
+var edSerialOut = document.getElementById('edSerialOut');
+var NOW = new Date();
+edDate.value = NOW.getFullYear() + '-' + String(NOW.getMonth() + 1).padStart(2, '0') + '-' + String(NOW.getDate()).padStart(2, '0');
+
+function dutc(y, m, d) {
+  return Date.UTC(y, m - 1, d);
+}
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+function dateToExcel(y, m, d) {
+  y = Number(y); m = Number(m); d = Number(d);
+  if (!(y >= 1900 && y <= 9999) || !(m >= 1 && m <= 12) || !(d >= 1 && d <= 31)) return NaN;
+  var s = Math.round((dutc(y, m, d) - dutc(1899, 12, 30)) / 86400000);
+  if (s <= 60) s -= 1;
+  return s;
+}
+
+function excelToDate(serial) {
+  serial = Number(serial);
+  if (!(serial >= 0 && serial <= 2958465)) return null;
+  var base = serial < 61 ? dutc(1899, 12, 31) : dutc(1899, 12, 30);
+  var dt = new Date(base + serial * 86400000);
+  if (isNaN(dt.getTime())) return null;
+  return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+}
+
+function fmtDate(o) {
+  if (!o) return '—';
+  return o.y + '-' + pad2(o.m) + '-' + pad2(o.d);
+}
+
+edToSerial.addEventListener('click', function () {
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(edDate.value);
+  if (!m) { edDateOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请输入合法日期（YYYY-MM-DD）</div>'; return; }
+  var s = dateToExcel(+m[1], +m[2], +m[3]);
+  if (isNaN(s)) { edDateOut.innerHTML = '<div class="result-box" style="color:#dc2626;">日期超出支持范围（1900-01-01 ~ 9999-12-31）</div>'; return; }
+  edDateOut.innerHTML = '<div class="result-box">日期 <b>' + edDate.value + '</b> 的 Excel 序列号 = <b>' + s + '</b></div><div class="hint">显示的序列号用于在 Excel 中填写、VLOOKUP 匹配或代码里直接使用，1900-03-01 之后数值正确。</div>';
+});
+
+edToDate.addEventListener('click', function () {
+  var o = excelToDate(edSerial.value);
+  if (!o) { edSerialOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请输入 0 ~ 2958465 的序列号</div>'; return; }
+  edSerialOut.innerHTML = '<div class="result-box">序列号 <b>' + Number(edSerial.value) + '</b> 对应日期 = <b>' + fmtDate(o) + '</b>' +
+    (Number(edSerial.value) === 60 ? '（Excel 假日期 1900-02-29，真实日历显示为 1900-03-01）' : '') +
+    '</div><div class="hint">原始序列号 0 表示 1900-01-00，Excel 会显示为 1900-01-00（即 1899-12-31）。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
