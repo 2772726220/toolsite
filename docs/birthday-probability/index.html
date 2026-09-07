@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日悖论概率计算器 - 同一天生日概率</title>
+  <meta name="description" content="在线生日悖论计算器：输入人数与年份天数，计算至少两人同一天生日的概率。23 人约 50%、50 人约 97%，理解这个经典概率反直觉现象。" />
+  <meta name="keywords" content="生日悖论,生日概率,同天生日,概率计算,班级生日">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7b97\u6cd5\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528\u7cbe\u786e\u7684\u5bf9\u6570\u7a7a\u95f4\u4e58\u79ef\uff0c\u8bef\u5dee\u5728\u6d6e\u70b9\u7cbe\u5ea6\u5185\uff1b\u9ed8\u8ba4 365 \u5929\uff0c\u95f0\u5e74\u53ef\u81ea\u586b 366\u3002"}},{"@type":"Question","name":"\u4eba\u6570\u80fd\u586b\u591a\u5927\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6700\u591a 1,000,000 \u4eba\uff0c\u5bf9\u6570\u5341\u4e07\u4eba\u7684\u54c8\u5e0c\u78b0\u649e\u5206\u6790\u540c\u6837\u9002\u7528\uff08\u6362\u6210 365 \u5929\u4e4b\u5916\u7684\u53d6\u503c\u5373\u53ef\uff09\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎂 生日悖论概率</h1>
+    <p>n 人至少两人同天生日的概率计算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">生日悖论概率</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#生日悖论</span><span class="badge">#概率</span><span class="badge">#碰撞</span><span class="badge">#随机</span>
+<h3>生日悖论概率计算器</h3>
+<p class="muted">计算 n 个人里至少有两人同一天生日的概率，理解为什么 23 人的班级就有约一半概率「撞生日」。</p>
+<div class="row">
+  <div class="col">
+    <label>人数</label>
+    <input id="bpN" type="number" min="1" max="1000000" step="1" value="23">
+    <label>一年天数</label>
+    <input id="bpDays" type="number" min="2" max="1000000" step="1" value="365">
+    <button id="bpBtn">计算概率</button>
+  </div>
+  <div class="col">
+    <label>结果</label>
+    <div id="bpOut" style="width:100%;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是生日悖论？</h2><p>只需要 23 人，就有一半概率「至少两人同一天生日」。因为比较的是任意两人之间的组合数 C(n,2)，而不是和固定某天撞。</p><h2>怎么算的？</h2><p>概率 = 1 − 所有人生日互不同，乘积式在对数空间内计算避免溢出，人数超过天数概率为 1。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>算法准确吗？</summary><p>采用精确的对数空间乘积，误差在浮点精度内；默认 365 天，闰年可自填 366。</p></details><details class="faq-item"><summary>人数能填多大？</summary><p>最多 1,000,000 人，对数十万人的哈希碰撞分析同样适用（换成 365 天之外的取值即可）。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>生日悖论概率 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='birthday-probability';}); _r.unshift('birthday-probability'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bpN = document.getElementById('bpN');
+var bpDays = document.getElementById('bpDays');
+var bpBtn = document.getElementById('bpBtn');
+var bpOut = document.getElementById('bpOut');
+
+function birthdayProbability(n, days) {
+  n = Number(n); days = Number(days);
+  if (!(n >= 1 && n <= 1000000)) return null;
+  if (!(days >= 2 && days <= 1000000)) return null;
+  if (n >= days) return 1;
+  var logP = 0;
+  n = Math.floor(n); days = Math.floor(days);
+  if (n > days) return 1;
+  for (var i = 0; i < n; i++) {
+    logP += Math.log(1 - i / days);
+  }
+  var p = 1 - Math.exp(logP);
+  return p < 0 ? 0 : p;
+}
+
+function bpSafeLast(n, days, p) {
+  if (n <= 1) return '';
+  var prev = birthdayProbability(n - 1, days);
+  var inc = p - prev;
+  var last = p > 0 ? inc / p * 100 : 0;
+  return '最后 1 人的贡献：' + (p === 0 ? 0 : last).toFixed(2) + '%';
+}
+
+bpBtn.addEventListener('click', function () {
+  var n = Number(bpN.value);
+  var days = Number(bpDays.value);
+  var p = birthdayProbability(n, days);
+  if (p === null) { bpOut.innerHTML = '<div class="result-box" style="color:#dc2626;">人数请输入 1~1,000,000，天数 2~1,000,000</div>'; return; }
+  var pct = (p * 100).toFixed(4);
+  var bar = Math.round(p * 100);
+  bpOut.innerHTML = '<div class="result-box">' +
+    '<div>' + n + ' 人中至少两人同一天生日（生日常见程度忽略闰年）的概率 = <b>' + pct + '%</b></div>' +
+    '<div style="margin-top:6px;background:#f1f5f9;border-radius:6px;height:10px;overflow:hidden;"><div style="width:' + bar + '%;height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);"></div></div>' +
+    '<div style="margin-top:6px;">' + bpSafeLast(n, days, p) + '</div>' +
+    '<div class="hint">23 人约 50%，50 人约 97%——这就是「生日悖论」：冲突概率增长远快于直觉。</div>' +
+    '</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
