@@ -91,39 +91,50 @@ var wnResult = document.getElementById('wnResult');
   var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 
   function pad(n) { return String(n).padStart(2, '0'); }
-
+  var now = new Date();
+  document.getElementById('wnDate').value = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
   document.getElementById('wnBtn').addEventListener('click', function () {
     var v = document.getElementById('wnDate').value;
     if (!v) { showToast('请选择日期'); return; }
     var d = new Date(v + 'T00:00:00');
     if (isNaN(d)) { showToast('日期无效'); return; }
     var startWeekday = parseInt(document.getElementById('wnStart').value, 10);
-    var y = d.getFullYear();
-    var jan1 = new Date(y, 0, 1);
-    var offset = (jan1.getDay() - startWeekday + 7) % 7;
-    var firstDay = new Date(y, 0, 1);
-    firstDay.setDate(firstDay.getDate() - offset);
-    var weekNum = Math.floor((d - firstDay) / 86400000 / 7) + 1;
-    if (weekNum === 0) {
-      y--;
-      var prevJan1 = new Date(y, 0, 1);
-      var prevOffset = (prevJan1.getDay() - startWeekday + 7) % 7;
-      var prevFirst = new Date(y, 0, 1);
-      prevFirst.setDate(prevFirst.getDate() - prevOffset);
-      weekNum = Math.floor((d - prevFirst) / 86400000 / 7) + 1;
+    var calYear = d.getFullYear();
+
+    // 通用 ISO 规则：某年第 1 周 = 包含该年 1 月 4 日的周（支持任意起始日）
+    function firstWeekStart(year, s) {
+      var jan4 = new Date(year, 0, 4);
+      var diff = (jan4.getDay() - s + 7) % 7;
+      var start = new Date(year, 0, 4);
+      start.setDate(jan4.getDate() - diff);
+      return start;
     }
-    var dayOfYear = Math.floor((d - new Date(y, 0, 1)) / 86400000) + 1;
-    var yearEnd = new Date(y, 11, 31);
+    function calcWeek(date, s) {
+      var y = date.getFullYear();
+      for (var off = -1; off <= 1; off++) {
+        var cand = y + off;
+        var fs = firstWeekStart(cand, s);
+        var week = Math.floor((date - fs) / 86400000 / 7) + 1;
+        if (week >= 1 && week <= 53) {
+          var weekCount = Math.round((firstWeekStart(cand + 1, s) - fs) / 86400000 / 7);
+          if (week <= weekCount) return { year: cand, week: week };
+        }
+      }
+      return { year: y, week: 1 };
+    }
+    var r = calcWeek(d, startWeekday);
+    var weekYear = r.year, weekNum = r.week;
+
+    var dayOfYear = Math.floor((d - new Date(calYear, 0, 1)) / 86400000) + 1;
+    var yearEnd = new Date(calYear, 11, 31);
     var daysLeft = Math.round((yearEnd - d) / 86400000);
-    var iso = weekNum < 10 ? '0' + weekNum : '' + weekNum;
+    var iso = (weekNum < 10 ? '0' : '') + weekNum;
     wnResult.hidden = false;
     wnResult.innerHTML =
-      v + ' 是<b> ' + y + '</b> 年第 <b style="font-size:22px;">' + iso + '</b> 周<br>' +
-      '星期' + WEEK[d.getDay()] + ' · 当年第 ' + dayOfYear + ' 天<br>' +
-      '距离 ' + y + ' 年结束还有 ' + daysLeft + ' 天';
+      v + ' 是<b> ' + weekYear + '</b> 年第 <b style="font-size:22px;">' + iso + '</b> 周<br>' +
+      '星期' + WEEK[d.getDay()] + ' · ' + calYear + ' 年第 ' + dayOfYear + ' 天<br>' +
+      '距离 ' + calYear + ' 年结束还有 ' + daysLeft + ' 天';
   });
-
-  document.getElementById('wnDate').value = new Date().toISOString().slice(0, 10);
   window.toggleTheme = function () {
     var r = document.documentElement;
     if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
