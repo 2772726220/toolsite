@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线集合运算器 - 并集/交集/差集/对称差计算</title>
+  <meta name="description" content="在线集合运算工具：输入两个集合，一键计算并集、交集、差集、对称差，或判断子集关系，并给出仅在 A、仅在 B、共有的数量划分。" />
+  <meta name="keywords" content="集合运算,并集,交集,差集,对称差,子集,集合计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7a7a\u96c6\u600e\u4e48\u663e\u793a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ed3\u679c\u96c6\u5408\u4e3a\u7a7a\u65f6\u663e\u793a \u2205\u3002"}},{"@type":"Question","name":"\u80fd\u5426\u7528\u4e2d\u6587\u5143\u7d20\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u3002\u5143\u7d20\u6309\u5b57\u7b26\u4e32\u5904\u7406\uff0c\u4e2d\u6587\u3001\u6570\u5b57\u3001\u5b57\u6bcd\u5747\u53ef\u3002"}},{"@type":"Question","name":"\u5b50\u96c6\u5224\u65ad\u600e\u4e48\u7406\u89e3\uff1f","acceptedAnswer":{"@type":"Answer","text":"A\u2286B \u6210\u7acb\u5f53\u4e14\u4ec5\u5f53 A \u7684\u6bcf\u4e2a\u5143\u7d20\u90fd\u5728 B \u4e2d\uff08\u4e0d\u542b\u591a\u4f59\u5143\u7d20\uff09\uff1b\u76f8\u7b49\u4e5f\u7b97\u5b50\u96c6\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⛅ 集合运算</h1>
+    <p>并集/交集/差集/对称差，子集判断</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">集合运算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#集合</span><span class="badge">#并集</span><span class="badge">#交集</span><span class="badge">#差集</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>集合运算计算</title>
+<style>
+textarea { width: 100%; box-sizing: border-box; font-family: monospace; min-height: 60px; resize: vertical; }
+button { margin: 4px 4px 4px 0; }
+select { margin: 4px 4px 4px 0; }
+#scOut { font-family: monospace; font-size: 13px; margin-top: 6px; line-height: 1.7; }
+.hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<p>集合运算工具：输入两个集合（元素用逗号或空格分隔），计算并集、交集、差集、对称差，或判断子集关系。</p>
+<label>集合 A</label>
+<textarea id="scA" placeholder="如 1, 2, 3, 4"></textarea>
+<label>集合 B</label>
+<textarea id="scB" placeholder="如 3, 4, 5, 6"></textarea>
+<select id="scOp">
+  <option value="union">并集 A ∪ B</option>
+  <option value="inter">交集 A ∩ B</option>
+  <option value="diff">差集 A − B</option>
+  <option value="symdiff">对称差 A △ B</option>
+  <option value="subsetA">A ⊆ B（A 是否 B 的子集）</option>
+  <option value="subsetB">B ⊆ A（B 是否 A 的子集）</option>
+</select>
+<button id="scGo">计算</button>
+<p class="hint">元素按字符串去重并保持首次出现顺序。显示 A−本次结果、B−本次结果、共有元素的数量划分。</p>
+<div id="scOut"></div>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>集合运算有哪些？</h2><p>并集 A∪B 是两者的全部元素；交集 A∩B 是共有元素；差集 A−B 是只在 A 的元素；对称差 A△B 是只在一边的元素。</p><h2>怎么输入集合？</h2><p>元素用逗号或空格分隔即可，如 「1, 2, 3」，重复元素自动去重，顺序按首次出现保持。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>空集怎么显示？</summary><p>结果集合为空时显示 ∅。</p></details><details class="faq-item"><summary>能否用中文元素？</summary><p>可以。元素按字符串处理，中文、数字、字母均可。</p></details><details class="faq-item"><summary>子集判断怎么理解？</summary><p>A⊆B 成立当且仅当 A 的每个元素都在 B 中（不含多余元素）；相等也算子集。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>集合运算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='set-calculator';}); _r.unshift('set-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var scA = document.getElementById('scA');
+var scB = document.getElementById('scB');
+var scOp = document.getElementById('scOp');
+var scGo = document.getElementById('scGo');
+var scOut = document.getElementById('scOut');
+
+function parseSet(text) {
+  if (typeof text !== 'string') return [];
+  var parts = text.split(/[\s,，;]+/).filter(function (x) { return x !== ''; });
+  var seen = {}, out = [];
+  for (var i = 0; i < parts.length; i++) {
+    if (Object.prototype.hasOwnProperty.call(seen, parts[i])) continue;
+    seen[parts[i]] = true;
+    out.push(parts[i]);
+  }
+  return out;
+}
+
+function setOps(a, b, mode) {
+  if (!Array.isArray(a) || !Array.isArray(b)) return null;
+  var sa = {}, sb = {};
+  for (var i = 0; i < a.length; i++) sa[a[i]] = true;
+  for (var j = 0; j < b.length; j++) sb[b[j]] = true;
+  var onlyA = [], both = [], onlyB = [];
+  for (var ka in sa) { if (sb[ka]) both.push(ka); else onlyA.push(ka); }
+  for (var kb in sb) { if (!sa[kb]) onlyB.push(kb); }
+  var order = function (arr) {
+    var pos = {}; var idx = -1;
+    for (var n = 0; n < a.length; n++) if (!pos[a[n]]) { idx++; pos[a[n]] = idx; }
+    for (var m = 0; m < b.length; m++) if (!pos[b[m]]) { idx++; pos[b[m]] = idx; }
+    return arr.slice().sort(function (x, y) { return pos[x] - pos[y]; });
+  };
+  onlyA = order(onlyA); onlyB = order(onlyB); both = order(both);
+  var result;
+  switch (mode) {
+    case 'union': result = onlyA.concat(both, onlyB); break;
+    case 'inter': result = both; break;
+    case 'diff': result = onlyA; break;
+    case 'symdiff': result = onlyA.concat(onlyB); break;
+    case 'subsetA': return { subset: onlyA.length === 0, onlyA: onlyA, both: both, onlyB: onlyB };
+    case 'subsetB': return { subset: onlyB.length === 0, onlyA: onlyA, both: both, onlyB: onlyB };
+    default: return null;
+  }
+  return { result: result, onlyA: onlyA, both: both, onlyB: onlyB };
+}
+
+function show() {
+  var A = parseSet(scA.value), B = parseSet(scB.value);
+  var r = setOps(A, B, scOp.value);
+  if (r === null) { scOut.textContent = '请选择运算类型。'; return; }
+  var fmt = function (arr) { return arr.length ? ('{ ' + arr.join(', ') + ' }') : '{ ∅ }'; };
+  if (r.subset !== undefined) {
+    scOut.textContent = (scOp.value === 'subsetA' ? 'A ⊆ B' : 'B ⊆ A') + ' 是否成立：' + (r.subset ? '是 ✓' : '否 ✗')
+      + '\n仅在 A：' + fmt(r.onlyA) + '\n共有：' + fmt(r.both) + '\n仅在 B：' + fmt(r.onlyB)
+      + '\n|A|=' + (r.onlyA.length + r.both.length) + '，|B|=' + (r.onlyB.length + r.both.length) + '，|A∩B|=' + r.both.length;
+    return;
+  }
+  scOut.textContent = '结果（' + r.result.length + ' 个元素）：' + fmt(r.result)
+    + '\n仅在 A：' + fmt(r.onlyA) + '（' + r.onlyA.length + '）'
+    + '\n共有：' + fmt(r.both) + '（' + r.both.length + '）'
+    + '\n仅在 B：' + fmt(r.onlyB) + '（' + r.onlyB.length + '）';
+}
+
+scGo.addEventListener('click', show);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
