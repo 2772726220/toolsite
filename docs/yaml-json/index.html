@@ -91,39 +91,6 @@ var yjYaml2Json = document.getElementById('yjYaml2Json');
 var yjCopy = document.getElementById('yjCopy');
 var yjMsg = document.getElementById('yjMsg');
 
-function jsonToYaml(obj, indent) {
-  indent = indent || '';
-  if (Array.isArray(obj)) {
-    if (obj.length === 0) return '[]';
-    var out = [];
-    for (var i = 0; i < obj.length; i++) {
-      var v = obj[i];
-      if (typeof v === 'object' && v !== null) {
-        out.push(indent + '- ' + Object.keys(v).map(function (k, idx) {
-          var prefix = idx === 0 ? '' : indent + '  ';
-          return prefix + k + ': ' + scalarOrBlock(v[k], indent + '  ');
-        }).join('\n'));
-      } else {
-        out.push(indent + '- ' + scalar(v));
-      }
-    }
-    return out.join('\n');
-  }
-  if (typeof obj === 'object' && obj !== null) {
-    var keys = Object.keys(obj);
-    if (keys.length === 0) return '{}';
-    return keys.map(function (k) {
-      return indent + k + ': ' + scalarOrBlock(obj[k], indent);
-    }).join('\n');
-  }
-  return scalar(obj);
-}
-
-function scalarOrBlock(v, indent) {
-  if (typeof v === 'object' && v !== null) return '\n' + jsonToYaml(v, indent + '  ');
-  return scalar(v);
-}
-
 function scalar(v) {
   if (v === null) return 'null';
   if (typeof v === 'string') {
@@ -134,6 +101,137 @@ function scalar(v) {
     return v;
   }
   return String(v);
+}
+
+function blockLines(v, indent) {
+  if (Array.isArray(v)) return arrLines(v, indent);
+  if (v !== null && typeof v === 'object') return objLines(v, indent);
+  return [indent + scalar(v)];
+}
+
+function objLines(o, indent) {
+  var lines = [];
+  var keys = Object.keys(o);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var v = o[k];
+    var kv = /[ \t]/.test(k) ? '"' + k.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"' : scalar(k);
+    if (v !== null && typeof v === 'object') {
+      lines.push(indent + kv + ':');
+      lines = lines.concat(blockLines(v, indent + '  '));
+    } else {
+      lines.push(indent + kv + ': ' + scalar(v));
+    }
+  }
+  return lines;
+}
+
+function arrLines(a, indent) {
+  var lines = [];
+  for (var i = 0; i < a.length; i++) {
+    var v = a[i];
+    if (v !== null && typeof v === 'object') {
+      lines.push(indent + '-');
+      lines = lines.concat(blockLines(v, indent + '  '));
+    } else {
+      lines.push(indent + '- ' + scalar(v));
+    }
+  }
+  return lines;
+}
+
+function jsonToYaml(obj) {
+  if (Array.isArray(obj)) return obj.length ? arrLines(obj, '').join('\n') : '[]';
+  if (obj !== null && typeof obj === 'object') {
+    var l = objLines(obj, '');
+    return l.length ? l.join('\n') : '{}';
+  }
+  return scalar(obj);
+}
+
+var yjBigSeen = false;
+
+function jsonParsePreserve(text) {
+  var pos = 0;
+  function ws() { while (pos < text.length && ' \t\n\r'.indexOf(text[pos]) >= 0) pos++; }
+  function parseString() {
+    pos++;
+    var s = '';
+    while (pos < text.length) {
+      var ch = text[pos];
+      if (ch === '"') { pos++; return s; }
+      if (ch === '\\') {
+        pos++;
+        var e = text[pos];
+        if (e === '"' || e === '\\' || e === '/') s += e;
+        else if (e === 'b') s += '\b';
+        else if (e === 'f') s += '\f';
+        else if (e === 'n') s += '\n';
+        else if (e === 'r') s += '\r';
+        else if (e === 't') s += '\t';
+        else if (e === 'u') {
+          var u = parseInt(text.slice(pos + 1, pos + 5), 16);
+          pos += 4;
+          if (u >= 0xD800 && u <= 0xDBFF && text.slice(pos + 1, pos + 3) === '\\u') {
+            var lo = parseInt(text.slice(pos + 3, pos + 7), 16);
+            if (lo >= 0xDC00 && lo <= 0xDFFF) { s += String.fromCharCode(u, lo); pos += 6; }
+            else s += String.fromCharCode(u);
+          } else s += String.fromCharCode(u);
+        } else throw new Error('JSON 非法转义 @' + pos);
+        pos++;
+      } else { s += ch; pos++; }
+    }
+    throw new Error('JSON 字符串未闭合');
+  }
+  function parse() {
+    ws();
+    if (pos >= text.length) throw new Error('JSON 意外结尾');
+    var c = text[pos];
+    if (c === '{') {
+      pos++; var o = {}; ws();
+      if (text[pos] === '}') { pos++; return o; }
+      for (;;) {
+        if (text[pos] !== '"') throw new Error('JSON 键必须是字符串 @' + pos);
+        var k = parseString(); ws();
+        if (text[pos] !== ':') throw new Error('JSON 键值缺冒号 @' + pos);
+        pos++;
+        o[k] = parse(); ws();
+        if (text[pos] === ',') { pos++; continue; }
+        if (text[pos] === '}') { pos++; break; }
+        throw new Error('JSON 对象分隔符错误 @' + pos);
+      }
+      return o;
+    }
+    if (c === '[') {
+      pos++; var a = []; ws();
+      if (text[pos] === ']') { pos++; return a; }
+      for (;;) {
+        a.push(parse()); ws();
+        if (text[pos] === ',') { pos++; continue; }
+        if (text[pos] === ']') { pos++; break; }
+        throw new Error('JSON 数组分隔符错误 @' + pos);
+      }
+      return a;
+    }
+    if (c === '"') return parseString();
+    var m = text.slice(pos).match(/^-?\d+(\.\d+)?([eE][+-]?\d+)?/);
+    if (m && (c === '-' || (c >= '0' && c <= '9'))) {
+      pos += m[0].length;
+      var n = Number(m[0]);
+      if (m[0].indexOf('.') < 0 && m[0].indexOf('e') < 0 && m[0].indexOf('E') < 0 && !Number.isSafeInteger(n)) {
+        yjBigSeen = true;
+        return m[0];
+      }
+      return n;
+    }
+    var lit = text.slice(pos).match(/^(true|false|null)/);
+    if (lit) { pos += lit[0].length; return lit[0] === 'true' ? true : lit[0] === 'false' ? false : null; }
+    throw new Error('JSON 意外字符 @' + pos);
+  }
+  var v = parse();
+  ws();
+  if (pos < text.length) throw new Error('JSON 尾部多余内容 @' + pos);
+  return v;
 }
 
 function yamlToJson(text) {
@@ -197,7 +295,7 @@ function yamlToJson(text) {
     if (s === 'false') return false;
     if (/^-?\d+$/.test(s)) {
       var n = parseInt(s, 10);
-      if (n >= -2147483648 && n <= 2147483647) return n;
+      if (!Number.isSafeInteger(n)) return s;
       return n;
     }
     if (/^-?\d+\.\d+$/.test(s)) return parseFloat(s);
@@ -214,9 +312,10 @@ yjJson2Yaml.addEventListener('click', function () {
   var raw = yjIn.value.trim();
   if (!raw) { yjLog('请输入 JSON'); return; }
   try {
-    var obj = JSON.parse(raw);
+    yjBigSeen = false;
+    var obj = jsonParsePreserve(raw);
     yjOut.value = jsonToYaml(obj);
-    yjLog('转换成功 ✓');
+    yjLog('转换成功 ✓' + (yjBigSeen ? '（注意：大整数已按字符串保留精度）' : ''));
   } catch (e) { yjLog('JSON 解析失败：' + e.message, true); }
 });
 
