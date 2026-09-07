@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 贝塞尔曲线生成器 - 可视化缓动函数在线工具</title>
+  <meta name="description" content="在线 CSS cubic-bezier 曲线生成器，可视化拖拽四个控制点实时预览缓动曲线，内置 ease、ease-in、ease-out、ease-in-out 等预设，一键复制 transition 代码并演示动画效果，前端动效调试必备。" />
+  <meta name="keywords" content="cubic-bezier,贝塞尔曲线,CSS缓动,easing,transition,动画曲线">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪄</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"x \u5750\u6807\u4e3a\u4ec0\u4e48\u53ea\u80fd\u662f 0-1\uff1f","acceptedAnswer":{"@type":"Answer","text":"CSS \u8981\u6c42\u4e24\u4e2a\u63a7\u5236\u70b9\u7684 x \u5fc5\u987b\u5728 0-1 \u4e4b\u95f4\uff0c\u5426\u5219\u65f6\u95f4\u51fd\u6570\u65e0\u5b9a\u4e49\uff1by \u53ef\u4ee5\u8d85\u51fa\u4ea7\u751f\u56de\u5f39\u6548\u679c\u3002"}},{"@type":"Question","name":"\u600e\u4e48\u505a\u51fa\u56de\u5f39\u52a8\u753b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a y \u63a7\u5236\u70b9\u8bbe\u4e3a\u5927\u4e8e 1 \u6216\u5c0f\u4e8e 0\uff0c\u66f2\u7ebf\u4f1a\u8d8a\u8fc7\u76ee\u6807\u518d\u56de\u5f39\uff0c\u5f62\u6210\u5f39\u8df3\u611f\uff0c\u4f8b\u5982 (0, -0.5, 1, 1.5)\u3002"}},{"@type":"Question","name":"\u590d\u5236\u7684\u662f\u54ea\u79cd\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u590d\u5236\u540e\u4e3a transition-timing-function: cubic-bezier(...) \u6574\u884c\uff0c\u53ef\u76f4\u63a5\u7c98\u8d34\u5230\u6837\u5f0f\u91cc\uff1b\u66f2\u7ebf\u4e0a\u65b9\u5b9e\u65f6\u9884\u89c8\u52a8\u753b\u6548\u679c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🪄 贝塞尔曲线</h1>
+    <p>CSS 缓动曲线可视化生成器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">贝塞尔曲线</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#贝塞尔</span><span class="badge">#缓动</span><span class="badge">#CSS</span><span class="badge">#动画</span>
+<div class="field">
+  <label>预设缓动</label>
+  <select id="cbPreset">
+    <option value="" selected>自定义</option>
+    <option value="ease">ease（默认）</option>
+    <option value="ease-in">ease-in</option>
+    <option value="ease-out">ease-out</option>
+    <option value="ease-in-out">ease-in-out</option>
+    <option value="linear">linear</option>
+  </select>
+</div>
+<div class="tool-grid" style="grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;">
+  <div class="field"><label for="cbX1">x1</label><input type="number" id="cbX1" value="0.42" min="0" max="1" step="0.01"></div>
+  <div class="field"><label for="cbY1">y1</label><input type="number" id="cbY1" value="0" min="-1" max="1" step="0.01"></div>
+  <div class="field"><label for="cbX2">x2</label><input type="number" id="cbX2" value="0.58" min="0" max="1" step="0.01"></div>
+  <div class="field"><label for="cbY2">y2</label><input type="number" id="cbY2" value="1" min="-1" max="1" step="0.01"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:12px;">
+  <div>
+    <canvas id="cbCanvas" width="300" height="200" style="width:100%;max-width:300px;border:1px solid var(--border,#ddd);border-radius:8px;background:var(--canvas-bg,#fff);touch-action:none;"></canvas>
+    <div style="font-size:12px;color:var(--muted,#666);margin-top:6px;">拖动两个控制点调整曲线</div>
+  </div>
+  <div>
+    <div class="field"><label>CSS 动画曲线</label>
+      <input type="text" id="cbOut" readonly style="width:100%;box-sizing:border-box;font-family:monospace;font-size:13px;">
+    </div>
+    <button class="btn" id="cbCopy">复制 CSS</button>
+    <div id="cbDemo" style="margin-top:14px;height:64px;border-bottom:2px solid var(--border,#ddd);background:linear-gradient(to bottom, transparent 63%, var(--border,#ddd) 63%, var(--border,#ddd) 65%, transparent 65%);">
+      <div id="cbBall" style="width:22px;height:22px;border-radius:50%;background:var(--primary,#2563eb);"></div>
+    </div>
+    <div style="font-size:12px;color:var(--muted,#666);margin-top:4px;">点击复制 CSS 后会演示一次动画</div>
+  </div>
+</div>
+
+<style>
+#cbBall { transform: translateY(-4px); transition: margin-left .3s, left .3s; }
+</style>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>CSS 贝塞尔曲线怎么用？</h2><p>cubic-bezier(x1, y1, x2, y2) 是 CSS transition 的缓动函数，四个参数控制曲线形状；本工具可拖点可视化调整并直接复制使用。</p><h2>预设曲线分别长什么样？</h2><p>ease、ease-in（加速）、ease-out（减速）、ease-in-out（先慢后快再慢）对应 CSS 规范的标准值；linear 为匀速直线。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>x 坐标为什么只能是 0-1？</summary><p>CSS 要求两个控制点的 x 必须在 0-1 之间，否则时间函数无定义；y 可以超出产生回弹效果。</p></details><details class="faq-item"><summary>怎么做出回弹动画？</summary><p>把 y 控制点设为大于 1 或小于 0，曲线会越过目标再回弹，形成弹跳感，例如 (0, -0.5, 1, 1.5)。</p></details><details class="faq-item"><summary>复制的是哪种格式？</summary><p>复制后为 transition-timing-function: cubic-bezier(...) 整行，可直接粘贴到样式里；曲线上方实时预览动画效果。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>贝塞尔曲线 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='cubic-bezier';}); _r.unshift('cubic-bezier'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cbX1 = document.getElementById('cbX1');
+var cbY1 = document.getElementById('cbY1');
+var cbX2 = document.getElementById('cbX2');
+var cbY2 = document.getElementById('cbY2');
+var cbPreset = document.getElementById('cbPreset');
+var cbCanvas = document.getElementById('cbCanvas');
+var cbOut = document.getElementById('cbOut');
+var cbCopy = document.getElementById('cbCopy');
+var cbBall = document.getElementById('cbBall');
+var cbDemo = document.getElementById('cbDemo');
+var ctx = cbCanvas.getContext('2d');
+var dragging = null;
+
+function bezierPoint(t, x1, y1, x2, y2) {
+  var mt = 1 - t;
+  var x = 3 * mt * mt * t * x1 + 3 * mt * t * t * x2 + t * t * t;
+  var y = 3 * mt * mt * t * y1 + 3 * mt * t * t * y2 + t * t * t;
+  return { x: x, y: y };
+}
+
+function curvePoints(n, x1, y1, x2, y2) {
+  var pts = [];
+  for (var i = 0; i <= n; i++) pts.push(bezierPoint(i / n, x1, y1, x2, y2));
+  return pts;
+}
+
+function currentVals() {
+  return [
+    clampX(cbX1.value), clampY(cbY1.value),
+    clampX(cbX2.value), clampY(cbY2.value)
+  ];
+}
+function clampX(v) { var n = Number(v); return isFinite(n) ? Math.min(Math.max(n, 0), 1) : 0; }
+function clampY(v) { var n = Number(v); return isFinite(n) ? Math.min(Math.max(n, -1), 1) : 0; }
+
+function cssString(v) {
+  return 'cubic-bezier(' + v[0].toFixed(2) + ', ' + v[1].toFixed(2) + ', ' + v[2].toFixed(2) + ', ' + v[3].toFixed(2) + ')';
+}
+
+function setLine(c) {
+  if (ctx.setLineDash) ctx.setLineDash(c);
+}
+
+function draw() {
+  var w = cbCanvas.width, h = cbCanvas.height;
+  var v = currentVals();
+  ctx.clearRect(0, 0, w, h);
+  ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, h * 0.5); ctx.lineTo(w, h * 0.5); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(w * 0.5, 0); ctx.lineTo(w * 0.5, h); ctx.stroke();
+  var X = function (p) { return p.x * w; };
+  var Y = function (p) { return (1 - p.y) * h; };
+  var pts = curvePoints(80, v[0], v[1], v[2], v[3]);
+  ctx.strokeStyle = '#2563eb';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(X({ x: 0, y: 0 }), Y({ x: 0, y: 0 }));
+  for (var i = 1; i < pts.length; i++) ctx.lineTo(X(pts[i]), Y(pts[i]));
+  ctx.stroke();
+  var c1 = { x: v[0], y: v[1] }, c2 = { x: v[2], y: v[3] };
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1.5;
+  setLine([4, 4]);
+  ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(X(c1), Y(c1)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(w, 0); ctx.lineTo(X(c2), Y(c2)); ctx.stroke();
+  setLine([]);
+  [c1, c2].forEach(function (c) {
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(X(c), Y(c), 5, 0, 2 * Math.PI); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(X(c), Y(c), 2.2, 0, 2 * Math.PI); ctx.fill();
+  });
+  cbOut.value = cssString(v);
+}
+
+function pointAt(evt) {
+  var rect = cbCanvas.getBoundingClientRect();
+  var mx = (evt.clientX - rect.left) / rect.width;
+  var my = (evt.clientY - rect.top) / rect.height;
+  mx = Math.min(Math.max(mx, 0), 1);
+  var yNorm = Math.min(Math.max(1 - my, 0), 1);
+  return { x: mx, y: yNorm };
+}
+
+function hitTest(p) {
+  var v = currentVals();
+  var c1 = { x: v[0], y: v[1] }, c2 = { x: v[2], y: v[3] };
+  if (Math.abs(p.x - c1.x) < 0.06 && Math.abs(p.y - c1.y) < 0.14) return 0;
+  if (Math.abs(p.x - c2.x) < 0.06 && Math.abs(p.y - c2.y) < 0.14) return 1;
+  return -1;
+}
+
+cbCanvas.addEventListener('mousedown', function (e) {
+  dragging = hitTest(pointAt(e));
+});
+cbCanvas.addEventListener('mousemove', function (e) {
+  if (dragging === null) return;
+  var p = pointAt(e);
+  if (dragging === 0) { cbX1.value = p.x.toFixed(2); cbY1.value = p.y.toFixed(2); }
+  else { cbX2.value = p.x.toFixed(2); cbY2.value = p.y.toFixed(2); }
+  if (dragging === 0 && p.x > 0.98) cbX1.value = '1';
+  draw();
+});
+window.addEventListener('mouseup', function () { dragging = null; });
+
+cbPreset.addEventListener('change', function () {
+  var p = cbPreset.value;
+  if (!p) return;
+  var map = { 'ease': [0.25, 0.1, 0.25, 1], 'ease-in': [0.42, 0, 1, 1], 'ease-out': [0, 0, 0.58, 1], 'ease-in-out': [0.42, 0, 0.58, 1], 'linear': [0, 0, 1, 1] };
+  var v = map[p];
+  if (!v) return;
+  cbX1.value = v[0]; cbY1.value = v[1]; cbX2.value = v[2]; cbY2.value = v[3];
+  draw();
+});
+
+function animateDemo() {
+  var el = cbBall;
+  el.style.transition = 'none';
+  el.style.marginLeft = '0px';
+  var t = el.getBoundingClientRect();
+  void t;
+  setTimeout(function () {
+    el.style.transition = 'margin-left .6s ' + cbOut.value;
+    el.style.marginLeft = (cbDemo.clientWidth - 22) + 'px';
+  }, 30);
+  setTimeout(function () {
+    el.style.transition = 'none';
+    el.style.marginLeft = '0px';
+  }, 700);
+}
+
+cbCopy.addEventListener('click', function () {
+  navigator.clipboard.writeText('transition-timing-function: ' + cbOut.value + ';').then(function () {
+    showToast('已复制：' + cbOut.value);
+    animateDemo();
+  });
+});
+
+[cbX1, cbY1, cbX2, cbY2].forEach(function (inp) {
+  inp.addEventListener('input', function () { draw(); });
+});
+
+draw();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
