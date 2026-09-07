@@ -100,7 +100,7 @@ var rvOut = document.getElementById('rvOut');
 var rvRailroad = document.getElementById('rvRailroad');
 
 function escapeHtml(s) {
-  return s.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"').replace(/'/g, "'");
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function highlightMatch(text, matches) {
@@ -183,32 +183,32 @@ function drawRailroad(pattern) {
   while (i < tokens.length) {
     var ch = tokens[i];
     if (ch === '\\' && i + 1 < tokens.length) {
-      html += '[' + ch + tokens[i + 1] + ']';
+      html += '[' + escapeHtml(ch + tokens[i + 1]) + ']';
       i += 2;
     } else if (ch === '[') {
       var j = i;
       while (j < tokens.length && tokens[j] !== ']') j++;
-      html += '[' + tokens.slice(i, j + 1).join('') + ']';
+      html += '[' + escapeHtml(tokens.slice(i, j + 1).join('')) + ']';
       i = j + 1;
     } else if (ch === '(') {
-      html += '(';
+      html += escapeHtml(ch);
       i++;
     } else if (ch === ')') {
-      html += ')';
+      html += escapeHtml(ch);
       i++;
     } else if (ch === '|') {
       html += ' ┆ ';
       i++;
     } else if (ch === '*' || ch === '+' || ch === '?') {
-      html += ch;
+      html += escapeHtml(ch);
       i++;
     } else if (ch === '{') {
       var j = i;
       while (j < tokens.length && tokens[j] !== '}') j++;
-      html += tokens.slice(i, j + 1).join('');
+      html += escapeHtml(tokens.slice(i, j + 1).join(''));
       i = j + 1;
     } else {
-      html += ch;
+      html += escapeHtml(ch);
       i++;
     }
     if (i < tokens.length) html += ' → ';
@@ -236,7 +236,7 @@ rvTest.addEventListener('click', function () {
     rvOut.innerHTML = html;
     drawRailroad(rvPattern.value);
   } catch (e) {
-    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">正则错误: ' + e.message + '</div>';
+    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">正则错误: ' + escapeHtml(e.message) + '</div>';
   }
 });
 
@@ -247,7 +247,7 @@ rvReplaceBtn.addEventListener('click', function () {
     rvOut.innerHTML = '<div class="result-box">替换完成</div><div style="padding:10px;background:var(--bg-elev);border-radius:6px;white-space:pre-wrap;">' + escapeHtml(result) + '</div>';
     drawRailroad(rvPattern.value);
   } catch (e) {
-    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">错误: ' + e.message + '</div>';
+    rvOut.innerHTML = '<div class="result-box" style="color:#dc2626;">错误: ' + escapeHtml(e.message) + '</div>';
   }
 });
 
