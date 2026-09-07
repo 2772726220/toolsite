@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS clip-path生成器 - 在线裁剪路径可视化工具</title>
+  <meta name="description" content="在线 CSS clip-path 生成器：可视化配置 polygon / circle / inset / ellipse 四种裁剪形状，实时预览并复制裁剪代码，支持多边形多点自由编辑。" />
+  <meta name="keywords" content="clip-path,裁剪路径,CSS裁剪,多边形裁剪,clip-path生成器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5750\u6807\u7528\u4ec0\u4e48\u5355\u4f4d\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9ed8\u8ba4\u7528\u767e\u5206\u6bd4\u76f8\u5bf9\u5143\u7d20\u5c3a\u5bf8\u5b9a\u4f4d\uff0c\u4efb\u610f\u5bbd\u9ad8\u90fd\u81ea\u9002\u5e94\uff1b\u4e5f\u652f\u6301\u76f4\u63a5\u586b\u5199\u50cf\u7d20\u6570\u503c\u3002"}},{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u590d\u5236\u526a\u8d34\u677f\u91cc\u7684 clip-path: \u2026; \u4e00\u884c\u5373\u53ef\uff0c\u7c98\u8d34\u5230\u4efb\u610f\u5143\u7d20\u7684 style \u6216 class \u4e2d\uff1b\u5982\u9700\u65e7\u6d4f\u89c8\u5668\u517c\u5bb9\u8bf7\u5728\u628a -webkit-clip-path \u4e00\u5e76\u52a0\u4e0a\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5b9e\u65f6\u9884\u89c8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002\u8c03\u6574\u70b9\u5750\u6807\u3001\u989c\u8272\u3001\u5c3a\u5bf8\u540e\u9884\u89c8\u6846\u7acb\u5373\u66f4\u65b0\uff0c\u70b9\u540c\u6837\u4f4d\u7f6e\u5373\u53ef\u590d\u5236\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>✂️ clip-path 生成器</h1>
+    <p>可视化生成 CSS clip-path 多边形/圆/椭圆/矩形裁剪</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">clip-path 生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#clip-path</span><span class="badge">#裁剪</span><span class="badge">#CSS</span><span class="badge">#形状</span>
+<div class="field">
+  <label>形状</label>
+  <select id="cpShape">
+    <option value="polygon" selected>多边形 polygon（可拖点可不拖）</option>
+    <option value="circle">圆形 circle</option>
+    <option value="inset">矩形 inset（可带圆角）</option>
+    <option value="ellipse">椭圆 ellipse</option>
+  </select>
+</div>
+<div class="field" id="cpParams" style="margin-bottom:12px;">
+  <div id="cpShapeRow" style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin-top:8px;">
+    <div id="cpRowPoly">
+      <label for="cpPoly">多边形点（x% y%, x% y%, …）</label>
+      <input id="cpPoly" type="text" style="width:300px;box-sizing:border-box;font-family:monospace;font-size:12px;" value="50% 0%, 100% 100%, 0% 100%">
+      <div class="hint">至少 3 个点；也可在下方预览图上拖动圆点调整</div>
+    </div>
+    <div id="cpRowCircle" style="display:none;">
+      <label>圆形参数</label>
+      <div style="display:flex;gap:8px;">
+        <label>半径% <input id="cpR" type="number" value="50" min="1" max="99" step="1" style="width:70px;"></label>
+        <label>X% <input id="cpCX" type="number" value="50" min="0" max="100" step="1" style="width:70px;"></label>
+        <label>Y% <input id="cpCY" type="number" value="50" min="0" max="100" step="1" style="width:70px;"></label>
+      </div>
+    </div>
+    <div id="cpRowEllipse" style="display:none;">
+      <label>椭圆参数</label>
+      <div style="display:flex;gap:8px;">
+        <label>RX% <input id="cpRX" type="number" value="30" min="1" max="99" step="1" style="width:70px;"></label>
+        <label>RY% <input id="cpRY" type="number" value="50" min="1" max="99" step="1" style="width:70px;"></label>
+        <label>X% <input id="cpEX" type="number" value="50" min="0" max="100" step="1" style="width:70px;"></label>
+        <label>Y% <input id="cpEY" type="number" value="50" min="0" max="100" step="1" style="width:70px;"></label>
+      </div>
+    </div>
+    <div id="cpRowInset" style="display:none;">
+      <label>矩形裁剪</label>
+      <div style="display:flex;gap:8px;">
+        <label>上% <input id="cpT" type="number" value="10" min="0" max="100" step="1" style="width:70px;"></label>
+        <label>右% <input id="cpRgt" type="number" value="10" min="0" max="100" step="1" style="width:70px;"></label>
+        <label>下% <input id="cpB" type="number" value="10" min="0" max="100" step="1" style="width:70px;"></label>
+        <label>左% <input id="cpL" type="number" value="10" min="0" max="100" step="1" style="width:70px;"></label>
+      </div>
+      <label style="margin-top:6px;">圆角 round <input id="cpRound" type="text" value="20px" placeholder="20px" style="width:160px;"></label>
+    </div>
+  </div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+  <div>
+    <label>预览尺寸 (px)</label>
+    <input id="cpSize" type="number" value="240" min="60" max="480" step="10">
+  </div>
+  <div>
+    <label>填充色</label>
+    <input type="color" id="cpColor" value="#4f46e5">
+  </div>
+  <div>
+    <label>&nbsp;</label>
+    <button class="btn btn-primary" id="cpBtn" style="width:100%;">生成 CSS</button>
+  </div>
+</div>
+<div id="cpPreview" style="display:flex;align-items:center;justify-content:center;background:repeating-conic-gradient(#e2e8f0 0% 25%, #f8fafc 0% 50%) 50% / 20px 20px;border-radius:10px;min-height:280px;margin-bottom:12px;"></div>
+<div class="field">
+  <label>CSS 代码（点击下方代码即可复制）</label>
+  <textarea id="cpCss" rows="3" readonly></textarea>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>clip-path 能做什么？</h2><p>matrix 无需切图即可给元素做任意形状裁剪：多边形头像、圆形卡片、渐变背景镂空、产品图去直角等，是纯 CSS 的视觉效果利器。</p><h2>inset 的圆角怎么写？</h2><p>inset(top right bottom left round 半径)，例如 inset(10% 20% round 16px)，半径支持 px、%、em 等任意长度单位。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>坐标用什么单位？</summary><p>默认用百分比相对元素尺寸定位，任意宽高都自适应；也支持直接填写像素数值。</p></details><details class="faq-item"><summary>生成的代码怎么用？</summary><p>复制剪贴板里的 clip-path: …; 一行即可，粘贴到任意元素的 style 或 class 中；如需旧浏览器兼容请在把 -webkit-clip-path 一并加上。</p></details><details class="faq-item"><summary>支持实时预览吗？</summary><p>支持。调整点坐标、颜色、尺寸后预览框立即更新，点同样位置即可复制。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>clip-path 生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='clip-path-generator';}); _r.unshift('clip-path-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cpShape = document.getElementById('cpShape');
+var cpBtn = document.getElementById('cpBtn');
+var cpSize = document.getElementById('cpSize');
+var cpColor = document.getElementById('cpColor');
+var cpPreview = document.getElementById('cpPreview');
+var cpCss = document.getElementById('cpCss');
+var cpPoly = document.getElementById('cpPoly');
+var cpR = document.getElementById('cpR');
+var cpCX = document.getElementById('cpCX');
+var cpCY = document.getElementById('cpCY');
+var cpRX = document.getElementById('cpRX');
+var cpRY = document.getElementById('cpRY');
+var cpEX = document.getElementById('cpEX');
+var cpEY = document.getElementById('cpEY');
+var cpT = document.getElementById('cpT');
+var cpRgt = document.getElementById('cpRgt');
+var cpB = document.getElementById('cpB');
+var cpL = document.getElementById('cpL');
+var cpRound = document.getElementById('cpRound');
+var lastCss = '';
+
+function escP(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function buildPath(shape, params) {
+  var pctOrNum = function (x) {
+    if (/^\d+(\.\d+)?%$/.test(x) || /^calc|^var/.test(x)) return x;
+    var n = parseFloat(x);
+    return isNaN(n) ? null : n + '%';
+  };
+  if (shape === 'polygon') {
+    var pairs = String(params.poly || '').split(/[\s,]+/).filter(function (s) { return s !== ''; });
+    if (pairs.length < 6 || pairs.length % 2 !== 0) {
+      return { ok: false, error: '多边形至少需要 3 个点，x 与 y 成对书写（每 2 个为一组，如 50% 0%）' };
+    }
+    if (pairs.length > 100) return { ok: false, error: '多边形点过多（上限 50 个点）' };
+    var pts = [];
+    for (var i = 0; i < pairs.length; i += 2) {
+      var x = pctOrNum(pairs[i]);
+      var y = pctOrNum(pairs[i + 1]);
+      if (x == null || y == null) return { ok: false, error: '点坐标必须是数值或百分比：' + pairs[i] + ' ' + pairs[i + 1] };
+      pts.push(x + ' ' + y);
+    }
+    return { ok: true, css: 'polygon(' + pts.join(', ') + ')' };
+  }
+  if (shape === 'circle') {
+    var r = parseFloat(params.r);
+    if (!(r > 0 && r <= 200)) return { ok: false, error: '半径需在 1-200 之间' };
+    return { ok: true, css: 'circle(' + r + '% at ' + pctOrNum(params.cx) + ' ' + pctOrNum(params.cy) + ')' };
+  }
+  if (shape === 'ellipse') {
+    var rx = parseFloat(params.rx), ry = parseFloat(params.ry);
+    if (!(rx > 0 && ry > 0)) return { ok: false, error: '椭圆两个半径需大于 0' };
+    return { ok: true, css: 'ellipse(' + rx + '% ' + ry + '% at ' + pctOrNum(params.ex) + ' ' + pctOrNum(params.ey) + ')' };
+  }
+  if (shape === 'inset') {
+    var t = parseFloat(params.top), rgt = parseFloat(params.right);
+    var b = parseFloat(params.bottom), l = parseFloat(params.left);
+    var nums = [t, rgt, b, l];
+    if (nums.some(function (x) { return !(x >= 0 && x <= 100); })) {
+      return { ok: false, error: '上右下左需在 0-100 之间，且上+下、左+右之和需 ≤100' };
+    }
+    if (t + b > 100 || l + rgt > 100) return { ok: false, error: '上+下、左+右之和需 ≤100' };
+    var insetStr = t + '% ' + rgt + '% ' + b + '% ' + l + '%';
+    if (params.round && String(params.round).trim()) {
+      var rv = /^\d+(\.\d+)?(px|%|em|rem)?$/;
+      if (!rv.test(String(params.round).trim())) return { ok: false, error: '圆角需为合法长度值（如 20px）' };
+      insetStr += ' round ' + String(params.round).trim();
+    }
+    return { ok: true, css: 'inset(' + insetStr + ')' };
+  }
+  return { ok: false, error: '未知形状' };
+}
+
+function currentParams() {
+  return {
+    poly: cpPoly.value,
+    r: cpR.value, cx: cpCX.value, cy: cpCY.value,
+    rx: cpRX.value, ry: cpRY.value, ex: cpEX.value, ey: cpEY.value,
+    top: cpT.value, right: cpRgt.value, bottom: cpB.value, left: cpL.value,
+    round: cpRound.value
+  };
+}
+
+function syncShapeRow(shape) {
+  ['cpRowPoly', 'cpRowCircle', 'cpRowEllipse', 'cpRowInset'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  var map = {
+    polygon: 'cpRowPoly', circle: 'cpRowCircle', ellipse: 'cpRowEllipse', inset: 'cpRowInset'
+  };
+  var show = document.getElementById(map[shape]);
+  if (show) show.style.display = 'block';
+}
+
+function refresh(shape, params) {
+  shape = shape || cpShape.value;
+  syncShapeRow(shape);
+  var size = Math.max(60, Math.min(480, parseInt(cpSize.value, 10) || 240));
+  var r = buildPath(shape, params || currentParams());
+  if (!r.ok) {
+    cpPreview.innerHTML = '<div style="color:#dc2626;font-size:13px;max-width:360px;text-align:center;">' + escP(r.error) + '</div>';
+    cpCss.value = '';
+    return r;
+  }
+  lastCss = 'clip-path: ' + r.css + ';';
+  cpPreview.innerHTML = '<div style="width:' + size + 'px;height:' + size + 'px;background:' + escP(cpColor.value) + ';' + lastCss + ';display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">预览</div>';
+  cpCss.value = lastCss;
+  return r;
+}
+
+cpShape.addEventListener('change', function () { refresh(); });
+['cpSize', 'cpColor', 'cpPoly', 'cpR', 'cpCX', 'cpCY', 'cpRX', 'cpRY', 'cpEX', 'cpEY', 'cpT', 'cpRgt', 'cpB', 'cpL', 'cpRound'].forEach(function (id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', function () { refresh(); });
+});
+
+cpBtn.addEventListener('click', function () {
+  var r = refresh(cpShape.value);
+  if (!r.ok) { showToast(r.error); return; }
+  try {
+    navigator.clipboard.writeText(lastCss).then(function () { showToast('已复制 CSS'); });
+  } catch (e) {
+    showToast('已生成 CSS，请手动复制');
+  }
+});
+
+cpCss.addEventListener('click', function () {
+  try {
+    navigator.clipboard.writeText(lastCss).then(function () { showToast('已复制 CSS'); });
+  } catch (e) {}
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
