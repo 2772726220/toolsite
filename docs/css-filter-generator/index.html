@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 CSS filter 滤镜生成器 - 亮度/对比度/色相工具</title>
+  <meta name="description" content="在线 CSS filter 滤镜生成器，通过滑块调整亮度、对比度、饱和度、色相旋转、模糊、反色等，实时预览并一键复制 CSS 代码。" />
+  <meta name="keywords" content="CSS滤镜,filter生成,滤镜工具,亮度调整,色相旋转,brightness,blur">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎚️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u6ee4\u955c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 brightness\u3001contrast\u3001saturate\u3001sepia\u3001grayscale\u3001invert\u3001opacity\u3001hue-rotate\u3001blur \u5171 9 \u79cd\u5e38\u89c1\u6ee4\u955c\u7ec4\u5408\u3002"}},{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u6d4f\u89c8\u5668\u517c\u5bb9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"filter \u5728\u73b0\u4ee3\u6d4f\u89c8\u5668\u5168\u90e8\u652f\u6301\uff1bblur \u5bf9\u6e32\u67d3\u5f00\u9500\u7565\u9ad8\uff0c\u9002\u4e2d\u53d6\u503c\u4f53\u9a8c\u6700\u4f73\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u7070\u5ea6\u7684\u503c\u5f88\u5c0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5982\u679c\u5bf9\u6bd4\u5ea6\u5f88\u4f4e\uff0c\u7070\u5ea6\u6548\u679c\u4f1a\u88ab\u5176\u5b83\u6ee4\u955c\u63a9\u76d6\uff0c\u5efa\u8bae\u5148\u8c03\u9ad8\u5bf9\u6bd4\u5ea6\u518d\u89c2\u5bdf\u7070\u5ea6\u6548\u679c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎚️ CSS 滤镜生成</h1>
+    <p>可视化生成 CSS filter，亮度对比度色相一键复制</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">CSS 滤镜生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#滤镜</span><span class="badge">#CSS</span><span class="badge">#filter</span><span class="badge">#视觉效果</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>CSS filter 属性</label>
+    <div id="cfSliders"></div>
+    <button class="btn btn-primary" id="cfCopy" style="width:100%;margin-top:10px;">复制 CSS</button>
+  </div>
+  <div>
+    <label>实时预览</label>
+    <div id="cfPreview" style="height:180px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:20px;">预览文字</div>
+    <label style="margin-top:12px;">CSS 代码</label>
+    <div id="cfCode" style="font-family:Consolas,Menlo,monospace;font-size:13px;background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px;min-height:70px;white-space:pre-wrap;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>CSS filter 能做什么？</h2><p>filter 属性可对元素应用亮度、对比度、饱和度、模糊、反色、色相旋转等视觉效果，常用于图片风格化、悬停特效和加载占位。</p><h2>怎么使用生成的代码？</h2><p>把复制到的 filter: ... 样式贴到元素的 CSS 上即可。注意 blur 等效果会创建新的层叠上下文。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些滤镜？</summary><p>支持 brightness、contrast、saturate、sepia、grayscale、invert、opacity、hue-rotate、blur 共 9 种常见滤镜组合。</p></details><details class="faq-item"><summary>生成的代码浏览器兼容吗？</summary><p>filter 在现代浏览器全部支持；blur 对渲染开销略高，适中取值体验最佳。</p></details><details class="faq-item"><summary>为什么灰度的值很小？</summary><p>如果对比度很低，灰度效果会被其它滤镜掩盖，建议先调高对比度再观察灰度效果。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>CSS 滤镜生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='css-filter-generator';}); _r.unshift('css-filter-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cfSliders = document.getElementById('cfSliders');
+var cfPreview = document.getElementById('cfPreview');
+var cfCode = document.getElementById('cfCode');
+var cfCopy = document.getElementById('cfCopy');
+
+var CF_DEFS = [
+  { key: 'brightness', label: '亮度', min: 50, max: 200, value: 100, step: 1, css: function (v) { return 'brightness(' + num(v) + ')'; }, def: 1 },
+  { key: 'contrast', label: '对比度', min: 50, max: 200, value: 100, step: 1, css: function (v) { return 'contrast(' + num(v) + ')'; }, def: 1 },
+  { key: 'saturate', label: '饱和度', min: 0, max: 200, value: 100, step: 1, css: function (v) { return 'saturate(' + num(v) + ')'; }, def: 1 },
+  { key: 'sepia', label: '怀旧棕', min: 0, max: 100, value: 0, step: 1, css: function (v) { return 'sepia(' + num(v) + ')'; }, def: 0 },
+  { key: 'grayscale', label: '灰度', min: 0, max: 100, value: 0, step: 1, css: function (v) { return 'grayscale(' + num(v) + ')'; }, def: 0 },
+  { key: 'invert', label: '反色', min: 0, max: 100, value: 0, step: 1, css: function (v) { return 'invert(' + num(v) + ')'; }, def: 0 },
+  { key: 'opacity', label: '不透明度', min: 0, max: 100, value: 100, step: 1, css: function (v) { return 'opacity(' + num(v) + ')'; }, def: 1 },
+  { key: 'hue', label: '色相旋转', min: 0, max: 360, value: 0, step: 1, css: function (v) { return 'hue-rotate(' + v + 'deg)'; }, def: 0 },
+  { key: 'blur', label: '模糊', min: 0, max: 20, value: 0, step: 1, css: function (v) { return 'blur(' + v + 'px)'; }, def: 0 },
+];
+
+var cfVals = {};
+
+function num(x) {
+  var s = (Math.round(x * 1000) / 1000).toString();
+  return s;
+}
+
+CF_DEFS.forEach(function (d) {
+  cfVals[d.key] = d.value;
+  var row = document.createElement('div');
+  row.style.cssText = 'margin-bottom:8px;';
+  var lab = document.createElement('div');
+  lab.textContent = d.label + ' ' + d.value;
+  lab.style.cssText = 'font-size:12px;color:var(--muted);margin-bottom:2px;';
+  lab.id = 'cfLab_' + d.key;
+  var input = document.createElement('input');
+  input.type = 'range';
+  input.min = d.min; input.max = d.max; input.step = d.step; input.value = d.value;
+  input.style.cssText = 'width:100%;';
+  input.id = 'cfRange_' + d.key;
+  input.addEventListener('input', function () {
+    cfVals[d.key] = parseInt(input.value, 10);
+    lab.textContent = d.label + ' ' + input.value;
+    update();
+  });
+  row.appendChild(lab);
+  row.appendChild(input);
+  cfSliders.appendChild(row);
+});
+
+function buildFilter(o) {
+  var parts = [];
+  CF_DEFS.forEach(function (d) {
+    var v = o && o[d.key] !== undefined ? Number(o[d.key]) : d.def;
+    if (!isFinite(v)) v = d.def;
+    var css = d.css(v);
+    var norm = d.def === 1 ? v !== 1 : v !== 0;
+    if (norm) parts.push(css);
+  });
+  return parts.join(' ');
+}
+
+function update() {
+  var o = {};
+  CF_DEFS.forEach(function (d) { o[d.key] = cfVals[d.key] / 100; });
+  o.hue = cfVals.hue;
+  o.blur = cfVals.blur;
+  var css = buildFilter(o);
+  cfPreview.style.filter = css;
+  cfCode.textContent = css ? 'filter: ' + css + ';' : 'filter: none;（全部默认值）';
+}
+
+cfCopy.addEventListener('click', function () {
+  var css = cfCode.textContent;
+  if (!css) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(css).then(function () { showToast('已复制 CSS'); }, function () { showToast('复制失败'); });
+  } else {
+    try { cfCode.select(); document.execCommand('copy'); showToast('已复制'); } catch (e) { showToast('复制失败'); }
+  }
+});
+
+update();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
