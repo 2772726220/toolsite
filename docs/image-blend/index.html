@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线图片合成 - 混合模式叠加两张图片</title>
+  <meta name="description" content="在线图片合成工具：把两张图片按正片叠底、滤色、叠加、变暗、变亮、差值、柔光等模式混合，可调前景透明度，适合做双重曝光与纹理叠加。浏览器本地处理。" />
+  <meta name="keywords" content="图片合成,混合模式,正片叠底,双重曝光,图片叠加,blend">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e24\u5f20\u56fe\u5c3a\u5bf8\u4e0d\u540c\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u8f83\u5c0f\u7684\u5bbd\u9ad8\u53d6\u4ea4\u96c6\u533a\u57df\u5408\u6210\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u5408\u6210\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6d4f\u89c8\u5668\u53ef\u89e3\u7801\u7684\u5e38\u89c1\u683c\u5f0f\uff08JPG\u3001PNG\u3001WebP \u7b49\uff09\uff0c\u5bfc\u51fa\u4e3a PNG\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎭 图片混合</h1>
+    <p>两张图按混合模式合成：正片叠底/叠加/差值等</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片混合</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#混合</span><span class="badge">#合成</span><span class="badge">#正片叠底</span><span class="badge">#滤色</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片混合模式</title>
+<style>
+img, canvas { max-width: 100%; border: 1px solid #eee; margin-top: 8px; }
+input[type="file"] { display: block; margin: 6px 0; }
+button { margin: 4px 4px 4px 0; }
+select, input[type="range"] { margin: 4px 4px 4px 0; vertical-align: middle; }
+.hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<p>把两张图片按混合模式叠加（正片叠底、滤色、叠加、差值等），可调透明度。适合做双重曝光与纹理叠加。</p>
+<input type="file" id="b1File" accept="image/*">
+<input type="file" id="b2File" accept="image/*">
+<select id="bMode">
+  <option value="normal">普通（透明度混合）</option>
+  <option value="multiply">正片叠底 multiply</option>
+  <option value="screen">滤色 screen</option>
+  <option value="overlay">叠加 overlay</option>
+  <option value="darken">变暗 darken</option>
+  <option value="lighten">变亮 lighten</option>
+  <option value="difference">差值 difference</option>
+  <option value="softlight">柔光 soft-light</option>
+</select>
+<label>前景透明度 <input type="range" id="bAlpha" min="0" max="100" value="100"></label>
+<button id="bGo">合成</button>
+<button id="bSave" class="secondary">下载 PNG</button>
+<p class="hint">以最小尺寸合成。图片仅在本机处理，不会上传。</p>
+<canvas id="bCanvas"></canvas>
+<div id="bTip"></div>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>混合模式是什么？</h2><p>混合模式定义两层像素如何合并：正片叠底让亮色更透、暗色保留；滤色反之；叠加/柔光用于增加层次；差值与柔光适合做艺术效果。</p><h2>透明度和模式怎么搭配？</h2><p>先选模式再调前景透明度：透明度 100% 完全叠加，调低则逐渐透出底图。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>两张图尺寸不同怎么办？</summary><p>按较小的宽高取交集区域合成。</p></details><details class="faq-item"><summary>图片会上传吗？</summary><p>不会。合成完全在浏览器本地完成。</p></details><details class="faq-item"><summary>支持哪些格式？</summary><p>支持浏览器可解码的常见格式（JPG、PNG、WebP 等），导出为 PNG。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片混合 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-blend';}); _r.unshift('image-blend'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var b1File = document.getElementById('b1File');
+var b2File = document.getElementById('b2File');
+var bMode = document.getElementById('bMode');
+var bAlpha = document.getElementById('bAlpha');
+var bGo = document.getElementById('bGo');
+var bSave = document.getElementById('bSave');
+var bCanvas = document.getElementById('bCanvas');
+var bTip = document.getElementById('bTip');
+
+function blendChannels(a, bl, mode) {
+  a = a / 255; bl = bl / 255;
+  var r;
+  switch (mode) {
+    case 'multiply': r = a * bl; break;
+    case 'screen': r = a + bl - a * bl; break;
+    case 'darken': r = a < bl ? a : bl; break;
+    case 'lighten': r = a > bl ? a : bl; break;
+    case 'difference': r = Math.abs(a - bl); break;
+    case 'overlay':
+      r = a < 0.5 ? 2 * a * bl : 1 - 2 * (1 - a) * (1 - bl);
+      break;
+    case 'softlight':
+      r = (1 - 2 * bl) * a * a + 2 * bl * a;
+      break;
+    default:
+      r = a;
+  }
+  return Math.round(Math.min(1, Math.max(0, r)) * 255);
+}
+
+function blendPixels(w, h, base, over, mode, t) {
+  if (!base || !over || base.length < w * h * 4 || over.length < w * h * 4) return null;
+  var out = new Uint8ClampedArray(w * h * 4);
+  for (var i = 0; i < w * h; i++) {
+    var oa = over[i * 4 + 3] / 255;
+    for (var c = 0; c < 3; c++) {
+      var a = base[i * 4 + c], b = over[i * 4 + c];
+      var blended = blendChannels(a, b, mode);
+      var mix = a * (1 - t * oa) + blended * t * oa;
+      out[i * 4 + c] = Math.round(Math.min(255, Math.max(0, mix)));
+    }
+    var ba = base[i * 4 + 3];
+    out[i * 4 + 3] = Math.max(ba, over[i * 4 + 3]);
+  }
+  return out;
+}
+
+var img1 = null;
+var img2 = null;
+
+function setupFile(input, label, onload) {
+  input.addEventListener('change', function () {
+    var f = input.files && input.files[0];
+    if (!f) return;
+    var url = URL.createObjectURL(f);
+    var im = new Image();
+    im.onload = function () { onload(im); bTip.textContent = label + ' 已加载：' + im.naturalWidth + '×' + im.naturalHeight; };
+    im.src = url;
+  });
+}
+
+setupFile(b1File, '底图', function (im) { img1 = im; });
+setupFile(b2File, '前景', function (im) { img2 = im; });
+
+bGo.addEventListener('click', function () {
+  if (!img1 || !img2) { bTip.textContent = '请先选择两张图片。'; return; }
+  var w = Math.min(img1.naturalWidth, img2.naturalWidth);
+  var h = Math.min(img1.naturalHeight, img2.naturalHeight);
+  if (!w || !h) { bTip.textContent = '图片尺寸异常。'; return; }
+  bCanvas.width = w; bCanvas.height = h;
+  var c1 = document.createElement('canvas');
+  c1.width = w; c1.height = h;
+  var x1 = c1.getContext('2d');
+  x1.drawImage(img1, 0, 0, w, h);
+  var base = x1.getImageData(0, 0, w, h).data;
+  var c2 = document.createElement('canvas');
+  c2.width = w; c2.height = h;
+  var x2 = c2.getContext('2d');
+  x2.drawImage(img2, 0, 0, w, h);
+  var over = x2.getImageData(0, 0, w, h).data;
+  var t = (parseInt(bAlpha.value, 10) || 100) / 100;
+  var out = blendPixels(w, h, base, over, bMode.value, t);
+  var ctx = bCanvas.getContext('2d');
+  ctx.putImageData(new ImageData(out, w, h), 0, 0);
+  bTip.textContent = '已合成 ' + w + '×' + h + '（模式：' + bMode.value + '，透明度 ' + Math.round(t * 100) + '%）。';
+});
+
+bSave.addEventListener('click', function () {
+  if (bCanvas.width === 0) return;
+  var a = document.createElement('a');
+  a.download = 'blended.png';
+  a.href = bCanvas.toDataURL('image/png');
+  try { document.body.appendChild(a); a.click(); document.body.removeChild(a); } catch (e) { }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
