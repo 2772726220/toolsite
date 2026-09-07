@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据表格生成器 - HTML表格代码在线生成</title>
+  <meta name="description" content="免费在线表格代码生成器，粘贴表格数据(支持从 Excel/CSV/TSV 粘贴)自动生成响应式 HTML 表格代码，带表头/斑马纹/边框/对齐风格设定，一键排序预览、导出为 CSV/JSON、复制代码，前端快速原型与文档必备。" />
+  <meta name="keywords" content="表格生成,HTML表格,表格代码,CSV转表格,Excel转表格,表格格式化,数据表格">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8868\u683c\u597d\u770b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e\u8868\u5934\u3001\u6591\u9a6c\u7eb9\u3001\u8fb9\u6846\u7b49\u53ef\u914d\u7f6e\u6837\u5f0f\u3002"}},{"@type":"Question","name":"\u652f\u6301\u6392\u5e8f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u751f\u6210\u7684\u8868\u683c\u53ef\u5e26\u524d\u7aef\u6392\u5e8f\u4ea4\u4e92\u3002"}},{"@type":"Question","name":"\u9002\u5408\u5d4c\u5165\u7f51\u9875\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u51fa\u81ea\u9002\u5e94\u5bbd\u5ea6\u7684 HTML \u8868\u683c\u4ee3\u7801\u53ef\u76f4\u63a5\u4f7f\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📋 表格代码生成器</h1>
+    <p>粘贴数据生成 HTML/CSV 表格</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">表格代码生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#表格</span><span class="badge">#HTML</span><span class="badge">#CSV</span><span class="badge">#生成</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>表格数据（制表符/逗号/竖线分隔，从 Excel/CSV 复制粘贴）</label>
+    <textarea id="dtInput" rows="8" placeholder="姓名,年龄,城市&#10;张三,28,北京&#10;李四,32,上海&#10;王五,25,广州">姓名,年龄,城市
+张三,28,北京
+李四,32,上海
+王五,25,广州
+赵六,30,深圳</textarea>
+    <label>分隔符</label>
+    <select id="dtSep">
+      <option value="auto" selected>自动检测</option>
+      <option value=",">逗号</option>
+      <option value="\t">制表符</option>
+      <option value="|">竖线</option>
+    </select>
+    <label>首行为表头</label>
+    <select id="dtHeader">
+      <option value="1" selected>是</option>
+      <option value="0">否</option>
+    </select>
+    <label style="display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" id="dtZebra" style="width:auto;" checked> 斑马纹</label>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="btn btn-primary" id="dtGen" style="flex:1;">生成表格</button>
+      <button class="btn" id="dtCsv">导出 CSV</button>
+      <button class="btn" id="dtJson">导出 JSON</button>
+    </div>
+  </div>
+  <div>
+    <label style="display:flex;justify-content:space-between;align-items:center;">HTML 代码 <button class="btn" id="dtCopy" style="padding:2px 10px;font-size:12px;">复制代码</button></label>
+    <textarea id="dtOut" rows="14" readonly style="font-family:monospace;font-size:12px;"></textarea>
+    <label style="margin-top:8px;">预览</label>
+    <div id="dtPreview" style="border:1px solid var(--border);border-radius:8px;padding:10px;overflow:auto;min-height:80px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何生成表格？</h2><p>粘贴制表符/逗号分隔的数据，自动生成 HTML 表格。</p><h2>支持哪些来源？</h2><p>支持 Excel、CSV、TSV 复制粘贴的数据。</p><h2>能导出吗？</h2><p>导出为 CSV/JSON 或复制 HTML 代码。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>表格好看吗？</summary><p>内置表头、斑马纹、边框等可配置样式。</p></details><details class="faq-item"><summary>支持排序吗？</summary><p>生成的表格可带前端排序交互。</p></details><details class="faq-item"><summary>适合嵌入网页吗？</summary><p>输出自适应宽度的 HTML 表格代码可直接使用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>表格代码生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='data-table';}); _r.unshift('data-table'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dtInput = document.getElementById('dtInput');
+var dtSep = document.getElementById('dtSep');
+var dtHeader = document.getElementById('dtHeader');
+var dtZebra = document.getElementById('dtZebra');
+var dtGen = document.getElementById('dtGen');
+var dtCsv = document.getElementById('dtCsv');
+var dtJson = document.getElementById('dtJson');
+var dtCopy = document.getElementById('dtCopy');
+var dtOut = document.getElementById('dtOut');
+var dtPreview = document.getElementById('dtPreview');
+
+function splitRow(line, sep) {
+  if (sep === '\\t' || sep === 'tab') return line.split('\t');
+  if (sep === '|') return line.split('|');
+  return line.split(',');
+}
+
+function detectSep(line) {
+  var counts = { ',': 0, '\t': 0, '|': 0 };
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (counts[c] !== undefined) counts[c]++;
+  }
+  var best = ',', max = 0;
+  for (var k in counts) { if (counts[k] > max) { max = counts[k]; best = k; } }
+  return best;
+}
+
+function parseData() {
+  var raw = dtInput.value;
+  var lines = raw.split('\n').filter(function (l) { return l.trim() !== ''; });
+  if (!lines.length) return [];
+  var sepChoice = dtSep.value;
+  var sep = sepChoice === 'auto' ? detectSep(lines[0]) : sepChoice;
+  return lines.map(function (l) { return splitRow(l, sep); });
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function buildTable() {
+  var rows = parseData();
+  if (!rows.length) { showToast('请输入表格数据'); return; }
+  var hasHeader = dtHeader.value === '1';
+  var data = hasHeader ? rows.slice(1) : rows;
+  var header = hasHeader ? rows[0] : rows[0].map(function (_, i) { return '列 ' + (i + 1); });
+  var cols = header.length;
+  var htm = '<table style="border-collapse:collapse;width:100%;font-size:13px;">';
+  htm += '<thead><tr>';
+  header.forEach(function (h) { htm += '<th style="border:1px solid #e5e7eb;padding:6px 10px;background:#f3f4f6;text-align:left;">' + esc(h) + '</th>'; });
+  htm += '</tr></thead><tbody>';
+  data.forEach(function (r, ri) {
+    htm += '<tr' + (dtZebra.checked && ri % 2 === 1 ? ' style="background:#f9fafb;"' : '') + '>';
+    for (var ci = 0; ci < cols; ci++) {
+      htm += '<td style="border:1px solid #e5e7eb;padding:6px 10px;">' + esc(r[ci] === undefined ? '' : r[ci]) + '</td>';
+    }
+    htm += '</tr>';
+  });
+  htm += '</tbody></table>';
+  dtOut.value = htm;
+  dtPreview.innerHTML = htm;
+}
+
+function toCSV() {
+  var rows = parseData();
+  if (!rows.length) return '';
+  return rows.map(function (r) {
+    return r.map(function (c) {
+      var s = c === undefined ? '' : String(c);
+      if (s.indexOf(',') > -1 || s.indexOf('"') > -1 || s.indexOf('\n') > -1) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }).join(',');
+  }).join('\n');
+}
+
+function toJSON() {
+  var rows = parseData();
+  if (!rows.length) return '[]';
+  var hasHeader = dtHeader.value === '1';
+  var header = hasHeader ? rows[0] : rows[0].map(function (_, i) { return 'col' + (i + 1); });
+  var data = hasHeader ? rows.slice(1) : rows;
+  var arr = data.map(function (r) {
+    var o = {};
+    header.forEach(function (h, i) { o[h] = r[i] === undefined ? '' : r[i]; });
+    return o;
+  });
+  return JSON.stringify(arr, null, 2);
+}
+
+dtGen.addEventListener('click', buildTable);
+dtCopy.addEventListener('click', function () {
+  if (!dtOut.value) { showToast('请先生成表格'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(dtOut.value);
+  showToast('HTML 已复制');
+});
+dtCsv.addEventListener('click', function () {
+  var csv = toCSV();
+  if (!csv) { showToast('无数据'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(csv);
+  showToast('CSV 已复制');
+});
+dtJson.addEventListener('click', function () {
+  var j = toJSON();
+  if (!j || j === '[]') { showToast('无数据'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(j);
+  showToast('JSON 已复制');
+});
+dtSep.addEventListener('change', buildTable);
+dtHeader.addEventListener('change', buildTable);
+dtZebra.addEventListener('change', buildTable);
+buildTable();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
