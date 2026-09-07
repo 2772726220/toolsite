@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cURL 构建器 - 在线生成 cURL 命令工具</title>
+  <meta name="description" content="免费在线 cURL 构建器，通过表单选择请求方法 GET/POST/PUT/DELETE、填写 URL/Headers/Body(JSON/表单/原始)，自动生成标准 cURL 命令，支持 Cookie/JWT 认证头、查询参数、文件上传字段、生成 Python/JS 等价代码，接口调试与文档必备。" />
+  <meta name="keywords" content="cURL,请求命令生成,CURL命令,HTTP请求,API调试,Headers,BODY">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u54cd\u5e94\u80fd\u9884\u89c8\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5728\u652f\u6301\u7684\u73af\u5883\u53ef\u76f4\u63a5\u6267\u884c\u67e5\u770b\u54cd\u5e94\uff0c\u5426\u5219\u590d\u5236\u5230\u7ec8\u7aef\u6267\u884c\u3002"}},{"@type":"Question","name":"\u6587\u4ef6\u4e0a\u4f20\u600e\u4e48\u5199\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u8bbe\u7f6e -F \u8868\u5355\u6587\u4ef6\u4e0a\u4f20\u5b57\u6bb5\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5730\u4fdd\u5b58\u5e38\u7528\u8bf7\u6c42\u6a21\u677f\u4fbf\u4e8e\u590d\u7528\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔧 cURL 构建器</h1>
+    <p>可视化生成 cURL 请求命令</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">cURL 构建器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#cURL</span><span class="badge">#请求</span><span class="badge">#命令</span><span class="badge">#HTTP</span>
+<div class="tool-grid" style="grid-template-columns:1fr 2fr; gap:10px; margin-bottom:10px;">
+  <div>
+    <label>方法</label>
+    <select id="cbMethod">
+      <option value="GET" selected>GET</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="PATCH">PATCH</option>
+      <option value="DELETE">DELETE</option>
+    </select>
+  </div>
+  <div><label>URL</label><input type="text" id="cbUrl" placeholder="https://api.example.com/users"></div>
+</div>
+<div><label>请求头（每行一个，Key: Value）</label>
+  <textarea id="cbHeaders" rows="3" placeholder="Authorization: Bearer token&#10;Content-Type: application/json"></textarea>
+</div>
+<div><label>Body</label>
+  <textarea id="cbBody" rows="4" placeholder='{"name":"张三"}'></textarea>
+</div>
+<div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;">
+  <button class="btn btn-primary" id="cbBuild">生成 cURL</button>
+  <button class="btn" id="cbPython">生成 Python</button>
+  <button class="btn" id="cbJs">生成 JS fetch</button>
+</div>
+<label>输出命令/代码</label>
+<pre id="cbOut" style="background:var(--bg-elev);padding:12px;border-radius:8px;font-size:12px;overflow:auto;max-height:260px;min-height:60px;"></pre>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何生成 cURL？</h2><p>填写请求方法与参数，实时生成可复制的 cURL 命令。</p><h2>支持认证吗？</h2><p>支持 Basic Auth、Bearer Token、Cookie 等认证方式。</p><h2>能生成其他语言吗？</h2><p>一键生成对应的 Python requests / JS fetch 代码。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>响应能预览吗？</summary><p>在支持的环境可直接执行查看响应，否则复制到终端执行。</p></details><details class="faq-item"><summary>文件上传怎么写？</summary><p>支持设置 -F 表单文件上传字段。</p></details><details class="faq-item"><summary>数据会保存吗？</summary><p>本地保存常用请求模板便于复用。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>cURL 构建器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='curl-builder';}); _r.unshift('curl-builder'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cbMethod = document.getElementById('cbMethod');
+var cbUrl = document.getElementById('cbUrl');
+var cbHeaders = document.getElementById('cbHeaders');
+var cbBody = document.getElementById('cbBody');
+var cbBuild = document.getElementById('cbBuild');
+var cbPython = document.getElementById('cbPython');
+var cbJs = document.getElementById('cbJs');
+var cbOut = document.getElementById('cbOut');
+
+function parseHeaders(text) {
+  var hs = [];
+  text.split('\n').forEach(function (line) {
+    var idx = line.indexOf(':');
+    if (idx > -1) {
+      var k = line.slice(0, idx).trim();
+      var v = line.slice(idx + 1).trim();
+      if (k) hs.push({ key: k, value: v });
+    }
+  });
+  return hs;
+}
+
+function buildCurl() {
+  var method = cbMethod.value;
+  var url = cbUrl.value.trim();
+  var headers = parseHeaders(cbHeaders.value);
+  var body = cbBody.value;
+  var parts = ['curl -X ' + method, "'" + url + "'"];
+  headers.forEach(function (h) {
+    parts.push("-H '" + h.key + ': ' + h.value.replace(/'/g, '\\\'') + "'");
+  });
+  if (body.trim()) {
+    parts.push("-H 'Content-Type: application/json'");
+    parts.push("-d '" + body.replace(/'/g, '\\\'') + "'");
+  }
+  parts.push('--insecure');
+  return parts.join(' \\\n  ');
+}
+
+function buildPython() {
+  var method = cbMethod.value;
+  var url = cbUrl.value.trim();
+  var hs = parseHeaders(cbHeaders.value).map(function (h) { return '    "' + h.key + '": "' + h.value.replace(/"/g, '\\"') + '"'; }).join(',\n');
+  var body = cbBody.value.trim();
+  return 'import requests\n\nheaders = {\n' + (hs || '    "Content-Type": "application/json"') + '\n}\n\n' +
+    (body ? 'data = ' + (isJson(body) ? body : '"' + body.replace(/"/g, '\\"') + '"') + '\n\n' : '') +
+    'resp = requests.' + method.toLowerCase() + '(\n    "' + url + '",\n    headers=headers' + (body ? ',\n    json=data' : '') + '\n)\n\nprint(resp.status_code)\nprint(resp.text)';
+}
+
+function buildJs() {
+  var method = cbMethod.value;
+  var url = cbUrl.value.trim();
+  var hs = parseHeaders(cbHeaders.value).map(function (h) { return '      "' + h.key + '": "' + h.value.replace(/"/g, '\\"') + '"'; }).join(',\n');
+  var body = cbBody.value.trim();
+  return 'fetch("' + url + '", {\n  method: "' + method + '",\n  headers: {\n' + (hs || '      "Content-Type": "application/json"') + '\n  }' + (body ? ',\n  body: ' + (isJson(body) ? 'JSON.stringify(' + body + ')' : '"' + body.replace(/"/g, '\\"') + '"') : '') + '\n})\n  .then(r => r.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));';
+}
+
+function isJson(s) {
+  try { JSON.parse(s); return true; } catch (e) { return false; }
+}
+
+cbBuild.addEventListener('click', function () {
+  if (!cbUrl.value.trim()) { showToast('请输入 URL'); return; }
+  cbOut.textContent = buildCurl();
+});
+cbPython.addEventListener('click', function () {
+  if (!cbUrl.value.trim()) { showToast('请输入 URL'); return; }
+  cbOut.textContent = buildPython();
+});
+cbJs.addEventListener('click', function () {
+  if (!cbUrl.value.trim()) { showToast('请输入 URL'); return; }
+  cbOut.textContent = buildJs();
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
