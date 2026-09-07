@@ -133,8 +133,17 @@ var WORKDAYS = {
   '2026-02-14': true, '2026-02-28': true, '2026-05-09': true, '2026-09-19': true, '2026-10-10': true,
 };
 
+function parseLocal(s) {
+  var p = s.split('-');
+  return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+}
+
+function formatDate(d) {
+  return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+}
+
 function isWorkday(d) {
-  var s = d.toISOString().slice(0, 10);
+  var s = formatDate(d);
   if (HOLIDAYS[s]) return false;
   if (WORKDAYS[s]) return true;
   var dow = d.getDay();
@@ -145,14 +154,10 @@ function row(label, val) {
   return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>';
 }
 
-function formatDate(d) {
-  return d.toISOString().slice(0, 10);
-}
-
 function getDetail(start, end) {
   var rows = [];
-  var cur = new Date(start);
-  var endTime = new Date(end);
+  var cur = parseLocal(start);
+  var endTime = parseLocal(end);
   endTime.setHours(23, 59, 59, 999);
   while (cur <= endTime) {
     var s = formatDate(cur);
@@ -183,13 +188,13 @@ function calc() {
   var html = '';
   if (mode === 'work') {
     if (!bdStart.value || !bdEnd.value) { bdOut.innerHTML = '<div class="result-box">请选择开始和结束日期</div>'; return; }
-    var s = new Date(bdStart.value), e = new Date(bdEnd.value);
+    var s = parseLocal(bdStart.value), e = parseLocal(bdEnd.value);
     if (bdIncStart.checked) s.setHours(0, 0, 0, 0); else s.setHours(23, 59, 59, 999);
     if (bdIncEnd.checked) e.setHours(23, 59, 59, 999); else e.setHours(0, 0, 0, 0);
     var count = 0, total = 0;
     var cur = new Date(s);
     while (cur <= e) { total++; if (isWorkday(cur)) count++; cur.setDate(cur.getDate() + 1); }
-    var rows = getDetail(new Date(bdStart.value), new Date(bdEnd.value));
+    var rows = getDetail(bdStart.value, bdEnd.value);
     var workRows = rows.filter(function (r) { return r.type === '工作日' || r.type === '调休上班'; });
     html += row('总天数', total);
     html += row('工作日', count);
@@ -203,13 +208,13 @@ function calc() {
     bdDetail.innerHTML = dtHtml;
   } else if (mode === 'natural') {
     if (!bdStart.value || !bdEnd.value) { bdOut.innerHTML = '<div class="result-box">请选择开始和结束日期</div>'; return; }
-    var s = new Date(bdStart.value), e = new Date(bdEnd.value);
+    var s = parseLocal(bdStart.value), e = parseLocal(bdEnd.value);
     var diff = Math.floor((e - s) / 86400000) + (bdIncStart.checked ? 1 : 0) + (bdIncEnd.checked ? 1 : 0) - 1;
     html += row('自然日天数', diff);
     bdOut.innerHTML = html;
   } else if (mode === 'deadline') {
     if (!bdStart.value || !bdWorkdays.value) { bdOut.innerHTML = '<div class="result-box">请选择开始日期和工作日数</div>'; return; }
-    var s = new Date(bdStart.value);
+    var s = parseLocal(bdStart.value);
     if (!bdIncStart.checked) s.setDate(s.getDate() + 1);
     var count = 0;
     var cur = new Date(s);
@@ -222,7 +227,7 @@ function calc() {
     html += row('工作日数', bdWorkdays.value);
     html += row('截止日期', formatDate(cur));
     bdOut.innerHTML = html;
-    var rows = getDetail(new Date(bdStart.value), cur);
+    var rows = getDetail(bdStart.value, formatDate(cur));
     var dtHtml = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:var(--bg-elev);"><th style="padding:6px;border:1px solid var(--border);">日期</th><th style="padding:6px;border:1px solid var(--border);">周</th><th style="padding:6px;border:1px solid var(--border);">类型</th><th style="padding:6px;border:1px solid var(--border);">备注</th></tr>';
     rows.forEach(function (r) {
       dtHtml += '<tr><td style="padding:4px;border:1px solid var(--border);">' + r.date + '</td><td style="padding:4px;border:1px solid var(--border);">' + r.week + '</td><td style="padding:4px;border:1px solid var(--border);">' + r.type + '</td><td style="padding:4px;border:1px solid var(--border);">' + r.note + '</td></tr>';
@@ -237,8 +242,8 @@ bdCalc.addEventListener('click', calc);
 bdExport.addEventListener('click', function () {
   var rows = [];
   if (bdMode.value === 'work' || bdMode.value === 'deadline') {
-    var s = new Date(bdStart.value), e = new Date(bdEnd.value || bdStart.value);
-    rows = getDetail(s, e);
+    var s = parseLocal(bdStart.value), e = parseLocal(bdEnd.value || bdStart.value);
+    rows = getDetail(bdStart.value, bdEnd.value || bdStart.value);
   }
   var csv = '日期,星期,类型,备注\n' + rows.map(function (r) { return r.date + ',' + r.week + ',' + r.type + ',' + r.note; }).join('\n');
   var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
@@ -257,10 +262,10 @@ bdCustom.addEventListener('click', function () {
 });
 
 var today = new Date();
-bdStart.value = today.toISOString().slice(0, 10);
+bdStart.value = formatDate(today);
 var tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 10);
-bdEnd.value = tomorrow.toISOString().slice(0, 10);
+bdEnd.value = formatDate(tomorrow);
   window.toggleTheme = function () {
     var r = document.documentElement;
     if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
