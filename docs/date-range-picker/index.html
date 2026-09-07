@@ -146,12 +146,18 @@ var drExport = document.getElementById('drExport');
 var drOut = document.getElementById('drOut');
 var drList = document.getElementById('drList');
 
+function tzWall(now, tzHours) {
+  if (tzHours === null) return { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+  var u = new Date(now.getTime() + tzHours * 3600000);
+  return { y: u.getUTCFullYear(), m: u.getUTCMonth() + 1, d: u.getUTCDate() };
+}
+
 drPreset.addEventListener('change', function () {
   if (drPreset.value === 'custom') return;
   var now = new Date();
-  var tz = drTz.value;
-  var offset = tz === 'local' ? now.getTimezoneOffset() * 60000 : parseInt(tz) * 3600000;
-  var local = new Date(now.getTime() - offset);
+  var tz = drTz.value === 'local' ? null : (parseInt(drTz.value, 10) || 0);
+  var wall = tzWall(now, tz);
+  var local = new Date(wall.y, wall.m - 1, wall.d);
   var start, end;
   var p = drPreset.value;
   if (p === 'today') { start = end = local; }
@@ -176,8 +182,13 @@ drFormat.addEventListener('change', function () {
   drCustomWrap.style.display = drFormat.value === 'custom' ? '' : 'none';
 });
 
+function parseLocal(s) {
+  var p = s.split('-');
+  return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+}
+
 function formatDate(d) {
-  return d.toISOString().slice(0, 10);
+  return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
 }
 
 function formatOut(d, fmt) {
@@ -192,7 +203,7 @@ function formatOut(d, fmt) {
     return tpl.replace('YYYY', y).replace('MM', String(d.getMonth() + 1).padStart(2, '0')).replace('DD', String(d.getDate()).padStart(2, '0'))
       .replace('HH', String(d.getHours()).padStart(2, '0')).replace('mm', String(d.getMinutes()).padStart(2, '0')).replace('ss', String(d.getSeconds()).padStart(2, '0'));
   }
-  return d.toISOString().slice(0, 10);
+  return formatDate(d);
 }
 
 function row(label, val) { return '<div class="stat" style="display:flex;justify-content:space-between;padding:10px 12px;"><span style="color:var(--muted)">' + label + '</span><b>' + val + '</b></div>'; }
@@ -204,15 +215,15 @@ function isWorkday(d) {
 
 drGenerate.addEventListener('click', function () {
   if (!drStart.value || !drEnd.value) { drOut.innerHTML = '<div class="result-box">请选择日期范围</div>'; return; }
-  var start = new Date(drStart.value);
-  var end = new Date(drEnd.value);
-  if (start > end) { drOut.innerHTML = '<div class="result-box">开始日期不能晚于结束日期</div>'; return; }
+  var start = parseLocal(drStart.value);
+  var end = parseLocal(drEnd.value);
+  if (start.getTime() > end.getTime()) { drOut.innerHTML = '<div class="result-box">开始日期不能晚于结束日期</div>'; return; }
   var fmt = drFormat.value;
   var incEnd = drIncEnd.checked;
   var list = [];
-  var cur = new Date(start);
-  var endTime = new Date(drEnd.value);
-  if (incEnd) endTime.setDate(endTime.getDate() + 1);
+  var cur = parseLocal(drStart.value);
+  var endTime = parseLocal(drEnd.value);
+  endTime.setDate(endTime.getDate() + (incEnd ? 1 : 0));
   while (cur < endTime) {
     if (drType.value === 'workday' && !isWorkday(cur)) { cur.setDate(cur.getDate() + 1); continue; }
     list.push(formatOut(cur, drFormat.value));
