@@ -209,7 +209,7 @@ csCalc.addEventListener('click', function () {
       if (growth !== 0) {
         for (var k = 1; k <= n; k++) {
           var pmtK = pmt * Math.pow(1 + g, Math.floor((k - 1) / freq));
-          pv -= pmtK * Math.pow(1 + i, -(k - pmtType)) / Math.pow(1 + i, n - k);
+          pv -= pmtK / Math.pow(1 + i, k - pmtType);
         }
       } else {
         pv -= pmt * (1 - Math.pow(1 + i, -n)) / i * (1 + i * pmtType);
@@ -225,10 +225,12 @@ csCalc.addEventListener('click', function () {
     html += row('目标金额', '¥' + fmt(target));
   } else if (mode === 'nper') {
     var fv = target;
-    var nCalc = Math.log(1 + (fv - pv * Math.pow(1 + i, 0)) * i / (pmt * (1 + i * pmtType))) / Math.log(1 + i);
+    var num = fv * i + pmt * (1 + i * pmtType);
+    var den = pv * i + pmt * (1 + i * pmtType);
+    var nCalc = (num <= 0 || den <= 0) ? NaN : Math.log(num / den) / Math.log(1 + i);
     var yearsCalc = nCalc / freq;
-    html += row('所需期数', nCalc.toFixed(2) + ' 期 (' + freq + '期/年)');
-    html += row('所需年数', yearsCalc.toFixed(2) + ' 年');
+    html += row('所需期数', isNaN(nCalc) ? '目标不可达' : nCalc.toFixed(2) + ' 期 (' + freq + '期/年)');
+    html += row('所需年数', isNaN(nCalc) ? '—' : yearsCalc.toFixed(2) + ' 年');
   }
 
   if (lastRows.length) {
