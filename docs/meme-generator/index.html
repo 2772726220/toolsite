@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线表情包生成器 - 自制梗图</title>
+  <meta name="description" content="免费在线表情包生成器：上传任意图片添加上下排粗体梗文字，或选纯文字模式一键生成表情包并下载 PNG；中英文文字智能换行，全部本地处理。" />
+  <meta name="keywords" content="表情包生成,梗图制作,表情包,自制表情,梗图,图片加字">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>😂</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u56fe\u7247\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6d4f\u89c8\u5668\u80fd\u8bfb\u53d6\u7684\u5e38\u89c1\u56fe\u7247\u5747\u53ef\uff08JPG/PNG/WebP/GIF \u9996\u5e27\uff09\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u53d8\u6a21\u7cca\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u51fa\u56fa\u5b9a 800px \u5bbd\uff0c\u539f\u56fe\u6309\u6bd4\u4f8b\u7f29\u653e\u81f3\u753b\u5e03\u5185\uff0c\u6e05\u6670\u5ea6\u8db3\u591f\u65e5\u5e38\u5206\u4eab\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u5168\u7a0b\u5728\u6d4f\u89c8\u5668\u672c\u5730\u7ed8\u5236\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>😂 表情包生成</h1>
+    <p>上传图片加上下梗文字，或纯文字生成表情</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">表情包生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#表情包</span><span class="badge">#梗图</span><span class="badge">#自制</span><span class="badge">#图片加字</span>
+<div class="field">
+  <label for="mgText">上排文字</label>
+  <input id="mgTop" value="上方梗文字" placeholder="输入上排文字">
+  <label for="mgText">下排文字</label>
+  <input id="mgBottom" value="下方梗文字" placeholder="输入下排文字">
+  <label for="mgText" style="margin-top:10px;">自定义上方空间（纯文字生成模式）</label>
+  <input id="mgTopSpace" value="80" placeholder="上方留白高度 px">
+</div>
+<div class="field">
+  <label>图片来源</label>
+  <div class="field-row">
+    <input id="mgFile" type="file" accept="image/*">
+    <button class="btn" id="mgTextMode" type="button">无图纯文字生成</button>
+  </div>
+</div>
+<div class="actions">
+  <button class="btn" id="mgGen" type="button">生成表情包</button>
+  <button class="btn btn-secondary" id="mgDl" type="button">下载 PNG</button>
+</div>
+<div class="result-box" id="mgOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>文字会自动换行吗？</h2><p>会。西文按单词换行避免断词，中文/日文/韩文按字符换行保证整齐，超长文字自动折行。</p><h2>纯文字模式是什么？</h2><p>不选图片时生成基础版式（浅色顶部 + 上下粗体文字），适合快速做灵感草图。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些图片格式？</summary><p>浏览器能读取的常见图片均可（JPG/PNG/WebP/GIF 首帧）。</p></details><details class="faq-item"><summary>图片会变模糊吗？</summary><p>输出固定 800px 宽，原图按比例缩放至画布内，清晰度足够日常分享。</p></details><details class="faq-item"><summary>图片会上传吗？</summary><p>不会。全程在浏览器本地绘制。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>表情包生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='meme-generator';}); _r.unshift('meme-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mgTop = document.getElementById('mgTop');
+var mgBottom = document.getElementById('mgBottom');
+var mgTopSpace = document.getElementById('mgTopSpace');
+var mgFile = document.getElementById('mgFile');
+var mgTextMode = document.getElementById('mgTextMode');
+var mgGen = document.getElementById('mgGen');
+var mgDl = document.getElementById('mgDl');
+var mgOut = document.getElementById('mgOut');
+
+// wrap text to at most maxChars per line. Break on spaces for Western words,
+// per-character for CJK so they never break mid-glyph.
+function wrapText(txt, maxChars) {
+  if (typeof txt !== 'string' || !txt.trim()) return [];
+  var text = txt.replace(/[ \t]+/g, ' ').replace(/\n{2,}/g, '\n');
+  var lines = [];
+  var cur = '';
+  var curLen = 0;
+  var i = 0;
+  while (i < text.length) {
+    var ch = text[i];
+    if (ch === '\n') {
+      lines.push(cur); cur = ''; curLen = 0; i++;
+      continue;
+    }
+    var isCjk = /[\u3400-\u9fff\uF900-\uFAFF\u3040-\u30ff\uac00-\ud7af]/.test(ch);
+    if (isCjk) {
+      if (curLen >= maxChars) { lines.push(cur); cur = ''; curLen = 0; }
+      cur += ch; curLen++; i++;
+      continue;
+    }
+    // consume a Western token: optional leading spaces + one word (up to next space/newline)
+    var lead = '';
+    while (i < text.length && text[i] === ' ') { lead += ' '; i++; }
+    var word = '';
+    while (i < text.length && text[i] !== ' ' && text[i] !== '\n' &&
+           !/[\u3400-\u9fff\uF900-\uFAFF\u3040-\u30ff\uac00-\ud7af]/.test(text[i])) { word += text[i]; i++; }
+    var addLen = lead.length + word.length;
+    if (curLen === 0) {
+      cur = word; curLen = word.length;
+    } else if (curLen + 1 + word.length <= maxChars) {
+      cur = cur + ' ' + word; curLen += 1 + word.length;
+    } else {
+      if (cur) lines.push(cur);
+      cur = word; curLen = word.length;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+mgGen.addEventListener('click', function () {
+  if (mgFile.files && mgFile.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) { renderMeme(e.target.result, true); };
+    reader.readAsDataURL(mgFile.files[0]);
+  } else {
+    // text only mode: draw on blank canvas with fixed layout
+    renderMeme(null, false);
+  }
+});
+
+mgTextMode.addEventListener('click', function () { mgFile.value = ''; renderMeme(null, false); });
+
+function renderMeme(srcData, hasImg) {
+  var w = 800, h = hasImg ? 450 : parseInt(mgTopSpace.value, 10) + 120;
+  if (isNaN(h) || h < 100) h = 200;
+  var canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, w, h);
+  if (hasImg) {
+    var img = new Image();
+    img.onload = function () {
+      var iw = img.width, ih = img.height;
+      var scale = Math.min(w / iw, (h - 100) / ih);
+      var dw = iw * scale, dh = ih * scale;
+      var dx = (w - dw) / 2, dy = 40 + ((h - 40) / 40 || 0);
+      ctx.drawImage(img, dx, 40, dw, dh);
+      finish(ctx, w, h, canvas);
+    };
+    img.src = srcData;
+  } else {
+    var topSpace = parseInt(mgTopSpace.value, 10) || 80;
+    ctx.fillStyle = '#f1f5f9';
+    ctx.fillRect(0, 0, w, topSpace);
+    finish(ctx, w, h, canvas);
+  }
+}
+
+function finish(ctx, w, h, canvas) {
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = '#fff';
+  ctx.fillStyle = '#000';
+  var topLines = wrapText(mgTop.value, 16);
+  var bottomLines = wrapText(mgBottom.value, 16);
+  var ly = 20;
+  ctx.font = 'bold 40px Impact, sans-serif';
+  topLines.forEach(function (t) { ctx.strokeText(t, w / 2, ly + 20); ctx.fillText(t, w / 2, ly + 20); ly += 44; });
+  var bl = h - 30 - Math.max(0, (bottomLines.length - 1) * 44);
+  bottomLines.forEach(function (t) { ctx.strokeText(t, w / 2, bl); ctx.fillText(t, w / 2, bl); bl += 44; });
+  mgOut.innerHTML = '';
+  mgOut.appendChild(canvas);
+  canvas.style.maxWidth = '100%';
+}
+
+mgDl.addEventListener('click', function () {
+  var c = mgOut.querySelector('canvas');
+  if (!c) { showToast('请先生成'); return; }
+  var a = document.createElement('a');
+  a.href = c.toDataURL('image/png');
+  a.download = 'meme.png';
+  a.click();
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
