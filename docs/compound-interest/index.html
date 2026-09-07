@@ -108,18 +108,21 @@ var ciResult = document.getElementById('ciResult');
     if (isNaN(p) || p < 0) { showToast('请输入本金'); return; }
     if (isNaN(r) || r < 0) { showToast('请输入年利率'); return; }
     if (isNaN(y) || y < 1 || y > 50) { showToast('年数需在 1-50 之间'); return; }
-    var yearly = p;
-    var totalInput = p;
+    if (m < 0) { showToast('月投入不能为负'); return; }
+    var i = r / 12;
+    var totalInput = p + m * y * 12;
+    var running = p;
+    var invested = p;
     var rows = [];
-    for (var i = 1; i <= y; i++) {
-      yearly *= (1 + r);
-      if (m > 0) {
-        yearly += m * 12;
-        totalInput += m * 12;
+    for (var yy = 1; yy <= y; yy++) {
+      for (var mm = 0; mm < 12; mm++) {
+        if (m > 0) running += m;
+        running *= (1 + i);
       }
-      rows.push({ y: i, v: yearly });
+      invested += m * 12;
+      rows.push({ y: yy, v: running, inv: invested });
     }
-    var final = yearly;
+    var final = running;
     var gain = final - totalInput;
     ciResult.hidden = false;
     ciResult.innerHTML = '总投入：<b>' + fmtMoney(totalInput) + '</b><br>' +
@@ -128,7 +131,7 @@ var ciResult = document.getElementById('ciResult');
     var html = '<table style="border-collapse:collapse;width:100%;font-family:monospace;font-size:13px;">' +
       '<tr><th style="text-align:left;padding:4px 10px;">年份</th><th style="text-align:left;padding:4px 10px;">年末价值</th><th style="text-align:left;padding:4px 10px;">累计投入</th></tr>';
     rows.forEach(function (row) {
-      html += '<tr><td style="padding:4px 10px;">' + row.y + '</td><td style="padding:4px 10px;">' + fmtMoney(row.v) + '</td><td style="padding:4px 10px;">' + fmtMoney(totalInput) + '</td></tr>';
+      html += '<tr><td style="padding:4px 10px;">' + row.y + '</td><td style="padding:4px 10px;">' + fmtMoney(row.v) + '</td><td style="padding:4px 10px;">' + fmtMoney(row.inv) + '</td></tr>';
     });
     ciTable.hidden = false;
     ciTable.innerHTML = html + '</table>';
