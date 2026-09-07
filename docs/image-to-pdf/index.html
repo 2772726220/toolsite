@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片转PDF - 在线图片合并PDF工具</title>
+  <meta name="description" content="免费在线图片转 PDF 工具，多张 JPG、PNG、WebP 图片一键合并为一个 PDF，支持画质与尺寸设置，全程浏览器本地转换不上传，文档整理必备。" />
+  <meta name="keywords" content="图片转PDF,图片合并PDF,JPG转PDF,PNG转PDF,多图片转PDF,在线PDF转换">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u56fe\u7247\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6d4f\u89c8\u5668\u53ef\u663e\u793a\u7684\u5e38\u89c1\u683c\u5f0f\uff1aJPG\u3001PNG\u3001WebP\u3001GIF \u7b49\uff0c\u591a\u9009\u540e\u70b9\u51fb\u751f\u6210\u5373\u53ef\u5408\u5e76\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0d\u4f1a\u88ab\u538b\u7f29\u53d8\u5f62\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u7b49\u6bd4\u7f29\u653e\uff0c\u4e0d\u4f1a\u62c9\u4f38\u53d8\u5f62\u3002\u53ef\u9009\u62e9\u6700\u5927\u8fb9\u957f\uff081600/1200/800px\uff09\u4e0e JPEG \u8d28\u91cf\u6863\u4f4d\uff0c\u517c\u987e\u6e05\u6670\u5ea6\u4e0e\u6587\u4ef6\u5927\u5c0f\u3002"}},{"@type":"Question","name":"PDF \u91cc\u6bcf\u5f20\u56fe\u7247\u662f\u72ec\u7acb\u4e00\u9875\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\u7684\uff0c\u6bcf\u5f20\u56fe\u7247\u751f\u6210\u72ec\u7acb\u4e00\u9875\uff0c\u9875\u9762\u5c3a\u5bf8\u4e0e\u56fe\u7247\u50cf\u7d20\u4e00\u81f4\uff0c\u65b9\u4fbf\u6253\u5370\u4e0e\u6392\u5217\u3002"}},{"@type":"Question","name":"\u6211\u7684\u56fe\u7247\u4f1a\u88ab\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u6574\u4e2a\u8f6c\u6362\u8fc7\u7a0b\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\uff0c\u56fe\u7247\u548c\u751f\u6210\u7684 PDF \u90fd\u4e0d\u4f1a\u79bb\u5f00\u4f60\u7684\u8bbe\u5907\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📄 图片转PDF</h1>
+    <p>多张图片合并为一个 PDF 文档</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片转PDF</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#PDF</span><span class="badge">#图片</span><span class="badge">#转换</span><span class="badge">#合并</span>
+<div class="field">
+  <label for="itpFiles">选择图片（可多选，将合并为一个 PDF）</label>
+  <input type="file" id="itpFiles" accept="image/*" multiple>
+</div>
+<div class="field" style="max-width:260px;">
+  <label for="itpQuality">JPEG 质量</label>
+  <select id="itpQuality">
+    <option value="0.92" selected>高品质（大文件）</option>
+    <option value="0.82">均衡</option>
+    <option value="0.7">小文件</option>
+  </select>
+</div>
+<div class="field" style="max-width:260px;">
+  <label for="itpMax">图片最大边长（px）</label>
+  <select id="itpMax">
+    <option value="1600" selected>1600</option>
+    <option value="1200">1200</option>
+    <option value="800">800</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="itpGo" type="button">生成 PDF</button>
+</div>
+<div id="itpPageList"></div>
+<div id="itpOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>图片转 PDF 有什么用途？</h2><p>把多张扫描件、截图、设计稿合并成一个 PDF 便于存档、打印和分享，是工作中最常见的文档整理需求。</p><h2>转换在本地完成有什么好处？</h2><p>图片不需要上传到服务器，隐私完全可控，速度也更快；工具内置高质量 JPEG 压缩，生成的 PDF 体积小且清晰。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些图片格式？</summary><p>支持浏览器可显示的常见格式：JPG、PNG、WebP、GIF 等，多选后点击生成即可合并。</p></details><details class="faq-item"><summary>图片会不会被压缩变形？</summary><p>会等比缩放，不会拉伸变形。可选择最大边长（1600/1200/800px）与 JPEG 质量档位，兼顾清晰度与文件大小。</p></details><details class="faq-item"><summary>PDF 里每张图片是独立一页吗？</summary><p>是的，每张图片生成独立一页，页面尺寸与图片像素一致，方便打印与排列。</p></details><details class="faq-item"><summary>我的图片会被上传吗？</summary><p>不会，整个转换过程在浏览器本地完成，图片和生成的 PDF 都不会离开你的设备。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片转PDF · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-to-pdf';}); _r.unshift('image-to-pdf'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var itpFiles = document.getElementById('itpFiles');
+var itpQuality = document.getElementById('itpQuality');
+var itpMax = document.getElementById('itpMax');
+var itpGo = document.getElementById('itpGo');
+var itpPageList = document.getElementById('itpPageList');
+var itpOut = document.getElementById('itpOut');
+
+function b64ToBytes(b64) {
+  var B = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  b64 = b64.replace(/=+$/, '');
+  var out = new Uint8Array(Math.floor(b64.length * 3 / 4));
+  var o = 0;
+  for (var i = 0; i < b64.length; i += 4) {
+    var c0 = B.indexOf(b64[i]), c1 = B.indexOf(b64[i + 1]), c2 = b64[i + 2] ? B.indexOf(b64[i + 2]) : 64, c3 = b64[i + 3] ? B.indexOf(b64[i + 3]) : 64;
+    var n = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
+    out[o++] = (n >> 16) & 255;
+    if (c2 < 64) out[o++] = (n >> 8) & 255;
+    if (c3 < 64) out[o++] = n & 255;
+  }
+  return out.subarray(0, o);
+}
+
+function buildPdf(pages) {
+  var chunks = [];
+  var offsets = [0];
+  function pushStr(s) {
+    var u = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 255;
+    chunks.push(u);
+  }
+  function pushBytes(u) { chunks.push(u); }
+  function record() { var t = 0; for (var i = 0; i < chunks.length; i++) t += chunks[i].length; return t; }
+
+  pushStr('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  var n = pages.length;
+  var kids = [];
+  offsets.push(record()); // obj1
+  pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  offsets.push(record()); // obj2
+  pushStr('2 0 obj\n<< /Type /Pages /Kids [');
+  for (var i = 0; i < n; i++) kids.push(5 + i * 3);
+  pushStr(kids.join(' 0 R ') + (n ? ' 0 R' : '') + '] /Count ' + n + ' >>\nendobj\n');
+  for (var p = 0; p < n; p++) {
+    var pg = pages[p];
+    var cNo = 3 + p * 3, imNo = 4 + p * 3, paNo = 5 + p * 3;
+    var contentStr = 'q\n' + pg.w + ' 0 0 ' + pg.h + ' 0 0 cm\n/Im' + p + ' Do\nQ\n';
+    offsets.push(record()); // cNo
+    pushStr(cNo + ' 0 obj\n<< /Length ' + contentStr.length + ' >>\nstream\n' + contentStr + 'endstream\nendobj\n');
+    offsets.push(record()); // imNo
+    pushStr(imNo + ' 0 obj\n<< /Type /XObject /Subtype /Image /Width ' + pg.w + ' /Height ' + pg.h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + pg.jpeg.length + ' >>\nstream\n');
+    pushBytes(pg.jpeg);
+    pushStr('\nendstream\nendobj\n');
+    offsets.push(record()); // paNo
+    pushStr(paNo + ' 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + pg.w + ' ' + pg.h + '] /Resources << /XObject << /Im' + p + ' ' + imNo + ' 0 R >> >> /Contents ' + cNo + ' 0 R >>\nendobj\n');
+  }
+  var xrefStart = record();
+  pushStr('xref\n0 ' + (n * 3 + 3) + '\n0000000000 65535 f \n');
+  for (var k = 1; k <= n * 3 + 2; k++) {
+    pushStr(('0000000000' + offsets[k]).slice(-10) + ' 00000 n \n');
+  }
+  pushStr('trailer\n<< /Size ' + (n * 3 + 3) + ' /Root 1 0 R >>\nstartxref\n' + xrefStart + '\n%%EOF');
+
+  var total = 0;
+  for (var ci = 0; ci < chunks.length; ci++) total += chunks[ci].length;
+  var out = new Uint8Array(total);
+  var pos = 0;
+  for (var cj = 0; cj < chunks.length; cj++) { out.set(chunks[cj], pos); pos += chunks[cj].length; }
+  return out;
+}
+
+function downloadBytes(bytes, filename) {
+  var blob = new Blob([bytes], { type: 'application/pdf' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+}
+
+function canvasImageToJpeg(img, maxDim, quality) {
+  var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+  var w = Math.max(1, Math.round(img.width * scale));
+  var h = Math.max(1, Math.round(img.height * scale));
+  var cnv = document.createElement('canvas');
+  cnv.width = w; cnv.height = h;
+  var ctx = cnv.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(img, 0, 0, w, h);
+  var dataUrl = cnv.toDataURL('image/jpeg', parseFloat(quality));
+  return { w: w, h: h, jpeg: b64ToBytes(dataUrl.split(',')[1]) };
+}
+
+var itpPages = [];
+
+itpFiles.addEventListener('change', function () {
+  var files = itpFiles.files;
+  var names = [];
+  for (var i = 0; i < files.length && i < 30; i++) names.push(escapeHTML(files[i].name));
+  itpPageList.innerHTML = names.length ? '<div class="stat" style="display:flex;justify-content:space-between;margin:0;padding:10px 12px;"><span style="color:var(--muted);font-size:13px;">已选 ' + names.length + ' 张图片</span><span style="font-size:13px;">' + names.join('、') + '</span></div>' : '';
+  itpOut.innerHTML = '';
+});
+
+function escapeHTML(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+itpGo.addEventListener('click', function () {
+  var files = itpFiles.files;
+  if (!files.length) { showToast('请先选择图片'); return; }
+  var maxDim = parseInt(itpMax.value, 10);
+  var quality = itpQuality.value;
+  itpOut.innerHTML = '<div class="result-box">正在处理 ' + Math.min(files.length, 30) + ' 张图片...（浏览器本地完成）</div>';
+  var pages = [];
+  var todo = 0, done = 0;
+  function finish() {
+    if (done < todo) return;
+    if (!pages.length) { itpOut.innerHTML = '<div class="result-box">没有成功处理的图片</div>'; return; }
+    var bytes = buildPdf(pages);
+    var fileSize = (bytes.length / 1024).toFixed(1);
+    itpOut.innerHTML = '<div class="result-box">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div style="font-size:14px;font-weight:700;">PDF 生成成功：' + pages.length + ' 页，约 ' + fileSize + ' KB</div>'
+      + '<button class="btn btn-primary" id="itpDl" type="button">下载 PDF</button></div>'
+      + pages.map(function (pg, i) { return '<div style="font-size:12px;color:var(--muted);padding-top:4px;">第 ' + (i + 1) + ' 页：' + pg.w + ' × ' + pg.h + ' px</div>'; }).join('')
+      + '</div>';
+    var dl = document.getElementById('itpDl');
+    if (dl) dl.addEventListener('click', function () { try { downloadBytes(bytes, 'images.pdf'); showToast('已开始下载 images.pdf'); } catch (e) { showToast('下载失败：' + e.message); } });
+  }
+  for (var i = 0; i < files.length && i < 30; i++) {
+    (function (file) {
+      todo++;
+      var img = new Image();
+      img.onload = function () {
+        try { pages.push(canvasImageToJpeg(img, maxDim, quality)); }
+        catch (e) { /* 单张失败跳过 */ }
+        done++; finish();
+      };
+      img.onerror = function () { done++; finish(); };
+      img.src = URL.createObjectURL(file);
+    })(files[i]);
+  }
+  if (!todo) finish();
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
