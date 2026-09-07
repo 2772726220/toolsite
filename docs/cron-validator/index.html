@@ -112,7 +112,12 @@ var cronResult = document.getElementById('cronResult');
     var hours = expandField(f[1], 0, 23);
     var days = expandField(f[2], 1, 31);
     var months = expandField(f[3], 1, 12);
-    var weekdays = expandField(f[4], 0, 6);
+    var weekdays = expandField(f[4], 0, 7);
+    if (weekdays !== null) {
+      var seen = {}, wdOut = [];
+      weekdays.forEach(function (v) { var n = v === 7 ? 0 : v; if (!seen[n]) { seen[n] = 1; wdOut.push(n); } });
+      weekdays = wdOut;
+    }
     var runs = [];
     var d = new Date(fromDate.getTime());
     d.setSeconds(0, 0);
@@ -176,6 +181,7 @@ var cronResult = document.getElementById('cronResult');
         if (field === undefined) throw new Error('表达式字段不足');
         if (field === '*') descParts.push(d[1].replace('{v}', '任意'));
         else if (field === '?') descParts.push(d[1].replace('{v}', '任意（不指定）'));
+        else if (i === 4 && /^\d+$/.test(field) && parseInt(field, 10) === 7) descParts.push('星期日');
         else if (i === 4 && field.indexOf('/') >= 0) descParts.push('每 ' + field.split('/')[1] + ' 个星期执行');
         else if (field.indexOf('/') >= 0) {
           var sp = field.split('/');
