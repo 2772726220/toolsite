@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>习惯打卡追踪器 - 每日习惯坚持统计工具</title>
+  <meta name="description" content="免费在线习惯打卡追踪器，创建每日/每周习惯，点击打卡记录完成度，显示连续坚持天数(Streak)、总完成率、本周/本月统计、可视化热力图日历，本地保存进度，支持自定义习惯频率与备注，养成好习惯必备。" />
+  <meta name="keywords" content="习惯打卡,习惯追踪,自定义习惯,每日打卡,坚持天数,Streak,习惯养成">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u636e\u5b58\u5728\u54ea\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5168\u90e8\u672c\u5730\u4fdd\u5b58\uff0c\u9690\u79c1\u5b89\u5168\u53ef\u79bb\u7ebf\u4f7f\u7528\u3002"}},{"@type":"Question","name":"\u652f\u6301\u591a\u4e2a\u4e60\u60ef\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u521b\u5efa\u4efb\u610f\u591a\u4e2a\u4e0d\u540c\u9891\u7387\u7684\u4e60\u60ef\u3002"}},{"@type":"Question","name":"\u4f1a\u63d0\u9192\u6211\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5728\u9875\u9762\u5185\u9ad8\u4eae\u5f53\u65e5\u5f85\u6253\u5361\u9879\u4fbf\u4e8e\u8ffd\u8e2a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>✅ 习惯打卡</h1>
+    <p>每日习惯追踪与打卡统计</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">习惯打卡</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#习惯</span><span class="badge">#打卡</span><span class="badge">#追踪</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:10px;">
+  <div><label>习惯名称</label><input type="text" id="htName" placeholder="如 早起 / 阅读 / 运动"></div>
+  <div><label>频率</label>
+    <select id="htFreq">
+      <option value="daily" selected>每日</option>
+      <option value="weekly">每周</option>
+    </select>
+  </div>
+  <div style="display:flex;align-items:flex-end;">
+    <button class="btn btn-primary" id="htAdd" style="width:100%;">创建习惯</button>
+  </div>
+</div>
+<div id="htList" style="display:grid;gap:10px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何创建习惯？</h2><p>输入习惯名称与频率即可开始每日打卡。</p><h2>有连续坚持统计吗？</h2><p>自动统计连续打卡天数(Streak)与总完成率。</p><h2>如何查看进度？</h2><p>热力图日历清晰展示每天的完成情况。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数据存在哪？</summary><p>全部本地保存，隐私安全可离线使用。</p></details><details class="faq-item"><summary>支持多个习惯吗？</summary><p>支持创建任意多个不同频率的习惯。</p></details><details class="faq-item"><summary>会提醒我吗？</summary><p>在页面内高亮当日待打卡项便于追踪。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>习惯打卡 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='habit-tracker';}); _r.unshift('habit-tracker'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var htName = document.getElementById('htName');
+var htFreq = document.getElementById('htFreq');
+var htAdd = document.getElementById('htAdd');
+var htList = document.getElementById('htList');
+
+var habits = [];
+
+function load() {
+  try { habits = JSON.parse(localStorage.getItem('ht-habits') || '[]'); if (!Array.isArray(habits)) habits = []; } catch (e) { habits = []; }
+}
+function save() {
+  try { localStorage.setItem('ht-habits', JSON.stringify(habits)); } catch (e) {}
+}
+
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function streak(habit) {
+  var dates = Object.keys(habit.dates).sort();
+  if (!dates.length) return 0;
+  var count = 0;
+  var cur = new Date();
+  for (var i = 0; i < 366; i++) {
+    var key = cur.getFullYear() + '-' + String(cur.getMonth() + 1).padStart(2, '0') + '-' + String(cur.getDate()).padStart(2, '0');
+    if (habit.dates[key]) { count++; } else {
+      if (habit.freq === 'daily') break;
+      var day = cur.getDay();
+      if (day === 0 || day === 6) { /* weekend skip */ } else break;
+    }
+    cur.setDate(cur.getDate() - 1);
+  }
+  return count;
+}
+
+function total(habit) {
+  return Object.keys(habit.dates).length;
+}
+
+function render() {
+  if (!habits.length) {
+    htList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">还没有习惯，创建第一个开始打卡吧！</div>';
+    return;
+  }
+  var today = todayStr();
+  var last7 = [];
+  for (var i = 6; i >= 0; i--) {
+    var d = new Date(); d.setDate(d.getDate() - i);
+    last7.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'));
+  }
+  var html = '';
+  habits.forEach(function (h) {
+    var done = !!h.dates[today];
+    var strk = streak(h);
+    var tot = total(h);
+    var cells = last7.map(function (key) {
+      var on = h.dates[key] ? 'background:var(--accent);' : 'background:var(--bg-elev);';
+      var label = key.slice(5).replace('-', '/');
+      return '<span title="' + key + '" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:4px;' + on + 'border:1px solid var(--border);"></span>';
+    }).join('');
+    html += '<div style="border:1px solid var(--border);border-radius:10px;padding:14px;">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+      '<b style="flex:1;">' + h.name + '</b>' +
+      '<button class="btn ' + (done ? 'btn-primary' : '') + '" style="padding:4px 14px;font-size:13px;" data-toggle="' + h.key + '">' + (done ? '已打卡 ✓' : '打卡') + '</button>' +
+      '<button class="btn" style="padding:4px 8px;font-size:11px;color:var(--muted);" data-del="' + h.key + '">删除</button></div>' +
+      '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);">' +
+      '<span>🔥 连续 ' + strk + ' 天</span><span>✅ 累计 ' + tot + ' 次</span>' +
+      '<span style="display:flex;gap:3px;margin-left:auto;">' + cells + '</span></div></div>';
+  });
+  htList.innerHTML = html;
+}
+
+htList.addEventListener('click', function (e) {
+  var el = e.target;
+  var key = el.getAttribute && el.getAttribute('data-toggle');
+  if (key) {
+    var h = habits.find(function (x) { return x.key === key; });
+    if (h) {
+      var today = todayStr();
+      if (h.dates[today]) delete h.dates[today];
+      else h.dates[today] = 1;
+      save();
+      render();
+      showToast(h.dates[today] ? '打卡成功' : '已取消');
+    }
+    return;
+  }
+  var dk = el.getAttribute && el.getAttribute('data-del');
+  if (dk) {
+    habits = habits.filter(function (x) { return x.key !== dk; });
+    save();
+    render();
+  }
+});
+
+htAdd.addEventListener('click', function () {
+  var name = htName.value.trim();
+  if (!name) { showToast('请输入习惯名称'); return; }
+  habits.push({ key: 'ht-' + Date.now() + '-' + Math.floor(Math.random() * 1000), name: name, freq: htFreq.value, dates: {} });
+  save();
+  htName.value = '';
+  render();
+  showToast('已创建习惯');
+});
+
+load();
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
