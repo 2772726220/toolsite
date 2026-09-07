@@ -103,14 +103,25 @@ var qrOut = document.getElementById('qrOut');
 
 // ---- QR 编码核心（byte mode, EC L/M/Q/H, versions 1-6）----
 var EC_LEVEL_BITS = { L: 1, M: 0, Q: 3, H: 2 };
-var EC_BLOCKS = {
-  L: [[19, 7], [34, 10], [55, 15], [80, 20], [108, 26], [[68, 18], 2]],
-  M: [[16, 10], [28, 16], [44, 26], [64, 36], [86, 46], [[56, 36], 2]],
-  Q: [[13, 13], [22, 22], [34, 34], [48, 48], [62, 62], [[44, 62], 2]],
-  H: [[9, 17], [16, 28], [26, 44], [36, 64], [46, 76], [[36, 88], 2]]
+// 每个纠错级别每版本的 [块数, 每块纠错码字数]（Nayuki qrcodegen 标准表，仅盲 1-6）
+var EC_INFO = {
+  L: [[1, 7], [1, 10], [1, 15], [1, 20], [1, 26], [2, 18]],
+  M: [[1, 10], [1, 16], [1, 26], [2, 18], [2, 24], [4, 16]],
+  Q: [[1, 13], [1, 22], [2, 18], [2, 26], [4, 18], [4, 24]],
+  H: [[1, 17], [1, 28], [2, 22], [4, 16], [4, 22], [4, 28]]
 };
-var CAPACITY_BYTES = { L: [17, 32, 53, 78, 106, 134], M: [14, 26, 42, 62, 84, 106], Q: [11, 20, 32, 46, 60, 74], H: [7, 14, 24, 34, 44, 58] };
-var ALIGN = { 1: [], 2: [[6, 18]], 3: [[6, 22]], 4: [[6, 26]], 5: [[6, 30]], 6: [[6, 34]] };
+// 每版本原始总码字数（数据 + 纠错）
+var TOTAL_CODEWORDS = [26, 44, 70, 100, 134, 172];
+// 每版本总数据码字容量（字节，= 总码字 - 块数×每块纠错数）
+var CAPACITY_BYTES = {
+  L: [19, 34, 55, 80, 108, 136],
+  M: [16, 28, 44, 64, 86, 108],
+  Q: [13, 22, 34, 48, 70, 84],
+  H: [9, 16, 26, 36, 46, 60]
+};
+// 对齐图案中心的「坐标轴」位置（QR 标准）。实际中心由这些轴坐标两两组合生成，
+// 并与 finder/timing 重叠者剔除（见 makeMatrix）。
+var ALIGN = { 1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30], 6: [6, 34] };
 var FORMAT_MASK = 0x5412;
 
 // ---- GF(256) & Reed-Solomon ----
@@ -158,104 +169,157 @@ function utf8Bytes(str) {
   return out;
 }
 
-function blockSpec(ec, version) {
-  var spec = EC_BLOCKS[ec][version - 1];
-  if (Array.isArray(spec[0])) return { blocks: spec[1], data: spec[0][0], ec: spec[0][1] };
-  return { blocks: 1, data: spec[0], ec: spec[1] };
-}
-
 function buildDataAndInterleave(version, ec, bytes) {
-  var b = blockSpec(ec, version);
-  var totalDataBits = b.data * b.blocks * 8;
+  var numBlocks = EC_INFO[ec][version - 1][0];
+  var blockEccLen = EC_INFO[ec][version - 1][1];
+  var rawCodewords = TOTAL_CODEWORDS[version - 1]; // 总码字（数据+纠错）
+  var numShortBlocks = numBlocks - rawCodewords % numBlocks;
+  var shortBlockLen = Math.floor(rawCodewords / numBlocks); // 每块总长（数据+纠错）
+
+  // 构造数据位流：模式指示符(0100) + 字符计数(8bit) + 数据 + 终止符 + 填充
+  var bitLenPerBlock = shortBlockLen - blockEccLen; // 每块数据字节数基准
+  var dataWordBytes = numBlocks * bitLenPerBlock + (numBlocks - numShortBlocks); // 总数据字节数
+  var dataCapacityBits = dataWordBytes * 8;
   var bits = '0100' + toBits(bytes.length, 8);
   bytes.forEach(function (x) { bits += toBits(x, 8); });
-  bits += '0000';
-  while (bits.length % 8 !== 0) bits += '0';
+  // 终止符：最多 4 个 0，但不超过剩余空间
+  var numTerm = Math.min(4, dataCapacityBits - bits.length);
+  if (numTerm < 0) throw new Error('内容过长');
+  for (var tt = 0; tt < numTerm; tt++) bits += '0';
+  // 补 0 到字节对齐（若剩余空间不足一字节则按需补）
+  while (bits.length % 8 !== 0 && bits.length < dataCapacityBits) bits += '0';
+  // 填充交替字节 11101100 / 00010001，直到占满
   var pad = true;
-  while (bits.length < totalDataBits) { bits += pad ? '11101100' : '00010001'; pad = !pad; }
-  bits = bits.slice(0, totalDataBits);
-  var offset = 0;
+  while (bits.length < dataCapacityBits) { bits += pad ? '11101100' : '00010001'; pad = !pad; }
+
+  // 分割数据块（长块多 1 字节，位置靠后）
   var dataBlocks = [];
-  for (var k = 0; k < b.blocks; k++) {
+  var offset = 0;
+  for (var k = 0; k < numBlocks; k++) {
+    var datLen = bitLenPerBlock + (k >= numShortBlocks ? 1 : 0);
     var arr = [];
-    for (var i = 0; i < b.data; i++) { arr.push(parseInt(bits.substr(offset, 8), 2)); offset += 8; }
+    for (var i = 0; i < datLen; i++) { arr.push(parseInt(bits.substr(offset, 8), 2)); offset += 8; }
     dataBlocks.push(arr);
   }
-  var ecBlocks = dataBlocks.map(function (db) { return rsEncode(db, b.ec); });
+  var ecBlocks = dataBlocks.map(function (db) { return rsEncode(db, blockEccLen); });
+
+  // 交错：逐字节从每块取数据，再从每块取纠错
   var result = [];
-  for (var d = 0; d < b.data; d++) dataBlocks.forEach(function (db) { result.push(db[d]); });
-  for (var e = 0; e < b.ec; e++) ecBlocks.forEach(function (eb) { result.push(eb[e]); });
+  var maxDatLen = shortBlockLen - blockEccLen; // 最长数据块长度（含长块）
+  for (var d = 0; d < maxDatLen + 1; d++) {
+    for (var b = 0; b < dataBlocks.length; b++) {
+      if (d < dataBlocks[b].length) result.push(dataBlocks[b][d]);
+    }
+  }
+  for (var e = 0; e < blockEccLen; e++) {
+    for (var b2 = 0; b2 < ecBlocks.length; b2++) {
+      result.push(ecBlocks[b2][e]);
+    }
+  }
   return result;
+}
+
+// 该格是否为「format info 区域」——数据放置时需跳过，后由 drawFormat 覆盖。
+// 覆盖格见 drawFormat：col8×rows0-5,7,8；row8×cols0-5,7,8；右下角 row8/size-8..、col8/size-8..。
+function isFormatCell(r, c, size) {
+  if (c === 8) {
+    if (r <= 8) return true;          // 左上竖条 (rows 0-8, col 8)
+    if (r >= size - 8) return true;   // 右下竖条 (col 8, bottom)
+    return false;
+  }
+  if (r === 8) {
+    if (c <= 8) return true;          // 左上横条 (row 8, cols 0-8)
+    if (c >= size - 8) return true;   // 右上横条 (row 8, cols size-8..)
+    return false;
+  }
+  return false;
 }
 
 function makeMatrix(version) {
   var size = 17 + 4 * version;
   var mod = Array.from({ length: size }, function () { return Array(size).fill(null); });
-  function set(r, c, v) { mod[r][c] = v; }
+  var func = Array.from({ length: size }, function () { return Array(size).fill(false); });
+  function set(r, c, v, isFunc) { mod[r][c] = v; if (isFunc) func[r][c] = true; }
   function finder(r, c) {
     for (var i = -1; i <= 7; i++) for (var j = -1; j <= 7; j++) {
       var rr = r + i, cc = c + j;
       if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
       var inOuter = i >= 0 && i <= 6 && j >= 0 && j <= 6;
-      set(rr, cc, inOuter && (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)));
+      set(rr, cc, inOuter && (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)), true);
     }
   }
   finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
   for (var t = 8; t < size - 8; t++) {
-    if (mod[6][t] === null) set(6, t, t % 2 === 0);
-    if (mod[t][6] === null) set(t, 6, t % 2 === 0);
+    set(6, t, t % 2 === 0, true);
+    set(t, 6, t % 2 === 0, true);
   }
-  set(size - 8, 8, true);
-  ALIGN[version].forEach(function (p) {
-    for (var i = -2; i <= 2; i++) for (var j = -2; j <= 2; j++) {
-      var rr = p[0] + i, cc = p[1] + j;
-      if (mod[rr][cc] !== null) continue;
-      set(rr, cc, Math.max(Math.abs(i), Math.abs(j)) !== 1);
+  set(6, 6, true, true);
+  set(size - 8, 8, true, true);
+  // 对齐图案：由轴坐标两两生成中心，跳过与 finder/timing 重叠位
+  (ALIGN[version] || []).forEach(function (p) {
+    for (var ci = 0; ci < ALIGN[version].length; ci++) {
+      var cr = p, cc = ALIGN[version][ci];
+      if (mod[cr][cc] !== null) continue; // 已设（finder/timing 区域）则跳过
+      for (var ai = -2; ai <= 2; ai++) for (var aj = -2; aj <= 2; aj++) {
+        var rr = cr + ai, cc2 = cc + aj;
+        if (mod[rr][cc2] !== null) continue;
+        set(rr, cc2, Math.max(Math.abs(ai), Math.abs(aj)) !== 1, true);
+      }
     }
   });
-  return mod;
+  // 预留 format info 区域（占位 false，后由 drawFormat 覆盖；placeData/applyMask 会跳过）
+  for (var rf = 0; rf < size; rf++) for (var cf = 0; cf < size; cf++) {
+    if (isFormatCell(rf, cf, size) && mod[rf][cf] === null) {
+      set(rf, cf, false, true);
+    }
+  }
+  return { mod: mod, func: func, size: size };
 }
 
-function placeData(mod, codewords) {
+function placeData(mod, func, codewords) {
+  // 数据放置：从右下向左上以 2 列一组曲折扫描（标准 qrcode 库 setupData 移植）
   var size = mod.length;
-  var idx = 0, bit = 7;
-  function nextBit() {
-    if (bit < 0) { bit = 7; idx++; }
-    return ((codewords[idx] >> bit--) & 1) === 1;
-  }
-  var dir = 0; // 0 = up, 1 = down; rightmost group goes up
-  for (var col = size - 1; col >= 1; col -= 2) {
+  var inc = -1;
+  var row = size - 1;
+  var bitIndex = 7;
+  var byteIndex = 0;
+  for (var col = size - 1; col > 0; col -= 2) {
     if (col === 6) col--;
-    for (var rowI = 0; rowI < size; rowI++) {
-      var row = dir === 0 ? size - 1 - rowI : rowI;
-      for (var d = 0; d < 2; d++) {
-        var c = col - d;
-        if (mod[row][c] === null && idx < codewords.length) {
-          mod[row][c] = nextBit();
+    while (true) {
+      for (var c = 0; c < 2; c++) {
+        if (!func[row][col - c]) {
+          var dark = false;
+          if (byteIndex < codewords.length) {
+            dark = ((codewords[byteIndex] >>> bitIndex) & 1) === 1;
+            bitIndex--;
+            if (bitIndex === -1) { byteIndex++; bitIndex = 7; }
+          }
+          mod[row][col - c] = dark;
         }
       }
+      row += inc;
+      if (row < 0 || size <= row) { row -= inc; inc = -inc; break; }
     }
-    dir = 1 - dir;
   }
 }
 
-function applyMask(mod, mask) {
+// 掩码作用于所有数据模块（不含功能模块）
+function applyMask(mod, func, mask) {
   var size = mod.length;
   for (var r = 0; r < size; r++) for (var c = 0; c < size; c++) {
-    if (mod[r][c] === null) {
-      var dark;
-      switch (mask) {
-        case 0: dark = (r + c) % 2 === 0; break;
-        case 1: dark = r % 2 === 0; break;
-        case 2: dark = c % 3 === 0; break;
-        case 3: dark = (r + c) % 3 === 0; break;
-        case 4: dark = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
-        case 5: dark = (r * c) % 2 + (r * c) % 3 === 0; break;
-        case 6: dark = ((r * c) % 2 + (r * c) % 3) % 2 === 0; break;
-        case 7: dark = ((r * c) % 3 + (r + c) % 2) % 2 === 0; break;
-      }
-      mod[r][c] = dark;
+    if (func[r][c]) continue; // 功能模块不掩码
+    var dark;
+    switch (mask) {
+      case 0: dark = (r + c) % 2 === 0; break;
+      case 1: dark = r % 2 === 0; break;
+      case 2: dark = c % 3 === 0; break;
+      case 3: dark = (r + c) % 3 === 0; break;
+      case 4: dark = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
+      case 5: dark = (r * c) % 2 + (r * c) % 3 === 0; break;
+      case 6: dark = ((r * c) % 2 + (r * c) % 3) % 2 === 0; break;
+      case 7: dark = ((r * c) % 3 + (r + c) % 2) % 2 === 0; break;
     }
+    if (mod[r][c] !== null) mod[r][c] = mod[r][c] !== dark; // XOR with mask
   }
 }
 
@@ -322,23 +386,39 @@ function penalty(mod) {
   return score;
 }
 
+function buildDataCapacityBits(version, ec) {
+  var numBlocks = EC_INFO[ec][version - 1][0];
+  var blockEccLen = EC_INFO[ec][version - 1][1];
+  var rawCodewords = TOTAL_CODEWORDS[version - 1];
+  var numShortBlocks = numBlocks - rawCodewords % numBlocks;
+  var shortBlockLen = Math.floor(rawCodewords / numBlocks);
+  var bitLenPerBlock = shortBlockLen - blockEccLen;
+  var dataWordBytes = numBlocks * bitLenPerBlock + (numBlocks - numShortBlocks);
+  return dataWordBytes * 8;
+}
+
 function makeQR(text, ecLevel) {
   var ec = ecLevel || 'M';
   var bytes = utf8Bytes(text);
+  // 内容所需位数：模式(4) + 计数(8) + 数据(8×n)
+  var neededBits = 12 + bytes.length * 8;
   var version = 1;
   for (var v = 1; v <= 6; v++) {
-    if (bytes.length <= CAPACITY_BYTES[ec][v - 1]) { version = v; break; }
+    if (neededBits <= buildDataCapacityBits(v, ec)) { version = v; break; }
   }
-  if (bytes.length > CAPACITY_BYTES[ec][5]) throw new Error('内容过长（' + ec + ' 纠错级别最多 ' + CAPACITY_BYTES[ec][5] + ' 字节）');
+  if (neededBits > buildDataCapacityBits(6, ec)) throw new Error('内容过长（' + ec + ' 纠错级别最多 ' + Math.floor((buildDataCapacityBits(6, ec) - 12) / 8) + ' 字节）');
   var codewords = buildDataAndInterleave(version, ec, bytes);
   var best = null;
   for (var mask = 0; mask < 8; mask++) {
     var m = makeMatrix(version);
-    placeData(m, codewords);
-    applyMask(m, mask);
-    drawFormat(m, ec, mask);
-    var p = penalty(m);
-    if (!best || p < best.penalty) best = { mod: m, mask: mask, penalty: p };
+    // 先放置数据（跳过功能模块）
+    placeData(m.mod, m.func, codewords);
+    // 再对数据模块施加掩码（XOR）
+    applyMask(m.mod, m.func, mask);
+    // 最后绘制 format info（覆盖占位）
+    drawFormat(m.mod, ec, mask);
+    var p = penalty(m.mod);
+    if (!best || p < best.penalty) best = { mod: m.mod, func: m.func, mask: mask, penalty: p };
   }
   return best;
 }
