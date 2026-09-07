@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跑步配速计算器 - 在线配速训练目标估算工具</title>
+  <meta name="description" content="免费在线跑步配速计算器，输入距离、用时、配速任意两项，一键算出配速、速度、5 公里/10 公里/半马/全马目标成绩，支持公里与英里单位，跑步爱好者必备。" />
+  <meta name="keywords" content="跑步配速,配速计算器,马拉松配速,跑步计算器,5公里用时,配速换算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u82f1\u91cc\u5355\u4f4d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u5355\u4f4d\u53ef\u5207\u6362\u516c\u91cc/\u82f1\u91cc\uff0c\u914d\u901f\u4e0e\u76ee\u6807\u6210\u7ee9\u4f1a\u6309\u6240\u9009\u5355\u4f4d\u6362\u7b97\uff0c\u540c\u65f6\u5c55\u793a\u5bf9\u5e94\u7684\u516c\u91cc\u6570\u3002"}},{"@type":"Question","name":"\u914d\u901f\u683c\u5f0f\u600e\u4e48\u586b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u5206:\u79d2\uff08\u5982 5:06\uff09\u6216\u7eaf\u6570\u5b57\u5206\u949f\uff08\u5982 6.5 \u8868\u793a 6 \u5206 30 \u79d2\uff09\uff1b\u65f6\u95f4\u652f\u6301 25:30 \u6216 0:25:30 \u4e24\u79cd\u5199\u6cd5\u3002"}},{"@type":"Question","name":"\u4f30\u7b97\u7684\u76ee\u6807\u6210\u7ee9\u9760\u8c31\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u5300\u901f\u5047\u8bbe\uff0c\u5b9e\u9645\u6bd4\u8d5b\u4e2d\u524d\u5feb\u540e\u6162\u5f88\u5e38\u89c1\uff0c\u6210\u7ee9\u4ec5\u4f9b\u53c2\u8003\uff0c\u4f5c\u4e3a\u8bad\u7ec3\u8ba1\u5212\u57fa\u51c6\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u8ba1\u7b97\u7ed3\u679c\u8981\u4e0d\u8981\u4fdd\u5b58\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ec5\u5c55\u793a\uff0c\u4e0d\u4fdd\u5b58\u4efb\u4f55\u6570\u636e\uff0c\u53ef\u5728\u6d4f\u89c8\u5668\u672c\u5730\u6253\u5f00\u9875\u9762\u968f\u65f6\u8ba1\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🏃 跑步配速</h1>
+    <p>距离、用时、配速互算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">跑步配速</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#跑步</span><span class="badge">#配速</span><span class="badge">#马拉松</span><span class="badge">#速度</span>
+<div class="field">
+  <label for="rpDist">距离</label>
+  <div style="display:flex;gap:8px;">
+    <input type="number" id="rpDist" step="0.01" min="0" placeholder="5">
+    <select id="rpUnit" style="max-width:110px;">
+      <option value="km">公里 (km)</option>
+      <option value="mi">英里 (mi)</option>
+    </select>
+  </div>
+</div>
+<div class="field">
+  <label for="rpTime">用时（分 / 或 时:分:秒）</label>
+  <input type="text" id="rpTime" placeholder="25:30 或 0:25:30">
+</div>
+<div class="field">
+  <label for="rpPace">配速（分:秒 / 每公里）</label>
+  <input type="text" id="rpPace" placeholder="5:06 或 6.5">
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="rpGo" type="button">计算</button>
+</div>
+<div id="rpMsg"></div>
+<div id="rpOut" style="margin-top:12px;display:grid;gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>配速是什么？怎么算？</h2><p>配速是完成每 1 公里需要的用时，比如 5:06 表示每公里 5 分 06 秒。用总用时除以距离即可得到配速，工具支持距离+用时、距离+配速、配速+用时三种推算方式。</p><h2>怎么选训练目标配速？</h2><p>10 公里成绩是很好的参考基准：10K 在 40 分钟内相当业余高手，50 分钟内进阶，60 分钟内大众水平。工具会按此给出水平参考。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持英里单位吗？</summary><p>支持，单位可切换公里/英里，配速与目标成绩会按所选单位换算，同时展示对应的公里数。</p></details><details class="faq-item"><summary>配速格式怎么填？</summary><p>支持分:秒（如 5:06）或纯数字分钟（如 6.5 表示 6 分 30 秒）；时间支持 25:30 或 0:25:30 两种写法。</p></details><details class="faq-item"><summary>估算的目标成绩靠谱吗？</summary><p>基于匀速假设，实际比赛中前快后慢很常见，成绩仅供参考，作为训练计划基准即可。</p></details><details class="faq-item"><summary>计算结果要不要保存？</summary><p>仅展示，不保存任何数据，可在浏览器本地打开页面随时计算。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>跑步配速 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='running-pace';}); _r.unshift('running-pace'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var rpDist = document.getElementById('rpDist');
+var rpUnit = document.getElementById('rpUnit');
+var rpTime = document.getElementById('rpTime');
+var rpPace = document.getElementById('rpPace');
+var rpGo = document.getElementById('rpGo');
+var rpMsg = document.getElementById('rpMsg');
+var rpOut = document.getElementById('rpOut');
+
+function parseTimeToMin(s) {
+  s = (s || '').trim();
+  if (!s) return null;
+  var m = s.split(':');
+  if (m.length === 3) {
+    var h = parseFloat(m[0]), mm = parseFloat(m[1]), ss = parseFloat(m[2]);
+    if (isFinite(h) && isFinite(mm) && isFinite(ss) && mm < 60 && ss < 60) return h * 60 + mm + ss / 60;
+    return NaN;
+  }
+  if (m.length === 2) {
+    var mi = parseFloat(m[0]), si = parseFloat(m[1]);
+    if (isFinite(mi) && isFinite(si) && si < 60) return mi + si / 60;
+    return NaN;
+  }
+  var v = parseFloat(s);
+  return isFinite(v) ? v : NaN;
+}
+
+function parsePaceToMin(s) {
+  s = (s || '').trim();
+  if (!s) return null;
+  var m = s.split(':');
+  if (m.length === 2) {
+    var mi = parseFloat(m[0]), si = parseFloat(m[1]);
+    if (isFinite(mi) && isFinite(si) && si < 60) return mi + si / 60;
+    return NaN;
+  }
+  var v = parseFloat(s);
+  return isFinite(v) ? v : NaN;
+}
+
+function fmtMin(km) {
+  var total = Math.round(km * 60);
+  var m2 = Math.floor(total / 60), s2 = total % 60;
+  return (m2 < 10 ? '0' : '') + m2 + ':' + (s2 < 10 ? '0' : '') + s2;
+}
+
+function fmtHMS(min) {
+  var total = Math.round(min * 60);
+  var h = Math.floor(total / 3600), m2 = Math.floor((total % 3600) / 60), s2 = total % 60;
+  return (h > 0 ? h + ' 小时 ' : '') + m2 + ' 分 ' + s2 + ' 秒';
+}
+
+function row(label, val) {
+  return '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px dashed var(--border);"><span style="color:var(--muted);">' + label + '</span><b style="font-family:monospace;">' + val + '</b></div>';
+}
+
+rpGo.addEventListener('click', function () {
+  rpMsg.innerHTML = '';
+  var dist = parseFloat(rpDist.value);
+  var unit = rpUnit.value;
+  var hasDist = isFinite(dist) && dist > 0;
+  var t = parseTimeToMin(rpTime.value);
+  var p = parsePaceToMin(rpPace.value);
+  if (t === NaN || p === NaN) { showToast('时间或配速格式不正确'); return; }
+  var filled = (hasDist ? 1 : 0) + (t !== null ? 1 : 0) + (p !== null ? 1 : 0);
+  if (filled < 2) {
+    rpMsg.innerHTML = '<div style="color:#dc2626;font-size:13px;">请至少填写三项中的两项：距离 / 用时 / 配速</div>';
+    return;
+  }
+  var distKm = hasDist ? (unit === 'mi' ? dist * 1.609344 : dist) : 0;
+  if (t !== null && p !== null) {
+    if (hasDist && Math.abs(distKm - (t / p)) > distKm * 0.02) {
+      rpMsg.innerHTML = '<div style="color:#f59e0b;font-size:13px;">提示：填写的距离与「配速 × 用时」不完全一致（按配速 × 用时修正为 ' + (t / p).toFixed(2) + ' km）</div>';
+    }
+    distKm = t / p;
+  } else if (t !== null) {
+    p = t / distKm;
+  } else {
+    t = distKm * p;
+  }
+
+  var kmh = 60 / p;
+  var perUnit = p;
+  var html = '<div class="result-box">';
+  html += '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px;">';
+  html += '<div><span style="color:var(--muted);font-size:12px;">配速</span><div style="font-size:20px;font-weight:800;">' + fmtMin(p) + ' <span style="font-size:12px;color:var(--muted);font-weight:400;">/' + unit + '</span></div></div>';
+  html += '<div><span style="color:var(--muted);font-size:12px;">用时</span><div style="font-size:20px;font-weight:800;">' + fmtHMS(t) + '</div></div>';
+  html += '<div><span style="color:var(--muted);font-size:12px;">速度</span><div style="font-size:20px;font-weight:800;">' + kmh.toFixed(2) + ' <span style="font-size:12px;color:var(--muted);font-weight:400;">km/h</span></div></div>';
+  html += '</div>';
+  html += row('距离', distKm.toFixed(2) + ' km' + (unit === 'mi' ? '（' + distKm.toFixed(2) + ' 公里 / ' + dist.toFixed(2) + ' 英里）' : ''));
+  html += row('每 400m', fmtMin(p / 2.5));
+  html += row('5 公里', fmtHMS(5 * p));
+  html += row('10 公里', fmtHMS(10 * p));
+  html += row('半程马拉松 21.0975 km', fmtHMS(21.0975 * p));
+  html += row('马拉松 42.195 km', fmtHMS(42.195 * p));
+  html += '</div>';
+  var fiveK = 5 * p, tenK = 10 * p;
+  var rank = '';
+  if (tenK < 30) rank = '精英级';
+  else if (tenK < 40) rank = '业余高手';
+  else if (tenK < 50) rank = '进阶跑者';
+  else if (tenK < 60) rank = '大众跑者';
+  else if (tenK < 72) rank = '休闲跑者';
+  else rank = '入门';
+  html += '<div style="font-size:12px;color:var(--muted);text-align:center;">按网上常见 10K 成绩划分，当前水平约为：<b>' + rank + '</b></div>';
+  rpOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
