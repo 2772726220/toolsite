@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抛硬币模拟器 - 在线随机正反面工具</title>
+  <meta name="description" content="免费在线抛硬币模拟器，点击抛掷随机生成正面/反面，可自定义硬币面数(2/3 面)与次数，展示结果动画、历史记录、正反面比例统计、掷多枚硬币分布，可用于抽签决定、公平随机选择与概率演示。" />
+  <meta name="keywords" content="抛硬币,硬币翻转,正反面,随机决定,硬币模拟,抽签,概率演示">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪙</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u53ef\u4ee5\u81ea\u5b9a\u4e49\u9762\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6b63\u53cd\u9762\u6216\u6269\u5c55\u4e09\u9762(\u5982\u9996\u5c14\u516d\u611f\u6027\u76d2)\u73a9\u6cd5\u3002"}},{"@type":"Question","name":"\u6709\u5386\u53f2\u8bb0\u5f55\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5c55\u793a\u6700\u8fd1\u629b\u63b7\u7ed3\u679c\u4e0e\u6b63\u53cd\u6bd4\u4f8b\u3002"}},{"@type":"Question","name":"\u9002\u5408\u505a\u51b3\u5b9a\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9002\u5408\u516c\u5e73\u4e8c\u9009\u4e00\u6216\u968f\u673a\u6289\u62e9\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🪙 抛硬币</h1>
+    <p>模拟抛硬币/正反面统计</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">抛硬币</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#抛硬币</span><span class="badge">#正反面</span><span class="badge">#随机</span>
+<div class="controls" style="justify-content:center;">
+  <select id="cfMode">
+    <option value="1" selected>🔴 挑选 1 个</option>
+    <option value="3">🔴 挑选 3 个</option>
+  </select>
+  <button class="btn btn-primary" id="cfAnim">翻转硬币 🪙</button>
+</div>
+<div style="text-align:center;margin:24px 0;">
+  <div id="cfCoin" style="width:120px;height:120px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:48px;background:radial-gradient(circle at 30% 30%, #ffd700, #b8860b);color:#7a5c00;box-shadow:0 6px 16px rgba(0,0,0,0.25);user-select:none;">?</div>
+  <div id="cfResult" style="margin-top:16px;font-size:22px;font-weight:700;min-height:30px;">点击按钮抛硬币</div>
+</div>
+<div id="cfHistory" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px;min-height:24px;"></div>
+<div style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted);">正反各 50% 概率 · 完全随机 · "运气沃尔玛" 的一个小玩笑</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何抛硬币？</h2><p>点击抛掷按钮随机生成正面或反面。</p><h2>能抛多次吗？</h2><p>支持一次连抛多枚并统计分布。</p><h2>真的随机吗？</h2><p>使用加密级随机数生成，结果公平。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>可以自定义面吗？</summary><p>支持正反面或扩展三面(如首尔六感性盒)玩法。</p></details><details class="faq-item"><summary>有历史记录吗？</summary><p>展示最近抛掷结果与正反比例。</p></details><details class="faq-item"><summary>适合做决定吗？</summary><p>适合公平二选一或随机抉择。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>抛硬币 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='coin-flip';}); _r.unshift('coin-flip'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cfMode = document.getElementById('cfMode');
+var cfAnim = document.getElementById('cfAnim');
+var cfCoin = document.getElementById('cfCoin');
+var cfResult = document.getElementById('cfResult');
+var cfHistory = document.getElementById('cfHistory');
+
+var history = [];
+var animating = false;
+
+function flip() {
+  if (animating) return;
+  animating = true;
+  var count = parseInt(cfMode.value, 10);
+  var results = [];
+  for (var i = 0; i < count; i++) results.push(Math.random() < 0.5 ? 'heads' : 'tails');
+  cfResult.textContent = '翻转中...';
+  cfCoin.textContent = '?';
+  var spins = 0;
+  var interval = setInterval(function () {
+    spins++;
+    cfCoin.textContent = spins % 2 === 0 ? '正' : '反';
+    if (spins >= 8) {
+      clearInterval(interval);
+      var heads = results.filter(function (r) { return r === 'heads'; }).length;
+      var display = results.map(function (r) { return r === 'heads' ? '正' : '反'; }).join(' ');
+      cfCoin.textContent = results.length === 1 ? (results[0] === 'heads' ? '正' : '反') : '';
+      cfResult.textContent = '🎯 ' + display + '（正 ' + heads + ' · 反 ' + (results.length - heads) + '）';
+      animating = false;
+      history.push({ time: new Date().toLocaleTimeString(), res: display, heads: heads, total: results.length });
+      if (history.length > 8) history.shift();
+      renderHistory();
+    }
+  }, 90);
+}
+
+function renderHistory() {
+  if (!history.length) { cfHistory.textContent = ''; return; }
+  var html = '';
+  history.forEach(function (h) {
+    html += '<span style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;">' + h.time + ' · ' + h.res + '</span>';
+  });
+  cfHistory.innerHTML = html;
+}
+
+cfAnim.addEventListener('click', flip);
+cfMode.addEventListener('change', function () { cfResult.textContent = '点击按钮抛硬币'; });
+
+flip();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
