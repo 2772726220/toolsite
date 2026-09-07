@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 动画生成器 - 在线生成 CSS 动画代码工具</title>
+  <meta name="description" content="免费在线 CSS 动画生成器，可视化配置位移/旋转/缩放/透明/颜色/缓动函数/延迟/循环次数生成 @keyframes 动画，预设常见效果(FadeIn/弹跳/滑动/脉冲/旋转/flip/shake 等)、实时预览、导出标准 CSS 代码与 HTML 演示，网页动效开发必备。" />
+  <meta name="keywords" content="CSS动画,动画生成器,keyframes,过渡动画,缓动函数,网页动效,前端动画">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u5bfc\u51fa\u4ee3\u7801\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e00\u952e\u590d\u5236\u6807\u51c6 CSS \u4ee3\u7801\uff0c\u5e76\u9644\u5e26\u6700\u5c0f HTML \u6f14\u793a\u7247\u6bb5\u3002"}},{"@type":"Question","name":"\u652f\u6301\u8fc7\u6e21\u52a8\u753b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9664\u5173\u952e\u5e27\u52a8\u753b\u5916\u4e5f\u652f\u6301 hover \u8fc7\u6e21\u8fc7\u6e21\u6548\u679c\u914d\u7f6e\u3002"}},{"@type":"Question","name":"\u52a8\u753b\u6027\u80fd\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f18\u5148\u4f7f\u7528 transform/opacity \u4ee5\u4fdd\u8bc1\u6d41\u7545\u7684\u786c\u4ef6\u52a0\u901f\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>✨ CSS 动画生成器</h1>
+    <p>可视化生成 CSS 动画/过渡效果</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">CSS 动画生成器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#CSS动画</span><span class="badge">#动效</span><span class="badge">#keyframes</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>预置动画</label>
+    <select id="caPreset" style="width:100%;padding:8px 12px;">
+      <option value="fadeIn">淡入 FadeIn</option>
+      <option value="pop">弹跳 Pop</option>
+      <option value="slideIn">从右滑入</option>
+      <option value="pulse">脉冲 Pulse</option>
+      <option value="spin">旋转 Spin</option>
+      <option value="shake">抖动 Shake</option>
+      <option value="bounce">弹跳 Bounce</option>
+      <option value="flip">翻转 Flip</option>
+      <option value="wiggle">摆动 Wiggle</option>
+    </select>
+    <label>持续时长 (ms)</label>
+    <input type="number" id="caDuration" value="1000" min="100" max="10000" step="100">
+    <label>缓动函数</label>
+    <select id="caEasing">
+      <option value="ease" selected>ease</option>
+      <option value="linear">linear</option>
+      <option value="ease-in">ease-in</option>
+      <option value="ease-out">ease-out</option>
+      <option value="ease-in-out">ease-in-out</option>
+    </select>
+    <label>循环次数</label>
+    <input type="number" id="caIter" value="1" min="1" max="10" step="1">
+  </div>
+  <div>
+    <label>移动方向 (像素)</label>
+    <input type="number" id="caDistance" value="40" min="0" max="300" step="5">
+    <label>位移起点角度 (0-360)</label>
+    <input type="number" id="caAngle" value="0" min="0" max="360" step="15">
+    <button class="btn btn-primary" id="caApply" style="width:100%;margin-top:8px;">应用动画</button>
+    <button class="btn" id="caCopy" style="width:100%;margin-top:6px;">复制 CSS 代码</button>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted);">动画将作用在下方方块，用于实时预览。</div>
+  </div>
+</div>
+<div style="display:flex;justify-content:center;margin:24px 0;">
+  <div id="caBox" style="width:80px;height:80px;background:linear-gradient(135deg,var(--accent),#a855f7);border-radius:12px;"></div>
+</div>
+<pre id="caCode" style="background:var(--bg-elev);padding:12px;border-radius:8px;font-size:12px;overflow:auto;line-height:1.6;"></pre>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何生成 CSS 动画？</h2><p>配置动画属性并实时预览，自动生成 @keyframes 与 animation 代码。</p><h2>支持哪些预设效果？</h2><p>内置 FadeIn、弹跳、滑动、脉冲、旋转、翻转、抖动等常用动画。</p><h2>可以自定义缓动吗？</h2><p>支持选择多种缓动函数并可自定义 cubic-bezier 曲线。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能导出代码吗？</summary><p>一键复制标准 CSS 代码，并附带最小 HTML 演示片段。</p></details><details class="faq-item"><summary>支持过渡动画吗？</summary><p>除关键帧动画外也支持 hover 过渡过渡效果配置。</p></details><details class="faq-item"><summary>动画性能如何？</summary><p>优先使用 transform/opacity 以保证流畅的硬件加速。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>CSS 动画生成器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='css-animator';}); _r.unshift('css-animator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var caPreset = document.getElementById('caPreset');
+var caDuration = document.getElementById('caDuration');
+var caEasing = document.getElementById('caEasing');
+var caIter = document.getElementById('caIter');
+var caDistance = document.getElementById('caDistance');
+var caAngle = document.getElementById('caAngle');
+var caApply = document.getElementById('caApply');
+var caCopy = document.getElementById('caCopy');
+var caBox = document.getElementById('caBox');
+var caCode = document.getElementById('caCode');
+
+function makePresets() {
+  var P = {};
+  var d = function (dist, deg) {
+    var rad = deg * Math.PI / 180;
+    return { tx: Math.round(Math.cos(rad) * dist), ty: Math.round(Math.sin(rad) * dist) };
+  };
+  P.fadeIn = {};
+  P.pop = { scaleFrom: 0.3, scaleTo: 1.1 };
+  P.slideIn = { txFrom: 100, tyFrom: 0, txTo: 0, tyTo: 0, opacityFrom: 0 };
+  P.pulse = { scaleFrom: 1, scaleTo: 1.15 };
+  P.spin = { rotateFrom: 0, rotateTo: 360 };
+  P.shake = { keyframe: 'shake' };
+  P.bounce = { keyframe: 'bounce' };
+  P.flip = { rotateYFrom: 0, rotateYTo: 360 };
+  P.wiggle = { keyframe: 'wiggle' };
+  return P;
+}
+
+function degrees() {
+  var presets = makePresets();
+  var cfg = presets[caPreset.value] || {};
+  var rad = (parseFloat(caAngle.value) || 0) * Math.PI / 180;
+  var dist = parseFloat(caDistance.value) || 40;
+  var tx = Math.round(Math.cos(rad) * dist);
+  var ty = Math.round(Math.sin(rad) * dist);
+  return { cfg: cfg, tx: tx, ty: ty };
+}
+
+function buildCss() {
+  var dur = parseInt(caDuration.value, 10) || 1000;
+  var iter = parseInt(caIter.value, 10) || 1;
+  var easing = caEasing.value;
+  var g = degrees();
+  var cfg = g.cfg;
+  var name = 'anim_' + caPreset.value + '_' + Date.now();
+  var frames = '';
+  var props = { from: [], to: [] };
+
+  function line(p, key, val) { props[p].push('      ' + key + ': ' + val + ';'); }
+
+  if (cfg.keyframe === 'shake') {
+    frames = '@keyframes ' + name + ' {\n' +
+      '  0%,100% { transform: translateX(0); }\n' +
+      '  25% { transform: translateX(-8px); }\n' +
+      '  50% { transform: translateX(8px); }\n' +
+      '  75% { transform: translateX(-4px); }\n}';
+  } else if (cfg.keyframe === 'bounce') {
+    frames = '@keyframes ' + name + ' {\n' +
+      '  0%,100% { transform: translateY(0); }\n' +
+      '  50% { transform: translateY(-24px); }\n}';
+  } else if (cfg.keyframe === 'wiggle') {
+    frames = '@keyframes ' + name + ' {\n' +
+      '  0%,100% { transform: rotate(0deg); }\n' +
+      '  25% { transform: rotate(-8deg); }\n' +
+      '  75% { transform: rotate(8deg); }\n}';
+  } else if (cfg.rotateFrom !== undefined || cfg.rotateYFrom !== undefined) {
+    var rf = cfg.rotateFrom, rt = cfg.rotateTo;
+    if (rf === undefined) { frames = '@keyframes ' + name + ' { from { transform: rotateY(' + cfg.rotateYFrom + 'deg);} to { transform: rotateY(' + cfg.rotateYTo + 'deg);} }'; }
+    else { frames = '@keyframes ' + name + ' { from { transform: rotate(' + rf + 'deg);} to { transform: rotate(' + rt + 'deg);} }'; }
+  } else if (cfg.txFrom !== undefined || cfg.scaleFrom !== undefined) {
+    var from = [], to = [];
+    if (cfg.txFrom !== undefined) { from.push('translate(' + cfg.txFrom + 'px,' + (cfg.tyFrom || 0) + 'px)'); to.push('translate(' + (cfg.txTo || 0) + 'px,' + (cfg.tyTo || 0) + 'px)'); }
+    if (cfg.scaleFrom !== undefined) { from.push('scale(' + cfg.scaleFrom + ')'); to.push('scale(' + (cfg.scaleTo || 1) + ')'); }
+    frames = '@keyframes ' + name + ' { from { opacity:' + (cfg.opacityFrom === undefined ? 1 : 0) + '; transform:' + from.join(' ') + ';} to { opacity:1; transform:' + to.join(' ') + ';} }';
+  } else if (cfg.scaleFrom !== undefined && cfg.scaleTo !== undefined) {
+    frames = '@keyframes ' + name + ' {\n  0% { transform: scale(' + cfg.scaleFrom + '); }\n' +
+      '  50% { transform: scale(' + cfg.scaleTo + '); }\n  100% { transform: scale(' + cfg.scaleFrom + '); }\n}';
+  } else {
+    frames = '@keyframes ' + name + ' {\n  0% { opacity:0; transform: translate(' + g.tx + 'px,' + g.ty + 'px); }\n  100% { opacity:1; transform: translate(0,0); }\n}';
+  }
+
+  var css = frames + '\n\n.element {\n  animation: ' + name + ' ' + dur + 'ms ' + easing + ' ' + iter + ';\n}';
+  return { css: css, name: name };
+}
+
+function apply() {
+  var css = buildCss().css;
+  var style = document.createElement('style');
+  style.innerHTML = css;
+  document.head.appendChild(style);
+  var anim = 'anim_';
+  var idx = css.indexOf('@keyframes ') + 11;
+  caBox.style.animation = '';
+  caBox.style.animation = css.substring(idx, css.indexOf(' ', idx)) + ' ' + (parseInt(caDuration.value, 10) || 1000) + 'ms ' + caEasing.value + ' ' + (parseInt(caIter.value, 10) || 1);
+  caCode.textContent = css;
+}
+
+caApply.addEventListener('click', apply);
+caCopy.addEventListener('click', function () {
+  var css = buildCss().css;
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(css);
+  showToast('CSS 已复制');
+});
+
+buildCss();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
