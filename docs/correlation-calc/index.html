@@ -167,7 +167,7 @@ function pearson(x, y) {
     dx2 += dx * dx;
     dy2 += dy * dy;
   }
-  return dx2 && dy2 ? num / Math.sqrt(dx2 * dy2) : 0;
+  return dx2 && dy2 ? num / Math.sqrt(dx2 * dy2) : NaN;
 }
 
 function spearman(x, y) {
@@ -187,7 +187,9 @@ function kendall(x, y) {
     }
   }
   var total = n * (n - 1) / 2;
-  return (concordant - discordant) / Math.sqrt((total - tx) * (total - ty));
+  var denom = Math.sqrt(Math.max(0, total - tx) * Math.max(0, total - ty));
+  if (!denom) return NaN;
+  return (concordant - discordant) / denom;
 }
 
 function fisherZ(r) { return 0.5 * Math.log((1 + r) / (1 - r)); }
@@ -262,6 +264,11 @@ ccCalc.addEventListener('click', function () {
   else if (ccType.value === 'spearman') r = spearman(data.x, data.y);
   else r = kendall(data.x, data.y);
   var conf = parseFloat(ccConf.value);
+  if (isNaN(conf)) conf = 0.95;
+  if (!isFinite(r)) {
+    ccOut.innerHTML = row('样本量', n) + row('相关系数 (' + ccType.value + ')', '未定义（数据无变异）');
+    return;
+  }
   var ci = fisherCI(r, n, conf);
   var p = tTest(r, n);
   var html = row('样本量', n);
@@ -269,7 +276,7 @@ ccCalc.addEventListener('click', function () {
   html += row('决定系数 R²', (r * r).toFixed(6));
   html += row(conf * 100 + '% 置信区间', '[' + ci[0].toFixed(6) + ', ' + ci[1].toFixed(6) + ']');
   html += row('p 值 (双侧)', p < 0.0001 ? '< 0.0001' : p.toFixed(6));
-  html += row('显著性', p < 0.05 ? '显著 *' : p < 0.01 ? '显著 **' : p < 0.001 ? '显著 ***' : '不显著');
+  html += row('显著性', p < 0.001 ? '显著 ***' : p < 0.01 ? '显著 **' : p < 0.05 ? '显著 *' : '不显著');
   ccOut.innerHTML = html;
 });
   window.toggleTheme = function () {
