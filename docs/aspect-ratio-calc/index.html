@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宽高比计算器 - 在线图片视频比例换算工具</title>
+  <meta name="description" content="免费在线宽高比计算器，输入已知宽或高自动换算另一维度，内置 16:9 / 4:3 / 3:2 / 1:1 / 9:16 等常用比例预设，一键锁定比例缩放、显示最简整数比例、对比失真提示，图片视频尺寸调整与网页排版必备。" />
+  <meta name="keywords" content="宽高比,宽高比计算,图片比例,16比9,4比3,视频比例,尺寸等比缩放">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8ba1\u7b97\u7ed3\u679c\u7cbe\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u591a\u4f4d\u5c0f\u6570\u5e76\u56db\u820d\u4e94\u5165\u81f3\u5e38\u7528\u6574\u6570\u3002"}},{"@type":"Question","name":"\u4f1a\u63d0\u793a\u5931\u771f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u68c0\u6d4b\u4e0e\u9884\u8bbe\u6bd4\u4f8b\u504f\u5dee\u5e76\u63d0\u793a\u662f\u5426\u63a5\u8fd1\u6807\u51c6\u6bd4\u4f8b\u3002"}},{"@type":"Question","name":"\u9002\u5408\u7f51\u9875\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5e38\u7528\u4e8e\u56fe\u7247\u3001\u89c6\u9891\u3001\u5c01\u9762\u4e0e\u6392\u7248\u6bd4\u4f8b\u7684\u6362\u7b97\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📐 宽高比计算</h1>
+    <p>计算/换算图片视频宽高比</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">宽高比计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#宽高比</span><span class="badge">#比例</span><span class="badge">#缩放</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>已知宽度 (px)</label>
+    <input type="number" id="arWidth" value="1920" min="1" step="1">
+    <label>已知高度 (px)</label>
+    <input type="number" id="arHeight" value="1080" min="1" step="1">
+    <button class="btn btn-primary" id="arCalc" style="width:100%;margin-top:8px;">计算宽高比</button>
+    <label style="margin-top:12px;">锁定比例等比缩放（改其一自动算另一）</label>
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:8px;">
+      <div><label>目标宽度</label><input type="number" id="arTW" value="1280" min="1" step="1"></div>
+      <div><label>目标高度</label><input type="number" id="arTH" value="" min="1" step="1" placeholder="自动"></div>
+    </div>
+    <button class="btn" id="arLock" style="width:100%;">锁定比例缩放</button>
+  </div>
+  <div>
+    <label>比例预设</label>
+    <div id="arPresets" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;"></div>
+    <label style="margin-top:12px;">计算结果</label>
+    <div id="arResult" style="border:1px solid var(--border);border-radius:8px;padding:16px;min-height:120px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何计算宽高比？</h2><p>输入已知宽度或高度，锁定比例自动求出另一维度。</p><h2>有哪些预设比例？</h2><p>内置 16:9、4:3、3:2、1:1、9:16 等常用预设。</p><h2>能等比缩放吗？</h2><p>支持锁定比例一键求出等比缩放后的尺寸。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>计算结果精确吗？</summary><p>支持多位小数并四舍五入至常用整数。</p></details><details class="faq-item"><summary>会提示失真吗？</summary><p>检测与预设比例偏差并提示是否接近标准比例。</p></details><details class="faq-item"><summary>适合网页用吗？</summary><p>常用于图片、视频、封面与排版比例的换算。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>宽高比计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='aspect-ratio-calc';}); _r.unshift('aspect-ratio-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var arWidth = document.getElementById('arWidth');
+var arHeight = document.getElementById('arHeight');
+var arCalc = document.getElementById('arCalc');
+var arTW = document.getElementById('arTW');
+var arTH = document.getElementById('arTH');
+var arLock = document.getElementById('arLock');
+var arPresets = document.getElementById('arPresets');
+var arResult = document.getElementById('arResult');
+
+var PRESETS = [
+  ['16:9', 16, 9], ['4:3', 4, 3], ['3:2', 3, 2], ['1:1', 1, 1],
+  ['9:16', 9, 16], ['21:9', 21, 9], ['3:4', 3, 4], ['2.35:1', 2.35, 1],
+  ['5:4', 5, 4], ['16:10', 16, 10], ['A4', 210, 297], ['1.91:1', 1.91, 1],
+];
+
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a || 1; }
+
+function fmt(n) {
+  return n % 1 === 0 ? String(n) : n.toFixed(2);
+}
+
+function renderPresets() {
+  arPresets.innerHTML = '';
+  PRESETS.forEach(function (p) {
+    var el = document.createElement('div');
+    el.innerHTML = p[0];
+    el.style.cssText = 'padding:8px;border:1px solid var(--border);border-radius:6px;text-align:center;cursor:pointer;font-size:13px;background:var(--bg-elev);';
+    el.addEventListener('click', function () {
+      arTW.value = p[1] * 100;
+      arTH.value = '';
+      setTH(p[1] * 100, p[1], p[2]);
+    });
+    arPresets.appendChild(el);
+  });
+}
+
+function setTH(w, ratioW, ratioH) {
+  if (!w || w <= 0) return;
+  var h = (w / ratioW) * ratioH;
+  arTH.value = Math.round(h);
+  showAR(w, h, ratioW, ratioH);
+}
+
+function showAR(w, h, rw, rh) {
+  var ratioW = rw, ratioH = rh;
+  if (ratioW === 0) {
+    var g = gcd(w, h);
+    ratioW = w / g; ratioH = h / g;
+  }
+  var sw = 220, sh = (220 / ratioW) * ratioH;
+  if (sh > 140) { sh = 140; sw = (140 / ratioH) * ratioW; }
+  arResult.innerHTML = '<div style="width:' + sw + 'px;height:' + sh + 'px;background:linear-gradient(135deg,rgba(79,70,229,0.7),rgba(14,165,233,0.7));border-radius:6px;margin:0 auto;"></div>' +
+    '<div style="text-align:center;margin-top:12px;line-height:1.8;">' +
+    '<div><b>宽高比：</b>' + fmt(ratioW) + ' : ' + fmt(ratioH) + '</div>' +
+    '<div><b>比例值：</b>' + (ratioW / ratioH).toFixed(3) + '</div>' +
+    '<div><b>尺寸：</b>' + w + ' × ' + h + ' px</div></div>';
+}
+
+arCalc.addEventListener('click', function () {
+  var w = parseInt(arWidth.value, 10);
+  var h = parseInt(arHeight.value, 10);
+  if (!w || !h || w <= 0 || h <= 0) { showToast('请输入有效的宽度与高度'); return; }
+  var g = gcd(w, h);
+  showAR(w, h, w / g, h / g);
+});
+
+arLock.addEventListener('click', function () {
+  var w = parseInt(arWidth.value, 10);
+  var h = parseInt(arHeight.value, 10);
+  if (!w || !h || w <= 0 || h <= 0) { showToast('请先输入原始宽高以确定比例'); return; }
+  var g = gcd(w, h);
+  var rw = w / g, rh = h / g;
+  var tw = parseInt(arTW.value, 10);
+  if (tw && tw > 0) setTH(tw, rw, rh);
+  else showToast('请输入目标宽度');
+});
+
+renderPresets();
+showAR(1920, 1080, 16, 9);
+arTH.value = Math.round((1280 / 16) * 9);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
