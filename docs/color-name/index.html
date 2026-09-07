@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色名称查询 - 在线 HEX 颜色名称对照工具</title>
+  <meta name="description" content="免费在线颜色名称查询工具，输入 HEX/RGB/HSL 颜色实时匹配最相近的标准颜色名称(中文/英文)，显示颜色预览、相近色列表、按名称搜索颜色库、网页安全色 216 色板，设计取色命名与前端文档必备。" />
+  <meta name="keywords" content="颜色名称,色值名称,HEX转名称,颜色查询,安全色,216色板,色彩名称">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5339\u914d\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u6b27\u51e0\u91cc\u5f97\u8ddd\u79bb\u5339\u914d\u6700\u76f8\u8fd1\u7684\u6807\u51c6\u8272\u540d\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5b89\u5168\u8272\u677f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5185\u7f6e 216 \u7f51\u9875\u5b89\u5168\u8272\u5168\u90e8\u5bf9\u7167\u3002"}},{"@type":"Question","name":"\u53ef\u590d\u5236\u7ed3\u679c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e00\u952e\u590d\u5236\u8272\u503c\u6216\u989c\u8272\u540d\u79f0\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🏷️ 颜色名称查询</h1>
+    <p>HEX/RGB 对应的颜色名称</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">颜色名称查询</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#颜色名称</span><span class="badge">#色值</span><span class="badge">#安全色</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>输入颜色 (HEX)</label>
+    <div style="display:flex;gap:8px;">
+      <input type="color" id="cnColor" value="#4f46e5" style="width:56px;height:38px;padding:0;border:1px solid var(--border);">
+      <input type="text" id="cnHex" value="#4f46e5" placeholder="#RRGGBB">
+    </div>
+    <button class="btn btn-primary" id="cnFind" style="margin-top:8px;">查询颜色名称</button>
+    <label style="margin-top:12px;">按名称搜索 (中/英)</label>
+    <input type="text" id="cnSearch" placeholder="如 红 / red / 天蓝">
+    <div id="cnResults" style="margin-top:8px;display:grid;gap:6px;max-height:300px;overflow:auto;"></div>
+  </div>
+  <div>
+    <label>匹配结果</label>
+    <div id="cnInfo" style="border:1px solid var(--border);border-radius:8px;padding:16px;min-height:200px;"></div>
+    <label style="margin-top:12px;">网页安全色板</label>
+    <div id="cnSafe" style="display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:6px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何查询颜色名称？</h2><p>输入 HEX 或 RGB 自动匹配最相近的标准颜色名。</p><h2>有哪些颜色库？</h2><p>内置 X11/CSS 标准颜色名并与网页安全色对照。</p><h2>能按名称反向查吗？</h2><p>支持输入中文或英文名称搜索对应色值。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>匹配准确吗？</summary><p>使用欧几里得距离匹配最相近的标准色名。</p></details><details class="faq-item"><summary>支持安全色板吗？</summary><p>内置 216 网页安全色全部对照。</p></details><details class="faq-item"><summary>可复制结果吗？</summary><p>一键复制色值或颜色名称。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>颜色名称查询 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='color-name';}); _r.unshift('color-name'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cnColor = document.getElementById('cnColor');
+var cnHex = document.getElementById('cnHex');
+var cnFind = document.getElementById('cnFind');
+var cnSearch = document.getElementById('cnSearch');
+var cnResults = document.getElementById('cnResults');
+var cnInfo = document.getElementById('cnInfo');
+var cnSafe = document.getElementById('cnSafe');
+
+var NAMES = [
+  ['黑色', 'black', '#000000'], ['白色', 'white', '#ffffff'], ['红色', 'red', '#ff0000'],
+  ['暗红', 'maroon', '#800000'], ['绿色', 'green', '#008000'], ['暗绿', 'darkgreen', '#006400'],
+  ['蓝色', 'blue', '#0000ff'], ['深蓝', 'navy', '#000080'], ['黄色', 'yellow', '#ffff00'],
+  ['暗金', 'olive', '#808000'], ['紫色', 'purple', '#800080'], ['青色', 'aqua', '#00ffff'],
+  ['蓝绿', 'teal', '#008080'], ['灰色', 'gray', '#808080'], ['银色', 'silver', '#c0c0c0'],
+  ['橙色', 'orange', '#ffa500'], ['深橙', 'darkorange', '#ff8c00'], ['棕褐', 'brown', '#a52a2a'],
+  ['粉红', 'pink', '#ffc0cb'], ['浅粉', 'lightpink', '#ffb6c1'], ['淡紫', 'lavender', '#e6e6fa'],
+  ['紫罗兰', 'violet', '#ee82ee'], ['洋红', 'magenta', '#ff00ff'], ['兰花紫', 'orchid', '#da70d6'],
+  ['浅蓝', 'lightblue', '#add8e6'], ['天蓝', 'skyblue', '#87ceeb'], ['钢蓝', 'steelblue', '#4682b4'],
+  ['深青', 'darkcyan', '#008b8b'], ['翡翠', 'seagreen', '#2e8b57'], ['草绿', 'lawngreen', '#7cfc00'],
+  ['森林绿', 'forestgreen', '#228b22'], ['薄荷绿', 'mintcream', '#f5fffa'], ['珊瑚红', 'coral', '#ff7f50'],
+  ['番茄红', 'tomato', '#ff6347'], ['金橙', 'gold', '#ffd700'], ['金色', 'goldenrod', '#daa520'],
+  ['靛蓝', 'indigo', '#4b0082'], ['蓝紫', 'blueviolet', '#8a2be2'], ['中紫', 'mediumpurple', '#9370db'],
+  ['铜绿', 'turquoise', '#40e0d0'], ['中绿', 'mediumseagreen', '#3cb371'], ['浅绿', 'lightgreen', '#90ee90'],
+  ['黄绿', 'yellowgreen', '#9acd32'], ['橄榄绿', 'olivedrab', '#6b8e23'], ['暗紫', 'darkviolet', '#9400d3'],
+  ['深洋红', 'darkmagenta', '#8b008b'], ['醉红', 'crimson', '#dc143c'], ['火砖红', 'firebrick', '#b22222'],
+  ['紫红', 'indianred', '#cd5c5c'], ['酒红', 'darksalmon', '#e9967a'], ['浅珊瑚', 'lightcoral', '#f08080'],
+  ['暖沙', 'sandybrown', '#f4a460'], ['黄褐', 'peru', '#cd853f'], ['麦色', 'wheat', '#f5deb3'],
+  ['米色', 'beige', '#f5f5dc'], ['古董白', 'antiquewhite', '#faebd7'], ['象牙白', 'ivory', '#fffff0'],
+  ['蜂蜜', 'honeydew', '#f0fff0'], ['雪白', 'snow', '#fffafa'], ['幽灵白', 'ghostwhite', '#f8f8ff'],
+  ['薄荷', 'aquamarine', '#7fffd4'], ['石板蓝', 'slateblue', '#6a5acd'], ['暗板岩蓝', 'darkslateblue', '#483d8b'],
+  ['皇家蓝', 'royalblue', '#4169e1'], ['道奇蓝', 'dodgerblue', '#1e90ff'], ['深天蓝', 'deepskyblue', '#00bfff'],
+  ['中蓝', 'mediumslateblue', '#7b68ee'], ['暗灰蓝', 'darkslategray', '#2f4f4f'], ['暗灰', 'dimgray', '#696969'],
+  ['浅灰', 'lightgray', '#d3d3d3'], ['亮灰', 'gainsboro', '#dcdcdc'], ['深金', 'darkgoldenrod', '#b8860b'],
+  ['暗橄榄', 'darkkhaki', '#bdb76b'], ['海蓝', 'mediumaquamarine', '#66cdaa'], ['青绿', 'darkturquoise', '#00ced1'],
+  ['紫打火石', 'thistle', '#d8bfd8'], ['李子紫', 'plum', '#dda0dd'], ['杨梅', 'mediumorchid', '#ba55d3'],
+  ['热粉红', 'hotpink', '#ff69b4'], ['深粉', 'deeppink', '#ff1493'], ['淡粉', 'palevioletred', '#db7093'],
+];
+
+function hexToRgb(hex) {
+  var h = hex.replace('#', '');
+  if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+  var r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return null;
+  return { r: r, g: g, b: b };
+}
+
+function colorDistance(a, b) {
+  return Math.sqrt(Math.pow(a.r - b.r, 2) + Math.pow(a.g - b.g, 2) + Math.pow(a.b - b.b, 2));
+}
+
+function findName(hex) {
+  var rgb = hexToRgb(hex);
+  if (!rgb) return null;
+  var best = null, bestD = Infinity;
+  NAMES.forEach(function (n) {
+    var nr = hexToRgb(n[2]);
+    var d = colorDistance(rgb, nr);
+    if (d < bestD) { bestD = d; best = n; }
+  });
+  return { name: best[0], en: best[1], hex: best[2], dist: Math.round(bestD) };
+}
+
+function luminance(r, g, b) { return (0.299 * r + 0.587 * g + 0.114 * b) / 255; }
+
+function renderInfo(hex) {
+  var found = findName(hex);
+  if (!found) { cnInfo.innerHTML = '<span style="color:var(--muted);">无效的颜色</span>'; return; }
+  var rgb = hexToRgb(hex);
+  var lum = luminance(rgb.r, rgb.g, rgb.b);
+  var fg = lum > 0.5 ? '#111' : '#fff';
+  cnInfo.innerHTML = '<div style="width:100%;height:70px;border-radius:8px;background:' + hex + ';display:flex;align-items:center;justify-content:center;color:' + fg + ';font-weight:700;font-size:18px;">' + hex.toUpperCase() + '</div>' +
+    '<div style="margin-top:12px;line-height:1.9;">' +
+    '<div><b>中文名：</b>' + found.name + '</div>' +
+    '<div><b>English：</b>' + found.en + '</div>' +
+    '<div><b>RGB：</b>(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')</div>' +
+    '<div><b>最近色：</b><span style="display:inline-block;width:14px;height:14px;background:' + found.hex + ';border:1px solid #ccc;vertical-align:middle;margin:0 4px;"></span>' + found.hex.toUpperCase() + '</div>' +
+    '<div><b>色差：</b>' + found.dist + '</div></div>';
+}
+
+function renderSafe() {
+  cnSafe.innerHTML = '';
+  var base = [0, 51, 102, 153, 204, 255];
+  base.forEach(function (r) {
+    base.forEach(function (g) {
+      base.forEach(function (b) {
+        var hex = '#' + [r, g, b].map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('');
+        var el = document.createElement('div');
+        el.style.cssText = 'width:100%;aspect-ratio:1;background:' + hex + ';border-radius:3px;cursor:pointer;';
+        el.title = hex;
+        el.addEventListener('click', function () {
+          cnHex.value = hex; cnColor.value = hex; renderInfo(hex);
+        });
+        cnSafe.appendChild(el);
+      });
+    });
+  });
+}
+
+cnFind.addEventListener('click', function () {
+  var hex = cnHex.value.trim();
+  var rgb = hexToRgb(hex);
+  if (!rgb) { showToast('请输入有效 HEX'); return; }
+  hex = '#' + [rgb.r, rgb.g, rgb.b].map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('');
+  cnColor.value = hex;
+  renderInfo(hex);
+});
+
+cnColor.addEventListener('input', function () {
+  cnHex.value = cnColor.value;
+  renderInfo(cnColor.value);
+});
+
+cnHex.addEventListener('keydown', function (e) { if (e.key === 'Enter') cnFind.click(); });
+
+cnSearch.addEventListener('input', function () {
+  var q = cnSearch.value.trim().toLowerCase();
+  cnResults.innerHTML = '';
+  if (!q) return;
+  var matches = NAMES.filter(function (n) { return n[0].toLowerCase().indexOf(q) > -1 || n[1].toLowerCase().indexOf(q) > -1 || n[2].indexOf(q) > -1; });
+  if (!matches.length) { cnResults.innerHTML = '<div style="color:var(--muted);font-size:13px;">未找到</div>'; return; }
+  matches.slice(0, 30).forEach(function (n) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px;border:1px solid var(--border);border-radius:6px;cursor:pointer;';
+    row.innerHTML = '<span style="width:26px;height:26px;border-radius:4px;background:' + n[2] + ';border:1px solid rgba(0,0,0,0.1);"></span><span style="flex:1;font-size:13px;">' + n[0] + ' · ' + n[1] + '</span><code style="font-size:11px;">' + n[2] + '</code>';
+    row.addEventListener('click', function () { cnHex.value = n[2]; cnColor.value = n[2]; renderInfo(n[2]); });
+    cnResults.appendChild(row);
+  });
+});
+
+renderInfo('#4f46e5');
+renderSafe();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
