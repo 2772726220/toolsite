@@ -166,7 +166,7 @@ function b64uToJson(str) {
 }
 
 async function signHS256(data, key) {
-  var keyBytes = new TextEncoder().encode(key);
+  var keyBytes = typeof key === 'string' ? new TextEncoder().encode(key) : key;
   var cryptoKey = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   var sig = await crypto.subtle.sign('HMAC', cryptoKey, new TextEncoder().encode(data));
   return b64u(sig);
@@ -205,7 +205,7 @@ jeGenerate.addEventListener('click', async function () {
 
     if (alg.startsWith('HS')) {
       var key = jeKeyFmt.value === 'jwk' ? parseJWK(JSON.parse(jeJwk.value)) : new TextEncoder().encode(jeKey.value);
-      signature = await signHS256(signingInput, new TextDecoder().decode(key));
+      signature = await signHS256(signingInput, key);
     } else if (alg.startsWith('RS') || alg.startsWith('PS') || alg.startsWith('ES')) {
       var keyInput = jeKey.value.trim();
       if (!keyInput) throw new Error('请输入私钥');
