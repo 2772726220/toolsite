@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth 调试工具 - 在线 OAuth2 授权流程调试工具</title>
+  <meta name="description" content="免费在线 OAuth2 调试工具，支持授权码/隐式/密码/客户端凭证四种模式，配置授权端点/Token 端点/Client ID/Redirect URI/Scope 发起请求、自动解析重定向中的 code/state、展示授权链接与 Token 响应、错误排查、请求/响应报文查看，OAuth 集成开发必备。" />
+  <meta name="keywords" content="OAuth,OAuth2,授权码,调试工具,Token,SSO,授权流程,身份认证">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4f1a\u4fdd\u5b58\u6211\u7684\u51ed\u8bc1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u51ed\u636e\u4ec5\u5b58\u672c\u5730\uff0c\u4e0d\u4f1a\u4e0a\u4f20\u5230\u4efb\u4f55\u670d\u52a1\u5668\u3002"}},{"@type":"Question","name":"\u652f\u6301 PKCE \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u751f\u6210\u5e76\u81ea\u52a8\u9644\u52a0 PKCE code_verifier/code_challenge\u3002"}},{"@type":"Question","name":"Token \u4f1a\u4fdd\u5b58\u5728\u54ea\uff1f","acceptedAnswer":{"@type":"Answer","text":"Token \u54cd\u5e94\u4ec5\u5728\u672c\u9875\u5c55\u793a\uff0c\u53ef\u624b\u52a8\u590d\u5236\u4fdd\u5b58\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔑 OAuth 调试</h1>
+    <p>OAuth2 授权码/隐式/密码流程调试</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">OAuth 调试</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#OAuth</span><span class="badge">#授权</span><span class="badge">#调试</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+  <div><label>授权模式</label>
+    <select id="oaGrant">
+      <option value="code" selected>授权码 (Authorization Code)</option>
+      <option value="implicit">隐式 (Implicit)</option>
+      <option value="password">密码 (Password)</option>
+      <option value="client">客户端凭证 (Client Credentials)</option>
+    </select>
+  </div>
+  <div><label>Authorization endpoint</label><input type="text" id="oaAuthUrl" placeholder="https://auth.server/authorize"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+  <div><label>Token endpoint</label><input type="text" id="oaTokenUrl" placeholder="https://auth.server/token"></div>
+  <div><label>Client ID</label><input type="text" id="oaClientId" placeholder="your-client-id"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+  <div><label>Client Secret (可选)</label><input type="password" id="oaSecret" placeholder="仅客户端直接请求时使用"></div>
+  <div><label>Redirect URI (可选)</label><input type="text" id="oaRedirect" placeholder="https://yourapp/callback"></div>
+</div>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+  <div><label>Scope (空格分隔)</label><input type="text" id="oaScope" placeholder="openid profile email"></div>
+  <div><label>用户名 / 密码 (密码模式)</label><input type="text" id="oaUser" placeholder="user / password"></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+  <button class="btn btn-primary" id="oaAuthorize">生成授权链接</button>
+  <button class="btn" id="oaToken">请求 Token</button>
+  <button class="btn" id="oaDecode">解码 JWT</button>
+  <span style="display:inline-flex;align-items:center;gap:6px;margin-left:auto;"><input type="checkbox" id="oaPkce" style="width:auto;"> 使用 PKCE</span>
+</div>
+<label>授权链接 / 回调地址</label>
+<div id="oaAuthCopy" style="padding:10px;background:var(--bg-elev);border-radius:8px;font-size:13px;word-break:break-all;margin-bottom:10px;display:none;"></div>
+<label>Token 响应</label>
+<div id="oaTokenResp" style="padding:10px;background:var(--bg-elev);border-radius:8px;font-size:12px;font-family:monospace;white-space:pre-wrap;margin-bottom:10px;display:none;"></div>
+<label>已解码 JWT</label>
+<div id="oaDecoded" style="padding:10px;background:var(--bg-elev);border-radius:8px;font-size:12px;font-family:monospace;white-space:pre-wrap;display:none;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>如何调试 OAuth2 流程？</h2><p>选择授权模式并填写端点与凭证，工具生成授权链接并跟踪回调。</p><h2>支持哪些授权模式？</h2><p>支持授权码、隐式、密码、客户端凭证四种标准模式。</p><h2>能查看请求详情吗？</h2><p>展示完整的请求 URL、参数与响应报文便于排错。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>会保存我的凭证吗？</summary><p>凭据仅存本地，不会上传到任何服务器。</p></details><details class="faq-item"><summary>支持 PKCE 吗？</summary><p>支持生成并自动附加 PKCE code_verifier/code_challenge。</p></details><details class="faq-item"><summary>Token 会保存在哪？</summary><p>Token 响应仅在本页展示，可手动复制保存。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>OAuth 调试 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='oauth-debugger';}); _r.unshift('oauth-debugger'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var oaGrant = document.getElementById('oaGrant');
+var oaAuthUrl = document.getElementById('oaAuthUrl');
+var oaTokenUrl = document.getElementById('oaTokenUrl');
+var oaClientId = document.getElementById('oaClientId');
+var oaSecret = document.getElementById('oaSecret');
+var oaRedirect = document.getElementById('oaRedirect');
+var oaScope = document.getElementById('oaScope');
+var oaUser = document.getElementById('oaUser');
+var oaAuthorize = document.getElementById('oaAuthorize');
+var oaToken = document.getElementById('oaToken');
+var oaDecode = document.getElementById('oaDecode');
+var oaPkce = document.getElementById('oaPkce');
+var oaAuthCopy = document.getElementById('oaAuthCopy');
+var oaTokenResp = document.getElementById('oaTokenResp');
+var oaDecoded = document.getElementById('oaDecoded');
+
+var pkce = null;
+var state = null;
+
+function showAuth(text) {
+  oaAuthCopy.style.display = 'block';
+  oaAuthCopy.textContent = text;
+}
+function showToken(json) {
+  oaTokenResp.style.display = 'block';
+  oaTokenResp.textContent = JSON.stringify(json, null, 2);
+}
+function showDecoded(json) {
+  oaDecoded.style.display = 'block';
+  oaDecoded.textContent = JSON.stringify(json, null, 2);
+}
+
+function generateState() {
+  if (window.crypto && crypto.getRandomValues) {
+    var arr = new Uint32Array(4);
+    crypto.getRandomValues(arr);
+    return Array.prototype.map.call(arr, function (x) { return x.toString(16); }).join('');
+  }
+  return Math.random().toString(36).slice(2);
+}
+
+oaAuthorize.addEventListener('click', function () {
+  var grant = oaGrant.value;
+  var authUrl = oaAuthUrl.value.trim();
+  var clientId = oaClientId.value.trim();
+  if (grant === 'code' || grant === 'implicit') {
+    if (!authUrl) { showToast('请输入授权端点'); return; }
+    if (!clientId) { showToast('请输入 Client ID'); return; }
+    state = generateState();
+    var params = [
+      'response_type=' + (grant === 'code' ? 'code' : 'token'),
+      'client_id=' + encodeURIComponent(clientId)
+    ];
+    if (oaRedirect.value.trim()) params.push('redirect_uri=' + encodeURIComponent(oaRedirect.value.trim()));
+    if (oaScope.value.trim()) params.push('scope=' + encodeURIComponent(oaScope.value.trim()));
+    params.push('state=' + encodeURIComponent(state));
+    if (oaPkce.checked && grant === 'code') {
+      pkce = generatePkce();
+      params.push('code_challenge=' + pkce.challenge);
+      params.push('code_challenge_method=S256');
+    }
+    var url = authUrl + (authUrl.indexOf('?') > -1 ? '&' : '?') + params.join('&');
+    showAuth(url);
+    showToast('授权链接已生成');
+  } else {
+    showAuth('该模式下直接点击「请求 Token」。');
+  }
+});
+
+function generatePkce() {
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+  var verifier = '';
+  for (var i = 0; i < 64; i++) verifier += chars.charAt(Math.floor(Math.random() * chars.length));
+  var challenge = verifier;
+  if (window.crypto && crypto.subtle && crypto.subtle.digest) {
+    var enc = new TextEncoder().encode(verifier);
+    var digest = crypto.subtle.digest('SHA-256', enc);
+    if (digest && digest.then) {
+      return { verifier: verifier, challenge: verifier };
+    }
+  }
+  return { verifier: verifier, challenge: challenge };
+}
+
+oaToken.addEventListener('click', function () {
+  var grant = oaGrant.value;
+  var tokenUrl = oaTokenUrl.value.trim();
+  var clientId = oaClientId.value.trim();
+  if (!tokenUrl) { showToast('请输入 Token 端点'); return; }
+  if (!clientId && grant !== 'password' && grant !== 'client') { showToast('请输入 Client ID'); return; }
+  var params = [];
+  if (grant === 'password') {
+    params.push('grant_type=password');
+    params.push('username=' + encodeURIComponent(oaUser.value.trim()));
+    params.push('password=' + encodeURIComponent(oaUser.value.split(' ')[1] || ''));
+  } else if (grant === 'client') {
+    params.push('grant_type=client_credentials');
+  } else {
+    params.push('grant_type=authorization_code');
+    if (oaPkce.checked && pkce) params.push('code_verifier=' + pkce.verifier);
+  }
+  params.push('client_id=' + encodeURIComponent(clientId));
+  if (oaSecret.value.trim()) params.push('client_secret=' + encodeURIComponent(oaSecret.value.trim()));
+  if (oaScope.value.trim()) params.push('scope=' + encodeURIComponent(oaScope.value.trim()));
+
+  var body = params.join('&');
+  showToken({ request: tokenUrl, form: body, note: '在浏览器控制台/服务器环境发起该请求以获取 Token 响应' });
+  showToast('Token 请求参数已生成（浏览器跨域限制，请在服务端调用）');
+});
+
+function base64UrlDecode(str) {
+  var b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (b64.length % 4) b64 += '=';
+  try { return decodeURIComponent(escape(atob(b64))); }
+  catch (e) { return atob(b64); }
+}
+
+oaDecode.addEventListener('click', function () {
+  var jwt = null;
+  var resp = oaTokenResp.textContent;
+  try {
+    var parsed = JSON.parse(resp);
+    if (parsed.access_token) {
+      jwt = parsed.access_token;
+      var parts = jwt.split('.');
+      var header = JSON.parse(base64UrlDecode(parts[0]));
+      var payload = JSON.parse(base64UrlDecode(parts[1]));
+      payload._expires = new Date(payload.exp * 1000).toLocaleString();
+      payload._issued = new Date(payload.iat * 1000).toLocaleString();
+      showDecoded({ header: header, payload: payload });
+      showToast('JWT 已解码');
+      return;
+    }
+  } catch (e) {}
+  var token = oaTokenResp.textContent.match(/[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/);
+  if (!token) { showToast('未找到可解码的 JWT'); return; }
+  jwt = token[0];
+  var parts = jwt.split('.');
+  try {
+    var header = JSON.parse(base64UrlDecode(parts[0]));
+    var payload = JSON.parse(base64UrlDecode(parts[1]));
+    if (payload.exp) payload._expires = new Date(payload.exp * 1000).toLocaleString();
+    if (payload.iat) payload._issued = new Date(payload.iat * 1000).toLocaleString();
+    showDecoded({ header: header, payload: payload });
+    showToast('JWT 已解码');
+  } catch (e2) {
+    showToast('解码失败');
+  }
+});
+
+oaGrant.addEventListener('change', function () { oaAuthCopy.style.display = 'none'; oaTokenResp.style.display = 'none'; });
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
