@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投资回报率计算器 - 在线IRR与NPV计算工具</title>
+  <meta name="description" content="免费在线 IRR 计算器，输入现金流自动求解内部收益率，同时计算净现值 NPV，辅助投资决策，支持多期现金流与贴现率设置，浏览器本地计算，理财投资必备。" />
+  <meta name="keywords" content="IRR计算,内部收益率,NPV计算,净现值,投资回报率,现金流计算器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u73b0\u91d1\u6d41\u600e\u4e48\u8f93\u5165\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u6bcf\u671f\u4e00\u4e2a\u503c\u3001\u9017\u53f7\u6216\u7a7a\u683c\u5206\u9694\uff0c\u901a\u5e38\u7b2c\u4e00\u671f\u4e3a\u8d1f\u6570\uff08\u521d\u59cb\u6295\u5165\uff09\uff0c\u5982 -1000, 300, 300, 300, 300, 300\u3002"}},{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u63d0\u793a\u6ca1\u6709 IRR\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u73b0\u91d1\u6d41\u5168\u90e8\u4e3a\u6b63\u6216\u5168\u90e8\u4e3a\u8d1f\uff08\u8d44\u91d1\u53ea\u8fdb\u4e0d\u51fa/\u53ea\u51fa\u4e0d\u8fdb\uff09\u65f6\u4e0d\u5b58\u5728 IRR\uff1b\u6709\u591a\u6b21\u7b26\u53f7\u53d8\u5316\u65f6 IRR \u53ef\u80fd\u4e0d\u552f\u4e00\uff0c\u5de5\u5177\u53ea\u8fd4\u56de\u627e\u5230\u7684\u7b2c\u4e00\u4e2a\u6839\u3002"}},{"@type":"Question","name":"NPV \u5927\u4e8e 0 \u8bf4\u660e\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8bf4\u660e\u5728\u7ed9\u5b9a\u8d34\u73b0\u7387\u4e0b\uff0c\u672a\u6765\u73b0\u91d1\u6d41\u7684\u73b0\u503c\u8d85\u8fc7\u521d\u59cb\u6295\u5165\uff0c\u9879\u76ee\u6309\u8be5\u8d34\u73b0\u7387\u8ba1\u7b97\u662f\u76c8\u5229\u7684\u3001\u53ef\u884c\u3002"}},{"@type":"Question","name":"\u8ba1\u7b97\u7cbe\u51c6\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f7f\u7528\u53cc\u5206\u6cd5\u8fed\u4ee3\u6c42\u89e3\u5230\u5c0f\u6570\u70b9\u540e 6 \u4f4d\u4ee5\u4e0a\uff0c\u7cbe\u5ea6\u6ee1\u8db3\u5e38\u89c4\u6295\u8d44\u5206\u6790\u9700\u6c42\uff0c\u7ed3\u679c\u4ec5\u4f9b\u4e2a\u4eba\u53c2\u8003\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📈 投资回报率</h1>
+    <p>IRR 内部收益率与 NPV 净现值计算</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">投资回报率</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#IRR</span><span class="badge">#NPV</span><span class="badge">#投资</span><span class="badge">#收益率</span>
+<div class="field">
+  <label for="irrCf">现金流（逗号分隔，每期一个值，通常第一期为负的初始投资）</label>
+  <textarea id="irrCf" rows="3" placeholder="-1000, 300, 300, 300, 300, 300"></textarea>
+</div>
+<div class="field" style="max-width:220px;">
+  <label for="irrRate">贴现率（用于计算净现值 NPV）</label>
+  <input type="number" id="irrRate" value="10" step="0.1">
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="irrGo" type="button">计算 IRR 与 NPV</button>
+</div>
+<div id="irrOut" style="margin-top:12px;display:grid;gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是 IRR 内部收益率？</h2><p>内部收益率是让现金流的净现值等于零的贴现率，衡量投资项目自身的回报水平。IRR 越高，项目相对越优，常用于对比理财、设备购置等投资决策。</p><h2>IRR 和 NPV 有什么区别？</h2><p>NPV 用预设贴现率把未来现金流折算到当前，大于零表示按该贴现率看项目可行；IRR 是不设外界利率、项目自身得出的收益率，两者结合使用最全面。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>现金流怎么输入？</summary><p>按每期一个值、逗号或空格分隔，通常第一期为负数（初始投入），如 -1000, 300, 300, 300, 300, 300。</p></details><details class="faq-item"><summary>为什么提示没有 IRR？</summary><p>当现金流全部为正或全部为负（资金只进不出/只出不进）时不存在 IRR；有多次符号变化时 IRR 可能不唯一，工具只返回找到的第一个根。</p></details><details class="faq-item"><summary>NPV 大于 0 说明什么？</summary><p>说明在给定贴现率下，未来现金流的现值超过初始投入，项目按该贴现率计算是盈利的、可行。</p></details><details class="faq-item"><summary>计算精准吗？</summary><p>使用双分法迭代求解到小数点后 6 位以上，精度满足常规投资分析需求，结果仅供个人参考，不构成投资建议。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>投资回报率 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='irr-calculator';}); _r.unshift('irr-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var irrCf = document.getElementById('irrCf');
+var irrRate = document.getElementById('irrRate');
+var irrGo = document.getElementById('irrGo');
+var irrOut = document.getElementById('irrOut');
+
+function npv(cf, r) {
+  var v = 0;
+  for (var i = 0; i < cf.length; i++) v += cf[i] / Math.pow(1 + r, i);
+  return v;
+}
+
+function irrBisect(cf) {
+  var f0 = npv(cf, 0);
+  if (Math.abs(f0) < 1e-9) return 0;
+  var prevR = -0.9998, prevF = npv(cf, prevR), r = prevR;
+  var step = 0.01;
+  for (var tries = 0; tries < 8000 && r < 200; tries++) {
+    r += step;
+    var f = npv(cf, r);
+    if (Math.abs(f) < 1e-10) return r;
+    if (prevF * f < 0) {
+      var lo = prevR, hi = r, flo = prevF;
+      for (var b = 0; b < 320; b++) {
+        var mid = (lo + hi) / 2;
+        var fm = npv(cf, mid);
+        if (Math.abs(fm) < 1e-12) { lo = mid; break; }
+        if (fm * flo < 0) hi = mid; else { lo = mid; flo = fm; }
+      }
+      return lo;
+    }
+    if (r > 0.05) step = Math.min(step * 1.25, 3);
+    else step *= 1.12;
+    prevR = r; prevF = f;
+  }
+  return null;
+}
+
+function fmtMoney(v) {
+  return (v >= 0 ? '' : '-') + '¥' + Math.abs(v).toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+}
+
+function row(label, val) {
+  return '<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px dashed var(--border);"><span style="color:var(--muted);">' + label + '</span><b style="font-family:monospace;">' + val + '</b></div>';
+}
+
+irrGo.addEventListener('click', function () {
+  var raw = irrCf.value.trim();
+  if (!raw) { showToast('请输入现金流'); return; }
+  var parts = raw.split(/[,\s]+/).filter(Boolean);
+  var cf = [];
+  for (var i = 0; i < parts.length; i++) {
+    var v = Number(parts[i]);
+    if (!isFinite(v)) { showToast('第 ' + (i + 1) + ' 项不是有效数字：' + parts[i]); return; }
+    cf.push(v);
+  }
+  if (cf.length < 2) { showToast('至少需要两个现金流'); return; }
+  if (cf.every(function (x) { return x >= 0; })) { irrOut.innerHTML = '<div class="result-box">没有 IRR：现金流全部为非负，资金只进不出。</div>'; return; }
+  if (cf.every(function (x) { return x <= 0; })) { irrOut.innerHTML = '<div class="result-box">没有 IRR：现金流全部为非正。</div>'; return; }
+
+  var r = irrBisect(cf);
+  var html = '';
+  if (r === null) {
+    html += '<div class="result-box">未找到内部收益率（IRR）。请检查现金流是否满足「先投入后回收」的典型形态，或存在多个交替符号。</div>';
+  } else {
+    var invest = 0, back = 0, sum = 0;
+    cf.forEach(function (x) { if (x < 0) invest += -x; else back += x; sum += x; });
+    var period = cf.length - 1 + ' 期';
+    html += '<div class="result-box">';
+    html += '<div style="font-size:15px;font-weight:700;color:#16a34a;margin-bottom:6px;">IRR ≈ ' + (r * 100).toFixed(4) + '%</div>';
+    html += row('净终值（各期求和）', fmtMoney(sum));
+    html += row('总投入', fmtMoney(invest));
+    html += row('总回收', fmtMoney(back));
+    html += row('回收倍数', (back / invest).toFixed(3) + ' 倍');
+    html += row('期数', period);
+    html += '</div>';
+  }
+  var disc = parseFloat(irrRate.value);
+  if (isFinite(disc) && disc > -1) {
+    var n = npv(cf, disc / 100);
+    html += '<div class="result-box">';
+    html += '<div style="font-size:14px;font-weight:700;margin-bottom:6px;">' + (isFinite(n) && n >= 0 ? '净现值 NPV（贴现率 ' + disc + '%）= ' : '净现值 NPV（贴现率 ' + disc + '%）= ') + '<span style="color:' + (n >= 0 ? '#16a34a' : '#dc2626') + ';">' + (isFinite(n) ? fmtMoney(n) : '—') + '</span></div>';
+    html += n >= 0 ? '<div style="font-size:12px;color:var(--muted);">当 NPV ≥ 0 时该贴现率下项目可行</div>' : '<div style="font-size:12px;color:var(--muted);">该贴现率下项目不可行</div>';
+    html += '</div>';
+  }
+  var negs = cf.map(function (x, i) { return x < 0 ? i : -1; }).filter(function (x) { return x >= 0; });
+  var posCount = cf.filter(function (x) { return x > 0; }).length;
+  html += '<div style="font-size:12px;color:var(--muted);text-align:center;">共 ' + cf.length + ' 期，含 ' + negs.length + ' 个投入期、' + posCount + ' 个回收期</div>';
+  irrOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
