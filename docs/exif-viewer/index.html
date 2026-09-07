@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXIF查看器 - 在线读取照片EXIF信息</title>
+  <meta name="description" content="免费在线 EXIF 信息查看工具：读取 JPEG 照片的相机品牌型号、光圈、快门、ISO、焦距、拍摄时间与 GPS 坐标等元数据，全程浏览器本地解析，隐私安全，无需上传。" />
+  <meta name="keywords" content="EXIF查看,照片元数据,相机参数,GPS坐标,光圈快门">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301 PNG/WebP \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u76ee\u524d\u652f\u6301 JPEG/Exif\uff08APP1 \u6bb5\uff09\u6700\u5b8c\u6574\uff1bPNG/WebP \u7684\u5143\u6570\u636e\u7ed3\u6784\u4e0d\u540c\uff0c\u6682\u4e0d\u652f\u6301\u3002"}},{"@type":"Question","name":"\u4f1a\u6cc4\u9732\u9690\u79c1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u672c\u5730\u89e3\u6790\uff0c\u4e0d\u4e0a\u4f20\u670d\u52a1\u5668\uff1b\u4f46\u8bf7\u77e5\u6089\u539f\u56fe\u672c\u8eab\u5305\u542b\u8fd9\u4e9b\u4fe1\u606f\uff0c\u5206\u4eab\u5927\u56fe\u524d\u53ef\u7528\u56fe\u7247\u7f16\u8f91\u8f6f\u4ef6\u6e05\u9664 EXIF\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔍 EXIF查看器</h1>
+    <p>读取 JPEG 照片相机/曝光/GPS 元数据</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">EXIF查看器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#EXIF</span><span class="badge">#元数据</span><span class="badge">#照片</span><span class="badge">#参数</span>
+<h3>EXIF 信息查看器</h3>
+<p class="muted">读取 JPEG 照片的 EXIF 元数据：相机型号、镜头光圈、快门、ISO、拍摄时间与 GPS 坐标。图片全程在本地解析。</p>
+<div class="row">
+  <div class="col" style="text-align:center;">
+    <label>选择 JPEG 图片</label>
+    <input id="evFile" type="file" accept="image/jpeg,image/jpg" style="width:100%;">
+    <button id="evBtn" style="margin-top:8px;">读取 EXIF</button>
+    <div class="hint">仅 JPEG（含 Exif APP1 段）可解析；PNG/WebP 暂不支持。</div>
+  </div>
+  <div class="col">
+    <label>EXIF 信息</label>
+    <div id="evOut" style="width:100%;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>EXIF 里能读到什么？</h2><p>拍摄参数（光圈/快门/ISO/焦距）、相机型号、拍摄时间、图片尺寸，部分手机会写入 GPS 坐标方便回忆打卡地点。</p><h2>为什么有的照片读不到？</h2><p>部分编辑工具或平台会剥离 EXIF；微信聊天传输的照片多数已删除原图元数据。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持 PNG/WebP 吗？</summary><p>目前支持 JPEG/Exif（APP1 段）最完整；PNG/WebP 的元数据结构不同，暂不支持。</p></details><details class="faq-item"><summary>会泄露隐私吗？</summary><p>工具本地解析，不上传服务器；但请知悉原图本身包含这些信息，分享大图前可用图片编辑软件清除 EXIF。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>EXIF查看器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='exif-viewer';}); _r.unshift('exif-viewer'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var evFile = document.getElementById('evFile');
+var evBtn = document.getElementById('evBtn');
+var evOut = document.getElementById('evOut');
+
+var TAGS = {
+  0x010f: '相机品牌', 0x0110: '相机型号', 0x0112: '拍摄方向',
+  0x011a: '水平分辨率', 0x011b: '垂直分辨率', 0x0128: '分辨率单位',
+  0x0131: '软件', 0x0132: '拍摄日期', 0x013b: '作者',
+  0x829a: '曝光时间', 0x829d: '光圈F值', 0x8822: '曝光程序',
+  0x8827: 'ISO感光度', 0x9003: '原始拍摄时间', 0x9004: '数字化时间',
+  0x9201: '快门速度', 0x9202: '光圈值', 0x9203: '亮度值',
+  0x9204: '曝光补偿', 0x9207: '测光模式', 0x9209: '闪光灯',
+  0x920a: '焦距', 0xa002: '像素宽度', 0xa003: '像素高度',
+  0xa40a: '拍摄模式', 0xa40c: '对比度', 0xa40d: '饱和度'
+};
+
+var ORIENT = { 1: '水平（正常）', 2: '水平镜像', 3: '旋转180°', 4: '垂直镜像', 5: '镜像+旋转90°', 6: '顺时针90°', 7: '镜像+旋转270°', 8: '逆时针90°' };
+
+function makeReader(u8) {
+  return {
+    u8: u8,
+    le: u8[0] === 0x49,
+    u16: function (o) {
+      return this.le ? u8[o] | (u8[o + 1] << 8) : (u8[o] << 8) | u8[o + 1];
+    },
+    u32: function (o) {
+      if (this.le) return (u8[o] | (u8[o + 1] << 8) | (u8[o + 2] << 16) | (u8[o + 3] << 24)) >>> 0;
+      return ((u8[o] << 24) | (u8[o + 1] << 16) | (u8[o + 2] << 8) | u8[o + 3]) >>> 0;
+    },
+    s32: function (o) {
+      var v = this.u32(o);
+      return v > 0x7fffffff ? v - 0x100000000 : v;
+    },
+    ascii: function (o) {
+      var s = ''; var i = o;
+      while (i < u8.length && s.length < 512) {
+        var c = u8[i];
+        if (c === 0) break;
+        s += String.fromCharCode(c);
+        i++;
+      }
+      return s;
+    }
+  };
+}
+
+function ratToNum(rd, num, den) {
+  if (den === 0) return NaN;
+  return num / den;
+}
+
+function formatRational(num, den, kind) {
+  if (den === 0 || !isFinite(num / den)) return String(num) + '/' + String(den);
+  if (kind === 'exposure') {
+    if (den === 1) return String(num) + ' s';
+    var inv = den / num;
+    if (Math.abs(inv - Math.round(inv)) < 0.01) return '1/' + String(Math.round(inv)) + ' s';
+    return (num / den).toFixed(4) + ' s';
+  }
+  var v = num / den;
+  if (Number.isInteger(v)) return String(v);
+  return String(Math.round(v * 1000) / 1000);
+}
+
+function readIFD(rd, off, tags, gpsOut) {
+  if (off + 2 > rd.u8.length) return [];
+  var count = rd.u16(off);
+  var out = [];
+  for (var i = 0; i < count; i++) {
+    var e = off + 2 + i * 12;
+    if (e + 12 > rd.u8.length) break;
+    var tag = rd.u16(e);
+    var type = rd.u16(e + 2);
+    var cnt = rd.u32(e + 4);
+    var valueOff = e + 8;
+    if (tags.hasOwnProperty(tag) || tag === 0x8825) {
+      var item = readEntry(rd, e, tag, type, cnt);
+      if (!item) continue;
+      if (tag === 0x8825 && item.num != null && gpsOut) { gpsOut.ifd = item.num; continue; }
+      if (tags[tag] != null) out.push({ tag: tag, label: tags[tag], kind: TKIND[tag] || '', value: fmtVal(item, tag) });
+    }
+  }
+  return out;
+}
+
+var TKIND = {
+  0x0112: 'orient', 0x829a: 'exposure', 0x829d: 'fnum', 0x920a: 'focal',
+  0xa002: 'px', 0xa003: 'px', 0x9204: 'bias', 0x8827: 'iso'
+};
+
+function fmtVal(item, tag) {
+  var r;
+  switch (tag) {
+    case 0x0112: var o = ORIENT[item.num]; return o || String(item.num);
+    case 0x829a: r = item.rnum; if (r != null) return formatRational(r.num, r.den, 'exposure'); break;
+    case 0x829d: r = item.rnum; if (r != null) return 'f/' + formatRational(r.num, r.den); break;
+    case 0x920a: r = item.rnum; if (r != null) return formatRational(r.num, r.den) + ' mm'; break;
+    case 0x9204: r = item.rnum; if (r != null) return (r.num >= 0 ? '+' : '') + formatRational(r.num, r.den) + ' EV'; break;
+    case 0x011a:
+    case 0x011b: r = item.rnum; if (r != null) return formatRational(r.num, r.den) + ' dpi'; break;
+    case 0x0128: return item.num === 2 ? '英寸' : String(item.num);
+    case 0x8827: return String(item.num);
+    case 0xa002:
+    case 0xa003: return String(item.num);
+  }
+  if (item.text != null) return item.text;
+  if (item.num != null) return String(item.num);
+  return '—';
+}
+
+function readEntry(rd, e, tag, type, cnt) {
+  var size = { 1: 1, 2: 1, 3: 2, 4: 4, 5: 8, 6: 1, 7: 1, 8: 2, 9: 4, 10: 8, 11: 4, 12: 8 }[type];
+  if (size == null) return null;
+  var byteSize = size * cnt;
+  var src = byteSize > 4 ? rd.u32(e + 8) : e + 8;
+  if (src + byteSize > rd.u8.length) { src = e + 8; }
+  var item = { type: type, cnt: cnt };
+  if (type === 2) { item.text = rd.ascii(src); return item; }
+  if (type === 7) { var s = ''; for (var i = 0; i < cnt && i < 32; i++) s += String.fromCharCode(rd.u8[src + i]); item.text = s; return item; }
+  if (type === 1) { item.num = rd.u8[src]; return item; }
+  if (type === 3) { item.num = rd.u16(src); return item; }
+  if (type === 4) { item.num = rd.u32(src); return item; }
+  if (type === 9) { item.num = rd.s32(src); return item; }
+  if (type === 5) { item.rnum = { num: rd.u32(src), den: rd.u32(src + 4) }; return item; }
+  if (type === 10) { item.rnum = { num: rd.s32(src), den: rd.s32(src + 4) }; return item; }
+  return null;
+}
+
+function parseGps(rd) {
+  var info = { lat: null, lng: null, alt: null, refs: {} };
+  var count = rd.u16(rd.gps);
+  var dms = { lat: null, lng: null };
+  for (var i = 0; i < count; i++) {
+    var e = rd.gps + 2 + i * 12;
+    if (e + 12 > rd.u8.length) break;
+    var tag = rd.u16(e);
+    var type = rd.u16(e + 2);
+    var cnt = rd.u32(e + 4);
+    if (tag === 0x0001 || tag === 0x0003) {
+      info.refs[tag === 0x0001 ? 'lat' : 'lng'] = String.fromCharCode(rd.u8[e + 8]);
+    } else if (tag === 0x0002 || tag === 0x0004) {
+      var src = rd.u32(e + 8);
+      var deg = ratToNum(rd, rd.u32(src), rd.u32(src + 4));
+      var min = ratToNum(rd, rd.u32(src + 8), rd.u32(src + 12));
+      var sec = ratToNum(rd, rd.u32(src + 16), rd.u32(src + 20));
+      dms[tag === 0x0002 ? 'lat' : 'lng'] = deg + min / 60 + sec / 3600;
+    } else if (tag === 0x0006) {
+      var s8 = rd.u32(e + 8);
+      info.alt = ratToNum(rd, rd.u32(s8), rd.u32(s8 + 4));
+    }
+  }
+  if (dms.lat != null && dms.lng != null) {
+    if (info.refs.lat === 'S') dms.lat = -dms.lat;
+    if (info.refs.lng === 'W') dms.lng = -dms.lng;
+    info.lat = dms.lat; info.lng = dms.lng;
+  }
+  return info;
+}
+
+function parseExif(u8) {
+  if (!u8 || u8.length < 4) return { ok: false, error: '文件过小' };
+  if (u8[0] !== 0xff || u8[1] !== 0xd8) return { ok: false, error: '不是 JPEG 文件（缺少 SOI 标记）' };
+  var tiffOff = -1;
+  var i = 2;
+  while (i + 4 < u8.length) {
+    if (u8[i] !== 0xff) { i++; continue; }
+    var marker = u8[i + 1];
+    var segLen = (u8[i + 2] << 8) | u8[i + 3];
+    if (marker === 0x01 || marker === 0xd8 || marker === 0xd9) { i++; continue; }
+    var tagPos = i + 4;
+    if (marker === 0xe1 && segLen >= 16 && u8[tagPos] === 0x45 && u8[tagPos + 1] === 0x78 && u8[tagPos + 2] === 0x69 && u8[tagPos + 3] === 0x66 && u8[tagPos + 4] === 0x00 && u8[tagPos + 5] === 0x00) {
+      tiffOff = tagPos + 6;
+      break;
+    }
+    i += segLen + 2;
+  }
+  if (tiffOff < 0) return { ok: false, error: '未找到 EXIF (APP1) 段' };
+  var rd = makeReader(u8.subarray(tiffOff));
+  if (rd.u16(2) !== 42) return { ok: false, error: 'TIFF 魔数错误' };
+  var ifd0 = rd.u32(4);
+  var gps = { ifd: null };
+  var items = readIFD(rd, ifd0, TAGS, gps);
+  var dims = null;
+  var exif = null;
+  if (gps.ifd != null) {
+    rd.gps = gps.ifd;
+    var gi = parseGps(rd);
+    if (gi.lat != null && gi.lng != null) {
+      exif = { lat: gi.lat, lng: gi.lng, alt: gi.alt };
+      items.push({ tag: 0, label: 'GPS 坐标', kind: '', value: gi.lat.toFixed(6) + ', ' + gi.lng.toFixed(6) });
+    }
+  }
+  items.forEach(function (it) {
+    if (it.tag === 0xa002) { dims = dims || {}; dims.w = Number(it.value); }
+    if (it.tag === 0xa003) { dims = dims || {}; dims.h = Number(it.value); }
+  });
+  return { ok: true, items: items, dims: dims, gps: exif };
+}
+
+function evEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+evBtn.addEventListener('click', function () {
+  var f = evFile.files && evFile.files[0];
+  if (!f) { evOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请先选择一张 JPEG 图片</div>'; return; }
+  var reader = new FileReader();
+  reader.onload = function () {
+    var u8 = new Uint8Array(reader.result);
+    var r = parseExif(u8);
+    if (!r.ok) { evOut.innerHTML = '<div class="result-box" style="color:#dc2626;">' + evEscape(r.error) + '</div>'; return; }
+    var html = '<div class="result-box">';
+    if (r.dims) html += '<div>图片尺寸：<b>' + r.dims.w + ' × ' + r.dims.h + '</b></div>';
+    if (r.gps) html += '<div>GPS：<b>' + r.gps.lat.toFixed(6) + ', ' + r.gps.lng.toFixed(6) + '</b>' + (r.gps.alt != null ? '，海拔 ' + r.gps.alt.toFixed(1) + ' m' : '') + '</div>';
+    if (!r.items.length) html += '<div style="color:#b45309;">未读取到可显示的 EXIF 字段</div>';
+    html += '</div>';
+    r.items.forEach(function (it) {
+      html += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="color:#64748b;">' + evEscape(it.label) + '</span><b>' + evEscape(it.value) + '</b></div>';
+    });
+    evOut.innerHTML = html;
+  };
+  reader.onerror = function () { evOut.innerHTML = '<div class="result-box" style="color:#dc2626;">文件读取失败</div>'; };
+  reader.readAsArrayBuffer(f);
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
