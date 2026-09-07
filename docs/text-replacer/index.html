@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线文本替换工具 - 批量查找替换/正则替换</title>
+  <meta name="description" content="在线文本替换工具，可以同时设置多组查找→替换规则，支持字面替换和正则表达式，可选择仅替换第一处或全部替换，实时输出结果。" />
+  <meta name="keywords" content="文本替换,批量替换,查找替换,正则替换,替换工具,字符串替换">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u300c\u5168\u90e8\u66ff\u6362\u300d\u548c\u9ed8\u8ba4\u7684\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u52fe\u9009\u5168\u90e8\u66ff\u6362\u4f1a\u66ff\u6362\u7b26\u53f7\u7684\u6240\u6709\u51fa\u73b0\u4f4d\u7f6e\uff1b\u53d6\u6d88\u540e\u53ea\u66ff\u6362\u7b2c\u4e00\u5904\u3002"}},{"@type":"Question","name":"\u66ff\u6362\u5185\u5bb9\u662f\u7eaf\u6587\u672c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b63\u5219\u6a21\u5f0f\u4e0b\u66ff\u6362\u5185\u5bb9\u6309\u666e\u901a\u6587\u672c\u5904\u7406\uff0c\u4e0d\u505a\u7279\u6b8a\u5c55\u5f00\uff0c\u907f\u514d\u610f\u5916\u884c\u4e3a\u3002"}},{"@type":"Question","name":"\u80fd\u5904\u7406\u5927\u6bb5\u6587\u672c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\u3002\u5904\u7406\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\uff0c\u5e38\u89c1\u5927\u5c0f\u7684\u6587\u672c\u5373\u65f6\u51fa\u7ed3\u679c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔁 文本替换</h1>
+    <p>批量查找替换文本，支持字面与正则表达式</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">文本替换</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#替换</span><span class="badge">#查找</span><span class="badge">#正则</span><span class="badge">#批量</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>原文</label>
+    <textarea id="trIn" rows="8" style="width:100%;font-family:Consolas,Menlo,monospace;font-size:13px;" placeholder="输入要处理的文本">banana apple banana</textarea>
+    <label style="margin-top:10px;">查找 → 替换（可多组）</label>
+    <div id="trPairs"></div>
+    <button class="btn" id="trAddPair" style="margin-top:6px;">+ 添加一组</button>
+    <div class="tool-grid" style="grid-template-columns:1fr auto; gap:8px;margin-top:8px;">
+      <select id="trMode" style="width:100%;">
+        <option value="lit" selected>字面替换</option>
+        <option value="regex">正则表达式</option>
+      </select>
+      <label style="align-self:center;font-size:12px;color:var(--muted);">
+        <input type="checkbox" id="trGlobal" checked> 全部替换
+      </label>
+    </div>
+    <button class="btn btn-primary" id="trGo" style="width:100%;margin-top:10px;">替换</button>
+  </div>
+  <div>
+    <label>结果</label>
+    <textarea id="trOut" rows="12" style="width:100%;font-family:Consolas,Menlo,monospace;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:12px;" readonly></textarea>
+    <div id="trMsg" class="hint" style="margin-top:6px;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>多组规则会按顺序执行吗？</h2><p>会。多组规则从上到下依次应用，后一组在前一组的结果上继续替换，适合制作脱敏、格式化等组合处理。</p><h2>正则替换怎么用？</h2><p>选择「正则表达式」模式后，查找框填写正则（如 \\d+ 匹配数字），替换内容支持普通文本。正则非法时会提示错误。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>「全部替换」和默认的区别？</summary><p>勾选全部替换会替换符号的所有出现位置；取消后只替换第一处。</p></details><details class="faq-item"><summary>替换内容是纯文本吗？</summary><p>正则模式下替换内容按普通文本处理，不做特殊展开，避免意外行为。</p></details><details class="faq-item"><summary>能处理大段文本吗？</summary><p>可以。处理在浏览器本地完成，常见大小的文本即时出结果。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>文本替换 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='text-replacer';}); _r.unshift('text-replacer'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var trIn = document.getElementById('trIn');
+var trPairs = document.getElementById('trPairs');
+var trAddPair = document.getElementById('trAddPair');
+var trMode = document.getElementById('trMode');
+var trGlobal = document.getElementById('trGlobal');
+var trGo = document.getElementById('trGo');
+var trOut = document.getElementById('trOut');
+var trMsg = document.getElementById('trMsg');
+
+function addPairRow(from, to) {
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;';
+  var f = document.createElement('input');
+  f.type = 'text'; f.value = from || ''; f.placeholder = '查找';
+  f.style.cssText = 'flex:1;font-family:Consolas,Menlo,monospace;font-size:12px;';
+  var t = document.createElement('input');
+  t.type = 'text'; t.value = to || ''; t.placeholder = '替换为';
+  t.style.cssText = 'flex:1;font-family:Consolas,Menlo,monospace;font-size:12px;';
+  var del = document.createElement('button');
+  del.textContent = '✕';
+  del.className = 'btn btn-sm';
+  del.style.cssText = 'padding:2px 8px;flex:0 0 auto;';
+  del.addEventListener('click', function () { row.remove(); });
+  row.appendChild(f);
+  row.appendChild(t);
+  row.appendChild(del);
+  trPairs.appendChild(row);
+  return { from: f, to: t };
+}
+
+trAddPair.addEventListener('click', function () { addPairRow('', ''); });
+
+function collectPairs() {
+  var pairs = [];
+  Array.prototype.forEach.call(trPairs.querySelectorAll('div'), function (row) {
+    var inputs = row.querySelectorAll('input');
+    if (inputs.length >= 2) {
+      var from = inputs[0].value, to = inputs[1].value;
+      if (from) pairs.push({ from: from, to: to });
+    }
+  });
+  return pairs;
+}
+
+function applyReplacements(text, pairs, opts) {
+  if (typeof text !== 'string') return null;
+  opts = opts || {};
+  pairs = pairs || [];
+  var regex = !!opts.regex;
+  var g = opts.global !== false;
+  var out = text;
+  for (var i = 0; i < pairs.length; i++) {
+    var p = pairs[i];
+    var from = String(p.from == null ? '' : p.from);
+    if (!from) continue;
+    var to = String(p.to == null ? '' : p.to);
+    if (regex) {
+      var re;
+      try {
+        re = new RegExp(from, g ? 'g' : '');
+      } catch (e) {
+        return null;
+      }
+      out = out.replace(re, function () { return to; });
+    } else {
+      if (g) out = out.split(from).join(to);
+      else {
+        var idx = out.indexOf(from);
+        if (idx >= 0) out = out.slice(0, idx) + to + out.slice(idx + from.length);
+      }
+    }
+  }
+  return out;
+}
+
+trGo.addEventListener('click', function () {
+  var pairs = collectPairs();
+  if (!pairs.length) { showToast('请至少填写一组查找内容'); return; }
+  var r = applyReplacements(trIn.value, pairs, { regex: trMode.value === 'regex', global: trGlobal.checked });
+  if (r === null) {
+    trOut.value = '';
+    trMsg.textContent = '正则表达式无效，请检查。';
+    showToast('正则无效');
+    return;
+  }
+  trOut.value = r;
+  trMsg.textContent = '替换完成，共 ' + pairs.length + ' 组规则。';
+});
+
+addPairRow('banana', '@');
+addPairRow('apple', '『苹果』');
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
