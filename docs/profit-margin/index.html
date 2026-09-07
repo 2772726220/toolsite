@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毛利率计算器 - 毛利率加价率与售价反推</title>
+  <meta name="description" content="免费在线毛利率计算器：输入成本与售价，一键算出利润额、毛利率与加价率；或输入成本与目标毛利率反推定价。适合电商、实体店与采购定价参考。" />
+  <meta name="keywords" content="毛利率,加价率,利润计算,成本定价,售价反推">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u7b97\u4e8f\u635f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u552e\u4ef7\u4f4e\u4e8e\u6210\u672c\u65f6\u5229\u6da6\u4e3a\u8d1f\uff0c\u6bdb\u5229\u7387\u663e\u793a\u8d1f\u767e\u5206\u6bd4\u3002"}},{"@type":"Question","name":"\u652f\u6301\u5c0f\u6570\u4e0e\u5343\u5206\u4f4d\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u7ed3\u679c\u6309\u4eba\u6c11\u5e01\u4e24\u4f4d\u5c0f\u6570\u4e0e\u5343\u5206\u4f4d\u5c55\u793a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📈 毛利率计算</h1>
+    <p>毛利率/加价率互算，按目标毛利反推售价</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">毛利率计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#毛利率</span><span class="badge">#加价率</span><span class="badge">#利润</span><span class="badge">#定价</span>
+<h3>毛利率 / 加价率计算器</h3>
+<p class="muted">输入成本与售价，算出利润、毛利率与加价率；或按目标毛利率反推定价。</p>
+<div class="row">
+  <div class="col">
+    <label>已知成本与售价</label>
+    <input id="pmCost" type="number" min="0" step="0.01" placeholder="成本价（元）">
+    <input id="pmPrice" type="number" min="0" step="0.01" placeholder="售价（元）">
+    <button id="pmBtn">计算毛利率</button>
+  </div>
+  <div class="col">
+    <label>按目标毛利率定价</label>
+    <input id="pmCost2" type="number" min="0" step="0.01" placeholder="成本价（元）">
+    <input id="pmMargin" type="number" min="0" max="100" step="0.1" placeholder="目标毛利率（%）">
+    <button id="pmBtn2">反推售价</button>
+  </div>
+</div>
+<div id="pmOut"></div>
+<div id="pmOut2"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>毛利率和加价率有什么区别？</h2><p>毛利率 = 利润 ÷ 售价，加价率 = 利润 ÷ 成本。售价 150 成本 100 时，毛利率约 33.33%，加价率 50%，两者数值不同含义也不同。</p><h2>怎么按目标毛利率定价？</h2><p>售价 = 成本 ÷ (1 − 毛利率)。例：成本 100、目标毛利 40%，售价应设为约 166.67。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能算亏损吗？</summary><p>可以，售价低于成本时利润为负，毛利率显示负百分比。</p></details><details class="faq-item"><summary>支持小数与千分位吗？</summary><p>支持，结果按人民币两位小数与千分位展示。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>毛利率计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='profit-margin';}); _r.unshift('profit-margin'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var pmCost = document.getElementById('pmCost');
+var pmPrice = document.getElementById('pmPrice');
+var pmBtn = document.getElementById('pmBtn');
+var pmOut = document.getElementById('pmOut');
+var pmCost2 = document.getElementById('pmCost2');
+var pmMargin = document.getElementById('pmMargin');
+var pmBtn2 = document.getElementById('pmBtn2');
+var pmOut2 = document.getElementById('pmOut2');
+
+function pct(x, d) {
+  if (!isFinite(x)) return '—';
+  d = d == null ? 2 : d;
+  return Number(x).toFixed(d) + '%';
+}
+
+function money2(x) {
+  if (!isFinite(x)) return '—';
+  return Number(x).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function marginFromPrice(cost, price) {
+  cost = Number(cost); price = Number(price);
+  if (!(cost >= 0) || !(price >= 0) || !(cost > 0 || price > 0)) return null;
+  var gross = price - cost;
+  return {
+    cost: cost, price: price, gross: gross,
+    marginPct: price > 0 ? gross / price * 100 : NaN,
+    markupPct: cost > 0 ? gross / cost * 100 : NaN
+  };
+}
+
+function priceFromMargin(cost, marginPct) {
+  cost = Number(cost); marginPct = Number(marginPct);
+  if (!(cost > 0) || !(marginPct > 0 && marginPct < 100)) return null;
+  return { price: cost / (1 - marginPct / 100), marginPct: marginPct };
+}
+
+pmBtn.addEventListener('click', function () {
+  var r = marginFromPrice(pmCost.value, pmPrice.value);
+  if (!r) { pmOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请输入非负成本与售价（至少一项大于 0）</div>'; return; }
+  var mode = r.marginPct >= 0 ? '赚' : '亏';
+  pmOut.innerHTML = '<div class="result-box">' +
+    '<div>利润额 = 售价 − 成本 = <b>¥' + money2(r.gross) + '</b>（' + mode + '）</div>' +
+    '<div>毛利率 = 利润 ÷ 售价 = <b>' + pct(r.marginPct) + '</b></div>' +
+    '<div>加价率 = 利润 ÷ 成本 = <b>' + pct(r.markupPct) + '</b></div>' +
+    '<div style="margin-top:6px;border-top:1px dashed #e2e8f0;padding-top:6px;font-size:12px;color:#64748b;">毛利率看「售出一件赚多少比例」，加价率看「进货成本加了几个点」，两者不要混用。</div>' +
+    '</div>';
+});
+
+pmBtn2.addEventListener('click', function () {
+  var r = priceFromMargin(pmCost2.value, pmMargin.value);
+  if (!r) { pmOut2.innerHTML = '<div class="result-box" style="color:#dc2626;">成本需大于 0，目标毛利率需在 0~100 之间</div>'; return; }
+  pmOut2.innerHTML = '<div class="result-box">要达到 <b>' + pct(r.marginPct) + '</b> 毛利率，售价应为 <b>¥' + money2(r.price) + '</b>' +
+    '<div style="margin-top:4px;font-size:12px;color:#64748b;">售价 = 成本 ÷ (1 − 毛利率) = ' + money2(r.cost) + ' ÷ ' + (1 - r.marginPct / 100).toFixed(2) + '</div></div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
