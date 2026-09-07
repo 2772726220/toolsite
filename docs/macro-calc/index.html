@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线三大营养素计算器 - 蛋白质/脂肪/碳水分配</title>
+  <meta name="description" content="在线营养素计算器：输入每日目标热量与蛋白质量、脂肪占比，自动拆分出碳水克数、热量占比与每餐分配，帮助制定均衡饮食计划。" />
+  <meta name="keywords" content="营养素,宏量营养,蛋白质脂肪碳水,碳蛋脂,饮食分配,饮食计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍱</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u70ed\u91cf\u5355\u4f4d\u600e\u4e48\u6362\u7b97\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u86cb\u767d\u8d28 4 \u5343\u5361/\u514b\uff0c\u78b3\u6c34 4 \u5343\u5361/\u514b\uff0c\u8102\u80aa 9 \u5343\u5361/\u514b\u3002"}},{"@type":"Question","name":"\u63d0\u793a\u70ed\u91cf\u8fc7\u4f4e\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8bf4\u660e\u86cb\u767d\u8d28\u4e0e\u8102\u80aa\u70ed\u91cf\u5df2\u8d85\u8fc7\u603b\u70ed\u91cf\uff0c\u8bf7\u63d0\u9ad8\u603b\u70ed\u91cf\u6216\u964d\u4f4e\u86cb\u767d\u8d28/\u8102\u80aa\u8bbe\u5b9a\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u53ef\u4ee5\u76f4\u63a5\u7528\u4e8e\u914d\u9910\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4f5c\u4e3a\u6574\u4e2a\u4f53\u91cd\u7684\u6bcf\u65e5\u53c2\u8003\u6444\u5165\u91cf\uff0c\u5b9e\u9645\u6309\u5f53\u65e5\u6d3b\u52a8\u8c03\u6574\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🍱 营养素分配</h1>
+    <p>按热量目标拆分蛋白质/脂肪/碳水克数与占比</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">营养素分配</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#营养素</span><span class="badge">#蛋白质</span><span class="badge">#碳水</span><span class="badge">#脂肪</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三大营养素分配</title>
+<style>
+input, select { margin: 4px 4px 4px 0; }
+button { margin: 6px 4px 6px 0; }
+#mcOut { font-size: 13px; line-height: 1.8; margin-top: 6px; }
+.hint { font-size: 12px; color: #888; }
+table { border-collapse: collapse; }
+td, th { padding: 3px 14px 3px 0; text-align: left; font-size: 13px; }
+</style>
+</head>
+<body>
+<p>按目标热量与蛋白质量，把剩余热量分配给脂肪和碳水（脂肪可选占比，其余为碳水热量）。适合记录饮食时核对营养素配比。</p>
+<table>
+  <tr><th>每日目标热量（千卡）</th><td><input id="mcKcal" value="2000"></td></tr>
+  <tr><th>每日蛋白质（克）</th><td><input id="mcProtein" value="130"></td></tr>
+  <tr><th>脂肪占比（%）</th><td><input id="mcFatPct" value="30"></td></tr>
+  <tr><th>餐次</th><td><select id="mcMeals"><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td></tr>
+</table>
+<button id="mcGo">计算</button>
+<p class="hint">热量单位：蛋白质 4 千卡/克，碳水 4 千卡/克，脂肪 9 千卡/克。结果为参考值。</p>
+<div id="mcOut"></div>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么分配三大营养素？</h2><p>先定每日热量目标与蛋白质量（维持或增肌约 1.2~2.0 克/公斤），再给脂肪设占比（常见 20~30%），剩余热量即由碳水提供。</p><h2>为什么脂肪不是固定克数？</h2><p>脂肪按占总热量百分比设定更贴合多数饮食方案，工具会换算成克数并显示热量。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>热量单位怎么换算？</summary><p>蛋白质 4 千卡/克，碳水 4 千卡/克，脂肪 9 千卡/克。</p></details><details class="faq-item"><summary>提示热量过低怎么办？</summary><p>说明蛋白质与脂肪热量已超过总热量，请提高总热量或降低蛋白质/脂肪设定。</p></details><details class="faq-item"><summary>结果可以直接用于配餐吗？</summary><p>可作为整个体重的每日参考摄入量，实际按当日活动调整。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>营养素分配 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='macro-calc';}); _r.unshift('macro-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mcKcal = document.getElementById('mcKcal');
+var mcProtein = document.getElementById('mcProtein');
+var mcFatPct = document.getElementById('mcFatPct');
+var mcMeals = document.getElementById('mcMeals');
+var mcGo = document.getElementById('mcGo');
+var mcOut = document.getElementById('mcOut');
+
+function calcMacros(kcal, proteinG, fatPct, meals) {
+  var K = parseInt(kcal, 10);
+  var P = parseFloat(proteinG);
+  var noMeals = parseInt(meals, 10);
+  if (!isFinite(K) || K <= 0 || K > 200000) return { error: '请填写合理的热量目标' };
+  if (!isFinite(P) || P < 0) P = 0;
+  if (!isFinite(fatPct)) fatPct = 30;
+  fatPct = Math.min(100, Math.max(0, fatPct));
+  if (!isFinite(noMeals) || noMeals < 1) noMeals = 3;
+
+  var proteinKcal = P * 4;
+  var fatKcal = K * fatPct / 100;
+  var fat = fatKcal / 9;
+  var carbKcal = K - proteinKcal - fatKcal;
+  var carbs = carbKcal / 4;
+  if (carbKcal < 0) return { error: '热量过低：蛋白质与脂肪热量已超出总热量，请提高热量或降低蛋白质/脂肪' };
+  var total = proteinKcal + fatKcal + carbKcal;
+  var r1 = function (v) { return Math.round(v * 10) / 10; };
+  var perMeal = {
+    protein: r1(P / noMeals),
+    fat: r1(fat / noMeals),
+    carbs: r1(carbs / noMeals),
+    kcal: r1(K / noMeals)
+  };
+  return {
+    protein: r1(P), proteinKcal: Math.round(proteinKcal),
+    fat: r1(fat), fatKcal: Math.round(fatKcal),
+    carbs: r1(carbs), carbKcal: Math.round(carbKcal),
+    totalKcal: Math.round(total), fatPct: fatPct, meals: noMeals, perMeal: perMeal
+  };
+}
+
+function run() {
+  var r = calcMacros(mcKcal.value, mcProtein.value, mcFatPct.value, mcMeals.value);
+  if (r.error) { mcOut.textContent = r.error; return; }
+  mcOut.textContent =
+    '总热量 ' + r.totalKcal + ' 千卡 = 蛋白质 ' + r.protein + ' g（' + r.proteinKcal + ' 千卡）'
+    + ' + 脂肪 ' + r.fat + ' g（' + r.fatKcal + ' 千卡）'
+    + ' + 碳水 ' + r.carbs + ' g（' + r.carbKcal + ' 千卡）'
+    + '\n热量占比：蛋白质 ' + Math.round(r.proteinKcal / r.totalKcal * 100) + '% / 脂肪 ' + r.fatPct + '% / 碳水 ' + Math.round(r.carbKcal / r.totalKcal * 100) + '%'
+    + '\n平均每餐（' + r.meals + ' 餐）：蛋白质 ' + r.perMeal.protein + ' g，脂肪 ' + r.perMeal.fat + ' g，碳水 ' + r.perMeal.carbs + ' g，约 ' + r.perMeal.kcal + ' 千卡';
+}
+
+mcGo.addEventListener('click', run);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
