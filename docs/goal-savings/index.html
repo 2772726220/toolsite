@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线存款目标计算器 - 每月储蓄需存多久/每月存多少</title>
+  <meta name="description" content="存款目标计算器：给定目标金额、现有本金与年利率，计算每月存入多少可多久达成；或指定月数反推每月需存金额。按月复利，支持多种利率方案。" />
+  <meta name="keywords" content="存款目标,存钱计划,每月储蓄,目标储蓄,复利,理财计算">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u672c\u91d1\u5df2\u8d85\u8fc7\u76ee\u6807\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u4f1a\u63d0\u793a\u672c\u91d1\u5df2\u8fbe\u6210\u76ee\u6807\uff0c\u6240\u9700\u6708\u6570\u4e3a 0\u3002"}},{"@type":"Question","name":"\u5229\u7387 0 \u4e14\u4e0d\u5b58\u5165\u53ef\u80fd\u8fbe\u6210\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u80fd\u3002\u6b64\u65f6\u4f59\u989d\u4e0d\u4f1a\u589e\u957f\uff0c\u5de5\u5177\u4f1a\u7ed9\u51fa\u63d0\u793a\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u662f\u4fdd\u8bc1\u503c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4fdd\u8bc1\u3002\u5229\u7387\u4f1a\u6ce2\u52a8\uff0c\u7ed3\u679c\u4e3a\u6309\u56fa\u5b9a\u5229\u7387\u7c97\u7565\u4f30\u7b97\uff0c\u4ec5\u4f9b\u53c2\u8003\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎯 存款目标</h1>
+    <p>倒推存够目标所需月数或每月应存金额</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">存款目标</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#存款</span><span class="badge">#目标</span><span class="badge">#储蓄</span><span class="badge">#复利</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存款目标计算器</title>
+<style>
+input { width: 200px; box-sizing: border-box; margin: 4px 0; }
+button { margin: 6px 4px 6px 0; }
+#gsOut { font-size: 13px; line-height: 1.8; margin-top: 6px; }
+.hint { font-size: 12px; color: #888; }
+th, td { text-align: left; padding: 2px 12px 2px 0; font-size: 13px; }
+</style>
+</head>
+<body>
+<p>存款目标倒推：给定现有本金、年利率与每月存入金额，计算存够目标金额需要多少个月；也可以指定月数反推每月需存多少。</p>
+<table>
+  <tr><th>目标金额（元）</th><td><input id="gsTarget" value="100000"></td></tr>
+  <tr><th>现有本金（元）</th><td><input id="gsPrincipal" value="0"></td></tr>
+  <tr><th>年利率（%）</th><td><input id="gsRate" value="3"></td></tr>
+</table>
+<label>计算方式</label>
+<select id="gsMode">
+  <option value="months">已知每月存入 → 求需要几个月</option>
+  <option value="monthly">已知月数 → 求每月需存多少</option>
+</select>
+<div id="gsParam"></div>
+<button id="gsGo">计算</button>
+<p class="hint">按月复利计息，默认每月月末存入（普通年金）。结果仅供参考。</p>
+<div id="gsOut"></div>
+<script src="app.js"></script>
+</body>
+</html>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>怎么使用？</h2><p>填入目标金额、现有本金与年利率后：方式一输入每月存入金额，求需要几个月；方式二输入想用的月数，求每月需存多少。</p><h2>利率怎么起作用？</h2><p>利息按月复利计入，存款越早越多，利息收益越大；基准方案为每月月末存入（普通年金）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>本金已超过目标怎么办？</summary><p>工具会提示本金已达成目标，所需月数为 0。</p></details><details class="faq-item"><summary>利率 0 且不存入可能达成吗？</summary><p>不能。此时余额不会增长，工具会给出提示。</p></details><details class="faq-item"><summary>结果是保证值吗？</summary><p>不保证。利率会波动，结果为按固定利率粗略估算，仅供参考。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>存款目标 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='goal-savings';}); _r.unshift('goal-savings'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var gsTarget = document.getElementById('gsTarget');
+var gsPrincipal = document.getElementById('gsPrincipal');
+var gsRate = document.getElementById('gsRate');
+var gsMode = document.getElementById('gsMode');
+var gsParam = document.getElementById('gsParam');
+var gsGo = document.getElementById('gsGo');
+var gsOut = document.getElementById('gsOut');
+
+function syncParam() {
+  if (gsMode.value === 'months') {
+    gsParam.innerHTML = '<label>每月存入（元）</label><input id="gsMonthly" value="2000">';
+  } else {
+    gsParam.innerHTML = '<label>目标月数</label><input id="gsN" value="60">';
+  }
+}
+gsMode.addEventListener('change', syncParam);
+syncParam();
+
+function monthsToGoal(target, principal, annualRatePct, monthly) {
+  var F = parseFloat(target), P = parseFloat(principal), M = parseFloat(monthly);
+  var r = parseFloat(annualRatePct) / 100;
+  if (!isFinite(F) || F <= 0) return { months: null, reason: '目标金额需大于 0' };
+  if (!isFinite(P) || isNaN(P) || P < 0) P = 0;
+  if (!isFinite(M) || M < 0) M = 0;
+  var ri = r / 12;
+  if (P >= F) return { months: 0, monthsCeil: 0, reason: '本金已达成目标', totalDeposit: P, final: P };
+  if (M === 0) {
+    if (ri === 0) return { months: Infinity, reason: '利率为 0 且每月不存入，无法达成' };
+    var n0 = Math.log(F / P) / Math.log(1 + ri);
+    return { months: n0, reason: '仅靠利息生息' };
+  }
+  var n;
+  if (ri === 0) {
+    n = (F - P) / M;
+  } else {
+    var lhs = (F + M / ri) / (P + M / ri);
+    if (lhs <= 1) return { months: Infinity, reason: '每月存入不足以覆盖季度' };
+    n = Math.log(lhs) / Math.log(1 + ri);
+  }
+  var ceil = Math.ceil(n - 1e-9);
+  var final = P * Math.pow(1 + ri, ceil) + M * ((Math.pow(1 + ri, ceil) - 1) / (ri === 0 ? 1 : ri));
+  if (ri === 0) final = P + M * ceil;
+  return { months: n, monthsCeil: ceil, final: final, totalDeposit: P + M * ceil };
+}
+
+function monthlyToGoal(target, principal, annualRatePct, nMonths) {
+  var F = parseFloat(target), P = parseFloat(principal), n = parseInt(nMonths, 10);
+  var r = parseFloat(annualRatePct) / 100;
+  if (!isFinite(F) || F <= 0) return { monthly: null, reason: '目标金额需大于 0' };
+  if (!isFinite(P) || isNaN(P) || P < 0) P = 0;
+  if (!isFinite(n) || n <= 0) return { monthly: null, reason: '月数需为正整数' };
+  if (P >= F) return { monthly: 0, reason: '本金已达成目标' };
+  var ri = r / 12;
+  var pv = Math.pow(1 + ri, n);
+  var M;
+  if (ri === 0) {
+    M = (F - P) / n;
+  } else {
+    M = (F - P * pv) * ri / (pv - 1);
+  }
+  return { monthly: M, totalDeposit: P + M * n, final: F };
+}
+
+function fmtMoney(v) {
+  return '¥' + (Math.round(v)).toLocaleString('zh-CN');
+}
+
+function run() {
+  var F = gsTarget.value, P = gsPrincipal.value, r = gsRate.value;
+  var out = '';
+  if (gsMode.value === 'months') {
+    var M = document.getElementById('gsMonthly').value;
+    var res = monthsToGoal(F, P, r, M);
+    if (res.months === null || res.months === Infinity) { gsOut.textContent = res.reason || '无法达成。'; return; }
+    out = '需要 ' + res.monthsCeil + ' 个月达成目标' + fmtMoney(parseFloat(F))
+      + '\n（精确 ' + res.months.toFixed(1) + ' 个月）'
+      + '\n按 ' + res.monthsCeil + ' 个月计，期末余额约 ' + fmtMoney(res.final)
+      + '\n累计投入本金 ' + fmtMoney(res.totalDeposit) + '，其中利息约 ' + fmtMoney(res.final - res.totalDeposit);
+  } else {
+    var n = document.getElementById('gsN').value;
+    var res2 = monthlyToGoal(F, P, r, n);
+    if (res2.monthly === null) { gsOut.textContent = res2.reason || '无法达成。'; return; }
+    out = '需每月存入 ' + fmtMoney(res2.monthly)
+      + '\n共 ' + n + ' 个月，累计投入 ' + fmtMoney(res2.totalDeposit)
+      + '\n到期余额 ' + fmtMoney(res2.final) + '（含利息 ' + fmtMoney(res2.final - res2.totalDeposit) + '）';
+  }
+  gsOut.textContent = out;
+}
+
+gsGo.addEventListener('click', run);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
