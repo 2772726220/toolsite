@@ -38,6 +38,9 @@
   <div><label>定投周期</label>
     <select id="sipFreq"><option value="12">每月</option><option value="52">每周</option></select>
   </div>
+  <div><label>投入时点</label>
+    <select id="sipTiming"><option value="end" selected>期末（每期结束时投入）</option><option value="start">期初（每期开始时投入）</option></select>
+  </div>
   <div><label>当前已投入本金（元，可选）</label><input type="number" id="sipExtra" value="0" min="0"></div>
 </div>
 <button class="btn btn-primary" id="sipGo">计算定投收益</button>
@@ -91,6 +94,7 @@ var sipAmount = document.getElementById('sipAmount');
 var sipYears = document.getElementById('sipYears');
 var sipRate = document.getElementById('sipRate');
 var sipFreq = document.getElementById('sipFreq');
+var sipTiming = document.getElementById('sipTiming');
 var sipExtra = document.getElementById('sipExtra');
 var sipGo = document.getElementById('sipGo');
 var sipResult = document.getElementById('sipResult');
@@ -109,13 +113,18 @@ sipGo.addEventListener('click', function () {
   if (isNaN(rate)) { sipResult.innerHTML = '<div class="result-box">请填写有效的年化收益率</div>'; return; }
   var n = freq * years;
   var per = rate / 100 / freq;
+  var timing = sipTiming.value;
   var total = 0;
-  for (var i = 0; i < n; i++) total = (total + amount) * (1 + per);
+  for (var i = 0; i < n; i++) {
+    if (timing === 'start') total = (total + amount) * (1 + per);
+    else total = total * (1 + per) + amount;
+  }
   total += extra * Math.pow(1 + per, n);
   var principal = amount * n + extra;
   var profit = total - principal;
   sipResult.innerHTML =
     row('定投期数', n + ' 期（' + (freq === 12 ? '月' : '周') + '）') +
+    row('投入时点', timing === 'start' ? '期初' : '期末') +
     row('累计投入本金', principal.toFixed(2) + ' 元') +
     row('期末总资产', total.toFixed(2) + ' 元') +
     row('总收益', (profit >= 0 ? '+' : '') + profit.toFixed(2) + ' 元') +
