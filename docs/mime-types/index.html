@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 MIME 类型查询 - 扩展名转 MIME</title>
+  <meta name="description" content="在线 MIME 类型查询工具：输入文件扩展名即可查到对应 MIME 类型与说明，附文本、图片、音频、视频、应用文档等 40+ 条常见扩展名速查表，可分类筛选。" />
+  <meta name="keywords" content="MIME类型,MIME查询,扩展名,Content-Type,文件类型,扩展名查询">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6269\u5c55\u540d\u9700\u8981\u5e26\u70b9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u9700\u8981\uff0c\u76f4\u63a5\u8f93\u5165\u5982 js\u3001png \u5373\u53ef\uff0c\u5de5\u5177\u81ea\u52a8\u5ffd\u7565\u5927\u5c0f\u5199\u4e0e\u524d\u7f6e\u5c0f\u6570\u70b9\u3002"}},{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u5206\u7c7b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6587\u672c\u3001\u56fe\u7247\u3001\u97f3\u9891\u3001\u89c6\u9891\u3001\u5e94\u7528/\u6587\u6863\u4e94\u7c7b\uff0c\u5171 40+ \u6761\u5e38\u89c1\u6620\u5c04\uff0c\u53ef\u5728\u4e0b\u65b9\u8868\u683c\u6309\u5206\u7c7b\u7b5b\u9009\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u6620\u5c04\u8868\u5185\u7f6e\u5728\u9875\u9762\uff0c\u5b8c\u5168\u79bb\u7ebf\u67e5\u8be2\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📄 MIME 类型查询</h1>
+    <p>扩展名查 MIME 类型，附文本/图片/音视频速查表</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">MIME 类型查询</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#MIME</span><span class="badge">#扩展名</span><span class="badge">#Content-Type</span><span class="badge">#文件类型</span>
+<div class="field">
+  <label for="mtExt">文件扩展名</label>
+  <input id="mtExt" value="js" placeholder="如：js / png / pdf">
+</div>
+<div class="actions">
+  <button class="btn" id="mtLookup" type="button">查询 MIME</button>
+</div>
+<div class="result-box" id="mtOut"></div>
+<div class="field">
+  <label>常见扩展名速查（按类型筛选）</label>
+  <select id="mtFilter">
+    <option value="">全部</option>
+    <option value="text">文本</option>
+    <option value="image">图片</option>
+    <option value="audio">音频</option>
+    <option value="video">视频</option>
+    <option value="application">应用/文档</option>
+  </select>
+  <div class="result-box" id="mtList"></div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>MIME 类型是什么？</h2><p>服务器与浏览器约定文件内容类型的标准标识，即响应头 Content-Type 里的取值，由主类型/子类型组成，如 text/html。</p><h2>为什么需要查 MIME？</h2><p>配置服务器、写上传接口、设置响应头或处理文件下载时，正确的 MIME 能避免浏览器乱码或误触发下载。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>扩展名需要带点吗？</summary><p>不需要，直接输入如 js、png 即可，工具自动忽略大小写与前置小数点。</p></details><details class="faq-item"><summary>支持哪些分类？</summary><p>文本、图片、音频、视频、应用/文档五类，共 40+ 条常见映射，可在下方表格按分类筛选。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会。映射表内置在页面，完全离线查询。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>MIME 类型查询 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='mime-types';}); _r.unshift('mime-types'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var mtExt = document.getElementById('mtExt');
+var mtOut = document.getElementById('mtOut');
+var mtFilter = document.getElementById('mtFilter');
+var mtList = document.getElementById('mtList');
+var mtLookup = document.getElementById('mtLookup');
+
+var MIME_TABLE = [
+  ['text', 'plain', 'txt', 'text 普通文本'],
+  ['text', 'html', 'html htm', 'HTML 网页'],
+  ['text', 'css', 'css', '层叠样式表'],
+  ['text', 'javascript', 'js mjs', 'JavaScript 脚本'],
+  ['text', 'csv', 'csv', '逗号分隔值'],
+  ['text', 'xml', 'xml', 'XML 数据'],
+  ['text', 'json', 'json map', 'JSON 数据'],
+  ['text', 'markdown', 'md markdown', 'Markdown 文档'],
+  ['text', 'yaml', 'yaml yml', 'YAML 数据'],
+  ['image', 'png', 'png', 'PNG 位图'],
+  ['image', 'jpeg', 'jpg jpeg', 'JPEG 照片'],
+  ['image', 'gif', 'gif', 'GIF 动画'],
+  ['image', 'webp', 'webp', 'WebP 图片'],
+  ['image', 'svg+xml', 'svg', 'SVG 矢量图'],
+  ['image', 'bmp', 'bmp', 'BMP 位图'],
+  ['image', 'ico', 'ico', 'ICO 图标'],
+  ['image', 'avif', 'avif', 'AVIF 图片'],
+  ['audio', 'mpeg', 'mp3', 'MP3 音频'],
+  ['audio', 'wav', 'wav', 'WAV 音频'],
+  ['audio', 'ogg', 'ogg oga', 'OGG 音频'],
+  ['audio', 'flac', 'flac', 'FLAC 音频'],
+  ['audio', 'm4a', 'm4a', 'M4A 音频'],
+  ['video', 'mp4', 'mp4', 'MP4 视频'],
+  ['video', 'webm', 'webm', 'WebM 视频'],
+  ['video', 'quicktime', 'mov', 'MOV 视频'],
+  ['video', 'mpeg', 'mpeg mpg', 'MPEG 视频'],
+  ['video', 'x-msvideo', 'avi', 'AVI 视频'],
+  ['application', 'pdf', 'pdf', 'PDF 文档'],
+  ['application', 'zip', 'zip', 'ZIP 压缩包'],
+  ['application', 'gzip', 'gz', 'GZIP 压缩'],
+  ['application', 'x-7z-compressed', '7z', '7-Zip 压缩'],
+  ['application', 'x-rar-compressed', 'rar', 'RAR 压缩'],
+  ['application', 'x-tar', 'tar', 'TAR 归档'],
+  ['application', 'json', 'json', 'JSON 数据'],
+  ['application', 'octet-stream', 'bin exe dll', '二进制流'],
+  ['application', 'wasm', 'wasm', 'WebAssembly'],
+  ['application', 'vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'xlsx', 'Excel 工作簿'],
+  ['application', 'vnd.openxmlformats-officedocument.wordprocessingml.document', 'docx', 'Word 文档'],
+  ['application', 'vnd.ms-excel', 'xls', 'Excel 1997-2003'],
+  ['application', 'msword', 'doc', 'Word 1997-2003'],
+  ['application', 'vnd.ms-powerpoint', 'ppt pps', 'PowerPoint'],
+  ['application', 'vnd.ms-fontobject', 'eot', 'EOT 字体'],
+  ['application', 'font-woff', 'woff', 'WOFF 字体'],
+  ['application', 'font-woff2', 'woff2', 'WOFF2 字体'],
+  ['application', 'x-font-ttf', 'ttf', 'TTF 字体'],
+  ['application', 'x-font-opentype', 'otf', 'OTF 字体'],
+  ['application', 'sql', 'sql', 'SQL 脚本'],
+  ['application', 'wasm', 'wasm', 'WebAssembly']
+];
+
+var EXT_TO_MIME = {};
+MIME_TABLE.forEach(function (row) {
+  row[2].split(' ').forEach(function (e) { EXT_TO_MIME[e] = { type: row[0], mime: row[1], label: row[3] }; });
+});
+
+function lookupMime(ext) {
+  if (typeof ext !== 'string') return null;
+  var e = ext.trim().toLowerCase().replace(/^\./, '');
+  if (!e) return null;
+  var hit = EXT_TO_MIME[e];
+  return hit ? { type: hit.type, mime: hit.mime, label: hit.label, ext: e } : null;
+}
+
+function render() {
+  var fil = mtFilter.value;
+  var rows = MIME_TABLE.filter(function (r) { return !fil || r[0] === fil; });
+  mtList.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:13px;">' +
+    '<tr style="text-align:left"><th>扩展名</th><th>MIME 类型</th><th>说明</th><th>分类</th></tr>' +
+    rows.map(function (r) {
+      return '<tr style="border-top:1px solid #eee"><td><b>' + r[2].split(' ').join('</b> <b>') + '</b></td>' +
+        '<td><code>@media' + r[0] + '/' + r[1] + '</code></td><td>' + r[3] + '</td><td>' + r[0] + '</td></tr>';
+    }).join('') + '</table>';
+}
+
+mtLookup.addEventListener('click', function () {
+  var hit = lookupMime(mtExt.value);
+  if (!hit) { mtOut.textContent = '未找到扩展名「' + mtExt.value + '」对应的 MIME 类型'; return; }
+  mtOut.textContent = '.' + hit.ext + ' → ' + hit.type + '/' + hit.mime + '（' + hit.label + '）';
+});
+
+mtFilter.addEventListener('change', render);
+render();
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
