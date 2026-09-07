@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 XPath 查询工具 - XML 路径提取</title>
+  <meta name="description" content="在线 XPath 查询工具：粘贴 XML 并输入 XPath 表达式（支持 / 与 //、@属性、text()、下标 [n]、[@a=\"v\"]、[@a!=\"v\"]、[last()]），高亮显示命中的节点文本。" />
+  <meta name="keywords" content="XPath,XPath查询,XML路径,XML解析,节点提取,路径表达式">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u80fd\u5904\u7406\u4e0d\u89c4\u8303\u7684 XML \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u5185\u7f6e\u8f7b\u91cf\u89e3\u6790\u5668\uff0c\u6807\u7b7e\u5fc5\u987b\u914d\u5bf9\u95ed\u5408\uff1b\u672a\u95ed\u5408\u4f1a\u63d0\u793a\u9519\u8bef\u4e0e\u5927\u81f4\u4f4d\u7f6e\u3002"}},{"@type":"Question","name":"\u5927\u5c0f\u5199\u654f\u611f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6807\u7b7e\u4e0e\u5c5e\u6027\u5339\u914d\u9ed8\u8ba4\u5927\u5c0f\u5199\u654f\u611f\uff0c\u4e0e\u6807\u51c6 XPath \u4e00\u81f4\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u89e3\u6790\u4e0e\u67e5\u8be2\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧭 XPath 查询</h1>
+    <p>XML/XHTML 上跑 XPath，支持属性/下标/谓词</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">XPath 查询</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#XPath</span><span class="badge">#XML</span><span class="badge">#路径</span><span class="badge">#节点</span>
+<div class="field">
+  <label for="xqXml">XML 代码</label>
+  <textarea id="xqXml" rows="8" placeholder="&lt;bookstore&gt;&#10;  &lt;book id=&quot;a&quot;&gt;&lt;title&gt;JS Guide&lt;/title&gt;&lt;/book&gt;&#10;  &lt;book id=&quot;b&quot;&gt;&lt;title&gt;Dream&lt;/title&gt;&lt;/book&gt;&#10;&lt;/bookstore&gt;"></textarea>
+</div>
+<div class="field">
+  <label for="xqExpr">XPath 表达式</label>
+  <input id="xqExpr" value="/bookstore/book/title/text()" placeholder="/bookstore/book[1]/@id">
+</div>
+<div class="actions">
+  <button class="btn" id="xqGo" type="button">查询</button>
+</div>
+<div class="result-box">
+  <div id="xqCount" class="stat-bar" style="margin-bottom:8px;"></div>
+  <textarea id="xqOut" readonly rows="8" placeholder="结果"></textarea>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>支持哪些 XPath 语法？</h2><p>核心子集：绝对/相对路径、后代 //、属性 @、text() 文本节点、位置谓词 [n] 与 [last()]、属性等值/不等谓词。</p><h2>XPath 有什么用？</h2><p>不写代码从 XML/HTML 结构中精准提取节点，工具开发、接口调试、数据清洗场景常用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>能处理不规范的 XML 吗？</summary><p>工具内置轻量解析器，标签必须配对闭合；未闭合会提示错误与大致位置。</p></details><details class="faq-item"><summary>大小写敏感吗？</summary><p>标签与属性匹配默认大小写敏感，与标准 XPath 一致。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会。解析与查询全部在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>XPath 查询 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='xpath-query';}); _r.unshift('xpath-query'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var xqXml = document.getElementById('xqXml');
+var xqExpr = document.getElementById('xqExpr');
+var xqOut = document.getElementById('xqOut');
+var xqCount = document.getElementById('xqCount');
+
+// ---- lightweight XML parser -> nested node tree ----
+function Parser(s) {
+  this.s = s;
+  this.i = 0;
+  this.n = s.length;
+}
+Parser.prototype.skipWs = function () {
+  while (this.i < this.n && /\s/.test(this.s[this.i])) this.i++;
+};
+Parser.prototype.error = function (msg) {
+  throw new Error(msg + ' (位置 ' + this.i + ')');
+};
+Parser.prototype.parseDocument = function () {
+  this.skipWs();
+  // optional XML decl / comments / doctype skipped
+  var node = this.parseElement();
+  this.skipWs();
+  if (this.i < this.n && this.s[this.i] !== '<') this.error('XML 末尾有多余内容');
+  return node;
+};
+Parser.prototype.parseElement = function () {
+  this.skipWs();
+  if (this.s[this.i] !== '<') this.error('缺少 <');
+  this.i++;
+  if (this.s.startsWith('?', this.i)) { this.skipDecl(); return this.parseElement(); }
+  if (this.s.startsWith('!--', this.i)) { this.skipComment(); return this.parseElement(); }
+  if (this.s.startsWith('![CDATA[', this.i)) { this.skipCdata(); return this.parseElement(); }
+  if (this.s.startsWith('!', this.i)) { this.skipMisc(); return this.parseElement(); }
+  if (this.s[this.i] === '/') this.error('意外的 </');
+  var name = this.readName();
+  var attrs = {};
+  for (;;) {
+    this.skipWs();
+    if (this.s[this.i] === '>' || this.s.startsWith('/>', this.i)) break;
+    if (this.s[this.i] === '/') { this.i += 2; return { tag: name, attrs: attrs, children: [] }; }
+    var an = this.readName();
+    this.skipWs();
+    if (this.s[this.i] !== '=') this.error('属性缺少 =');
+    this.i++;
+    this.skipWs();
+    var q = this.s[this.i];
+    if (q !== '"' && q !== "'") this.error('属性值需带引号');
+    this.i++;
+    var val = '';
+    while (this.i < this.n && this.s[this.i] !== q) { val += this.s[this.i]; this.i++; }
+    this.i++;
+    attrs[an] = val;
+  }
+  if (this.s.startsWith('/>', this.i)) { this.i += 2; return { tag: name, attrs: attrs, children: [] }; }
+  this.i++; // consume '>'
+  var children = [];
+  for (;;) {
+    this.skipWs();
+    if (this.i >= this.n) this.error('未闭合标签 <' + name + '>');
+    if (this.s[this.i] === '<') {
+      if (this.s.startsWith('</', this.i)) {
+        this.i += 2;
+        var cn = this.readName();
+        this.skipWs();
+        if (this.i < this.n && this.s[this.i] === '>') this.i++;
+        if (cn !== name) this.error('标签不匹配 </' + cn + '> vs <' + name + '>');
+        return { tag: name, attrs: attrs, children: children };
+      }
+      if (this.s.startsWith('<!--', this.i)) { this.skipComment(); continue; }
+      if (this.s.startsWith('<![CDATA[', this.i)) { children.push({ text: this.readCdata() }); continue; }
+      children.push(this.parseElement());
+    } else {
+      var txt = '';
+      while (this.i < this.n && this.s[this.i] !== '<') { txt += this.s[this.i]; this.i++; }
+      if (txt.trim() !== '') children.push({ text: txt });
+    }
+  }
+};
+Parser.prototype.readName = function () {
+  var start = this.i;
+  while (this.i < this.n && /[A-Za-z0-9_\-.:]/.test(this.s[this.i])) this.i++;
+  if (this.i === start) this.error('无效的名称');
+  return this.s.slice(start, this.i);
+};
+Parser.prototype.skipDecl = function () {
+  while (this.i < this.n && this.s[this.i] !== '>') this.i++;
+  this.i++;
+};
+Parser.prototype.skipComment = function () {
+  var e = this.s.indexOf('-->', this.i);
+  this.i = e < 0 ? this.n : e + 3;
+};
+Parser.prototype.skipCdata = function () {
+  var e = this.s.indexOf(']]>', this.i);
+  this.i = e < 0 ? this.n : e + 3;
+};
+Parser.prototype.readCdata = function () {
+  var e = this.s.indexOf(']]>', this.i + 9);
+  this.i = e < 0 ? this.n : e + 3;
+  return this.s.slice(this.i - (e < 0 ? 0 : 9), (e < 0 ? this.n : e));
+};
+Parser.prototype.skipMisc = function () {
+  while (this.i < this.n && this.s[this.i] !== '>') this.i++;
+  this.i++;
+};
+
+function parseXml(xml) {
+  if (typeof xml !== 'string' || !xml.trim()) return null;
+  try {
+    return new Parser(xml).parseDocument();
+  } catch (e) {
+    return { _error: e.message };
+  }
+}
+
+// ---- minimal XPath evaluator ----
+function selectXPath(root, expr) {
+  if (!root || typeof root !== 'object' || root._error) return { error: (root && root._error) || 'XML 为空或无效' };
+  if (!expr || !expr.trim()) return { error: '请输入 XPath' };
+  var steps = tokenizeSteps(expr);
+  if (steps === null) return { error: 'XPath 语法错误' };
+  var result = evalSteps(root, steps);
+  if (result === null) return { error: '不支持的特性或无法解析' };
+  return { nodes: result };
+}
+
+function tokenizeSteps(expr) {
+  // support: / /name //name . .. @attr text() [n] [@a="v"] [@a!="v"] [last()]
+  var parts = [];
+  var i = 0, n = expr.length;
+  if (expr[0] !== '/') return null;
+  var cur = '';
+  function pushTerm() { if (cur !== '') { parts.push({ axis: 'child', sel: cur }); cur = ''; } }
+  var abs = expr[1] === '/'; // leading '//'
+  if (abs) i = 2; else i = 1;
+  while (i < n) {
+    var c = expr[i];
+    if (c === '/') {
+      if (expr[i + 1] === '/') { pushTerm(); parts.push({ axis: 'desc' }); i += 2; continue; }
+      pushTerm(); i++; continue;
+    }
+    if (c === '.') {
+      if (expr[i + 1] === '/') { pushTerm(); parts.push({ axis: 'parent' }); i++; continue; }
+      if (expr[i + 1] === '.') { pushTerm(); parts.push({ axis: 'parent', up: 2 }); i += 2; continue; }
+      if (expr[i + 1] === '/') { }
+      pushTerm(); parts.push({ axis: 'self' }); i++; continue;
+    }
+    if (c === '@') {
+      pushTerm(); var an = ''; i++;
+      while (i < n && /[A-Za-z0-9_\-.:]/.test(expr[i])) { an += expr[i]; i++; }
+      parts.push({ axis: 'attr', name: an });
+      continue;
+    }
+    if (c === '(' && cur.endsWith('text')) {
+      // text()
+      i++;
+      while (i < n && /[A-Za-z]/.test(expr[i])) i++; // '()'
+      if (i < n && expr[i] === ')') i++;
+      parts.push({ axis: 'text' });
+      cur = '';
+      continue;
+    }
+    if (c === '[') {
+      // predicate appended to current term
+      var j = expr.indexOf(']', i);
+      if (j < 0) return null;
+      var pred = expr.slice(i + 1, j).trim();
+      i = j + 1;
+      // attach to last pushable (cur or last part with a sel)
+      if (cur !== '') { parts.push({ axis: 'child', sel: cur, pred: pred }); cur = ''; }
+      else if (parts.length) {
+        var lp = parts[parts.length - 1];
+        if (lp.axis === 'child' || lp.axis === 'desc') {
+          if (lp.pred) { parts.push({ axis: 'child', sel: '*', pred: pred }); }
+          else lp.pred = pred;
+        } else { parts.push({ axis: 'child', sel: '*', pred: pred }); }
+      } else return null;
+      continue;
+    }
+    cur += expr[i];
+    i++;
+  }
+  pushTerm();
+  return { parts: parts, abs: abs };
+}
+
+function childrenOf(node) {
+  return node.children || [];
+}
+function nodeText(node) {
+  var acc = '';
+  (function walk(n) {
+    if (n.text !== undefined) { acc += n.text; return; }
+    (n.children || []).forEach(walk);
+  })(node);
+  return acc;
+}
+function matchSel(node, sel) {
+  if (sel === '*' || sel === '') return true;
+  return node.tag === sel;
+}
+function evalPredicate(node, predicate) {
+  var isPos = /^\d+$/.test(predicate.trim());
+  if (isPos) return { position: parseInt(predicate.trim(), 10), okAll: true };
+  if (predicate === 'last()') return { last: true };
+  var m = predicate.match(/^@([A-Za-z0-9_\-.:]+)\s*=\s*["']([^"']*)["']$/);
+  if (m) return { attrEq: { name: m[1], value: m[2] } };
+  var mn = predicate.match(/^@([A-Za-z0-9_\-.:]+)\s*!=\s*["']([^"']*)["']$/);
+  if (mn) return { attrNe: { name: mn[1], value: mn[2] } };
+  var mc = predicate.match(/^(?:count\(@([A-Za-z0-9_\-.:]+)\)\s*>\s*(\d+))$/);
+  if (mc) return { attrCountGt: { name: mc[1], n: parseInt(mc[2], 10) } };
+  return null; // unsupported predicate -> skip this branch entirely
+}
+
+function evalSteps(root, stepsObj) {
+  var steps = stepsObj.parts;
+  var cur = [root];
+  if (stepsObj.abs) { cur = descendants(root); }
+  for (var s = 0; s < steps.length; s++) {
+    var st = steps[s];
+    var next = [];
+    if (st.axis === 'child' || st.axis === 'desc') {
+      var isFirst = (s === 0 && !stepsObj.abs);
+      for (var k = 0; k < cur.length; k++) {
+        var cset = childrenOf(cur[k]);
+        // first child step matches the document root itself
+        var matching;
+        if (isFirst) {
+          matching = (cur[k].tag !== undefined && matchSel(cur[k], st.sel)) ? [cur[k]] : [];
+          applyPredicates(matching, st.pred);
+          next = next.concat(matching);
+        } else if (st.axis === 'child') {
+          matching = cset.filter(function (c) { return matchSel(c, st.sel) && c.tag !== undefined; });
+          applyPredicates(matching, st.pred);
+          next = next.concat(matching);
+        } else {
+          var dm = cset.filter(function (c) { return c.tag !== undefined; });
+          next = next.concat(dm);
+        }
+      }
+    } else if (st.axis === 'attr') {
+      for (var a = 0; a < cur.length; a++) {
+        var n = cur[a];
+        if (n.tag && n.attrs && st.name in n.attrs) next.push({ attrValue: n.attrs[st.name] });
+      }
+    } else if (st.axis === 'text') {
+      for (var t = 0; t < cur.length; t++) {
+        if (cur[t].tag) {
+          var txt = (cur[t].children || []).filter(function (c) { return c.text !== undefined; }).map(function (c) { return c.text; });
+          txt.forEach(function (x) { next.push({ textValue: x }); });
+        } else if (cur[t].text !== undefined) {
+          next.push({ textValue: cur[t].text });
+        }
+      }
+    } else if (st.axis === 'self') {
+      next = next.concat(cur);
+    } else if (st.axis === 'parent') {
+      // not implemented fully; treat as empty unless we tracked parents
+    }
+    cur = next;
+    if (cur.length === 0 && s < steps.length) return [];
+  }
+  return cur;
+}
+
+function applyPredicates(list, pred) {
+  if (!pred) return;
+  var p = evalPredicate(null, pred);
+  if (!p) { list.length = 0; return; }
+  if (p.position !== undefined) {
+    if (p.position <= 0) { list.length = 0; return; }
+    var keep = list[p.position - 1];
+    list.length = 0;
+    if (keep) list.push(keep);
+    return;
+  }
+  if (p.last) { if (list.length) list.splice(0, list.length - 1); return; }
+  if (p.attrEq || p.attrNe || p.attrCountGt) {
+    var res = [];
+    for (var i = 0; i < list.length; i++) {
+      var a = list[i].attrs || {};
+      if (p.attrEq && a[p.attrEq.name] === p.attrEq.value) res.push(list[i]);
+      else if (p.attrNe && !(p.attrNe.name in a) === false && a[p.attrNe.name] !== p.attrNe.value) res.push(list[i]);
+      else if (p.attrCountGt && Object.keys(a).length > p.attrCountGt.n) res.push(list[i]);
+    }
+    list.length = 0;
+    Array.prototype.push.apply(list, res);
+  }
+}
+
+function descendants(node) {
+  var out = [];
+  (function walk(n) {
+    if (!n || n.text !== undefined) return;
+    (n.children || []).forEach(function (c) { if (c.text === undefined) { out.push(c); walk(c); } });
+  })(node);
+  return out;
+}
+
+function pretty(n) {
+  if (n.attrValue !== undefined) return n.attrValue;
+  if (n.textValue !== undefined) return n.textValue;
+  if (!n) return '';
+  return '<' + n.tag + '>'; // compact repr
+}
+
+function run() {
+  var xml = xqXml.value;
+  var expr = xqExpr.value;
+  var tree = parseXml(xml);
+  if (!tree) { xqOut.value = 'XML 为空或无效'; xqCount.textContent = ''; return; }
+  if (tree._error) { xqOut.value = 'XML 解析错误：' + tree._error; xqCount.textContent = ''; return; }
+  var res = selectXPath(tree, expr);
+  if (res.error) { xqOut.value = '错误：' + res.error; xqCount.textContent = ''; return; }
+  xqCount.textContent = '匹配 ' + res.nodes.length + ' 项';
+  xqOut.value = res.nodes.map(pretty).join('\n');
+}
+
+var xqGo = document.getElementById('xqGo');
+xqGo.addEventListener('click', run);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
