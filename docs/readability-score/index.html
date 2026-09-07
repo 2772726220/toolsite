@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>英文可读性测试 - Flesch·FK·Fog·SMOG 评分</title>
+  <meta name="description" content="英文文本可读性测评工具：按标准公式计算 Flesch Reading Ease、Flesch-Kincaid 年级、Gunning Fog 指数与 SMOG（含单词/句数/音节/多音节词统计）。" />
+  <meta name="keywords" content="可读性,Flesch,Flesch-Kincaid,Gunning Fog,SMOG,阅读难度,英语阅读">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u56db\u4e2a\u6307\u6807\u90fd\u8981\u770b\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"Flesch \u6700\u5e38\u7528\uff1b\u5176\u4f59\u4e09\u4e2a\u90fd\u504f\u5411\u8f93\u51fa\u5e74\u7ea7\u6c34\u5e73\uff0c\u6570\u503c\u4e0a\u6709\u7ec6\u5fae\u5dee\u5f02\uff0c\u53ef\u4efb\u9009\u4e00\u4e2a\u7ed3\u5408 Flesch \u4e00\u8d77\u770b\u3002"}},{"@type":"Question","name":"\u4e2d\u6587\u6587\u672c\u652f\u6301\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u652f\u6301\u3002\u97f3\u8282\u6cd5\u6309\u82f1\u6587\u8bbe\u8ba1\uff0c\u4e2d\u6587\u6587\u672c\u4f1a\u8fd4\u56de\u65e0\u6709\u6548\u5355\u8bcd\u7684\u63d0\u793a\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u6240\u6709\u7edf\u8ba1\u90fd\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📖 英文可读性评分</h1>
+    <p>Flesch/Flesch-Kincaid/Gunning Fog/SMOG 四大指标</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">英文可读性评分</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#可读性</span><span class="badge">#Flesch</span><span class="badge">#阅读难度</span><span class="badge">#英文</span>
+<div class="field">
+  <label for="rsText">文本（英文）</label>
+  <textarea id="rsText" rows="10" placeholder="The quick brown fox jumps over the lazy dog."></textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="rsGo" type="button">计算可读性</button>
+</div>
+<div class="result-box" id="rsOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>Flesch 分数怎么解读？</h2><p>分数越高越好读：90+ 小学生水平，60-70 标准水平，30 以下接近学术文献。</p><h2>适合测什么？</h2><p>适合评估自己写的英文博客、邮件、说明文档的易读程度；公式与 WebFX 等英文工具一致，便于跨工具对比。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>四个指标都要看吗？</summary><p>Flesch 最常用；其余三个都偏向输出年级水平，数值上有细微差异，可任选一个结合 Flesch 一起看。</p></details><details class="faq-item"><summary>中文文本支持吗？</summary><p>不支持。音节法按英文设计，中文文本会返回无有效单词的提示。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会。所有统计都在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>英文可读性评分 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='readability-score';}); _r.unshift('readability-score'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var rsText = document.getElementById('rsText');
+var rsGo = document.getElementById('rsGo');
+var rsOut = document.getElementById('rsOut');
+
+// syllable counting heuristic (English)
+function countSyllables(word) {
+  var w = String(word).toLowerCase().replace(/[^a-z]/g, '');
+  if (!w) return 0;
+  // count vowel groups, but treat "e" at end as silent unless the word needs it
+  var vowels = w.match(/[aeiouy]+/g);
+  if (!vowels) return 1;
+  var n = vowels.length;
+  if (n === 0) return 1;
+  // silent final e / es
+  if (w.length > 1) {
+    if (w.endsWith('e') && !w.endsWith('le')) n--;
+    if (w.endsWith('es') && w.length > 2 && n > 1) n--;
+  }
+  return Math.max(1, n);
+}
+
+function sentenceCount(text) {
+  var t = String(text).replace(/\s+/g, ' ').trim();
+  if (!t) return 0;
+  var m = t.match(/[^.!?]+[.!?]*/g);
+  var count = m ? m.length : 1;
+  // handle common abbreviations: Mr., Dr., etc. count as part of sentence
+  count -= (t.match(/\b(Mr|Mrs|Ms|Dr|Prof|St|vs|etc|e\.g|i\.e|Fig)\.\s+\w/g) || []).length;
+  return Math.max(1, count);
+}
+
+function wordCount(text) {
+  var m = String(text).match(/[A-Za-z0-9']+/g);
+  return m ? m.length : 0;
+}
+
+var POLYSYLLABLES_OVER_3 = /[aeiouy][^aeiouy]*[aeiouy][^aeiouy]*[aeiouy]/;
+
+function readabilityStats(text) {
+  var words = wordCount(text);
+  if (!words) return { error: '没有可读的单词（仅支持英文）' };
+  var sents = sentenceCount(text);
+  var syllables = 0;
+  var polys3 = 0;
+  String(text).match(/[A-Za-z0-9']+/g).forEach(function (w) {
+    var syl = countSyllables(w);
+    syllables += syl;
+    if (syl >= 3 && /[a-z]/.test(w)) polys3++;
+  });
+  var W = words, S = sents, Sy = syllables;
+  var flesch = 206.835 - 1.015 * (W / S) - 84.6 * (Sy / W);
+  var fk = 0.39 * (W / S) + 11.8 * (Sy / W) - 15.59;
+  var fog = 0.4 * ((W / S) + (100 * polys3 / W));
+  var smog = 1.043 * Math.sqrt(polys3 * (30 / S)) + 3.1291;
+
+  function grade(p) {
+    if (p >= 90) return '小学 4-6 年级（很容易读）';
+    if (p >= 80) return '小学 6 年级（容易读）';
+    if (p >= 70) return '初中一年级（较容易）';
+    if (p >= 60) return '初中二年级（标准）';
+    if (p >= 50) return '高中（较难）';
+    if (p >= 30) return '大学（难）';
+    return '研究生/专业（很难）';
+  }
+  return {
+    words: W, sentences: S, syllables: Sy,
+    avgWordsPerSentence: W / S,
+    polysyllables3: polys3,
+    flesch: flesch,
+    fleschGrade: grade(flesch),
+    fk: fk,
+    fog: fog,
+    smog: smog
+  };
+}
+
+rsGo.addEventListener('click', function () {
+  var res = readabilityStats(rsText.value);
+  if (res.error) { rsOut.textContent = res.error; return; }
+  rsOut.innerHTML =
+    '<div class="stat"><div class="num">' + res.flesch.toFixed(1) + '</div><div class="label">Flesch 阅读难度（' + res.fleschGrade + '）</div></div>' +
+    '<div class="stat"><div class="num">' + res.fk.toFixed(1) + '</div><div class="label">Flesch-Kincaid 年级</div></div>' +
+    '<div class="stat"><div class="num">' + res.fog.toFixed(1) + '</div><div class="label">Gunning Fog 指数</div></div>' +
+    '<div class="stat"><div class="num">' + res.smog.toFixed(1) + '</div><div class="label">SMOG 年级</div></div>' +
+    '<div style="margin-top:8px;color:#667;font-size:13px;">' + res.words + ' 词 · ' + res.sentences + ' 句 · ' + res.syllables + ' 音节 · 每句平均 ' + res.avgWordsPerSentence.toFixed(1) + ' 词 · 三音节+ 词 ' + res.polysyllables3 + ' 个</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
