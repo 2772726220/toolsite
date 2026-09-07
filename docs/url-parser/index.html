@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL解析 - 在线URL拆分查询参数提取工具</title>
+  <meta name="description" content="免费在线 URL 解析工具，一键拆分协议、域名、端口、路径、查询参数、锚点等全部组成，自动识别默认端口，浏览器本地解析，开发者调试接口必备。" />
+  <meta name="keywords" content="URL解析,URL拆分,URL组成部分,查询参数提取,在线URL工具">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u534f\u8bae\u7684 URL\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6807\u51c6 http/https \u4ee5\u53ca URL \u6807\u51c6\u4e2d\u5b9a\u4e49\u7684\u6240\u6709 scheme\uff0c\u53ea\u8981\u6d4f\u89c8\u5668\u80fd\u89e3\u6790\u5373\u53ef\u3002"}},{"@type":"Question","name":"\u67e5\u8be2\u53c2\u6570\u4f1a\u89e3\u6790\u6210\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f1a\u89e3\u6790\u6210\u72ec\u7acb\u7684\u952e\u503c\u5bf9\u5217\u8868\uff0c\u91cd\u590d\u53c2\u6570\u4f1a\u4e00\u5e76\u5217\u51fa\uff0c\u5e76\u5c55\u793a URL \u7f16\u7801\u540e\u7684\u539f\u59cb\u67e5\u8be2\u5b57\u7b26\u4e32\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0cURL \u89e3\u6790\u5b8c\u5168\u5728\u672c\u5730\u6d4f\u89c8\u5668\u4e2d\u5b8c\u6210\u3002"}},{"@type":"Question","name":"\u7aef\u53e3\u663e\u793a\u9ed8\u8ba4\u662f\u4ec0\u4e48\u610f\u601d\uff1f","acceptedAnswer":{"@type":"Answer","text":"HTTPS \u9ed8\u8ba4\u7aef\u53e3 443\u3001HTTP \u9ed8\u8ba4\u7aef\u53e3 80\uff0c\u7701\u7565\u7aef\u53e3\u65f6\u6d4f\u89c8\u5668\u6587\u4ef6\u4f1a\u4f7f\u7528\u9ed8\u8ba4\u503c\uff0c\u5de5\u5177\u4f1a\u6839\u636e\u534f\u8bae\u81ea\u52a8\u6807\u6ce8\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔗 URL解析</h1>
+    <p>拆分 URL 各组成部分与查询参数</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">URL解析</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#URL</span><span class="badge">#解析</span><span class="badge">#参数</span>
+<div class="field">
+  <label for="upUrl">URL</label>
+  <input type="text" id="upUrl" value="https://user:pass@example.com:8080/path/to/page?q=在线工具&page=2&page=3#section">
+</div>
+<div class="actions">
+  <button class="btn btn-primary" id="upGo" type="button">解析 URL</button>
+</div>
+<div id="upOut" style="margin-top:12px;display:grid;gap:8px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>URL 由哪些部分组成？</h2><p>完整 URL 包含协议、用户名密码、主机名、端口、路径、查询参数（Query）和锚点（Hash）。工具会自动拆分并标注端口是否为默认值。</p><h2>为什么每个工具站点都要配 URL 解析？</h2><p>排查回调地址、调试跳转、拼接分享链接时，快速看清参数归属能节省大量时间，尤其适合前端与爬虫开发者。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些协议的 URL？</summary><p>支持标准 http/https 以及 URL 标准中定义的所有 scheme，只要浏览器能解析即可。</p></details><details class="faq-item"><summary>查询参数会解析成什么？</summary><p>会解析成独立的键值对列表，重复参数会一并列出，并展示 URL 编码后的原始查询字符串。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，URL 解析完全在本地浏览器中完成。</p></details><details class="faq-item"><summary>端口显示默认是什么意思？</summary><p>HTTPS 默认端口 443、HTTP 默认端口 80，省略端口时浏览器文件会使用默认值，工具会根据协议自动标注。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>URL解析 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='url-parser';}); _r.unshift('url-parser'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var upUrl = document.getElementById('upUrl');
+var upGo = document.getElementById('upGo');
+var upOut = document.getElementById('upOut');
+
+function upRow(label, val) {
+  return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:12px;flex-shrink:0;">' + label + '</span><span style="font-family:monospace;font-size:13px;word-break:break-all;text-align:right;color:var(--text);">' + val + '</span></div>';
+}
+
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+upGo.addEventListener('click', function () {
+  var raw = upUrl.value.trim();
+  if (!raw) { showToast('请输入 URL'); return; }
+  var u;
+  try { u = new URL(raw); }
+  catch (e) { upOut.innerHTML = '<div class="result-box" style="color:#dc2626;">无法解析 URL，请检查格式（需包含协议，如 https://）</div>'; return; }
+  var defaultPort = (u.protocol === 'https:' && (u.port === '' || u.port === '443')) || (u.protocol === 'http:' && (u.port === '' || u.port === '80'));
+  var params = [];
+  u.searchParams.forEach(function (v, k) { params.push(esc(k) + ' = ' + esc(v)); });
+  var html = '';
+  html += upRow('协议', esc(u.protocol.replace(':', '')));
+  if (u.username) html += upRow('用户名', esc(u.username));
+  if (u.password) html += upRow('密码', esc(u.password));
+  html += upRow('主机', esc(u.hostname));
+  html += upRow('端口', u.port ? esc(u.port) + '（' + (u.protocol === 'https:' ? 'HTTPS' : 'HTTP') + ' 默认 443/80，可省略）' : esc(u.protocol === 'https:' ? '443（默认，可省略）' : u.protocol === 'http:' ? '80（默认，可省略）' : ''));
+  html += upRow('完整 Host', esc(u.host));
+  html += upRow('来源 Origin', esc(u.origin));
+  html += upRow('路径', esc(u.pathname));
+  html += upRow('查询字符串（原始）', params.length ? esc(u.search) : '（无）');
+  if (params.length) {
+    html += '<div style="margin-top:4px;padding:10px 12px;background:var(--bg-elev);border-radius:10px;"><div style="font-size:12px;color:var(--muted);margin-bottom:6px;">查询参数</div>' + params.map(function (p) { return '<div style="font-family:monospace;font-size:13px;padding:3px 0;border-bottom:1px dashed var(--border);">' + p + '</div>'; }).join('') + '</div>';
+  }
+  html += upRow('锚点 Hash', u.hash ? esc(u.hash) : '（无）');
+  if (/\/\/([^/]+)\/([^/]+)/.test(raw)) {
+    var matchPath = raw.match(/\/\/([^/]+)\/([^/]+)/);
+    if (matchPath) html += upRow('一级路径', '/' + esc(matchPath[2]));
+  }
+  upOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
