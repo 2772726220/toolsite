@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盈亏平衡点计算器 - 在线保本销量保本销售额计算工具</title>
+  <meta name="description" content="在线盈亏平衡点计算器，输入固定成本、单位售价与单位变动成本，自动算出单位边际贡献、边际贡献率、保本销量与保本销售额，并预测指定销量下的利润，开店定价与产品盈利分析必备。" />
+  <meta name="keywords" content="盈亏平衡,保本点,保本销量,边际贡献,成本计算,盈利分析">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u9002\u5408\u8c01\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9002\u5408\u5f00\u5e97\u3001\u505a\u4ea7\u54c1\u5b9a\u4ef7\u6216\u5ba1\u6838\u65b0\u54c1\u4e0a\u67b6\u7684\u573a\u666f\uff1a\u65b0\u54c1\u7684\u56fa\u5b9a\u6295\u5165\u644a\u5230\u591a\u5c11\u9500\u91cf\u624d\u662f\u95e8\u69db\u4e00\u76ee\u4e86\u7136\u3002"}},{"@type":"Question","name":"\u56fa\u5b9a\u6210\u672c\u6307\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u623f\u79df\u3001\u8bbe\u5907\u3001\u5de5\u8d44\u7b49\u4e0e\u9500\u91cf\u65e0\u5173\u7684\u6210\u672c\uff1b\u53d8\u52a8\u6210\u672c\u5219\u662f\u539f\u6750\u6599\u3001\u5305\u88c5\u3001\u8fd0\u8f93\u7b49\u968f\u9500\u91cf\u53d8\u5316\u7684\u6210\u672c\u3002"}},{"@type":"Question","name":"\u7b97\u51fa\u6765\u4e0d\u53ef\u80fd\u76c8\u5229\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f6f\u4ef6\u4f1a\u660e\u786e\u63d0\u793a\u6bcf\u5356\u4e00\u4ef6\u90fd\u5728\u4e8f\u635f\uff0c\u9700\u8981\u63d0\u4ef7\u3001\u538b\u4f4e\u53d8\u52a8\u6210\u672c\u6216\u7f29\u51cf\u56fa\u5b9a\u6295\u5165\uff0c\u5e76\u7ed9\u51fa\u76ee\u6807\u5229\u6da6\u5bf9\u5e94\u7684\u6700\u4f4e\u9500\u91cf\u601d\u8def\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⚖️ 盈亏平衡计算</h1>
+    <p>保本销量与保本销售额计算器</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">盈亏平衡计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#盈亏平衡</span><span class="badge">#保本点</span><span class="badge">#边际贡献</span><span class="badge">#成本</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
+  <div class="field"><label for="beF">固定成本（¥）</label><input type="number" id="beF" value="12000" min="0"></div>
+  <div class="field"><label for="beP">单位售价（¥）</label><input type="number" id="beP" value="50" min="0.01"></div>
+  <div class="field"><label for="beV">单位变动成本（¥）</label><input type="number" id="beV" value="30" min="0"></div>
+  <div class="field"><label for="beQ">预期销量</label><input type="number" id="beQ" value="1000" min="0"></div>
+</div>
+<button class="btn btn-primary" id="beBtn">计算盈亏平衡点</button>
+<div id="beOut" style="margin-top:12px;"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>保本销量怎么算？</h2><p>保本销量 = 固定成本 ÷ (单位售价 - 单位变动成本)；保本销售额 = 保本销量 × 单位售价。售价低于变动成本时永远无法保本。</p><h2>什么是边际贡献？</h2><p>单位边际贡献 = 售价 - 单位变动成本，代表每卖出一件对固定成本和利润的贡献，边际贡献率 = 边际贡献 ÷ 售价。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>适合谁用？</summary><p>适合开店、做产品定价或审核新品上架的场景：新品的固定投入摊到多少销量才是门槛一目了然。</p></details><details class="faq-item"><summary>固定成本指什么？</summary><p>房租、设备、工资等与销量无关的成本；变动成本则是原材料、包装、运输等随销量变化的成本。</p></details><details class="faq-item"><summary>算出来不可能盈利怎么办？</summary><p>软件会明确提示每卖一件都在亏损，需要提价、压低变动成本或缩减固定投入，并给出目标利润对应的最低销量思路。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 手动汇率换算，人民币/美元/欧元等 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">手动汇率换算，人民币/美元/欧元等</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>盈亏平衡计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='break-even-calculator';}); _r.unshift('break-even-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var beF = document.getElementById('beF');
+var beP = document.getElementById('beP');
+var beV = document.getElementById('beV');
+var beQ = document.getElementById('beQ');
+var beBtn = document.getElementById('beBtn');
+var beOut = document.getElementById('beOut');
+
+function fmtN(n) { return Number(n).toLocaleString('zh-CN', { maximumFractionDigits: 2 }); }
+function fmtPct(n) { return (n * 100).toFixed(1) + '%'; }
+
+function calcBE(F, P, V, Q) {
+  var margin = P - V;
+  var marginRate = P === 0 ? null : margin / P;
+  var units = null;
+  var revenue = null;
+  var profit = null;
+  if (margin > 0) {
+    units = F / margin;
+    revenue = units * P;
+  }
+  if (isFinite(Q)) profit = (margin * Q) - F;
+  return { margin: margin, marginRate: marginRate, units: units, revenue: revenue, profit: profit };
+}
+
+beBtn.addEventListener('click', function () {
+  var F = Number(beF.value);
+  var P = Number(beP.value);
+  var V = Number(beV.value);
+  var Q = Number(beQ.value);
+  if (!isFinite(F) || !isFinite(P) || !isFinite(V) || F < 0 || P <= 0 || V < 0) { showToast('请输入有效数字（售价须大于 0）'); return; }
+  var r = calcBE(F, P, V, isFinite(Q) ? Q : 0);
+  var html =
+    '<div class="kpi-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + fmtN(r.margin) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">单位边际贡献</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + (r.marginRate === null ? '—' : fmtPct(r.marginRate)) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">边际贡献率</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + (r.units === null ? '∞' : Math.ceil(r.units)) + ' 件</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">保本销量（向上取整）</div></div>' +
+    '<div class="kpi-box" style="background:var(--box-bg,#f5f5f5);padding:12px;border-radius:8px;flex:1;min-width:120px;"><div class="kpi-val" style="font-size:20px;font-weight:700;">' + (r.revenue === null ? '∞' : fmtN(r.revenue)) + '</div><div class="kpi-label" style="font-size:12px;color:var(--muted,#666);">保本销售额（¥）</div></div>' +
+    '</div>';
+  if (r.margin <= 0) {
+    html += '<div class="result-box" style="color:#dc2626;">单位变动成本 ≥ 售价，永远无法保本 —— 每卖一件都在亏钱，需要提价或降低变动成本。</div>';
+  } else {
+    var estProfit = isFinite(Q) ? (r.margin * Q - F) : null;
+    var profitLine = estProfit === null ? '' : '<div style="margin-top:6px;">预期销量 ' + fmtN(Q) + ' 件：预估利润 <b style="color:#16a34a;">' + fmtN(estProfit) + ' 元</b>' + (estProfit < 0 ? '（亏损，需销量 ≥ ' + Math.ceil(r.units) + ' 件才盈利）' : '') + '</div>';
+    html += '<div class="result-box">' +
+      '<div>销量达到 <b>' + Math.ceil(r.units) + ' 件</b>（销售额 ' + fmtN(r.revenue) + ' 元）时收入刚好覆盖总成本。</div>' +
+      '<div style="margin-top:6px;color:var(--muted,#666);">若实际销量低于此数则亏损，高于则开始盈利。</div>' +
+      profitLine +
+      '</div>';
+  }
+  beOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
