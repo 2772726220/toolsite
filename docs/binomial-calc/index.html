@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二项分布计算器 - 二项分布与泊松分布概率计算</title>
+  <meta name="description" content="在线概率计算器：输入试验次数 n 与成功概率 p，计算二项分布 P(X=k)、P(X≤k)、P(X≥k)、期望与方差；另有泊松分布 P(λ) 计算，n 上限 9999。" />
+  <meta name="keywords" content="二项分布计算,泊松分布,概率计算,P(X=k),统计计算器">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4e3a\u4ec0\u4e48\u7ed3\u679c\u53ef\u80fd\u4e0e\u6559\u79d1\u4e66\u6709\u7ec6\u5fae\u5dee\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e3a\u5728\u5927 n \u4e0b\u4fdd\u6301\u6570\u503c\u7a33\u5b9a\u91c7\u7528\u5bf9\u6570\u7a7a\u95f4\u8ba1\u7b97\u540e\u8fd8\u539f\uff0c\u6d6e\u70b9\u8bef\u5dee\u901a\u5e38\u5728 1e-12 \u91cf\u7ea7\uff0c\u53ef\u5ffd\u7565\u3002"}},{"@type":"Question","name":"\u6cca\u677e\u5206\u5e03\u53c2\u6570\u600e\u4e48\u9009\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53 n \u5f88\u5927\u3001p \u5f88\u5c0f\uff08\u7a00\u6709\u4e8b\u4ef6\uff09\u65f6\u53ef\u7528\u6cca\u677e\u5206\u5e03\u8fd1\u4f3c\u4e8c\u9879\u5206\u5e03\uff0c\u03bb=n\u00b7p\uff0c\u8f93\u5165 \u03bb \u4e0e\u53d1\u751f\u6b21\u6570 k \u5373\u53ef\u3002"}},{"@type":"Question","name":"k \u53ef\u4ee5\u5927\u4e8e n \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u53ef\u4ee5\uff0c\u4e8c\u9879\u5206\u5e03\u8981\u6c42 0\u2264k\u2264n\uff1b\u8d85\u8fc7\u4f1a\u5728\u754c\u9762\u7ed9\u51fa\u63d0\u793a\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎲 二项分布计算</h1>
+    <p>二项分布与泊松分布的概率、累计概率、期望与方差</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">二项分布计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#二项分布</span><span class="badge">#泊松分布</span><span class="badge">#概率</span><span class="badge">#统计</span>
+<div class="field">
+  <label>二项分布 B(n, p)</label>
+  <div class="tool-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;">
+    <div><label>试验次数 n</label><input id="bnN" type="number" value="10" min="1" max="9999" step="1"></div>
+    <div><label>成功概率 p</label><input id="bnP" type="number" value="0.5" min="0" max="1" step="0.01"></div>
+    <div><label>成功次数 k</label><input id="bnK" type="number" value="5" min="0" step="1"></div>
+  </div>
+  <button class="btn btn-primary" id="bnBtn" style="margin-top:10px;">计算</button>
+</div>
+<div id="bnOut"></div>
+<div class="field" style="margin-top:16px;">
+  <label>泊松分布 P(λ)</label>
+  <div class="tool-grid" style="grid-template-columns:1fr 1fr;gap:10px;">
+    <div><label>λ（均值）</label><input id="pnL" type="number" value="2" min="0.01" step="0.1"></div>
+    <div><label>发生次数 k</label><input id="pnK" type="number" value="4" min="0" step="1"></div>
+  </div>
+  <button class="btn btn-primary" id="pnBtn" style="margin-top:10px;">计算</button>
+</div>
+<div id="pnOut"></div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>二项分布什么时候用？</h2><p>当试验独立、每次只有成功/失败两种结果、重复 n 次（如抽检、抛硬币、营销转化），随机变量=成功次数时使用 B(n,p)。</p><h2>什么参数合理？</h2><p>n 为试验次数（1-9999 整数），p 为单次成功概率（0-1）。结果同时给出点概率、左侧累计、右侧累计与均值 np、方差 np(1-p)。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>为什么结果可能与教科书有细微差别？</summary><p>为在大 n 下保持数值稳定采用对数空间计算后还原，浮点误差通常在 1e-12 量级，可忽略。</p></details><details class="faq-item"><summary>泊松分布参数怎么选？</summary><p>当 n 很大、p 很小（稀有事件）时可用泊松分布近似二项分布，λ=n·p，输入 λ 与发生次数 k 即可。</p></details><details class="faq-item"><summary>k 可以大于 n 吗？</summary><p>不可以，二项分布要求 0≤k≤n；超过会在界面给出提示。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>二项分布计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='binomial-calc';}); _r.unshift('binomial-calc'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bnN = document.getElementById('bnN');
+var bnP = document.getElementById('bnP');
+var bnK = document.getElementById('bnK');
+var bnBtn = document.getElementById('bnBtn');
+var bnOut = document.getElementById('bnOut');
+var pnL = document.getElementById('pnL');
+var pnK = document.getElementById('pnK');
+var pnBtn = document.getElementById('pnBtn');
+var pnOut = document.getElementById('pnOut');
+
+function logFac(n) {
+  var s = 0;
+  for (var i = 2; i <= n; i++) s += Math.log(i);
+  return s;
+}
+
+function binomialPmf(n, p, k) {
+  if (k < 0 || k > n || !(k === Math.floor(k))) return NaN;
+  if (p <= 0) return k === 0 ? 1 : 0;
+  if (p >= 1) return k === n ? 1 : 0;
+  var q = 1 - p;
+  var logc = 0;
+  var kk = Math.min(k, n - k);
+  for (var i = 1; i <= kk; i++) logc += Math.log(n - kk + i) - Math.log(i);
+  var logpmf = logc + k * Math.log(p) + (n - k) * Math.log(q);
+  return Math.exp(logpmf);
+}
+
+function binomialCdf(n, p, k) {
+  if (!(k >= 0)) return 0;
+  if (k >= n) return 1;
+  var s = 0;
+  for (var i = 0; i <= k; i++) s += binomialPmf(n, p, i);
+  return Math.min(1, s);
+}
+
+function poissonPmf(lambda, k) {
+  if (!(k === Math.floor(k)) || k < 0) return NaN;
+  if (lambda <= 0) return k === 0 ? 1 : 0;
+  var p = Math.exp(-lambda);
+  for (var i = 1; i <= k; i++) p = p * lambda / i;
+  return p;
+}
+
+function poissonCdf(lambda, k) {
+  if (k < 0) return 0;
+  var s = 0;
+  for (var i = 0; i <= k; i++) s += poissonPmf(lambda, i);
+  return Math.min(1, s);
+}
+
+function fmtB(x) {
+  if (!isFinite(x)) return '—';
+  return String(x);
+}
+
+bnBtn.addEventListener('click', function () {
+  var n = parseInt(bnN.value, 10);
+  var p = parseFloat(bnP.value);
+  var k = parseInt(bnK.value, 10);
+  if (!(n >= 1 && n <= 9999) || !(n === Math.floor(n)) || !(p > 0 && p < 1) || !(k >= 0 && k <= n)) {
+    bnOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请检查输入：n 为 1-9999 整数，0&lt;p&lt;1，0≤k≤n</div>';
+    return;
+  }
+  var pmf = binomialPmf(n, p, k);
+  var lo = binomialCdf(n, p, k);
+  var hi = 1 - (k === 0 ? 0 : binomialCdf(n, p, k - 1));
+  var mean = n * p, varv = n * p * (1 - p);
+  bnOut.innerHTML = '<div class="result-box">' +
+    '<div>P(X = ' + k + ') = <b>' + fmtB(pmf.toFixed(10)) + '</b></div>' +
+    '<div>P(X ≤ ' + k + ') = <b>' + fmtB(lo.toFixed(10)) + '</b></div>' +
+    '<div>P(X ≥ ' + k + ') = <b>' + fmtB(hi.toFixed(10)) + '</b></div>' +
+    '<div style="margin-top:6px;border-top:1px dashed #e2e8f0;padding-top:6px;">期望 E(X) = ' + mean + '，方差 Var(X) = ' + varv.toFixed(6) + '，标准差 σ = ' + Math.sqrt(varv).toFixed(6) + '</div>' +
+    '</div>';
+});
+
+pnBtn.addEventListener('click', function () {
+  var l = parseFloat(pnL.value);
+  var k = parseInt(pnK.value, 10);
+  if (!(l > 0) || !(k >= 0 && k === Math.floor(k))) {
+    pnOut.innerHTML = '<div class="result-box" style="color:#dc2626;">请检查输入：λ&gt;0，k 为非负整数</div>';
+    return;
+  }
+  if (k > 5000) {
+    pnOut.innerHTML = '<div class="result-box" style="color:#dc2626;">k 过大（上限 5000）</div>';
+    return;
+  }
+  var pmf = poissonPmf(l, k);
+  var lo = poissonCdf(l, k);
+  var hi = 1 - (k === 0 ? 0 : poissonCdf(l, k - 1));
+  pnOut.innerHTML = '<div class="result-box">' +
+    '<div>P(X = ' + k + ') = <b>' + fmtB(pmf.toFixed(10)) + '</b></div>' +
+    '<div>P(X ≤ ' + k + ') = <b>' + fmtB(lo.toFixed(10)) + '</b></div>' +
+    '<div>P(X ≥ ' + k + ') = <b>' + fmtB(hi.toFixed(10)) + '</b></div>' +
+    '<div style="margin-top:6px;border-top:1px dashed #e2e8f0;padding-top:6px;">期望 E(X) = λ = ' + l + '，方差 Var(X) = λ</div>' +
+    '</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
