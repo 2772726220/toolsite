@@ -104,6 +104,18 @@ function row(label, val) {
   return '<div class="stat" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;margin:0;"><span style="color:var(--muted);font-size:13px;">' + label + '</span><span style="font-weight:700;font-family:monospace;">' + val + '</span></div>';
 }
 
+var REF_PCT = {
+  m: [46.5, 52.9, 58.1, 62.5, 66.5, 70.1, 73.5, 76.8, 80.0, 83.1, 86.2, 89.4, 92.6, 95.3, 97.5, 98.8, 99.6, 99.9],
+  f: [49.8, 55.8, 61.0, 65.2, 68.9, 72.2, 75.3, 78.3, 81.5, 84.8, 88.0, 91.3, 94.5, 97.0, 98.5, 99.4, 99.8, 99.9]
+};
+function typicalPct(sex, age) {
+  var t = REF_PCT[sex];
+  if (age <= 1) return t[0];
+  if (age >= 18) return t[17];
+  var i = Math.floor(age);
+  return t[i - 1] + (t[i] - t[i - 1]) * (age - i);
+}
+
 function calc() {
   var f = parseFloat(chF.value), m = parseFloat(chM.value);
   var sex = chSex.value;
@@ -113,14 +125,19 @@ function calc() {
   var html = '';
   html += row('预测成年身高（中位）', fmt(mid) + ' cm');
   html += row('正常波动范围', fmt(lo) + ' ~ ' + fmt(hi) + ' cm');
-  var pct = sex === 'm' ? 23.7 : 20.1; // adult male/female final-height percentage of mid height
   var age = parseFloat(chAge.value);
   var cur = parseFloat(chH.value);
   if (!isNaN(age) && age >= 1 && age <= 18 && !isNaN(cur) && cur > 0) {
-    var adultPct = sex === 'm' ? mid : mid;
-    var reached = cur / adultPct * 100;
+    var reached = cur / mid * 100;
+    var typ = typicalPct(sex, age);
+    var diff = reached - typ;
+    var lab = diff > 5 ? '同龄偏高（超前）' : diff > 2 ? '稍高于同龄' : diff >= -2 ? '与同龄相当' : diff >= -5 ? '稍低于同龄' : '明显低于同龄';
     html += row('目前已达成年身高的', fmt(reached) + '%');
-    if (reached > 88) html += row('剩余生长空间', '约 ' + fmt((1 - reached / 100) * adultPct) + ' cm');
+    html += row('同龄典型水平（参考）', '约 ' + fmt(typ) + '%（' + lab + '）');
+    if (reached > 88) {
+      var rem = (1 - reached / 100) * mid;
+      html += row('剩余生长空间', rem > 0 ? '约 ' + fmt(rem) + ' cm' : '已接近/超过预测中位');
+    }
   }
   html += '<div class="result-box" style="margin-top:6px;">提示：此为标准公式估算，仅供参考。身高 70% 由遗传决定，后天营养、睡眠、运动同样重要。</div>';
   chOut.innerHTML = html;
