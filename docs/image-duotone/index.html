@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线图片双色调滤镜 - 双色海报风格生成器</title>
+  <meta name="description" content="在线图片双色调（Duotone）工具，把图片按亮度映射到两种颜色之间，快速生成复古海报风、品牌双色宣传图。支持自定义明暗色与强度，浏览器本地处理。" />
+  <meta name="keywords" content="双色调,Duotone,图片滤镜,双色图片,海报风格,图片调色">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u4ec0\u4e48\u56fe\u7247\u683c\u5f0f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u6d4f\u89c8\u5668\u53ef\u89e3\u7801\u7684\u5e38\u89c1\u683c\u5f0f\uff08JPG\u3001PNG\u3001WebP \u7b49\uff09\uff0c\u5904\u7406\u540e\u5bfc\u51fa PNG\u3002"}},{"@type":"Question","name":"\u56fe\u7247\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\u3002\u5904\u7406\u5b8c\u5168\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\uff0c\u56fe\u7247\u4e0d\u4f1a\u79bb\u5f00\u60a8\u7684\u8bbe\u5907\u3002"}},{"@type":"Question","name":"\u5f3a\u5ea6\u6ed1\u5757\u662f\u4ec0\u4e48\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f3a\u5ea6 100% \u4e3a\u7eaf\u53cc\u8272\u8c03\uff1b\u8c03\u4f4e\u4f1a\u5411\u539f\u56fe\u989c\u8272\u9760\u8fd1\uff0c\u9002\u5408\u505a\u8f7b\u5ea6\u98ce\u683c\u5316\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎞️ 图片双色调</h1>
+    <p>按明度给图片套双色滤镜，复古海报风</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/image/">🖼️ 图片处理</a><span class="crumb-sep">›</span><span class="crumb-cur">图片双色调</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
+<main class="container">
+  <section class="tool-card">
+<span class="badge">#双色调</span><span class="badge">#滤镜</span><span class="badge">#海报</span><span class="badge">#调色</span>
+<div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+  <div>
+    <label>选择图片</label>
+    <input type="file" id="dtFile" accept="image/*">
+    <div class="tool-grid" style="grid-template-columns:1fr 1fr; gap:8px;margin-top:8px;">
+      <div><label>阴影色（暗部）</label><input type="color" id="dtC1" value="#1e1b4b" style="width:100%;height:38px;"></div>
+      <div><label>高光色（亮部）</label><input type="color" id="dtC2" value="#fef08a" style="width:100%;height:38px;"></div>
+    </div>
+    <label style="margin-top:8px;">强度</label>
+    <input type="range" id="dtStrength" min="0" max="100" value="100" step="1" style="width:100%;">
+    <div id="dtStrengthV" style="font-size:12px;color:var(--muted);text-align:center;">100%</div>
+    <button class="btn btn-primary" id="dtGo" style="width:100%;margin-top:8px;">双色调化</button>
+    <div class="hint" style="margin-top:8px;">按像素明度在两种颜色间渐变，适合制作复古海报风格。</div>
+  </div>
+  <div>
+    <label>结果</label>
+    <div id="dtOut" style="display:flex;justify-content:center;min-height:200px;align-items:center;"></div>
+  </div>
+</div>
+  </section>
+  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <section class="content-block">
+<h2>什么是双色调？</h2><p>Duotone 把原图每个像素按亮度在两色之间渐变映射：暗部倾向第一色，亮部倾向第二色，形成简洁又有冲击力的视觉风格。</p><h2>适合什么场景？</h2><p>常用于品牌视觉、社交媒体封面、电子音乐海报等，能快速统一多张照片的色调。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持什么图片格式？</summary><p>支持浏览器可解码的常见格式（JPG、PNG、WebP 等），处理后导出 PNG。</p></details><details class="faq-item"><summary>图片会上传吗？</summary><p>不会。处理完全在浏览器本地完成，图片不会离开您的设备。</p></details><details class="faq-item"><summary>强度滑块是什么？</summary><p>强度 100% 为纯双色调；调低会向原图颜色靠近，适合做轻度风格化。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多图片处理工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../img-compress/" class="t-card" data-cat="image" data-tags="压缩 图片处理" data-name="图片压缩 免费批量压缩 JPG/PNG/WebP，浏览器本地处理 压缩 图片处理"><div class="t-icon">🗜️</div><div class="t-name">图片压缩</div><div class="t-desc">免费批量压缩 JPG/PNG/WebP，浏览器本地处理</div><div class="t-tags"><span class="tt">#压缩</span><span class="tt">#图片处理</span></div></a><a href="../img-ico/" class="t-card" data-cat="image" data-tags="图标 favicon" data-name="图片转ICO 把 JPG/PNG 转成 ICO 图标，支持多尺寸 图标 favicon"><div class="t-icon">🖼️</div><div class="t-name">图片转ICO</div><div class="t-desc">把 JPG/PNG 转成 ICO 图标，支持多尺寸</div><div class="t-tags"><span class="tt">#图标</span><span class="tt">#favicon</span></div></a><a href="../nine-grid/" class="t-card" data-cat="image" data-tags="切图 朋友圈 小红书" data-name="九宫格切图 一张图切成 9 张，发朋友圈小红书神器 切图 朋友圈 小红书"><div class="t-icon">🔲</div><div class="t-name">九宫格切图</div><div class="t-desc">一张图切成 9 张，发朋友圈小红书神器</div><div class="t-tags"><span class="tt">#切图</span><span class="tt">#朋友圈</span><span class="tt">#小红书</span></div></a><a href="../image-resize/" class="t-card" data-cat="image" data-tags="尺寸 缩放" data-name="图片改尺寸 等比缩放图片，一键改分辨率 尺寸 缩放"><div class="t-icon">📐</div><div class="t-name">图片改尺寸</div><div class="t-desc">等比缩放图片，一键改分辨率</div><div class="t-tags"><span class="tt">#尺寸</span><span class="tt">#缩放</span></div></a><a href="../image-rotate/" class="t-card" data-cat="image" data-tags="旋转 方向" data-name="图片旋转 图片旋转 90/180/270 度，一键翻转 旋转 方向"><div class="t-icon">🔄</div><div class="t-name">图片旋转</div><div class="t-desc">图片旋转 90/180/270 度，一键翻转</div><div class="t-tags"><span class="tt">#旋转</span><span class="tt">#方向</span></div></a><a href="../image-crop/" class="t-card" data-cat="image" data-tags="裁剪 正方形" data-name="图片裁剪 自由裁剪或按比例裁剪图片 裁剪 正方形"><div class="t-icon">✂️</div><div class="t-name">图片裁剪</div><div class="t-desc">自由裁剪或按比例裁剪图片</div><div class="t-tags"><span class="tt">#裁剪</span><span class="tt">#正方形</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>图片双色调 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='image-duotone';}); _r.unshift('image-duotone'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var dtFile = document.getElementById('dtFile');
+var dtC1 = document.getElementById('dtC1');
+var dtC2 = document.getElementById('dtC2');
+var dtStrength = document.getElementById('dtStrength');
+var dtStrengthV = document.getElementById('dtStrengthV');
+var dtGo = document.getElementById('dtGo');
+var dtOut = document.getElementById('dtOut');
+
+var dtImg = null;
+
+function hexToRgb(hex) {
+  if (typeof hex !== 'string') return null;
+  var h = hex.trim().replace(/^#/, '');
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+}
+
+function luminanceOf(r, g, b) {
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+}
+
+function lerpColor(c1, c2, t) {
+  t = Math.max(0, Math.min(1, t));
+  return {
+    r: Math.round(c1.r + (c2.r - c1.r) * t),
+    g: Math.round(c1.g + (c2.g - c1.g) * t),
+    b: Math.round(c1.b + (c2.b - c1.b) * t),
+  };
+}
+
+function duotonePixels(w, h, data, c1, c2, t) {
+  if (!data || data.length < w * h * 4) return null;
+  t = t === undefined ? 1 : t;
+  var out = new Uint8ClampedArray(data.length);
+  for (var i = 0; i < w * h; i++) {
+    var p = i * 4;
+    var lum = luminanceOf(data[p], data[p + 1], data[p + 2]);
+    var target = lum;
+    target = lum * t + 0.5 * (1 - t);
+    var c = lerpColor(c1, c2, target);
+    out[p] = c.r;
+    out[p + 1] = c.g;
+    out[p + 2] = c.b;
+    out[p + 3] = data[p + 3];
+  }
+  return out;
+}
+
+dtStrength.addEventListener('input', function () { dtStrengthV.textContent = dtStrength.value + '%'; });
+
+dtFile.addEventListener('change', function () {
+  if (!dtFile.files || !dtFile.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var img = new Image();
+    img.onload = function () { dtImg = img; showToast('图片已加载，可点击双色调化'); };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(dtFile.files[0]);
+});
+
+dtGo.addEventListener('click', function () {
+  if (!dtImg) { showToast('请先选择图片'); return; }
+  var c1 = hexToRgb(dtC1.value);
+  var c2 = hexToRgb(dtC2.value);
+  if (!c1 || !c2) { showToast('颜色格式不正确'); return; }
+  var maxW = 400;
+  var w = Math.min(dtImg.naturalWidth || 400, maxW);
+  var h = Math.round((dtImg.naturalHeight || 300) * w / (dtImg.naturalWidth || 400));
+  var canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(dtImg, 0, 0, w, h);
+  var imgData = ctx.getImageData(0, 0, w, h);
+  var strength = parseInt(dtStrength.value, 10) / 100;
+  var out = duotonePixels(w, h, imgData.data, c1, c2, strength);
+  ctx.putImageData(new ImageData(out, w, h), 0, 0);
+  var oi = document.createElement('img');
+  oi.src = canvas.toDataURL('image/png');
+  oi.style.cssText = 'width:100%;max-width:400px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);';
+  dtOut.innerHTML = '';
+  dtOut.appendChild(oi);
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+})();
+</script>
+</body>
+</html>
