@@ -114,11 +114,12 @@ ecGo.addEventListener('click', function () {
   if (!min || min <= 0) { ecResult.innerHTML = '<div class="result-box">请输入有效时长</div>'; return; }
   var kcal = met * weight * (min / 60);
   var kcalPerHour = met * weight;
+  var equivKm = met * min / 60;
   ecResult.innerHTML =
     row('MET 代谢当量', met) +
     row('运动消耗（本次）', kcal.toFixed(1) + ' 千卡') +
     row('每小时消耗', kcalPerHour.toFixed(1) + ' 千卡/小时') +
-    row('参考：约相当于', '慢跑 ' + (min / 60 * 8.3 / met).toFixed(1) + ' 公里等效热量');
+    row('参考：约相当于慢跑', equivKm.toFixed(1) + ' 公里（每公里≈体重 ' + weight + ' kg千卡）');
 });
   window.toggleTheme = function () {
     var r = document.documentElement;
