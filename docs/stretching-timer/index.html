@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线拉伸计时器</title>
+  <meta name="description" content="拉伸计时器：设定动作数与保持秒数，逐动作倒计时，劳逸结合的休息拉伸小助手。" />
+  <meta name="keywords" content="拉伸,计时器,倒计时,健身,拉伸训练,休息">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/stretching-timer/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线拉伸计时器" /><meta property="og:description" content="拉伸计时器：设定动作数与保持秒数，逐动作倒计时，劳逸结合的休息拉伸小助手。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/stretching-timer/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线拉伸计时器" /><meta name="twitter:description" content="拉伸计时器：设定动作数与保持秒数，逐动作倒计时，劳逸结合的休息拉伸小助手。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤸</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "拉伸计时器", "description": "拉伸计时器：设定动作数与保持秒数，逐动作倒计时，劳逸结合的休息拉伸小助手。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/stretching-timer/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "健康生活"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "健康生活", "item": "https://2772726220.github.io/toolsite/category/health/"}, {"@type": "ListItem", "position": 3, "name": "拉伸计时器", "item": "https://2772726220.github.io/toolsite/stretching-timer/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u52a8\u4f5c\u6570\u548c\u4fdd\u6301\u65f6\u95f4\u6709\u4ec0\u4e48\u9650\u5236\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u52a8\u4f5c\u6570 1-20 \u4e2a\uff0c\u6bcf\u4e2a\u52a8\u4f5c\u4fdd\u6301 3-120 \u79d2\uff0c\u81f3\u5c11 3 \u79d2\uff0c\u8fc7\u77ed\u8fbe\u4e0d\u5230\u7275\u62c9\u6548\u679c\u3002"}},{"@type":"Question","name":"\u52a8\u4f5c\u4e4b\u95f4\u6709\u4f11\u606f\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6bcf\u4e2a\u52a8\u4f5c\u4e4b\u95f4\u9884\u7559 5 \u79d2\u8fc7\u6e21\u65f6\u95f4\uff08\u4e0d\u8ba1\u5165\u4fdd\u6301\u65f6\u95f4\uff09\uff0c\u7528\u4e8e\u6362\u52a8\u4f5c\u3002"}},{"@type":"Question","name":"\u591a\u4e45\u62c9\u4f38\u4e00\u6b21\u5408\u9002\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8fd0\u52a8\u540e\u53ef\u7acb\u5373\u62c9\u4f38\u653e\u677e\uff0c\u65e5\u5e38\u53ef\u6bcf\u5929\u6216\u9694\u5929\u4e00\u6b21\uff0c\u4ee5\u8f7b\u5fae\u7275\u62c9\u611f\u3001\u4e0d\u75bc\u75db\u4e3a\u5b9c\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🤸 拉伸计时器</h1>
+    <p>设定动作数与保持秒数的拉伸倒计时</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">拉伸计时器</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#拉伸</span><span class="badge">#计时</span><span class="badge">#健身</span>
+<div class="field-row">
+  <div class="field"><label for="stRounds">动作数（1-20）</label><input id="stRounds" value="5" type="number" min="1" max="20"></div>
+  <div class="field"><label for="stHold">每个动作保持（秒，≥3）</label><input id="stHold" value="20" type="number" min="3"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="stGo" type="button">开始</button>
+  <button class="btn" id="stStop" type="button" disabled>停止</button>
+</div>
+<div class="result-box" id="stOut"></div>
+<div class="result-box" id="stStatus"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>一次拉伸训练要多久？</h2><p>建议每个动作保持 20-30 秒，全套 5-8 个动作，总时长几分钟即可。工具默认 5 个动作、每个保持 20 秒，含 5 秒过渡，全程约 125 秒。</p><h2>内置哪些拉伸动作？</h2><p>内置 10 个常见徒手动作：颈部侧拉伸、肩部环绕、手臂交叉拉伸、躯干扭转、站姿体前屈、腘绳肌拉伸、股四头肌拉伸、小腿拉伸、胸大肌拉伸、背阔肌侧拉伸，按轮次循环引导。</p><h2>计时器怎么用？</h2><p>设定动作数与每个动作保持秒数后点「开始」，页面逐动作显示当前动作、保持中/过渡状态、剩余时间与总进度，可以随时停止。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>动作数和保持时间有什么限制？</summary><p>动作数 1-20 个，每个动作保持 3-120 秒，至少 3 秒，过短达不到牵拉效果。</p></details><details class="faq-item"><summary>动作之间有休息吗？</summary><p>每个动作之间预留 5 秒过渡时间（不计入保持时间），用于换动作。</p></details><details class="faq-item"><summary>多久拉伸一次合适？</summary><p>运动后可立即拉伸放松，日常可每天或隔天一次，以轻微牵拉感、不疼痛为宜。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>拉伸计时器 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='stretching-timer';}); _r.unshift('stretching-timer'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var stRounds = document.getElementById('stRounds');
+var stHold = document.getElementById('stHold');
+var stGo = document.getElementById('stGo');
+var stStop = document.getElementById('stStop');
+var stOut = document.getElementById('stOut');
+var stStatus = document.getElementById('stStatus');
+
+var st = {
+  total: 0, round: 0, idx: 0, step: 0, t: 0, timer: null, running: false
+};
+var ST_EXERCISES = [
+  '颈部侧拉伸', '肩部环绕', '手臂交叉拉伸', '躯干扭转', '站姿体前屈',
+  '腘绳肌拉伸', '股四头肌拉伸', '小腿拉伸', '胸大肌拉伸', '背阔肌侧拉伸'
+];
+
+function stretchPlan(exCount, holdSec) {
+  var rounds = parseInt(exCount, 10);
+  if (isNaN(rounds) || rounds < 1 || rounds > 20) return null;
+  var hold = parseFloat(holdSec);
+  if (isNaN(hold) || hold < 3 || hold > 120) return null;
+  var per = hold + 5; // 5s 过渡
+  return { total: rounds * per, hold: hold, rounds: rounds, per: per };
+}
+
+function startStretch() {
+  var plan = stretchPlan(stRounds.value, stHold.value);
+  if (plan === null) { stStatus.textContent = '请输入有效的动作数与单次保持秒数（保持 ≥3 秒）。'; return; }
+  st.total = plan.total; st.round = plan.rounds; st.idx = 0; st.step = 0;
+  st.hold = plan.hold; st.per = plan.per; st.t = 0; st.running = true;
+  stGo.disabled = true; stStop.disabled = false;
+  if (st.timer) clearInterval(st.timer);
+  st.timer = setInterval(tickStretch, 1000);
+  renderStretch();
+}
+
+function tickStretch() {
+  if (!st.running) return;
+  st.t++;
+  if (st.t >= st.total) { endStretch(); return; }
+  st.step++;
+  renderStretch();
+}
+
+function endStretch() {
+  st.running = false;
+  if (st.timer) clearInterval(st.timer);
+  stGo.disabled = false; stStop.disabled = true;
+  stStatus.textContent = '拉伸完成，感觉不错吧！';
+  stOut.textContent = '';
+  st.stop = true;
+}
+
+function stopStretch() {
+  st.running = false;
+  if (st.timer) clearInterval(st.timer);
+  stGo.disabled = false; stStop.disabled = true;
+  stStatus.textContent = '已停止。';
+}
+
+function renderStretch() {
+  var plan = { hold: st.hold, per: st.per, rounds: st.round };
+  var stepLen = st.round * 2;
+  var elapsed = st.t;
+  var total = st.total;
+  // determine current exercise index
+  var exIdx = Math.min(Math.floor(elapsed / st.per), st.round - 1);
+  var inHold = (elapsed % st.per) < st.hold;
+  var name = ST_EXERCISES[exIdx % ST_EXERCISES.length];
+  var pct = Math.round(elapsed / total * 100);
+  if (pct > 100) pct = 100;
+  var remain = total - elapsed;
+  var mm = Math.floor(remain / 60), ss = remain % 60;
+  stOut.innerHTML =
+    '<div class="stat"><div class="num">' + ST_EXERCISES[exIdx] + '</div><div class="label">当前动作（第 ' + (exIdx + 1) + '/' + st.round + ' 轮）' + (inHold ? ' · 保持中' : ' · 过渡') + '</div></div>' +
+    '<div class="stat"><div class="num">' + (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss + '</div><div class="label">剩余</div></div>' +
+    '<div class="stat"><div class="num">' + pct + '%</div><div class="label">进度</div></div>';
+}
+
+stGo.addEventListener('click', startStretch);
+stStop.addEventListener('click', stopStretch);
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
