@@ -7,16 +7,19 @@
   <meta name="description" content="在线正态分布计算器，支持 Z 值→概率、概率→Z 值、值域→概率区间面积三种模式，内置高精度 erf 累积分布函数与反函数，输出 P(Z≤z)、右侧概率、区间面积与经验法则对照，统计学与质量分析必备。" />
   <meta name="keywords" content="正态分布,Z值,累积概率,标准正态,CDF,概率计算">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/normal-distribution/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="正态分布计算器 - 在线 Z 值概率与区间面积换算工具" /><meta property="og:description" content="在线正态分布计算器，支持 Z 值→概率、概率→Z 值、值域→概率区间面积三种模式，内置高精度 erf 累积分布函数与反函数，输出 P(Z≤z)、右侧概率、区间面积与经验法则对照，统计学与质量分析必备。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/normal-distribution/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="正态分布计算器 - 在线 Z 值概率与区间面积换算工具" /><meta name="twitter:description" content="在线正态分布计算器，支持 Z 值→概率、概率→Z 值、值域→概率区间面积三种模式，内置高精度 erf 累积分布函数与反函数，输出 P(Z≤z)、右侧概率、区间面积与经验法则对照，统计学与质量分析必备。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
-  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
 </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u00b11\u03c3 \u00b12\u03c3 \u00b13\u03c3 \u662f\u591a\u5927\u533a\u95f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b63\u6001\u5206\u5e03\u4e2d\u7ea6 68.27% \u6570\u636e\u843d\u5728 \u00b11\u03c3\u300195.45% \u843d\u5728 \u00b12\u03c3\u300199.73% \u843d\u5728 \u00b13\u03c3\uff0c\u8fd9\u662f\u7ecf\u9a8c\u6cd5\u5219\u3002"}},{"@type":"Question","name":"\u975e\u6807\u51c6\u6b63\u6001\u600e\u4e48\u7b97\u9762\u79ef\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ed9\u5b9a\u5747\u503c \u03bc \u4e0e\u6807\u51c6\u5dee \u03c3 \u65f6\uff0c\u5148\u8f6c\u6807\u51c6\u5206 z = (X-\u03bc)/\u03c3\uff0c\u518d\u7528\u6807\u51c6\u6b63\u6001\u7d2f\u79ef\u5206\u5e03\u51fd\u6570\u6c42\u533a\u95f4\u9762\u79ef\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528 erf \u903c\u8fd1\u516c\u5f0f\u4e0e 200 \u6b21\u4e8c\u5206\u8fed\u4ee3\uff0c\u03a6(1.96)\u22480.97500\u3001\u5206\u4f4d\u6570\u7b49\u5173\u952e\u503c\u53ef\u8fbe 5-6 \u4f4d\u5c0f\u6570\uff0c\u8db3\u591f\u6559\u5b66\u4e0e\u8d28\u68c0\u4f7f\u7528\u3002"}}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "正态分布计算", "description": "在线正态分布计算器，支持 Z 值→概率、概率→Z 值、值域→概率区间面积三种模式，内置高精度 erf 累积分布函数与反函数，输出 P(Z≤z)、右侧概率、区间面积与经验法则对照，统计学与质量分析必备。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/normal-distribution/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "计算数学"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "计算数学", "item": "https://2772726220.github.io/toolsite/category/math/"}, {"@type": "ListItem", "position": 3, "name": "正态分布计算", "item": "https://2772726220.github.io/toolsite/normal-distribution/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u00b11\u03c3 \u00b12\u03c3 \u00b13\u03c3 \u662f\u591a\u5927\u533a\u95f4\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6b63\u6001\u5206\u5e03\u4e2d\u7ea6 68.27% \u6570\u636e\u843d\u5728 \u00b11\u03c3\u300195.45% \u843d\u5728 \u00b12\u03c3\u300199.73% \u843d\u5728 \u00b13\u03c3\uff0c\u8fd9\u662f\u7ecf\u9a8c\u6cd5\u5219\u3002"}},{"@type":"Question","name":"\u975e\u6807\u51c6\u6b63\u6001\u600e\u4e48\u7b97\u9762\u79ef\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ed9\u5b9a\u5747\u503c \u03bc \u4e0e\u6807\u51c6\u5dee \u03c3 \u65f6\uff0c\u5148\u8f6c\u6807\u51c6\u5206 z = (X-\u03bc)/\u03c3\uff0c\u518d\u7528\u6807\u51c6\u6b63\u6001\u7d2f\u79ef\u5206\u5e03\u51fd\u6570\u6c42\u533a\u95f4\u9762\u79ef\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u91c7\u7528 erf \u903c\u8fd1\u516c\u5f0f\u4e0e 200 \u6b21\u4e8c\u5206\u8fed\u4ee3\uff0c\u03a6(1.96)\u22480.97500\u3001\u5206\u4f4d\u6570\u7b49\u5173\u952e\u503c\u53ef\u8fbe 5-6 \u4f4d\u5c0f\u6570\uff0c\u8db3\u591f\u6559\u5b66\u4e0e\u8d28\u68c0\u4f7f\u7528\u3002"}}]}</script>
 </head>
 <body>
 <noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -25,8 +28,8 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">正态分布计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
-<main class="container">
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">正态分布计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
   <section class="tool-card">
 <span class="badge">#正态分布</span><span class="badge">#Z值</span><span class="badge">#概率</span><span class="badge">#CDF</span>
 <div class="field">
@@ -48,7 +51,7 @@
 <button class="btn btn-primary" id="ndBtn">计算</button>
 <div id="ndOut" style="margin-top:12px;"></div>
   </section>
-  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
   <section class="content-block">
 <h2>Z 值概率怎么算？</h2><p>Z 值对应的左侧累积概率 Φ(z) 用误差函数 erf 精确计算；右侧概率 = 1 - Φ(z)；标准正态分布均值 0 标准差 1。</p><h2>概率反推 Z 值怎么算？</h2><p>用二分法反解标准正态累积分布函数，得到满足 P(Z ≤ z) = p 的分位数，常用作 90%/95%/99% 置信区间临界值，如 ±1.645/±1.96/±2.576。</p>
     <h2>常见问题</h2>
@@ -91,7 +94,15 @@
       showToast('已复制本工具链接');
     } catch (e) { showToast('复制失败，请手动复制地址栏'); }
   };
-  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='normal-distribution';}); _r.unshift('normal-distribution'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='normal-distribution';}); _r.unshift('normal-distribution'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var ndMode = document.getElementById('ndMode');
 var ndZ = document.getElementById('ndZ');
 var ndP = document.getElementById('ndP');
@@ -199,7 +210,49 @@ ndBtn.addEventListener('click', function () {
     });
   }
   updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
 })();
 </script>
+
 </body>
 </html>
