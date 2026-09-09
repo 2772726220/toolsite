@@ -7,16 +7,19 @@
   <meta name="description" content="在线 cron 表达式解析工具：输入标准 5 字段 cron（分 时 日 月 周），立即算未来 N 次执行时间与距离现在多久，支持区间、步长、列表与日月或逻辑。" />
   <meta name="keywords" content="cron表达式,下次运行,cron解析,定时任务计算,Linux crontab">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/cron-next-run/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="Cron下次运行时间计算器 - 在线cron表达式解析" /><meta property="og:description" content="在线 cron 表达式解析工具：输入标准 5 字段 cron（分 时 日 月 周），立即算未来 N 次执行时间与距离现在多久，支持区间、步长、列表与日月或逻辑。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/cron-next-run/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Cron下次运行时间计算器 - 在线cron表达式解析" /><meta name="twitter:description" content="在线 cron 表达式解析工具：输入标准 5 字段 cron（分 时 日 月 周），立即算未来 N 次执行时间与距离现在多久，支持区间、步长、列表与日月或逻辑。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
-  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
   <link rel="stylesheet" href="../assets/app.css">
   <script>
 (function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
 </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b cron \u5199\u6cd5\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 * \u4efb\u610f\u30011-5 \u533a\u95f4\u3001*/15 \u6b65\u957f\u30011,3,5 \u5217\u8868\u30011-30/5 \u5e26\u6b65\u957f\u533a\u95f4\uff1b\u5468\u5b57\u6bb5\u652f\u6301 0-7\uff0c7 \u7b49\u4ef7\u4e8e 0\uff08\u5468\u65e5\uff09\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u5206\u949f\u7ea7\u7cbe\u786e\u5339\u914d\uff0c\u4f1a\u5217\u51fa\u4ece\u5c0f\u5230\u5927\u6700\u8fd1\u7684 N \u6b21\uff08\u9ed8\u8ba4 5 \u6b21\u3001\u53ef\u9009 3/10\uff09\uff0c\u5e76\u663e\u793a\u8ddd\u8d77\u59cb\u65f6\u523b\u7684\u5929\u65f6\u5206\u3002"}},{"@type":"Question","name":"\u5b58\u5728\u65e0\u6cd5\u6267\u884c\u7684\u60c5\u51b5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6709\u3002\u4f8b\u5982 2 \u6708 29 \u65e5\u8fd9\u7c7b\u6781\u7a00\u758f\u8868\u8fbe\u5f0f\u5728\u515c\u5e95\u641c\u7d22\u7a97\u53e3\uff08\u7ea6 4 \u5e74\uff09\u5185\u627e\u4e0d\u5230\u65f6\u4f1a\u660e\u786e\u63d0\u793a\uff0c\u800c\u4e0d\u662f\u9759\u9ed8\u51fa\u9519\u3002"}}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Cron 下次运行", "description": "在线 cron 表达式解析工具：输入标准 5 字段 cron（分 时 日 月 周），立即算未来 N 次执行时间与距离现在多久，支持区间、步长、列表与日月或逻辑。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/cron-next-run/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "开发编码"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "开发编码", "item": "https://2772726220.github.io/toolsite/category/dev/"}, {"@type": "ListItem", "position": 3, "name": "Cron 下次运行", "item": "https://2772726220.github.io/toolsite/cron-next-run/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b cron \u5199\u6cd5\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301 * \u4efb\u610f\u30011-5 \u533a\u95f4\u3001*/15 \u6b65\u957f\u30011,3,5 \u5217\u8868\u30011-30/5 \u5e26\u6b65\u957f\u533a\u95f4\uff1b\u5468\u5b57\u6bb5\u652f\u6301 0-7\uff0c7 \u7b49\u4ef7\u4e8e 0\uff08\u5468\u65e5\uff09\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u7cbe\u5ea6\u5982\u4f55\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u5206\u949f\u7ea7\u7cbe\u786e\u5339\u914d\uff0c\u4f1a\u5217\u51fa\u4ece\u5c0f\u5230\u5927\u6700\u8fd1\u7684 N \u6b21\uff08\u9ed8\u8ba4 5 \u6b21\u3001\u53ef\u9009 3/10\uff09\uff0c\u5e76\u663e\u793a\u8ddd\u8d77\u59cb\u65f6\u523b\u7684\u5929\u65f6\u5206\u3002"}},{"@type":"Question","name":"\u5b58\u5728\u65e0\u6cd5\u6267\u884c\u7684\u60c5\u51b5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6709\u3002\u4f8b\u5982 2 \u6708 29 \u65e5\u8fd9\u7c7b\u6781\u7a00\u758f\u8868\u8fbe\u5f0f\u5728\u515c\u5e95\u641c\u7d22\u7a97\u53e3\uff08\u7ea6 4 \u5e74\uff09\u5185\u627e\u4e0d\u5230\u65f6\u4f1a\u660e\u786e\u63d0\u793a\uff0c\u800c\u4e0d\u662f\u9759\u9ed8\u51fa\u9519\u3002"}}]}</script>
 </head>
 <body>
 <noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
 <button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
 <header>
   <div class="container">
@@ -25,8 +28,8 @@
     <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
   </div>
 </header>
-<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">Cron 下次运行</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button></div></nav>
-<main class="container">
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">Cron 下次运行</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
   <section class="tool-card">
 <span class="badge">#Cron</span><span class="badge">#定时任务</span><span class="badge">#下次运行</span><span class="badge">#调度</span>
 <div class="field">
@@ -52,7 +55,7 @@
 </div>
 <div id="cnOut"></div>
   </section>
-  <div class="ad-slot">广告位（AdSense / 优量汇横幅）</div>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
   <section class="content-block">
 <h2>cron 的日与周字段冲突怎么办？</h2><p>标准 crontab 中当日与周同时受限时按“或”逻辑匹配（任一满足即执行）。本工具严格遵循该语义，如 0 0 13 * 5 表示每月 13 号或每周五执行。</p><h2>x 月没有 31 号怎么办？</h2><p>月份只有 30 天的日子不会匹配 31 号，属于正常现象，查找会跳过；日期永远以“所在那个月”的有效天数为准。</p>
     <h2>常见问题</h2>
@@ -95,7 +98,15 @@
       showToast('已复制本工具链接');
     } catch (e) { showToast('复制失败，请手动复制地址栏'); }
   };
-  try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='cron-next-run';}); _r.unshift('cron-next-run'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='cron-next-run';}); _r.unshift('cron-next-run'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
 var cnExpr = document.getElementById('cnExpr');
 var cnCount = document.getElementById('cnCount');
 var cnFrom = document.getElementById('cnFrom');
@@ -242,7 +253,49 @@ cnBtn.addEventListener('click', function () {
     });
   }
   updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
 })();
 </script>
+
 </body>
 </html>
