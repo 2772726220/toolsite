@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线扑克牌型判定</title>
+  <meta name="description" content="扑克牌型判定：输入 5 张牌判定高牌/对子/两对/三条/顺子/同花/葫芦/四条/同花顺。" />
+  <meta name="keywords" content="扑克,牌型,德州,顺子,同花,判牌,德州扑克">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/poker-hands/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线扑克牌型判定" /><meta property="og:description" content="扑克牌型判定：输入 5 张牌判定高牌/对子/两对/三条/顺子/同花/葫芦/四条/同花顺。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/poker-hands/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线扑克牌型判定" /><meta name="twitter:description" content="扑克牌型判定：输入 5 张牌判定高牌/对子/两对/三条/顺子/同花/葫芦/四条/同花顺。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "德州扑克牌型", "description": "扑克牌型判定：输入 5 张牌判定高牌/对子/两对/三条/顺子/同花/葫芦/四条/同花顺。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/poker-hands/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "娱乐游戏"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "娱乐游戏", "item": "https://2772726220.github.io/toolsite/category/fun/"}, {"@type": "ListItem", "position": 3, "name": "德州扑克牌型", "item": "https://2772726220.github.io/toolsite/poker-hands/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u5224\u5b9a\u7ed3\u679c\u6709\u54ea\u4e9b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u51fa\u724c\u578b\u540d\u79f0\uff08\u5982\u300c\u540c\u82b1\u987a\u300d\u300c\u846b\u82a6\u300d\uff09\uff0c\u7687\u5bb6\u540c\u82b1\u987a\u4f1a\u7279\u522b\u6807\u6ce8\u8bf4\u660e\u3002"}},{"@type":"Question","name":"\u5141\u8bb8\u8f93\u5165\u91cd\u590d\u724c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5de5\u5177\u6309 5 \u5f20\u8f93\u5165\u5224\u5b9a\uff0c\u4e0d\u4f1a\u6821\u9a8c\u662f\u5426\u6765\u81ea\u540c\u4e00\u526f\u724c\u7684\u5b9e\u9645\u6301\u724c\u7ea6\u675f\uff0c\u5efa\u8bae\u8f93\u5165\u5404\u4e0d\u76f8\u540c\u7684\u771f\u5b9e\u724c\u3002"}},{"@type":"Question","name":"\u652f\u6301 7 \u5f20\u5fb7\u5dde\u6251\u514b\u724c\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u5224\u5b9a\u56fa\u5b9a\u7684 5 \u5f20\u724c\uff0c\u9002\u5408\u5b66\u4e60\u4e0e\u9a8c\u8bc1\u724c\u578b\uff1b\u4ece 7 \u5f20\u4e2d\u9009\u51fa\u6700\u4f73 5 \u5f20\u7684\u573a\u666f\u6682\u4e0d\u652f\u6301\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🃏 德州扑克牌型</h1>
+    <p>5 张牌判定高牌到同花顺</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">德州扑克牌型</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#扑克</span><span class="badge">#牌型</span><span class="badge">#德州</span>
+<div class="field">
+  <label for="phIn">5 张牌（点数 + 花色，空格/逗号分隔）</label>
+  <input id="phIn" value="10S JH QD KC AH">
+</div>
+<div class="actions">
+  <button class="btn" id="phGo" type="button">判定牌型</button>
+</div>
+<div class="result-box" id="phOut"></div>
+<div style="margin-top:8px;color:#667;font-size:13px;">点数：2-10、T/J/Q/K/A；花色：S 黑桃、H 红心、D 方块、C 梅花。</div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>常见的扑克牌型有哪些？</h2><p>5 张牌按强度从低到高可分为：高牌、一对、两对、三条、顺子、同花、葫芦、四条、同花顺；其中从 A 到 10 的同花顺即皇家同花顺，是最大牌型。</p><h2>怎么输入牌？</h2><p>以「点数 + 花色」的形式输入 5 张牌，点数用 2-10、T、J、Q、K、A，花色用 S 黑桃、H 红心、D 方块、C 梅花，例如 10S JH QD KC AH。</p><h2>特殊的 A2345 顺子怎么判定？</h2><p>A 可以是最大牌，也可以组成 A2345 的最小顺子（轮子），此时顺子的最高点按 5 计算；工具对这两种情况都能正确识别。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>判定结果有哪些？</summary><p>输出牌型名称（如「同花顺」「葫芦」），皇家同花顺会特别标注说明。</p></details><details class="faq-item"><summary>允许输入重复牌吗？</summary><p>工具按 5 张输入判定，不会校验是否来自同一副牌的实际持牌约束，建议输入各不相同的真实牌。</p></details><details class="faq-item"><summary>支持 7 张德州扑克牌吗？</summary><p>本工具判定固定的 5 张牌，适合学习与验证牌型；从 7 张中选出最佳 5 张的场景暂不支持。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>德州扑克牌型 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='poker-hands';}); _r.unshift('poker-hands'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var phIn = document.getElementById('phIn');
+var phGo = document.getElementById('phGo');
+var phOut = document.getElementById('phOut');
+
+var PH_RANK_NAMES = ['高牌', '一对', '两对', '三条', '顺子', '同花', '葫芦', '四条', '同花顺'];
+var PH_FACES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 };
+
+function parseCard(s) {
+  s = s.trim();
+  var m = /^([2-9TJQKA]|10)([shdc])$/i.exec(s);
+  if (!m) return null;
+  return { rank: PH_FACES[m[1].toUpperCase()], suit: m[2].toLowerCase() };
+}
+
+function evaluateHand(cards) {
+  if (!Array.isArray(cards) || cards.length !== 5) return null;
+  for (var i = 0; i < 5; i++) if (!cards[i]) return null;
+  var r = cards.map(function (c) { return c.rank; }).sort(function (a, b) { return a - b; });
+  var suits = {};
+  var flush = true;
+  var s = cards[0].suit;
+  for (var j = 1; j < 5; j++) if (cards[j].suit !== s) flush = false;
+  var counts = {};
+  for (var k = 0; k < 5; k++) counts[r[k]] = (counts[r[k]] || 0) + 1;
+  var isStraight = (r[4] - r[0] === 4 && new Set(Object.keys(counts).map(Number)).size === 5) ||
+    (r[4] === 14 && r[3] === 5 && r[0] === 2 && new Set(Object.keys(counts).map(Number)).size === 5);
+  var v = Object.keys(counts).map(Number).sort(function (a, b) { return counts[b] - counts[a] || b - a; });
+  var groups = v.map(function (x) { return counts[x]; }).sort(function (a, b) { return b - a; });
+  var rank;
+  if (flush && isStraight) rank = 8;
+  else if (groups[0] === 4) rank = 7;
+  else if (groups[0] === 3 && groups[1] === 2) rank = 6;
+  else if (flush) rank = 5;
+  else if (isStraight) rank = 4;
+  else if (groups[0] === 3) rank = 3;
+  else if (groups[0] === 2 && groups[1] === 2) rank = 2;
+  else if (groups[0] === 2) rank = 1;
+  else rank = 0;
+  var high = isStraight && r[0] === 2 && r[4] === 14 ? 5 : r[4];
+  return { rank: rank, name: PH_RANK_NAMES[rank], high: high, sorted: r };
+}
+
+phGo.addEventListener('click', function () {
+  var tokens = phIn.value.trim().split(/[\s,;]+/);
+  var cards = tokens.map(parseCard);
+  if (cards.length !== 5 || cards.some(function (c) { return c === null; })) {
+    phOut.textContent = '请输入 5 张牌，如：10S JH QD KC AH（点数2-10/T/J/Q/K/A + 花色S/H/D/C）。';
+    return;
+  }
+  var ev = evaluateHand(cards);
+  var desc = PH_RANK_NAMES[ev.rank];
+  if (ev.rank === 8) desc = '同花顺' + (ev.high === 14 ? '（皇家同花顺）' : '');
+  phOut.innerHTML =
+    '<div class="stat"><div class="num">' + ev.name + '</div><div class="label">牌型判定</div></div>' +
+    '<div class="stat"><div class="num">' + (ev.rank === 8 && ev.high === 14 ? '皇家同花顺' : desc) + '</div><div class="label">说明</div></div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
