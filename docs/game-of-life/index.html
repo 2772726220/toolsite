@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线生命游戏元胞自动机</title>
+  <meta name="description" content="康威生命游戏模拟器：随机生成或单步演化，观察细胞群的诞生、存活与消亡。" />
+  <meta name="keywords" content="生命,游戏,康威,元胞,模拟,Life,演化">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/game-of-life/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线生命游戏元胞自动机" /><meta property="og:description" content="康威生命游戏模拟器：随机生成或单步演化，观察细胞群的诞生、存活与消亡。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/game-of-life/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线生命游戏元胞自动机" /><meta name="twitter:description" content="康威生命游戏模拟器：随机生成或单步演化，观察细胞群的诞生、存活与消亡。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "生命游戏", "description": "康威生命游戏模拟器：随机生成或单步演化，观察细胞群的诞生、存活与消亡。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/game-of-life/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "娱乐游戏"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "娱乐游戏", "item": "https://2772726220.github.io/toolsite/category/fun/"}, {"@type": "ListItem", "position": 3, "name": "生命游戏", "item": "https://2772726220.github.io/toolsite/game-of-life/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u68cb\u76d8\u5c3a\u5bf8\u8303\u56f4\u662f\u591a\u5c11\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5bbd\u9ad8\u5747\u652f\u6301 4-64\uff0c\u9ed8\u8ba4 16\u00d716\uff1b\u7ec6\u80de\u8d8a\u5bc6\u3001\u6f14\u5316\u8d8a\u5bb9\u6613\u51fa\u73b0\u6709\u8da3\u7684\u56fe\u6848\u3002"}},{"@type":"Question","name":"\u968f\u673a\u79cd\u5b50\u6709\u4ec0\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u76f8\u540c\u7684\u5bbd\u9ad8\u4e0e\u79cd\u5b50\u4f1a\u751f\u6210\u5b8c\u5168\u76f8\u540c\u7684\u521d\u59cb\u56fe\u6848\uff1b\u6539\u53d8\u79cd\u5b50\u5f97\u5230\u4e0d\u540c\u7684\u968f\u673a\u5f00\u5c40\u3002"}},{"@type":"Question","name":"\u652f\u6301\u81ea\u52a8\u64ad\u653e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u4e3a\u5355\u6b65\u6f14\u5316\uff0c\u53ef\u8fde\u7eed\u70b9\u51fb\u300c\u6f14\u5316\u4e00\u6b65\u300d\u9010\u6b65\u89c2\u5bdf\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🦠 生命游戏</h1>
+    <p>康威生命游戏随机生成与单步演化</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">生命游戏</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#生命游戏</span><span class="badge">#元胞</span><span class="badge">#演化</span>
+<div class="field-row">
+  <div class="field"><label for="glW">宽</label><input id="glW" value="16" type="number" min="4" max="64"></div>
+  <div class="field"><label for="glH">高</label><input id="glH" value="16" type="number" min="4" max="64"></div>
+  <div class="field"><label for="glSeed">随机种子</label><input id="glSeed" value="42"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="glGo" type="button">随机生成</button>
+  <button class="btn" id="glStep" type="button">演化一步</button>
+</div>
+<div class="result-box" id="glOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>什么是康威生命游戏？</h2><p>康威生命游戏是一个元胞自动机：每个格子依据邻居数量演化——存活细胞有 2 或 3 个活邻居时存活，否则死亡；死亡细胞恰有 3 个活邻居时复活。规则极简却能量现复杂图案。</p><h2>怎么玩？</h2><p>设置棋盘宽高与随机种子后点「随机生成」铺满细胞，再不断点「演化一步」观察细胞群的诞生、存活与消亡。边界采用环绕相连的环形棋盘规则。</p><h2>能看到什么现象？</h2><p>稳定静物、周期振荡的振子（如摆动陀螺）、沿对角线移动的滑翔机（glider）等经典图案会在演化中不断出现，适合直观感受「涌现」现象。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>棋盘尺寸范围是多少？</summary><p>宽高均支持 4-64，默认 16×16；细胞越密、演化越容易出现有趣的图案。</p></details><details class="faq-item"><summary>随机种子有什么用？</summary><p>相同的宽高与种子会生成完全相同的初始图案；改变种子得到不同的随机开局。</p></details><details class="faq-item"><summary>支持自动播放吗？</summary><p>当前为单步演化，可连续点击「演化一步」逐步观察。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>生命游戏 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='game-of-life';}); _r.unshift('game-of-life'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var glW = document.getElementById('glW');
+var glH = document.getElementById('glH');
+var glSeed = document.getElementById('glSeed');
+var glGo = document.getElementById('glGo');
+var glStep = document.getElementById('glStep');
+var glOut = document.getElementById('glOut');
+
+/* body 里按钮: 随机 / 单步 */
+
+function makeRng(seed) {
+  var a = (seed >>> 0) || 0x9e3779b9;
+  return function () { a = ((a * 1664525) + 1013904223) >>> 0; return a; };
+}
+
+function lifeGrid(w, h) {
+  var g = new Array(h);
+  for (var y = 0; y < h; y++) { g[y] = new Array(w).fill(0); }
+  return g;
+}
+
+function lifeInit(w, h, seed) {
+  var g = lifeGrid(w, h);
+  var rng = makeRng(seed);
+  for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) g[y][x] = rng() % 2;
+  return g;
+}
+
+function lifeCountNeighbors(grid, w, h, cx, cy) {
+  var n = 0;
+  for (var dy = -1; dy <= 1; dy++) {
+    for (var dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      var x = cx + dx, y = cy + dy;
+      if (x < 0) x = w - 1; else if (x >= w) x = 0;
+      if (y < 0) y = h - 1; else if (y >= h) y = 0;
+      if (grid[y][x]) n++;
+    }
+  }
+  return n;
+}
+
+function lifeStep(grid, w, h) {
+  var next = lifeGrid(w, h);
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      var n = lifeCountNeighbors(grid, w, h, x, y);
+      if (grid[y][x]) {
+        next[y][x] = (n === 2 || n === 3) ? 1 : 0;
+      } else {
+        next[y][x] = (n === 3) ? 1 : 0;
+      }
+    }
+  }
+  return next;
+}
+
+var glCur = null, glTimer = null;
+
+function renderGrid(grid, w, h) {
+  glCur = grid;
+  var cellW = Math.max(6, Math.floor(240 / w));
+  var html = '<div style="display:grid;grid-template-columns:repeat(' + w + ',1fr);width:' + (w * cellW) + 'px;height:' + (h * cellW) + 'px;border:1px solid #ccc;">';
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      html += '<div style="background:' + (grid[y][x] ? '#2563eb' : '#fafafa') + ';"></div>';
+    }
+  }
+  html += '</div>';
+  glOut.innerHTML = html;
+}
+
+function toggleCell(e) {
+  /* click to toggle */
+}
+
+glGo.addEventListener('click', function () {
+  var w = parseInt(glW.value, 10) || 16, h = parseInt(glH.value, 10) || 16;
+  glCur = lifeInit(w, h, parseInt(glSeed.value, 10) || 42);
+  renderGrid(glCur, w, h);
+});
+
+glStep.addEventListener('click', function () {
+  if (!glCur) { glGo.click(); return; }
+  glCur = lifeStep(glCur, glCur.length ? glCur[0].length : 16, glCur.length);
+  renderGrid(glCur, glCur[0].length, glCur.length);
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
