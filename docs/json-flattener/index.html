@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 JSON 扁平化 / 还原工具</title>
+  <meta name="description" content="JSON 嵌套对象一键扁平化为点分键，或反向还原为嵌套结构，方便对比与序列化。" />
+  <meta name="keywords" content="JSON,扁平化,对象,点分键,还原,flatten">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/json-flattener/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线 JSON 扁平化 / 还原工具" /><meta property="og:description" content="JSON 嵌套对象一键扁平化为点分键，或反向还原为嵌套结构，方便对比与序列化。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/json-flattener/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线 JSON 扁平化 / 还原工具" /><meta name="twitter:description" content="JSON 嵌套对象一键扁平化为点分键，或反向还原为嵌套结构，方便对比与序列化。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "JSON 扁平化", "description": "JSON 嵌套对象一键扁平化为点分键，或反向还原为嵌套结构，方便对比与序列化。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/json-flattener/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "开发编码"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "开发编码", "item": "https://2772726220.github.io/toolsite/category/dev/"}, {"@type": "ListItem", "position": 3, "name": "JSON 扁平化", "item": "https://2772726220.github.io/toolsite/json-flattener/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u952e\u540d\u672c\u8eab\u53ef\u4ee5\u542b\u70b9\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6241\u5e73\u5316\u540e\u4ee5\u70b9\u4f5c\u4e3a\u5c42\u7ea7\u5206\u9694\u7b26\uff1b\u82e5\u539f\u59cb\u952e\u540d\u542b\u70b9\uff0c\u8fd8\u539f\u65f6\u53ef\u80fd\u4ea7\u751f\u6b67\u4e49\uff0c\u5efa\u8bae\u907f\u514d\u5728\u952e\u540d\u4e2d\u4f7f\u7528\u70b9\u3002"}},{"@type":"Question","name":"\u7a7a\u5bf9\u8c61\u548c\u7a7a\u6570\u7ec4\u600e\u4e48\u5904\u7406\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9876\u5c42\u7a7a\u5bf9\u8c61/\u7a7a\u6570\u7ec4\u7528\u952e value \u8868\u793a\uff1b\u5d4c\u5957\u7684\u7a7a\u5bf9\u8c61\u4e0e\u7a7a\u6570\u7ec4\u4f1a\u4fdd\u7559\u4e3a {} \u548c []\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u8f6c\u6362\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🗂️ JSON 扁平化</h1>
+    <p>JSON 嵌套对象一键扁平化为点分键</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">JSON 扁平化</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#JSON</span><span class="badge">#扁平化</span><span class="badge">#对象</span>
+<div class="field">
+  <label for="jfMode">操作</label>
+  <select id="jfMode">
+    <option value="flatten">扁平化（对象 → 点分键）</option>
+    <option value="unflatten">还原（点分键 → 嵌套对象）</option>
+  </select>
+</div>
+<div class="field">
+  <label for="jfIn">JSON 文本</label>
+  <textarea id="jfIn" rows="5" style="width:100%;font-family:monospace;font-size:13px;">{"a":{"b":1,"c":{"d":2}},"e":[3,4]}</textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="jfGo" type="button">转换</button>
+</div>
+<div class="result-box" id="jfOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>JSON 扁平化是什么？</h2><p>把嵌套的 JSON 对象转换成单层点分键对象，例如 {a:{b:1,c:{d:2}}} 会变成 {a.b:1,a.c.d:2}，数组元素用下标表示（如 e.0、e.1）。</p><h2>什么时候需要扁平化？</h2><p>对比两个 JSON 的差异、把嵌套数据存入键值对存储，或做日志与展示时，点分键形式更易读、更利于逐项比较。</p><h2>可以还原吗？</h2><p>可以。把点分键对象粘贴到「还原」模式，工具会重建嵌套结构，纯数字键自动识别为数组索引，实现扁平化与还原的往返转换。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>键名本身可以含点吗？</summary><p>扁平化后以点作为层级分隔符；若原始键名含点，还原时可能产生歧义，建议避免在键名中使用点。</p></details><details class="faq-item"><summary>空对象和空数组怎么处理？</summary><p>顶层空对象/空数组用键 value 表示；嵌套的空对象与空数组会保留为 {} 和 []。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，转换全部在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>JSON 扁平化 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='json-flattener';}); _r.unshift('json-flattener'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var jfIn = document.getElementById('jfIn');
+var jfMode = document.getElementById('jfMode');
+var jfGo = document.getElementById('jfGo');
+var jfOut = document.getElementById('jfOut');
+
+function flattenJson(obj, prefix, out) {
+  if (obj === null || typeof obj !== 'object') {
+    out[prefix === '' ? 'value' : prefix] = obj;
+    return out;
+  }
+  var isArr = Array.isArray(obj);
+  var keys = isArr ? obj.map(function (_, i) { return i; }) : Object.keys(obj);
+  if (keys.length === 0) {
+    out[prefix === '' ? 'value' : prefix] = isArr ? [] : {};
+    return out;
+  }
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var key = prefix === '' ? String(k) : prefix + '.' + k;
+    flattenJson(obj[k], key, out);
+  }
+  return out;
+}
+
+function unflattenJson(flat) {
+  if (flat === null || typeof flat !== 'object' || Array.isArray(flat)) return flat;
+  var root = {};
+  var keys = Object.keys(flat);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var parts = key.split('.');
+    var cur = root;
+    var path = '';
+    for (var j = 0; j < parts.length; j++) {
+      var p = parts[j];
+      var isIdx = /^\d+$/.test(p);
+      var nextIsIdx = j + 1 < parts.length && /^\d+$/.test(parts[j + 1]);
+      if (j === parts.length - 1) {
+        cur[p] = flat[key];
+      } else {
+        if (!cur[p] || typeof cur[p] !== 'object') {
+          cur[p] = nextIsIdx ? [] : {};
+        }
+        cur = cur[p];
+      }
+    }
+  }
+  return root;
+}
+
+jfGo.addEventListener('click', function () {
+  var mode = jfMode.value;
+  var text = jfIn.value.trim();
+  var parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (e) {
+    jfOut.textContent = 'JSON 解析失败：' + e.message;
+    return;
+  }
+  var out;
+  if (mode === 'flatten') {
+    out = flattenJson(parsed, '', {});
+  } else {
+    out = unflattenJson(parsed);
+  }
+  jfOut.innerHTML = '<pre style="white-space:pre-wrap;text-align:left;font-family:monospace;font-size:13px;max-height:260px;overflow:auto;">' +
+    JSON.stringify(out, null, 2).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
