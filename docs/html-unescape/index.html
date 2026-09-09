@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 HTML 实体解码器</title>
+  <meta name="description" content="把 &amp;、&lt;、&#65;、&#x42; 等 HTML 字符实体解码为对应字符。" />
+  <meta name="keywords" content="HTML,实体,解码,转义,字符,unescape">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/html-unescape/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线 HTML 实体解码器" /><meta property="og:description" content="把 &amp;amp;、&amp;lt;、&amp;#65;、&amp;#x42; 等 HTML 字符实体解码为对应字符。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/html-unescape/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线 HTML 实体解码器" /><meta name="twitter:description" content="把 &amp;amp;、&amp;lt;、&amp;#65;、&amp;#x42; 等 HTML 字符实体解码为对应字符。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔣</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "HTML 实体解码", "description": "把 &amp;、&lt;、&#65;、&#x42; 等 HTML 字符实体解码为对应字符。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/html-unescape/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "文本工具"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "文本工具", "item": "https://2772726220.github.io/toolsite/category/text/"}, {"@type": "ListItem", "position": 3, "name": "HTML 实体解码", "item": "https://2772726220.github.io/toolsite/html-unescape/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u6570\u5b57\u5f15\u7528\u652f\u6301\u4e2d\u6587\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\uff0c\u50cf &#x4E2D; \u8fd9\u6837\u7684 Unicode \u7801\u70b9\u53ef\u76f4\u63a5\u89e3\u7801\u4e3a\u5bf9\u5e94\u5b57\u7b26\uff08\u672c\u4f8b\u4e3a\u300c\u4e2d\u300d\uff09\u3002"}},{"@type":"Question","name":"\u8f93\u51fa\u7ed3\u679c\u4f1a\u518d\u8f6c\u4e49\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ed3\u679c\u6846\u4f1a\u505a\u5b89\u5168\u8f6c\u4e49\u540e\u518d\u663e\u793a\uff0c\u907f\u514d\u628a\u89e3\u7801\u51fa\u7684 < > \u5f53\u4f5c\u771f\u5b9e\u6807\u7b7e\u6e32\u67d3\u3002"}},{"@type":"Question","name":"\u6570\u636e\u4f1a\u4e0a\u4f20\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u4f1a\uff0c\u89e3\u7801\u5904\u7406\u5168\u90e8\u5728\u6d4f\u89c8\u5668\u672c\u5730\u5b8c\u6210\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔣 HTML 实体解码</h1>
+    <p>把 HTML 字符实体解码为对应字符</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/text/">✍️ 文本工具</a><span class="crumb-sep">›</span><span class="crumb-cur">HTML 实体解码</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#HTML</span><span class="badge">#实体</span><span class="badge">#解码</span>
+<div class="field">
+  <label for="huIn">含 HTML 实体的文本</label>
+  <textarea id="huIn" rows="4" style="width:100%;font-family:monospace;font-size:13px;">&lt;p&gt;Tom &amp; Jerry&nbsp;&amp;copy;&lt;/p&gt; &#65;&#x42;</textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="huGo" type="button">解码</button>
+</div>
+<div class="result-box" id="huOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>什么是 HTML 实体？</h2><p>HTML 源码里 <、>、& 等字符必须转义为实体（如 &lt;、&gt;、&amp;），否则会被误当成标签或截断，页面显示前再把实体解码回原字符。</p><h2>支持哪些编码形式？</h2><p>三种都支持：命名字符实体（&amp;、&lt;、&gt;、&quot;、&nbsp;、&copy; 等 20 个常用实体）、十进制数字引用（&#65; → A）、十六进制数字引用（&#x42; → B）。</p><h2>未知实体怎么处理？</h2><p>未收录的命名字体会原样保留，避免误替换；嵌套的实体（如 &amp;amp;）会一层层解开，先得到 &amp;，再解为 &。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>数字引用支持中文吗？</summary><p>支持，像 &#x4E2D; 这样的 Unicode 码点可直接解码为对应字符（本例为「中」）。</p></details><details class="faq-item"><summary>输出结果会再转义吗？</summary><p>结果框会做安全转义后再显示，避免把解码出的 < > 当作真实标签渲染。</p></details><details class="faq-item"><summary>数据会上传吗？</summary><p>不会，解码处理全部在浏览器本地完成。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多文本工具工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../word-count/" class="t-card" data-cat="text" data-tags="字数 统计" data-name="字数统计 统计字数、字符、段落、行数，实时更新 字数 统计"><div class="t-icon">🔢</div><div class="t-name">字数统计</div><div class="t-desc">统计字数、字符、段落、行数，实时更新</div><div class="t-tags"><span class="tt">#字数</span><span class="tt">#统计</span></div></a><a href="../text-dedup/" class="t-card" data-cat="text" data-tags="去重 重复行" data-name="文本去重排序 文本去重、排序、统计出现次数 去重 重复行"><div class="t-icon">🔁</div><div class="t-name">文本去重排序</div><div class="t-desc">文本去重、排序、统计出现次数</div><div class="t-tags"><span class="tt">#去重</span><span class="tt">#重复行</span></div></a><a href="../text-reverse/" class="t-card" data-cat="text" data-tags="反转 倒序" data-name="文本反转 文本反转/倒序/镜像翻转 反转 倒序"><div class="t-icon">↔️</div><div class="t-name">文本反转</div><div class="t-desc">文本反转/倒序/镜像翻转</div><div class="t-tags"><span class="tt">#反转</span><span class="tt">#倒序</span></div></a><a href="../case-convert/" class="t-card" data-cat="text" data-tags="大小写 转换" data-name="大小写转换 文本大小写、驼峰、下划线转换 大小写 转换"><div class="t-icon">🔠</div><div class="t-name">大小写转换</div><div class="t-desc">文本大小写、驼峰、下划线转换</div><div class="t-tags"><span class="tt">#大小写</span><span class="tt">#转换</span></div></a><a href="../id-card-check/" class="t-card" data-cat="text" data-tags="身份证 校验" data-name="身份证校验 校验身份证号合法性，提取生日信息 身份证 校验"><div class="t-icon">🪪</div><div class="t-name">身份证校验</div><div class="t-desc">校验身份证号合法性，提取生日信息</div><div class="t-tags"><span class="tt">#身份证</span><span class="tt">#校验</span></div></a><a href="../zh-convert/" class="t-card" data-cat="text" data-tags="简繁 中文" data-name="简繁转换 简体字与繁体字一键互转 简繁 中文"><div class="t-icon">简🈶</div><div class="t-name">简繁转换</div><div class="t-desc">简体字与繁体字一键互转</div><div class="t-tags"><span class="tt">#简繁</span><span class="tt">#中文</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>HTML 实体解码 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='html-unescape';}); _r.unshift('html-unescape'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var huIn = document.getElementById('huIn');
+var huMode = document.getElementById('huMode');
+var huGo = document.getElementById('huGo');
+var huOut = document.getElementById('huOut');
+
+var HU_ENTITIES = {
+  'amp': '&', 'lt': '<', 'gt': '>', 'quot': '"', 'apos': "'",
+  'nbsp': '\u00a0', 'copy': '\u00a9', 'reg': '\u00ae', 'trade': '\u2122',
+  'middot': '\u00b7', 'hellip': '\u2026', 'rsquo': '\u2019', 'lsquo': '\u2018',
+  'rdquo': '\u201d', 'ldquo': '\u201c', 'mdash': '\u2014', 'ndash': '\u2013',
+  'times': '\u00d7', 'divide': '\u00f7', 'minus': '\u2212', 'plusmn': '\u00b1'
+};
+
+function htmlUnescape(str) {
+  if (typeof str !== 'string') return null;
+  return str.replace(/&(#\d+);/g, function (_, code) {
+    return String.fromCharCode(parseInt(code.slice(1), 10));
+  }).replace(/&#x[0-9a-fA-F]+;/g, function (code) {
+    return String.fromCharCode(parseInt(code.slice(3, -1), 16));
+  }).replace(/&([a-zA-Z#][a-zA-Z0-9]*);/g, function (_, name) {
+    if (Object.prototype.hasOwnProperty.call(HU_ENTITIES, name)) return HU_ENTITIES[name];
+    return '&' + name + ';';
+  });
+}
+
+function htmlEscapeEntities(str) {
+  if (typeof str !== 'string') return null;
+  var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' };
+  return str.replace(/[&<>"']/g, function (c) {
+    return map[c];
+  });
+}
+
+huGo.addEventListener('click', function () {
+  var text = huIn.value;
+  var out = htmlUnescape(text);
+  huOut.innerHTML =
+    '<div class="stat"><div class="num" style="font-size:15px;word-break:break-all">' + htmlEscapeEntities(out) + '</div><div class="label">解码结果</div></div>' +
+    '<div style="margin-top:6px;font-size:13px;color:#667">共 ' + text.length + ' 字符 → ' + out.length + ' 字符。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
