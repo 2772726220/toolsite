@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线宾果卡生成器</title>
+  <meta name="description" content="一键生成可打乱的宾果卡，支持自定义词汇与网格大小，中心免费格自动标记。" />
+  <meta name="keywords" content="宾果,卡,游戏,BINGO,生成,格子">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/bingo-generator/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线宾果卡生成器" /><meta property="og:description" content="一键生成可打乱的宾果卡，支持自定义词汇与网格大小，中心免费格自动标记。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/bingo-generator/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线宾果卡生成器" /><meta name="twitter:description" content="一键生成可打乱的宾果卡，支持自定义词汇与网格大小，中心免费格自动标记。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "宾果卡生成", "description": "一键生成可打乱的宾果卡，支持自定义词汇与网格大小，中心免费格自动标记。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/bingo-generator/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "娱乐游戏"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "娱乐游戏", "item": "https://2772726220.github.io/toolsite/category/fun/"}, {"@type": "ListItem", "position": 3, "name": "宾果卡生成", "item": "https://2772726220.github.io/toolsite/bingo-generator/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7f51\u683c\u652f\u6301\u591a\u5927\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8fb9\u957f 3-7\uff0c\u5373 3\u00d73 \u5230 7\u00d77\uff0c\u9ed8\u8ba4 5\u00d75\u3002"}},{"@type":"Question","name":"\u8bcd\u6c47\u4e0d\u591f\u683c\u5b50\u6570\u91cf\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4e0d\u8db3\u65f6\u4f1a\u4ece\u5df2\u6709\u8bcd\u6c47\u5faa\u73af\u8865\u5145\u5e76\u6dfb\u52a0\u5e8f\u53f7\u540e\u7f00\uff08\u5982 \u82f9\u679c\u00b71\uff09\uff0c\u4fdd\u8bc1\u6bcf\u683c\u90fd\u6709\u5185\u5bb9\u3002"}},{"@type":"Question","name":"\u8bfe\u5802\u4e0a\u80fd\u7528\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9002\u5408\u8bcd\u6c47\u590d\u4e60\u3001\u542c\u529b\u7ec3\u4e60\u7b49\u6559\u5b66\u6d3b\u52a8\uff1b\u8bcd\u6c47\u4e0e\u968f\u673a\u79cd\u5b50\u90fd\u53ef\u81ea\u5b9a\u4e49\uff0c\u540c\u4e00\u79cd\u5b50\u751f\u6210\u5b8c\u5168\u76f8\u540c\u7684\u5361\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎯 宾果卡生成</h1>
+    <p>自定义词汇一键生成宾果卡</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/fun/">🎮 娱乐游戏</a><span class="crumb-sep">›</span><span class="crumb-cur">宾果卡生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#宾果</span><span class="badge">#BINGO</span><span class="badge">#游戏</span>
+<div class="field">
+  <label for="bgWords">单词 / 选项（空格或逗号分隔，留空用默认主题）</label>
+  <textarea id="bgWords" rows="3" style="width:100%;font-size:13px;">苹果 香蕉 篮球 太阳 月亮 星星 老虎 熊猫 飞机 轮船 彩虹 森林 海洋 雪山 北极 沙漠 岛屿 灯塔 雨伞 风筝 火箭 火车 蜜蜂 蝴蝶 恐龙</textarea>
+</div>
+<div class="field-row">
+  <div class="field"><label for="bgN">网格（3-7）</label><input id="bgN" value="5" type="number" min="3" max="7"></div>
+  <div class="field"><label for="bgSeed">随机种子</label><input id="bgSeed" value="7"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="bgGo" type="button">生成宾果卡</button>
+</div>
+<div class="result-box" id="bgOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>宾果卡怎么玩？</h2><p>宾果（BINGO）是喊号或翻词、圈出匹配格子的经典游戏。工具生成 n×n 网格，格子内容可自定义词汇（用空格或逗号分隔），适合课堂复习、破冰与聚会等多人场景。</p><h2>中心免费格是什么？</h2><p>奇数尺寸（3×3、5×5、7×7）网格的中心格为免费格 ★，直接视为已标记，降低开局难度；偶数尺寸没有免费格。</p><h2>怎么判定获胜？</h2><p>任意完整的一行、一列或一条对角线被全部标记即 BINGO。词汇不足时工具会自动循环补齐并加序号区分，保证每格都有内容。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>网格支持多大？</summary><p>边长 3-7，即 3×3 到 7×7，默认 5×5。</p></details><details class="faq-item"><summary>词汇不够格子数量怎么办？</summary><p>不足时会从已有词汇循环补充并添加序号后缀（如 苹果·1），保证每格都有内容。</p></details><details class="faq-item"><summary>课堂上能用吗？</summary><p>适合词汇复习、听力练习等教学活动；词汇与随机种子都可自定义，同一种子生成完全相同的卡。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多娱乐游戏工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../zodiac/" class="t-card" data-cat="fun" data-tags="星座 查询" data-name="星座查询 出生日期查星座和生肖 星座 查询"><div class="t-icon">♌</div><div class="t-name">星座查询</div><div class="t-desc">出生日期查星座和生肖</div><div class="t-tags"><span class="tt">#星座</span><span class="tt">#查询</span></div></a><a href="../personality-test/" class="t-card" data-cat="fun" data-tags="性格测试 心理" data-name="性格测试 趣味 MBTI 风格性格小测试 性格测试 心理"><div class="t-icon">🧠</div><div class="t-name">性格测试</div><div class="t-desc">趣味 MBTI 风格性格小测试</div><div class="t-tags"><span class="tt">#性格测试</span><span class="tt">#心理</span></div></a><a href="../dice-roller/" class="t-card" data-cat="fun" data-tags="骰子 随机" data-name="骰子抽签 抛硬币、掷骰子、随机抽签 骰子 随机"><div class="t-icon">🎲</div><div class="t-name">骰子抽签</div><div class="t-desc">抛硬币、掷骰子、随机抽签</div><div class="t-tags"><span class="tt">#骰子</span><span class="tt">#随机</span></div></a><a href="../tic-tac-toe/" class="t-card" data-cat="fun" data-tags="井字棋 游戏" data-name="井字棋 人机对战井字棋小游戏 井字棋 游戏"><div class="t-icon">⭕</div><div class="t-name">井字棋</div><div class="t-desc">人机对战井字棋小游戏</div><div class="t-tags"><span class="tt">#井字棋</span><span class="tt">#游戏</span></div></a><a href="../random-picker/" class="t-card" data-cat="fun" data-tags="抽签 随机" data-name="随机抽签 多个选项随机抽取一个 抽签 随机"><div class="t-icon">🎰</div><div class="t-name">随机抽签</div><div class="t-desc">多个选项随机抽取一个</div><div class="t-tags"><span class="tt">#抽签</span><span class="tt">#随机</span></div></a><a href="../typing-test/" class="t-card" data-cat="fun" data-tags="打字 测速" data-name="打字测速 测打字速度 WPM 与准确率 打字 测速"><div class="t-icon">⌨️</div><div class="t-name">打字测速</div><div class="t-desc">测打字速度 WPM 与准确率</div><div class="t-tags"><span class="tt">#打字</span><span class="tt">#测速</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>宾果卡生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='bingo-generator';}); _r.unshift('bingo-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bgWords = document.getElementById('bgWords');
+var bgN = document.getElementById('bgN');
+var bgSeed = document.getElementById('bgSeed');
+var bgGo = document.getElementById('bgGo');
+var bgOut = document.getElementById('bgOut');
+
+var BG_FALLBACK = ['苹果','香蕉','篮球','太阳','月亮','星星','老虎','熊猫','飞机','轮船','彩虹','森林','海洋','雪山','北极','沙漠','岛屿','灯塔','雨伞','风筝','火箭','火车','蜜蜂','蝴蝶','恐龙'];
+
+function makeRng(seed) {
+  var a = (seed >>> 0) || 0x9e3779b9;
+  return function () { a = ((a * 1664525) + 1013904223) >>> 0; return a; };
+}
+
+function shuffle(arr, rng) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = rng() % (i + 1);
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function makeBingoGrid(wordList, n, seed) {
+  n = parseInt(n, 10) || 5;
+  if (n < 3 || n > 7) n = 5;
+  var words = (Array.isArray(wordList) && wordList.length) ? wordList.slice() : BG_FALLBACK.slice();
+  var rng = makeRng(seed);
+  words = shuffle(words, rng);
+  var need = n * n;
+  var pick = [];
+  var src = words;
+  for (var i = 0; i < need; i++) {
+    if (i < src.length) pick.push(src[i]);
+    else pick.push(src[i % src.length] + '·' + Math.floor(i / src.length));
+  }
+  var grid = [];
+  var k = 0;
+  for (var y = 0; y < n; y++) {
+    var row = [];
+    for (var x = 0; x < n; x++) row.push(pick[k++]);
+    grid.push(row);
+  }
+  if (n % 2 === 1) {
+    grid[Math.floor(n / 2)][Math.floor(n / 2)] = '★';
+  }
+  return grid;
+}
+
+function bingoLines(n) {
+  var lines = [];
+  for (var i = 0; i < n; i++) {
+    var r = [], c = [];
+    for (var j = 0; j < n; j++) { r.push(i * n + j); c.push(j * n + i); }
+    lines.push(r); lines.push(c);
+  }
+  var d1 = [], d2 = [];
+  for (var k = 0; k < n; k++) { d1.push(k * n + k); d2.push(k * n + (n - 1 - k)); }
+  lines.push(d1, d2);
+  return lines;
+}
+
+function markBingo(grid, marked) {
+  var n = grid.length;
+  var flat = [];
+  for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) flat.push(grid[y][x]);
+  var m = Array.isArray(marked) ? marked.slice() : [];
+  if (n % 2 === 1 && m.indexOf('★') < 0) m.push('★');
+  var hit = flat.map(function (v) { return m.indexOf(v) >= 0; });
+  var lines = bingoLines(n);
+  var done = [];
+  for (var i = 0; i < lines.length; i++) {
+    var ok = true;
+    for (var j = 0; j < lines[i].length; j++) {
+      if (!hit[lines[i][j]]) { ok = false; break; }
+    }
+    if (ok) done.push(lines[i]);
+  }
+  return { bingo: done.length > 0, lines: done, hitSum: hit.reduce(function (a, b) { return a + (b ? 1 : 0); }, 0) };
+}
+
+function renderBingo(grid, markedCells) {
+  var n = grid.length;
+  var html = '<div style="display:inline-grid;grid-template-columns:repeat(' + n + ',1fr);gap:4px;">';
+  for (var y = 0; y < n; y++) {
+    for (var x = 0; x < n; x++) {
+      var cellVal = grid[y][x];
+      var isFree = cellVal === '★';
+      var hit = markedCells.indexOf(cellVal) >= 0;
+      html += '<div class="bingo-cell' + (isFree ? ' free' : '') + '" data-v="' + cellVal + '" style="width:56px;height:56px;border:1px solid #d1d5db;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;background:' + (hit ? '#bfdbfe' : isFree ? '#fef3c7' : '#fff') + ';">' + cellVal + '</div>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+bgGo.addEventListener('click', function () {
+  var n = parseInt(bgN.value, 10) || 5;
+  var words = bgWords.value.split(/[\s,，;；]+/).filter(function (w) { return w !== ''; });
+  var grid = makeBingoGrid(words.length ? words : null, n, parseInt(bgSeed.value, 10) || 7);
+  bgOut.innerHTML = renderBingo(grid, ['★']) +
+    '<div style="margin-top:8px;font-size:13px;color:#667">' + grid.length + '×' + grid.length + ' 宾果卡，中心为免费格（★）。点格子标记，凑成一行即喊 BINGO！</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
