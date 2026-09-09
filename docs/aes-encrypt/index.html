@@ -251,6 +251,21 @@ aesDec.addEventListener('click', function () {
       });
     });
   }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
 })();
 </script>
 
