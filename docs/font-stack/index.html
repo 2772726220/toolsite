@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线字体栈生成器</title>
+  <meta name="description" content="为不同平台生成合适的 font-family 字体栈，Windows/macOS/移动端/中文字体一应俱全。" />
+  <meta name="keywords" content="字体,字体栈,font-family,排版,中文字体,fallback">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/font-stack/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线字体栈生成器" /><meta property="og:description" content="为不同平台生成合适的 font-family 字体栈，Windows/macOS/移动端/中文字体一应俱全。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/font-stack/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线字体栈生成器" /><meta name="twitter:description" content="为不同平台生成合适的 font-family 字体栈，Windows/macOS/移动端/中文字体一应俱全。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔠</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "字体栈生成", "description": "为不同平台生成合适的 font-family 字体栈，Windows/macOS/移动端/中文字体一应俱全。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/font-stack/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "颜色设计"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "颜色设计", "item": "https://2772726220.github.io/toolsite/category/design/"}, {"@type": "ListItem", "position": 3, "name": "字体栈生成", "item": "https://2772726220.github.io/toolsite/font-stack/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u7b49\u5bbd\u5b57\u4f53\u6808\u9002\u5408\u4ec0\u4e48\u573a\u666f\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4ee3\u7801\u7f16\u8f91\u5668\u3001\u7ec8\u7aef\u754c\u9762\u4e0e\u9700\u8981\u6570\u5b57\u5bf9\u9f50\u7684\u8868\u683c\u5efa\u8bae\u7528\u7b49\u5bbd\u4f53\uff0c\u4f8b\u5982 SF Mono\u3001Consolas\u3001Menlo\u3001monospace \u7684\u7ec4\u5408\u3002"}},{"@type":"Question","name":"\u4e2d\u6587\u5b57\u4f53\u6392\u5e8f\u6709\u4ec0\u4e48\u8bb2\u7a76\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a\u76ee\u6807\u5e73\u53f0\u6700\u5e38\u89c1\u7684\u5b57\u4f53\u653e\u6700\u524d\uff08\u5982 PingFang SC\u3001Microsoft YaHei\u3001Source Han Sans\uff09\uff0c\u907f\u514d\u989d\u5916\u52a0\u8f7d\u5b57\u4f53\u6587\u4ef6\u3002"}},{"@type":"Question","name":"\u751f\u6210\u7684\u4ee3\u7801\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u628a\u751f\u6210\u7684 font-family \u58f0\u660e\u7c98\u8d34\u8fdb CSS \u89c4\u5219\u5373\u53ef\uff0c\u4e5f\u53ef\u4ee5\u653e\u5230 :root \u7684 CSS \u53d8\u91cf\u91cc\u7edf\u4e00\u7ba1\u7406\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔠 字体栈生成</h1>
+    <p>为各平台生成合适的 font-family 栈</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">字体栈生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#字体</span><span class="badge">#字体栈</span><span class="badge">#排版</span>
+<div class="field">
+  <label for="fsPreset">字体预设</label>
+  <select id="fsPreset">
+    <option value="系统">系统默认</option>
+    <option value="Windows">Windows</option>
+    <option value="macOS">macOS</option>
+    <option value="iOS">iOS</option>
+    <option value="Android">Android</option>
+    <option value="无衬线体">无衬线体</option>
+    <option value="衬线体">衬线体</option>
+    <option value="等宽体">等宽体</option>
+    <option value="中文字体">中文字体</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="fsBtn" type="button">生成字体栈</button>
+</div>
+<div class="result-box" id="fsOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>什么是字体栈？</h2><p>font-family 属性后跟的一串备选字体列表（如 font-family: Segoe UI, Arial, sans-serif）就是字体栈：浏览器从前到后逐个尝试，前面的不可用就用后面的回退。</p><h2>内置哪些平台预设？</h2><p>Windows、macOS、iOS、Android、系统默认、无衬线体、衬线体、等宽体、中文字体九大类，每套都按平台生态排好顺序，例如 Windows 优先 Segoe UI，中文字体栈优先 PingFang SC 与微软雅黑。</p><h2>回退顺序重要吗？</h2><p>重要。把最优先的字体放最前、通用家族名（sans-serif、serif、monospace）放最后兜底，既能适配任意设备，又能尽量贴近设计预期。工具实时预览效果。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>等宽字体栈适合什么场景？</summary><p>代码编辑器、终端界面与需要数字对齐的表格建议用等宽体，例如 SF Mono、Consolas、Menlo、monospace 的组合。</p></details><details class="faq-item"><summary>中文字体排序有什么讲究？</summary><p>把目标平台最常见的字体放最前（如 PingFang SC、Microsoft YaHei、Source Han Sans），避免额外加载字体文件。</p></details><details class="faq-item"><summary>生成的代码怎么用？</summary><p>把生成的 font-family 声明粘贴进 CSS 规则即可，也可以放到 :root 的 CSS 变量里统一管理。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>字体栈生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='font-stack';}); _r.unshift('font-stack'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var fsBtn = document.getElementById('fsBtn');
+var fsOut = document.getElementById('fsOut');
+
+var FS_SYSTEMS = [
+  ['系统', ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']],
+  ['Windows', ['Segoe UI', 'Tahoma', 'Arial', 'sans-serif']],
+  ['macOS', ['-apple-system', 'BlinkMacSystemFont', 'Helvetica Neue', 'Arial', 'sans-serif']],
+  ['iOS', ['-apple-system', 'BlinkMacSystemFont', 'Helvetica Neue', 'Arial', 'sans-serif']],
+  ['Android', ['Roboto', '"Noto Sans CJK"', '"Droid Sans"', 'Arial', 'sans-serif']],
+  ['无衬线体', ['Helvetica', 'Arial', '"Microsoft YaHei"', '"PingFang SC"', 'sans-serif']],
+  ['衬线体', ['Georgia', '"Times New Roman"', 'Cambria', "Times", 'serif']],
+  ['等宽体', ['"SF Mono"', 'Consolas', 'Menlo', 'Monaco', 'Liberation Mono', 'monospace']],
+  ['中文字体', ['"PingFang SC"', '"Hiragino Sans GB"', '"Source Han Sans"', '"Microsoft YaHei"', '"WenQuanYi Zen Hei"', 'sans-serif']]
+];
+
+function buildFontStack(preset) {
+  for (var i = 0; i < FS_SYSTEMS.length; i++) {
+    if (FS_SYSTEMS[i][0] === preset) {
+      return { label: preset, stack: FS_SYSTEMS[i][1] };
+    }
+  }
+  return null;
+}
+
+function copyStack(s) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(s);
+  }
+}
+
+fsBtn.addEventListener('click', function () {
+  var preset = document.getElementById('fsPreset').value;
+  var r = buildFontStack(preset);
+  if (!r) { fsOut.textContent = '未知的字体预设。'; return; }
+  var css = 'font-family: ' + r.stack.join(', ') + ';';
+  fsOut.innerHTML =
+    '<pre style="margin:0;padding:10px;background:#f6f8fa;border-radius:8px;font-size:13px;overflow:auto;text-align:left;white-space:pre-wrap;">' + htmlEsc(css) + '</pre>' +
+    '<div style="font-size:26px;margin:10px 0;font-family:' + r.stack.join(', ') + ';">衬线测试 abc 中文字体 0123456789</div>' +
+    '<div style="font-size:13px;color:#667">栈中字体依次回退，字体越靠前越优先。</div>';
+});
+
+function htmlEsc(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
