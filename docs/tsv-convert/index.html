@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 TSV/JSON 互转工具</title>
+  <meta name="description" content="TSV 与 JSON 互转工具：表格数据一键转对象数组，或对象数组转制表符分隔文本，自动识别布尔与数字。" />
+  <meta name="keywords" content="TSV,JSON,表格,转换,制表符,互转">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/tsv-convert/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线 TSV/JSON 互转工具" /><meta property="og:description" content="TSV 与 JSON 互转工具：表格数据一键转对象数组，或对象数组转制表符分隔文本，自动识别布尔与数字。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/tsv-convert/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线 TSV/JSON 互转工具" /><meta name="twitter:description" content="TSV 与 JSON 互转工具：表格数据一键转对象数组，或对象数组转制表符分隔文本，自动识别布尔与数字。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "TSV/JSON 互转", "description": "TSV 与 JSON 互转工具：表格数据一键转对象数组，或对象数组转制表符分隔文本，自动识别布尔与数字。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/tsv-convert/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "开发编码"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "开发编码", "item": "https://2772726220.github.io/toolsite/category/dev/"}, {"@type": "ListItem", "position": 3, "name": "TSV/JSON 互转", "item": "https://2772726220.github.io/toolsite/tsv-convert/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u5e26\u5f15\u53f7\u7684\u5b57\u6bb5\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u652f\u6301\u3002\u53cc\u5f15\u53f7\u5305\u88f9\u7684\u5b57\u6bb5\u4f1a\u4fdd\u7559\u5f15\u53f7\u5185\u5185\u5bb9\uff0c\u4e24\u4e2a\u8fde\u7eed\u53cc\u5f15\u53f7\u4f5c\u4e3a\u8f6c\u4e49\u4e5f\u80fd\u6b63\u786e\u89e3\u6790\uff0c\u5f15\u53f7\u5185\u7684\u5236\u8868\u7b26\u4e0d\u4f1a\u8bef\u5f53\u4f5c\u5206\u9694\u7b26\u3002"}},{"@type":"Question","name":"\u54ea\u4e9b JSON \u53ef\u4ee5\u8f6c TSV\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5fc5\u987b\u662f\u5bf9\u8c61\u6570\u7ec4\uff0c\u5982 [{\"a\":1},{\"a\":2}]\uff1b\u5355\u4e2a\u5bf9\u8c61\u6216\u6807\u91cf\u4f1a\u63d0\u793a\u9519\u8bef\u3002"}},{"@type":"Question","name":"\u5217\u987a\u5e8f\u600e\u4e48\u786e\u5b9a\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6309\u8f93\u5165\u5bf9\u8c61\u6570\u7ec4\u4e2d\u5404\u952e\u9996\u6b21\u51fa\u73b0\u7684\u987a\u5e8f\u751f\u6210\u8868\u5934\uff0c\u800c\u4e0d\u662f\u5b57\u6bcd\u5e8f\uff0c\u4fdd\u8bc1\u4e0e\u539f\u6570\u636e\u4e00\u81f4\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧾 TSV/JSON 互转</h1>
+    <p>TSV 表格与 JSON 对象数组互相转换</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">TSV/JSON 互转</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#TSV</span><span class="badge">#JSON</span><span class="badge">#表格</span>
+<div class="field">
+  <label for="tcMode">转换方向</label>
+  <select id="tcMode">
+    <option value="tsv2json">TSV → JSON</option>
+    <option value="json2tsv">JSON（对象数组）→ TSV</option>
+  </select>
+</div>
+<div class="field">
+  <label for="tcIn">输入</label>
+  <textarea id="tcIn" rows="8">name	age	score
+Alice	30	88.5
+Bob	25	92</textarea>
+</div>
+<div class="actions">
+  <button class="btn" id="tcGo" type="button">转换</button>
+</div>
+<div class="result-box" id="tcOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>TSV 是什么？</h2><p>TSV（Tab-Separated Values）是用制表符分隔字段的表格文本，常从 Excel 等表格软件导出，第一行是表头。工具可把这类表格一键转成 JSON 对象数组。</p><h2>TSV 转 JSON 时类型怎么处理？</h2><p>首行作为键名，其余每行生成一个对象；纯数字（含小数）自动转成 number，true/false 转成布尔值，其余保留为字符串，可直接用于程序。</p><h2>JSON 怎么转回 TSV？</h2><p>把对象数组 JSON 粘贴进来，工具按对象中首次出现的键序生成表头，空值输出为空单元格，嵌套对象序列化为 JSON 字符串，可直接粘贴回 Excel 使用。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持带引号的字段吗？</summary><p>支持。双引号包裹的字段会保留引号内内容，两个连续双引号作为转义也能正确解析，引号内的制表符不会误当作分隔符。</p></details><details class="faq-item"><summary>哪些 JSON 可以转 TSV？</summary><p>必须是对象数组，如 [{"a":1},{"a":2}]；单个对象或标量会提示错误。</p></details><details class="faq-item"><summary>列顺序怎么确定？</summary><p>按输入对象数组中各键首次出现的顺序生成表头，而不是字母序，保证与原数据一致。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>TSV/JSON 互转 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='tsv-convert';}); _r.unshift('tsv-convert'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var tcIn = document.getElementById('tcIn');
+var tcMode = document.getElementById('tcMode');
+var tcGo = document.getElementById('tcGo');
+var tcOut = document.getElementById('tcOut');
+
+function csvSplitRow(line) {
+  var out = [];
+  var cur = '';
+  var inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (inQ) {
+      if (c === '"') {
+        if (line[i + 1] === '"') { cur += '"'; i++; }
+        else inQ = false;
+      } else cur += c;
+    } else {
+      if (c === '"') inQ = true;
+      else if (c === '\t') { out.push(cur); cur = ''; }
+      else cur += c;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+function tsvToJson(tsv) {
+  var text = tsv.replace(/\r\n/g, '\n').trim();
+  if (!text) return null;
+  var lines = text.split('\n');
+  var headers = csvSplitRow(lines[0]);
+  var rows = [];
+  for (var i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    var cells = csvSplitRow(lines[i]);
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      var raw = cells[j] !== undefined ? cells[j] : '';
+      var val = raw;
+      if (val === 'true') val = true;
+      else if (val === 'false') val = false;
+      else if (val !== '' && !isNaN(Number(val)) && /^-?\d+(\.\d+)?$/.test(val.trim())) val = Number(val);
+      obj[headers[j] || ('col' + (j + 1))] = val;
+    }
+    rows.push(obj);
+  }
+  return rows;
+}
+
+function jsonToTsv(rows) {
+  if (!rows || rows.length === 0) return '';
+  var headers = [];
+  var seen = {};
+  for (var i = 0; i < rows.length; i++) {
+    Object.keys(rows[i]).forEach(function (k) { if (!seen[k]) { seen[k] = true; headers.push(k); } });
+  }
+  var lines = [headers.join('\t')];
+  for (var r = 0; r < rows.length; r++) {
+    var row = [];
+    for (var h = 0; h < headers.length; h++) {
+      var v = rows[r][headers[h]];
+      if (v === null || v === undefined) row.push('');
+      else if (typeof v === 'object') row.push(JSON.stringify(v));
+      else row.push(String(v));
+    }
+    lines.push(row.join('\t'));
+  }
+  return lines.join('\n');
+}
+
+function guessSeparator(line) {
+  var t = line.indexOf('\t');
+  var c = line.indexOf(',');
+  if (t === -1) return 'comma';
+  if (c === -1) return 'tab';
+  return t < c ? 'tab' : 'comma';
+}
+
+tcGo.addEventListener('click', function () {
+  if (!tcIn.value.trim()) { tcOut.textContent = '请输入内容。'; return; }
+  if (tcMode.value === 'tsv2json') {
+    var rows = tsvToJson(tcIn.value);
+    if (rows === null) { tcOut.textContent = '没有可解析的数据。'; return; }
+    tcOut.innerHTML = '<pre class="pre-box">' + JSON.stringify(rows, null, 2).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>' +
+      '<div style="margin-top:8px;color:#667;font-size:13px;">已转出 ' + rows.length + ' 行 JSON 对象（将纯数字与 true/false 自动转类型）。</div>';
+  } else {
+    var obj;
+    try { obj = JSON.parse(tcIn.value); } catch (e) { tcOut.textContent = 'JSON 无法解析：' + e.message; return; }
+    if (!Array.isArray(obj)) { tcOut.textContent = '请输入对象数组（如 [{"a":1},{"a":2}]）。'; return; }
+    tcOut.innerHTML = '<pre class="pre-box">' + jsonToTsv(obj).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+  }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
