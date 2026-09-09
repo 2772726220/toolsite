@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线分形噪声生成器</title>
+  <meta name="description" content="分形噪声 / 纹理生成器：基于哈希值噪声与多 Octave 叠加生成无缝灰度纹理，可设定随机种子。" />
+  <meta name="keywords" content="噪声,纹理,分形,Noise,Octave,生成器,棋盘格">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/noise-generator/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线分形噪声生成器" /><meta property="og:description" content="分形噪声 / 纹理生成器：基于哈希值噪声与多 Octave 叠加生成无缝灰度纹理，可设定随机种子。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/noise-generator/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线分形噪声生成器" /><meta name="twitter:description" content="分形噪声 / 纹理生成器：基于哈希值噪声与多 Octave 叠加生成无缝灰度纹理，可设定随机种子。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "噪声纹理生成", "description": "分形噪声 / 纹理生成器：基于哈希值噪声与多 Octave 叠加生成无缝灰度纹理，可设定随机种子。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/noise-generator/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "颜色设计"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "颜色设计", "item": "https://2772726220.github.io/toolsite/category/design/"}, {"@type": "ListItem", "position": 3, "name": "噪声纹理生成", "item": "https://2772726220.github.io/toolsite/noise-generator/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u968f\u673a\u79cd\u5b50\u600e\u4e48\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5728\u8f93\u5165\u6846\u586b\u6570\u5b57\u4f5c\u4e3a\u79cd\u5b50\uff0c\u7559\u7a7a\u6216\u975e\u6cd5\u65f6\u4f1a\u81ea\u52a8\u7528\u5f53\u524d\u65f6\u95f4\u751f\u6210\uff1b\u540c\u4e00\u4e2a\u79cd\u5b50\u6c38\u8fdc\u4ea7\u751f\u540c\u4e00\u5f20\u7eb9\u7406\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u8c03\u6574\u5927\u5c0f\u6216\u56fe\u5c42\u6570\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5f53\u524d\u56fa\u5b9a\u751f\u6210 256\u00d7256\u30013 \u5c42 Octave \u7684\u7070\u5ea6\u7eb9\u7406\uff0c\u6838\u5fc3\u7b97\u6cd5\u51fd\u6570\u4fbf\u4e8e\u81ea\u884c\u6269\u5c55\u4e0e\u5b9e\u9a8c\u3002"}},{"@type":"Question","name":"\u751f\u6210\u7684\u56fe\u80fd\u4fdd\u5b58\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5728\u652f\u6301\u753b\u5e03\u7684\u73af\u5883\u4e2d\u4f1a\u7ed8\u5236\u5230\u9875\u9762 canvas\uff0c\u53ef\u76f4\u63a5\u53f3\u952e\u4fdd\u5b58\u56fe\u7247\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>◼️ 噪声纹理生成</h1>
+    <p>哈希噪声多 Octave 生成灰度纹理</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/design/">🎨 颜色设计</a><span class="crumb-sep">›</span><span class="crumb-cur">噪声纹理生成</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#噪声</span><span class="badge">#纹理</span><span class="badge">#分形</span>
+<canvas id="ngCanvas" width="256" height="256" style="width:100%;max-width:256px;background:#fff;border:1px solid #ddd;border-radius:8px;"></canvas>
+<div class="field" style="margin-top:8px;">
+  <label for="ngSeed">随机种子（数字）</label><input id="ngSeed" value="12345">
+</div>
+<div class="actions">
+  <button class="btn" id="ngGo" type="button">生成</button>
+</div>
+<div class="result-box" id="ngOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>什么是分形噪声？</h2><p>分形噪声由多个不同频率的噪声层（Octave）叠加而成：低频层决定大范围起伏，高频层补充细节，让结果更自然连续。工具默认叠加 3 层 Octave 生成 256×256 灰度纹理。</p><h2>怎么保证纹理可复现？</h2><p>纹理由确定性哈希与线性同余随机数生成，同一个随机种子会得到完全相同的图案，方便复现、对比或再次使用。</p><h2>能用来做什么？</h2><p>灰度噪声纹理常用作游戏地形高度图、程序化贴图、艺术背景与设计灵感，输出为纯灰度图，可直接作为贴图素材或高度数据。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>随机种子怎么用？</summary><p>在输入框填数字作为种子，留空或非法时会自动用当前时间生成；同一个种子永远产生同一张纹理。</p></details><details class="faq-item"><summary>可以调整大小或图层数吗？</summary><p>当前固定生成 256×256、3 层 Octave 的灰度纹理，核心算法函数便于自行扩展与实验。</p></details><details class="faq-item"><summary>生成的图能保存吗？</summary><p>在支持画布的环境中会绘制到页面 canvas，可直接右键保存图片。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多颜色设计工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../color-convert/" class="t-card" data-cat="design" data-tags="颜色 转换" data-name="颜色转换器 HEX/RGB/HSL/HSV 颜色格式互转 颜色 转换"><div class="t-icon">🎨</div><div class="t-name">颜色转换器</div><div class="t-desc">HEX/RGB/HSL/HSV 颜色格式互转</div><div class="t-tags"><span class="tt">#颜色</span><span class="tt">#转换</span></div></a><a href="../color-picker/" class="t-card" data-cat="design" data-tags="取色 吸管" data-name="图片取色器 上传图片点击取色，获取色值代码 取色 吸管"><div class="t-icon">🎯</div><div class="t-name">图片取色器</div><div class="t-desc">上传图片点击取色，获取色值代码</div><div class="t-tags"><span class="tt">#取色</span><span class="tt">#吸管</span></div></a><a href="../gradient-generator/" class="t-card" data-cat="design" data-tags="渐变 CSS" data-name="渐变生成器 生成 CSS 渐变背景，一键复制 渐变 CSS"><div class="t-icon">🌈</div><div class="t-name">渐变生成器</div><div class="t-desc">生成 CSS 渐变背景，一键复制</div><div class="t-tags"><span class="tt">#渐变</span><span class="tt">#CSS</span></div></a><a href="../palette-generator/" class="t-card" data-cat="design" data-tags="配色 调色板" data-name="配色方案生成 生成互补/近似/三角配色方案 配色 调色板"><div class="t-icon">🎨</div><div class="t-name">配色方案生成</div><div class="t-desc">生成互补/近似/三角配色方案</div><div class="t-tags"><span class="tt">#配色</span><span class="tt">#调色板</span></div></a><a href="../contrast-checker/" class="t-card" data-cat="design" data-tags="对比度 无障碍 WCAG" data-name="颜色对比度 前景/背景对比度与 WCAG 达标检测 对比度 无障碍 WCAG"><div class="t-icon">👁️</div><div class="t-name">颜色对比度</div><div class="t-desc">前景/背景对比度与 WCAG 达标检测</div><div class="t-tags"><span class="tt">#对比度</span><span class="tt">#无障碍</span><span class="tt">#WCAG</span></div></a><a href="../color-mixer/" class="t-card" data-cat="design" data-tags="混色 调色 RGB" data-name="颜色混合器 按比例混合两种颜色，实时预览结果 混色 调色 RGB"><div class="t-icon">🎨</div><div class="t-name">颜色混合器</div><div class="t-desc">按比例混合两种颜色，实时预览结果</div><div class="t-tags"><span class="tt">#混色</span><span class="tt">#调色</span><span class="tt">#RGB</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>噪声纹理生成 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='noise-generator';}); _r.unshift('noise-generator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var ngGo = document.getElementById('ngGo');
+var ngCanvas = document.getElementById('ngCanvas');
+var ngMode = document.getElementById('ngMode');
+var ngSeed = document.getElementById('ngSeed');
+var ngOut = document.getElementById('ngOut');
+
+function makeRng(seed) {
+  var a = (seed >>> 0) || 0x9e3779b9;
+  return function () { a = ((a * 1664525) + 1013904223) >>> 0; return a; };
+}
+
+function hash2(x, y, seed) {
+  var h = (x * 374761393 + y * 668265263) ^ (seed * 2246822519);
+  h = ((h ^ (h >>> 13)) * 1274126177) >>> 0;
+  h = ((h ^ (h >>> 16)) >>> 0);
+  return (h & 0xffff) / 65536;
+}
+
+function smooth(t) { return t * t * (3 - 2 * t); }
+
+function valueNoise(x, y, seed) {
+  var xi = Math.floor(x), yi = Math.floor(y);
+  var xf = x - xi, yf = y - yi;
+  var a = hash2(xi, yi, seed);
+  var b = hash2(xi + 1, yi, seed);
+  var c = hash2(xi, yi + 1, seed);
+  var d = hash2(xi + 1, yi + 1, seed);
+  var u = smooth(xf), v = smooth(yf);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+
+function buildNoisePixels(w, h, seed, scale, octaves) {
+  var px = new Uint8ClampedArray(w * h * 4);
+  var amp = 1, freq = scale, totalAmp = 0, total = 0;
+  for (var o = 0; o < octaves; o++) { totalAmp += amp; amp *= 0.5; }
+  amp = 1; freq = scale;
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      var val = 0;
+      var a2 = 1, f2 = scale;
+      for (var o = 0; o < octaves; o++) {
+        val += valueNoise(x / w * f2, y / h * f2, seed + o * 1000) * a2;
+        a2 *= 0.5; f2 *= scale;
+      }
+      val = val / totalAmp;
+      var g = Math.floor(val * 255);
+      var i4 = (y * w + x) * 4;
+      px[i4] = g; px[i4 + 1] = g; px[i4 + 2] = g; px[i4 + 3] = 255;
+    }
+  }
+  return px;
+}
+
+ngGo.addEventListener('click', function () {
+  var seed = parseInt(ngSeed.value, 10);
+  if (isNaN(seed)) seed = Date.now() % 2147483647;
+  var w = 256, h = 256;
+  var px = buildNoisePixels(w, h, seed, 4, 3);
+  var ctx = ngCanvas.getContext && ngCanvas.getContext('2d');
+  if (ctx && typeof ctx.createImageData === 'function') {
+    var img = ctx.createImageData(w, h);
+    if (img.data && img.data.length === px.length) img.data.set(px);
+    ctx.putImageData(img, 0, 0);
+    ngOut.textContent = '已生成 256×256 分形噪声（种子 ' + seed + '，3 层 Octave）。';
+  } else {
+    ngOut.textContent = '已计算 256×256 分形噪声（种子 ' + seed + '，3 层）。当前环境不支持画布绘制。';
+  }
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
