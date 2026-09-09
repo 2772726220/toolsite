@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线 chmod 权限（rwx/八进制）转换器</title>
+  <meta name="description" content="rwx 符号与八进制数字 mode 互相转换，并解析属主/属组/其他权限与 SUID/SGID/Sticky 特殊位。" />
+  <meta name="keywords" content="chmod,权限,rwx,八进制,转换,Linux,umask">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/chmod-calculator/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线 chmod 权限（rwx/八进制）转换器" /><meta property="og:description" content="rwx 符号与八进制数字 mode 互相转换，并解析属主/属组/其他权限与 SUID/SGID/Sticky 特殊位。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/chmod-calculator/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线 chmod 权限（rwx/八进制）转换器" /><meta name="twitter:description" content="rwx 符号与八进制数字 mode 互相转换，并解析属主/属组/其他权限与 SUID/SGID/Sticky 特殊位。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "chmod 权限转换", "description": "rwx 符号与八进制数字 mode 互相转换，并解析属主/属组/其他权限与 SUID/SGID/Sticky 特殊位。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/chmod-calculator/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "开发编码"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "开发编码", "item": "https://2772726220.github.io/toolsite/category/dev/"}, {"@type": "ListItem", "position": 3, "name": "chmod 权限转换", "item": "https://2772726220.github.io/toolsite/chmod-calculator/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u54ea\u4e9b\u8f93\u5165\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u6570\u5b57\u6a21\u5f0f\u652f\u6301 3-4 \u4f4d\uff08\u6bcf\u4f4d\u6570 0-7\uff09\uff0c\u5982 755\u30014755\uff1b\u7b26\u53f7\u6a21\u5f0f\u652f\u6301 9 \u4f4d rwx \u7ec4\u5408\uff0c\u5982 rwxr-xr-x\u3001rwsr-xr-x\u3002\u975e\u6cd5\u8f93\u5165\u4f1a\u63d0\u793a\u3002"}},{"@type":"Question","name":"\u5c0f\u5199 s \u548c\u5927\u5199 S \u6709\u4ec0\u4e48\u533a\u522b\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5c0f\u5199 s/t \u8868\u793a\u5bf9\u5e94\u7279\u6b8a\u4f4d\u8bbe\u7f6e\u4e14\u6267\u884c\u4f4d\u4e5f\u5f00\u542f\uff1b\u5927\u5199 S/T \u8868\u793a\u7279\u6b8a\u4f4d\u8bbe\u7f6e\u4f46\u6267\u884c\u4f4d\u672a\u5f00\uff0c\u5de5\u5177\u6309\u89c4\u5219\u81ea\u52a8\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u548c umask \u6709\u5173\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u5de5\u5177\u662f\u6743\u9650\u6a21\u5f0f\u7684\u4e92\u8f6c\u4e0e\u89e3\u6790\uff0c\u4e0d\u8ba1\u7b97 umask \u5bf9\u65b0\u6587\u4ef6\u9ed8\u8ba4\u6743\u9650\u7684\u5f71\u54cd\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🔐 chmod 权限转换</h1>
+    <p>rwx 符号与八进制 mode 互转并解析权限位</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/dev/">💻 开发编码</a><span class="crumb-sep">›</span><span class="crumb-cur">chmod 权限转换</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#chmod</span><span class="badge">#权限</span><span class="badge">#八进制</span>
+<div class="field">
+  <label for="cmMode">转换方向</label>
+  <select id="cmMode">
+    <option value="toSym">数字 → 符号（如 755 → rwxr-xr-x）</option>
+    <option value="toDigits">符号 → 数字（如 rwxr-xr-x → 755）</option>
+  </select>
+</div>
+<div class="field">
+  <label for="cmIn">模式值</label>
+  <input id="cmIn" value="755">
+</div>
+<div class="actions">
+  <button class="btn" id="cmGo" type="button">转换</button>
+</div>
+<div class="result-box" id="cmOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>rwx 权限怎么对应八进制？</h2><p>每三位 rwx 用二进制位表示：读 r=4、写 w=2、执行 x=1，加总就是一位八进制。例如 rwxr-xr-x 中，属主 4+2+1=7、属组 4+0+1=5、其他 4+0+1=5，即 755。</p><h2>特殊权限位 SUID/SGID/Sticky 是什么？</h2><p>SUID=4、SGID=2、Sticky=1，写在 3 位模式最前面（如 4755）。当对应执行位也开启时以小写 s/t 显示（4755 → rwsr-xr-x），否则显示大写 S/T。</p><h2>工具能做什么？</h2><p>双向转换：3-4 位数字模式转 9 位符号模式、符号模式转数字，并解析属主/属组/其他各自的读、写、执行明细与特殊权限位。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持哪些输入？</summary><p>数字模式支持 3-4 位（每位数 0-7），如 755、4755；符号模式支持 9 位 rwx 组合，如 rwxr-xr-x、rwsr-xr-x。非法输入会提示。</p></details><details class="faq-item"><summary>小写 s 和大写 S 有什么区别？</summary><p>小写 s/t 表示对应特殊位设置且执行位也开启；大写 S/T 表示特殊位设置但执行位未开，工具按规则自动换算。</p></details><details class="faq-item"><summary>和 umask 有关吗？</summary><p>本工具是权限模式的互转与解析，不计算 umask 对新文件默认权限的影响。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多开发编码工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../json-format/" class="t-card" data-cat="dev" data-tags="JSON 格式化" data-name="JSON格式化 JSON 格式化、校验、压缩，一键搞定 JSON 格式化"><div class="t-icon">📋</div><div class="t-name">JSON格式化</div><div class="t-desc">JSON 格式化、校验、压缩，一键搞定</div><div class="t-tags"><span class="tt">#JSON</span><span class="tt">#格式化</span></div></a><a href="../timestamp/" class="t-card" data-cat="dev" data-tags="时间戳 转换" data-name="时间戳转换 Unix 时间戳与日期时间互转 时间戳 转换"><div class="t-icon">🕐</div><div class="t-name">时间戳转换</div><div class="t-desc">Unix 时间戳与日期时间互转</div><div class="t-tags"><span class="tt">#时间戳</span><span class="tt">#转换</span></div></a><a href="../md-preview/" class="t-card" data-cat="dev" data-tags="Markdown 预览" data-name="Markdown编辑器 Markdown 实时编辑预览，一键复制 HTML Markdown 预览"><div class="t-icon">📝</div><div class="t-name">Markdown编辑器</div><div class="t-desc">Markdown 实时编辑预览，一键复制 HTML</div><div class="t-tags"><span class="tt">#Markdown</span><span class="tt">#预览</span></div></a><a href="../regex-test/" class="t-card" data-cat="dev" data-tags="正则 测试" data-name="正则测试 正则表达式在线测试，高亮匹配结果 正则 测试"><div class="t-icon">🧩</div><div class="t-name">正则测试</div><div class="t-desc">正则表达式在线测试，高亮匹配结果</div><div class="t-tags"><span class="tt">#正则</span><span class="tt">#测试</span></div></a><a href="../base64/" class="t-card" data-cat="dev" data-tags="Base64 编码" data-name="Base64编解码 Base64 编码解码，支持文本与文件 Base64 编码"><div class="t-icon">🔤</div><div class="t-name">Base64编解码</div><div class="t-desc">Base64 编码解码，支持文本与文件</div><div class="t-tags"><span class="tt">#Base64</span><span class="tt">#编码</span></div></a><a href="../password-gen/" class="t-card" data-cat="dev" data-tags="密码 生成" data-name="密码生成器 生成高强度随机密码，多种字符组合 密码 生成"><div class="t-icon">🔑</div><div class="t-name">密码生成器</div><div class="t-desc">生成高强度随机密码，多种字符组合</div><div class="t-tags"><span class="tt">#密码</span><span class="tt">#生成</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>chmod 权限转换 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='chmod-calculator';}); _r.unshift('chmod-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cmIn = document.getElementById('cmIn');
+var cmMode = document.getElementById('cmMode');
+var cmGo = document.getElementById('cmGo');
+var cmOut = document.getElementById('cmOut');
+
+var CM_SPECIAL = { 0: 4, 1: 2, 2: 1 };
+
+function chmodToDigits(symbols) {
+  if (typeof symbols !== 'string') return null;
+  var sym = symbols.trim();
+  if (!/^[rwxsSt-]{9}$/.test(sym)) return null;
+  var special = 0;
+  var digits = '';
+  for (var g = 0; g < 3; g++) {
+    var set = sym.slice(g * 3, g * 3 + 3);
+    var v = 0;
+    if (set[0] === 'r') v += 4;
+    if (set[1] === 'w') v += 2;
+    var x = set[2];
+    if (x === 'x' || x === 's' || x === 't') v += 1;
+    if (x === 's') special += CM_SPECIAL[g];
+    if (x === 't') special += CM_SPECIAL[2];
+    digits += String(v);
+  }
+  return (special ? String(special) : '') + digits;
+}
+
+function chmodToSymbol(modeStr) {
+  if (typeof modeStr !== 'string') return null;
+  modeStr = modeStr.trim();
+  if (!/^[0-7]{3,4}$/.test(modeStr)) return null;
+  var full = modeStr.length === 3 ? '0' + modeStr : modeStr;
+  var special = parseInt(full[0], 10);
+  var digits = full.slice(1);
+  var out = '';
+  for (var g = 0; g < 3; g++) {
+    var v = parseInt(digits[g], 10);
+    var str = '';
+    str += (v & 4) ? 'r' : '-';
+    str += (v & 2) ? 'w' : '-';
+    var x = (v & 1) ? 'x' : '-';
+    var bit = CM_SPECIAL[g];
+    if (special & bit) {
+      if (x === 'x') {
+        str += (g === 2) ? 't' : 's';
+      } else {
+        str += (g === 2) ? 'T' : 'S';
+      }
+    } else str += x;
+    out += str;
+  }
+  return out;
+}
+
+function classifyChmod(modeStr) {
+  if (typeof modeStr !== 'string') return null;
+  modeStr = modeStr.trim();
+  if (!/^[0-7]{3,4}$/.test(modeStr)) return null;
+  var full = modeStr.length === 3 ? '0' + modeStr : modeStr;
+  var special = parseInt(full[0], 10);
+  var digits = full.slice(1);
+  var labels = ['属主', '属组', '其他'];
+  var result = { suid: !!(special & 4), sgid: !!(special & 2), sticky: !!(special & 1), rows: [] };
+  for (var g = 0; g < 3; g++) {
+    var v = parseInt(digits[g], 10);
+    var bits = [];
+    if (v & 4) bits.push('读 r');
+    if (v & 2) bits.push('写 w');
+    if (v & 1) bits.push('执行 x');
+    if (bits.length === 0) bits.push('无权限');
+    result.rows.push({ label: labels[g], value: String(v), text: bits.join('、') });
+  }
+  return result;
+}
+
+cmGo.addEventListener('click', function () {
+  var m = cmMode.value;
+  var val = cmIn.value.trim();
+  var result = (m === 'toSym') ? chmodToSymbol(val) : chmodToDigits(val);
+  if (result === null) {
+    cmOut.textContent = (m === 'toSym')
+      ? '请输入 3-4 位数字模式（0-7），如 755 或 4755。'
+      : '请输入 9 位符号模式（rwx 组合），如 rwxr-xr-x。';
+    return;
+  }
+  var cls = classifyChmod(m === 'toSym' ? result : val);
+  var html = '<div class="stat"><div class="num" style="font-family:monospace">' + result +
+    '</div><div class="label">' + (m === 'toSym' ? '符号模式' : '数字模式') + '</div></div>';
+  if (cls) {
+    var spec = [];
+    if (cls.suid) spec.push('SUID');
+    if (cls.sgid) spec.push('SGID');
+    if (cls.sticky) spec.push('Sticky');
+    if (spec.length) {
+      html += '<div class="stat"><div class="num">' + spec.join(' ') +
+        '</div><div class="label">特殊权限位</div></div>';
+    }
+    html += '<div style="margin-top:8px;text-align:left">';
+    cls.rows.forEach(function (r) {
+      html += '<div style="font-size:13px;color:#555;border-bottom:1px solid #f0f0f0;padding:2px 0;">' +
+        r.label + '（' + r.value + '）→ ' + r.text + '</div>';
+    });
+    html += '</div>';
+  }
+  cmOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
