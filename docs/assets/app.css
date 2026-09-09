@@ -102,11 +102,14 @@ label { font-size: 14px; color: var(--muted); display: block; margin-bottom: 6px
   background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;
   padding: 14px; margin-top: 14px; font-size: 14px; word-break: break-all; max-height: 300px; overflow: auto;
 }
+.ad-slot:empty { display: none; }
 .ad-slot {
   margin: 28px 0; padding: 28px 16px; border: 1px dashed #cbd5e1;
   border-radius: 10px; text-align: center; color: #94a3b8; font-size: 13px;
   background: #f8fafc;
+  min-height: 90px;
 }
+.ad-slot > ins { text-align: center; }
 .content-block { max-width: 760px; margin: 48px auto; }
 .content-block h2 { font-size: 22px; margin: 32px 0 14px; }
 .content-block h3 { font-size: 17px; margin: 22px 0 10px; }
@@ -144,6 +147,7 @@ footer a:hover { text-decoration: underline; }
 .cat-nav { display: flex; gap: 4px 14px; flex-wrap: wrap; font-size: 13px; }
 .cat-nav a { color: var(--primary); text-decoration: none; }
 .cat-nav a:hover { text-decoration: underline; }
+.cat-nav a.current { color: var(--accent); font-weight: 700; text-decoration: none; }
 .cat-section { margin-top: 36px; }
 .cat-title {
   display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
@@ -159,6 +163,13 @@ footer a:hover { text-decoration: underline; }
 /* ── UI/UX 优化 ─────────────────────────────── */
 html { scroll-behavior: smooth; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 9999;
+  background: var(--primary); color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0;
+  font-size: 14px; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
 .tool-grid .t-tags { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
 .tool-grid .tt { font-size: 11px; color: var(--muted); background: #f1f5f9; border-radius: 999px; padding: 1px 8px; }
 .theme-toggle {
@@ -426,3 +437,35 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 [data-theme="dark"] .wl-cell { color: #fff; }
 .sq-chip { transition: transform 0.12s; }
 .sq-chip:hover { transform: scale(1.05); }
+/* ── UI/UX 深化（触感反馈 / 锚点 / 专注态 / 结果反馈）────────── */
+html { scroll-padding-top: 132px; }
+.btn, .chip, .t-card { transition: transform 0.1s ease, box-shadow 0.15s ease; }
+.btn:active, .chip:active { transform: scale(0.96); }
+.t-card:active { transform: translateY(1px) scale(0.99); }
+.t-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+.result-box { animation: resultIn 0.25s ease both; }
+@keyframes resultIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.btn-sm { padding: 5px 14px; font-size: 13px; }
+.result-copy { margin-top: 10px; display: inline-block; }
+@media (prefers-reduced-motion: reduce) {
+  .result-box { animation: none; }
+  .btn, .chip, .t-card { transition: none; }
+}
+/* 404 页 */
+.error-404 { text-align: center; padding: 48px 0 64px; }
+.error-404 .emoji { font-size: 72px; display: block; margin-bottom: 12px; }
+.error-404 h2 { font-size: 26px; margin-bottom: 10px; }
+.error-404 p { color: var(--muted); margin-bottom: 20px; }
+.error-search { max-width: 420px; margin: 0 auto 18px; display: flex; gap: 8px; }
+.error-search input { flex: 1; }
+.error-search .btn { flex-shrink: 0; }
+.seo-links { display: flex; flex-wrap: wrap; gap: 8px 16px; line-height: 1.8; }
+.seo-links a { color: var(--primary); text-decoration: none; font-size: 14px; }
+.seo-links a:hover { text-decoration: underline; }
+@media print {
+  .filter-bar, .theme-toggle, .scroll-top, .ad-slot, .copy-link, .result-copy, .cat-nav, .cat-more, footer, .badges { display: none !important; }
+  header { padding: 16px 0; }
+  .result-box { box-shadow: none; border: 1px solid #ccc; border-radius: 6px; }
+  a { color: #000; text-decoration: none; }
+}
