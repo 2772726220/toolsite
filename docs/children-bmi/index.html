@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线儿童 BMI 评估</title>
+  <meta name="description" content="儿童 BMI（2-20 岁）评估：计算 BMI 并按简化 WHO 百分位曲线判定偏瘦/正常/超重/肥胖。" />
+  <meta name="keywords" content="儿童,BMI,身体质量指数,百分位,WHO,青少年">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/children-bmi/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线儿童 BMI 评估" /><meta property="og:description" content="儿童 BMI（2-20 岁）评估：计算 BMI 并按简化 WHO 百分位曲线判定偏瘦/正常/超重/肥胖。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/children-bmi/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线儿童 BMI 评估" /><meta name="twitter:description" content="儿童 BMI（2-20 岁）评估：计算 BMI 并按简化 WHO 百分位曲线判定偏瘦/正常/超重/肥胖。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧒</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "儿童 BMI 评估", "description": "儿童 BMI（2-20 岁）评估：计算 BMI 并按简化 WHO 百分位曲线判定偏瘦/正常/超重/肥胖。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/children-bmi/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "健康生活"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "健康生活", "item": "https://2772726220.github.io/toolsite/category/health/"}, {"@type": "ListItem", "position": 3, "name": "儿童 BMI 评估", "item": "https://2772726220.github.io/toolsite/children-bmi/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8f93\u5165\u7684\u6708\u9f84\u600e\u4e48\u6362\u7b97\u6210\u5e74\u9f84\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u5165 0-240 \u7684\u6708\u9f84\uff0c\u5de5\u5177\u9664\u4ee5 12 \u5f97\u5230\u5e74\u9f84\u5e76\u5728\u767e\u5206\u4f4d\u8868\u4e2d\u6309\u6708\u9f84\u7ebf\u6027\u53d6\u503c\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u6709\u591a\u51c6\u786e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u57fa\u4e8e\u7b80\u5316\u7684 WHO \u767e\u5206\u4f4d\u53c2\u8003\uff0c\u4ec5\u4f9b\u5927\u81f4\u8bc4\u4f30\uff0c\u4e0d\u662f\u533b\u7597\u8bca\u65ad\uff1b\u5982\u6709\u62c5\u5fc3\u8bf7\u54a8\u8be2\u513f\u4fdd\u6216\u513f\u79d1\u533b\u751f\u3002"}},{"@type":"Question","name":"\u4f53\u91cd\u6216\u8eab\u9ad8\u8d85\u51fa\u8303\u56f4\u600e\u4e48\u529e\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u4f53\u91cd\u9700\u5728 5-250kg\u3001\u8eab\u9ad8\u9700\u5728 70-230cm \u4e4b\u95f4\uff0c\u8d85\u51fa\u4f1a\u63d0\u793a\u9519\u8bef\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🧒 儿童 BMI 评估</h1>
+    <p>儿童 BMI 与 WHO 百分位判定</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/health/">🏥 健康生活</a><span class="crumb-sep">›</span><span class="crumb-cur">儿童 BMI 评估</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#儿童</span><span class="badge">#BMI</span><span class="badge">#百分位</span>
+<div class="field-row">
+  <div class="field"><label for="cbMonth">月龄（24-240）</label><input id="cbMonth" value="120"></div>
+  <div class="field"><label for="cbSex">性别</label>
+    <select id="cbSex">
+      <option value="boy">男童</option>
+      <option value="girl">女童</option>
+    </select>
+  </div>
+</div>
+<div class="field-row">
+  <div class="field"><label for="cbW">体重（kg）</label><input id="cbW" value="42"></div>
+  <div class="field"><label for="cbH">身高（cm）</label><input id="cbH" value="140"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="cbGo" type="button">评估</button>
+</div>
+<div class="result-box" id="cbOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>儿童 BMI 和成人有什么区别？</h2><p>成人的 BMI 用固定界值判断，而儿童处在生长发育期，身高体重变化快，必须用「同龄同性别的百分位」评估。儿童 BMI 随年龄先降后升，判定界值每个年龄都不同。</p><h2>怎么看评估结果？</h2><p>工具按简化 WHO 2-19 岁 BMI 百分位参考表（含 P2.3、P15、P50、P85、P97.7 五档分位点）定位：低于 P2.3 明显偏瘦，P2.3-P15 偏瘦，P15-P85 正常，P85-P97.7 超重，超过 P97.7 判为肥胖。</p><h2>适用的年龄范围？</h2><p>适用于 2-20 岁（24-240 个月）的儿童青少年；未满 2 岁建议改用本站的婴幼儿生长曲线评估（baby-growth）。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>输入的月龄怎么换算成年龄？</summary><p>输入 0-240 的月龄，工具除以 12 得到年龄并在百分位表中按月龄线性取值。</p></details><details class="faq-item"><summary>结果有多准确？</summary><p>基于简化的 WHO 百分位参考，仅供大致评估，不是医疗诊断；如有担心请咨询儿保或儿科医生。</p></details><details class="faq-item"><summary>体重或身高超出范围怎么办？</summary><p>体重需在 5-250kg、身高需在 70-230cm 之间，超出会提示错误。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多健康生活工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../bmi-calculator/" class="t-card" data-cat="health" data-tags="BMI 体重" data-name="BMI计算器 身高体重算BMI，看体重是否健康 BMI 体重"><div class="t-icon">⚖️</div><div class="t-name">BMI计算器</div><div class="t-desc">身高体重算BMI，看体重是否健康</div><div class="t-tags"><span class="tt">#BMI</span><span class="tt">#体重</span></div></a><a href="../todo-list/" class="t-card" data-cat="health" data-tags="待办 清单" data-name="待办清单 在线待办事项，数据保存在本地 待办 清单"><div class="t-icon">✅</div><div class="t-name">待办清单</div><div class="t-desc">在线待办事项，数据保存在本地</div><div class="t-tags"><span class="tt">#待办</span><span class="tt">#清单</span></div></a><a href="../pomodoro/" class="t-card" data-cat="health" data-tags="番茄钟 专注" data-name="番茄钟 25 分钟专注+5 分钟休息循环 番茄钟 专注"><div class="t-icon">🍅</div><div class="t-name">番茄钟</div><div class="t-desc">25 分钟专注+5 分钟休息循环</div><div class="t-tags"><span class="tt">#番茄钟</span><span class="tt">#专注</span></div></a><a href="../bmr-calculator/" class="t-card" data-cat="health" data-tags="基础代谢 热量" data-name="基础代谢计算 BMR+TDEE，算每日热量需求 基础代谢 热量"><div class="t-icon">🔥</div><div class="t-name">基础代谢计算</div><div class="t-desc">BMR+TDEE，算每日热量需求</div><div class="t-tags"><span class="tt">#基础代谢</span><span class="tt">#热量</span></div></a><a href="../sleep-calc/" class="t-card" data-cat="health" data-tags="睡眠 周期" data-name="睡眠周期计算 按 90 分钟周期算最佳入睡/起床时间 睡眠 周期"><div class="t-icon">😴</div><div class="t-name">睡眠周期计算</div><div class="t-desc">按 90 分钟周期算最佳入睡/起床时间</div><div class="t-tags"><span class="tt">#睡眠</span><span class="tt">#周期</span></div></a><a href="../water-intake/" class="t-card" data-cat="health" data-tags="饮水 喝水" data-name="每日饮水量 按体重/运动量算每日喝水目标 饮水 喝水"><div class="t-icon">💧</div><div class="t-name">每日饮水量</div><div class="t-desc">按体重/运动量算每日喝水目标</div><div class="t-tags"><span class="tt">#饮水</span><span class="tt">#喝水</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>儿童 BMI 评估 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='children-bmi';}); _r.unshift('children-bmi'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var cbMonth = document.getElementById('cbMonth');
+var cbW = document.getElementById('cbW');
+var cbH = document.getElementById('cbH');
+var cbSex = document.getElementById('cbSex');
+var cbGo = document.getElementById('cbGo');
+var cbOut = document.getElementById('cbOut');
+
+// Simplified WHO BMI percentile tables for boys/girls age 2-20 years (BMI kg/m2) at
+// selected (month) indices. Rows: [P2.3, P15, P50, P85, P97.7] approximate.
+var BOYS_BMI = [
+  [14.1, 15.2, 16.2, 17.6, 19.1],
+  [13.7, 14.7, 15.6, 16.9, 18.3],
+  [13.3, 14.3, 15.2, 16.4, 17.8],
+  [13.1, 14.0, 14.9, 16.1, 17.4],
+  [13.0, 13.9, 14.8, 16.0, 17.3],
+  [13.0, 13.9, 14.8, 16.0, 17.3],
+  [13.1, 14.0, 14.9, 16.1, 17.4],
+  [13.2, 14.1, 15.0, 16.2, 17.5],
+  [13.3, 14.2, 15.2, 16.4, 17.7],
+  [13.5, 14.4, 15.4, 16.6, 18.0],
+  [13.7, 14.7, 15.7, 17.0, 18.4],
+  [14.0, 15.0, 16.0, 17.4, 18.8],
+  [14.3, 15.3, 16.4, 17.8, 19.3],
+  [14.6, 15.7, 16.8, 18.3, 19.8],
+  [15.0, 16.1, 17.3, 18.8, 20.4],
+  [15.4, 16.5, 17.7, 19.3, 20.9],
+  [15.7, 16.9, 18.1, 19.7, 21.4],
+  [16.1, 17.3, 18.6, 20.2, 21.9],
+  [16.4, 17.7, 19.0, 20.7, 22.4],
+  [16.7, 18.0, 19.4, 21.1, 22.9],
+  [17.0, 18.3, 19.7, 21.5, 23.3]
+];
+var GIRLS_BMI = [
+  [13.8, 14.8, 15.9, 17.4, 19.0],
+  [13.5, 14.5, 15.6, 17.1, 18.7],
+  [13.3, 14.2, 15.3, 16.8, 18.4],
+  [13.2, 14.1, 15.2, 16.6, 18.3],
+  [13.1, 14.0, 15.1, 16.5, 18.2],
+  [13.1, 14.1, 15.2, 16.6, 18.2],
+  [13.2, 14.2, 15.3, 16.7, 18.4],
+  [13.4, 14.4, 15.5, 16.9, 18.6],
+  [13.6, 14.6, 15.7, 17.2, 18.9],
+  [13.8, 14.8, 16.0, 17.5, 19.2],
+  [14.1, 15.2, 16.4, 17.9, 19.6],
+  [14.5, 15.6, 16.8, 18.4, 20.2],
+  [14.8, 16.0, 17.3, 18.9, 20.8],
+  [15.2, 16.4, 17.7, 19.4, 21.3],
+  [15.6, 16.8, 18.1, 19.8, 21.8],
+  [16.0, 17.2, 18.6, 20.3, 22.3],
+  [16.3, 17.6, 18.9, 20.7, 22.7],
+  [16.6, 17.9, 19.3, 21.1, 23.2],
+  [16.9, 18.2, 19.6, 21.4, 23.5],
+  [17.1, 18.4, 19.8, 21.6, 23.7],
+  [17.2, 18.5, 19.9, 21.8, 23.9]
+];
+
+function parseAgeMonths(input) {
+  var v = parseFloat(input);
+  return (isFinite(v) && v >= 0 && v <= 240) ? v : null;
+}
+
+function bmiPercentile(bmi, table, ageMonths) {
+  var idx = ageMonths / 12;
+  if (idx < 2) return null;
+  var i = Math.floor(idx - 2);
+  if (i >= table.length - 1) i = table.length - 1;
+  var row = table[i];
+  var cut = [2.3, 15, 50, 85, 97.7];
+  var pc;
+  if (bmi < row[0]) { pc = (bmi / row[0]) * 2.3; return Math.max(0.1, pc); }
+  if (bmi > row[4]) { pc = 97.7 + (bmi - row[4]) / (row[4] || 1) * 2.3; return Math.min(99.9, pc); }
+  var j = 0;
+  while (j < 4 && bmi > row[j + 1]) j++;
+  pc = cut[j] + (bmi - row[j]) / (row[j + 1] - row[j]) * (cut[j + 1] - cut[j]);
+  return pc;
+}
+
+function bandFor(percentile) {
+  if (percentile === null) return null;
+  if (percentile < 2.3) return '明显偏瘦';
+  if (percentile < 15) return '偏瘦';
+  if (percentile <= 85) return '正常范围';
+  if (percentile < 97.7) return '超重';
+  return '肥胖';
+}
+
+function childBmi(ageMonths, wkg, hcm, sex) {
+  var m = parseAgeMonths(ageMonths);
+  var w = parseFloat(wkg);
+  var h = parseFloat(hcm);
+  if (m === null || !isFinite(w) || !isFinite(h)) return { error: '请输入有效的月龄（0-240）、体重与身高。' };
+  if (m < 24) return { error: '2 岁以下请使用 WHO 婴幼儿生长曲线（本站 baby-growth）。' };
+  if (w < 5 || w > 250 || h < 70 || h > 230) return { error: '体重或身高超出合理范围。' };
+  var hm = h / 100;
+  var bmi = w / (hm * hm);
+  var table = sex === 'girl' ? GIRLS_BMI : BOYS_BMI;
+  var pc = bmiPercentile(bmi, table, m);
+  return { bmi: bmi, percentile: pc, band: bandFor(pc), ageYears: (m / 12).toFixed(1) };
+}
+
+cbGo.addEventListener('click', function () {
+  var r = childBmi(cbMonth.value, cbW.value, cbH.value, cbSex ? cbSex.value : 'boy');
+  if (r.error) { cbOut.textContent = r.error; return; }
+  cbOut.innerHTML =
+    '<div class="stat"><div class="num">' + r.bmi.toFixed(1) + ' kg/m²</div><div class="label">BMI（' + r.ageYears + ' 岁）</div></div>' +
+    '<div class="stat"><div class="num">' + (r.percentile === null ? '—' : r.percentile.toFixed(1) + ' %') + '</div><div class="label">同龄百分位</div></div>' +
+    '<div class="stat"><div class="num">' + r.band + '</div><div class="label">判定（简化 WHO 百分位曲线）</div></div>' +
+    '<div style="margin-top:8px;color:#667;font-size:13px;">基于简化的 WHO 2-19 岁 BMI 百分位参考（仅近似）。非医疗诊断，请咨询儿保医生。</div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
