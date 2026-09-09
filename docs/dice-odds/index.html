@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线骰子概率分布计算器</title>
+  <meta name="description" content="计算多颗多面骰子的点数概率分布、期望值与最可能点数，轻松算概率。" />
+  <meta name="keywords" content="骰子,概率,分布,期望,组合,掷骰">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/dice-odds/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线骰子概率分布计算器" /><meta property="og:description" content="计算多颗多面骰子的点数概率分布、期望值与最可能点数，轻松算概率。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/dice-odds/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线骰子概率分布计算器" /><meta name="twitter:description" content="计算多颗多面骰子的点数概率分布、期望值与最可能点数，轻松算概率。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "骰子概率分布", "description": "计算多颗多面骰子的点数概率分布、期望值与最可能点数，轻松算概率。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/dice-odds/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "计算数学"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "计算数学", "item": "https://2772726220.github.io/toolsite/category/math/"}, {"@type": "ListItem", "position": 3, "name": "骰子概率分布", "item": "https://2772726220.github.io/toolsite/dice-odds/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u652f\u6301\u7684\u9ab0\u5b50\u89c4\u683c\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u9762\u6570 1-20\u3001\u9897\u6570 1-20\u3002\u5355\u9897\u516d\u9762\u9ab0\u671f\u671b 3.5\uff1b2 \u9897 D6 \u671f\u671b\u4e3a 7\u3002"}},{"@type":"Question","name":"\u7ec4\u5408\u6570\u4e0e\u6982\u7387\u51c6\u786e\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7ec4\u5408\u6570\u7528\u6574\u6570\u7d2f\u52a0\u53d6\u5f97\uff0c\u7ed3\u679c\u7cbe\u786e\uff1b\u6982\u7387\u7528\u7ec4\u5408\u6570\u9664\u4ee5\u603b\u7ec4\u5408\u6570\uff08\u9762\u6570\u7684\u9897\u6570\u6b21\u65b9\uff09\u6362\u7b97\u3002"}},{"@type":"Question","name":"\u53ef\u4ee5\u7528\u5728\u684c\u6e38\u8bbe\u8ba1\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u53ef\u4ee5\uff0c\u4f8b\u5982\u6bd4\u8f83 2D6 \u4e0e D12 \u7684\u5206\u5e03\u5dee\u5f02\uff0c\u5e2e\u52a9\u8c03\u6574\u9ab0\u5b50\u7ec4\u5408\u7684\u5f3a\u5ea6\u4e0e\u5e73\u8861\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>🎲 骰子概率分布</h1>
+    <p>多面骰子点数概率分布与期望</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/math/">🧮 计算数学</a><span class="crumb-sep">›</span><span class="crumb-cur">骰子概率分布</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#骰子</span><span class="badge">#概率</span><span class="badge">#分布</span>
+<div class="field-row">
+  <div class="field"><label for="doI">骰子面数</label><input id="doI" value="6" type="number" min="1" max="20"></div>
+  <div class="field"><label for="doN">骰子个数</label><input id="doN" value="2" type="number" min="1" max="20"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="doGo" type="button">计算概率分布</button>
+</div>
+<div class="result-box" id="doOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>多颗骰子的点数分布怎么算？</h2><p>工具用动态规划枚举所有组合：n 颗 s 面骰的每种点数各有多少种组合。例如 2 颗六面骰共 36 种组合，总点数 7 有 6 种，概率恰为 6/36 = 1/6。</p><h2>能得到哪些统计量？</h2><p>一次输出点数范围（最小 = 骰子数，最大 = 骰子数 × 面数）、期望值（= 骰子数 × (面数+1)/2）、最可能点数及其概率，以及大于平均值的概率。</p><h2>分布表有什么用？</h2><p>下方逐行列出每个可能点数的组合数与概率，可直观看到中间点数概率高、两端概率低的铃形（钟形）分布。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>支持的骰子规格？</summary><p>面数 1-20、颗数 1-20。单颗六面骰期望 3.5；2 颗 D6 期望为 7。</p></details><details class="faq-item"><summary>组合数与概率准确吗？</summary><p>组合数用整数累加取得，结果精确；概率用组合数除以总组合数（面数的颗数次方）换算。</p></details><details class="faq-item"><summary>可以用在桌游设计吗？</summary><p>可以，例如比较 2D6 与 D12 的分布差异，帮助调整骰子组合的强度与平衡。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多计算数学工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../unit-convert/" class="t-card" data-cat="math" data-tags="单位 换算" data-name="单位换算 长度/重量/温度/面积单位互转 单位 换算"><div class="t-icon">📏</div><div class="t-name">单位换算</div><div class="t-desc">长度/重量/温度/面积单位互转</div><div class="t-tags"><span class="tt">#单位</span><span class="tt">#换算</span></div></a><a href="../random-number/" class="t-card" data-cat="math" data-tags="随机数 生成" data-name="随机数生成器 指定范围生成随机整数/小数 随机数 生成"><div class="t-icon">🎲</div><div class="t-name">随机数生成器</div><div class="t-desc">指定范围生成随机整数/小数</div><div class="t-tags"><span class="tt">#随机数</span><span class="tt">#生成</span></div></a><a href="../scientific-calculator/" class="t-card" data-cat="math" data-tags="科学计算器" data-name="科学计算器 函数、开方、幂运算全能计算 科学计算器"><div class="t-icon">🧮</div><div class="t-name">科学计算器</div><div class="t-desc">函数、开方、幂运算全能计算</div><div class="t-tags"><span class="tt">#科学计算器</span></div></a><a href="../pi-memory/" class="t-card" data-cat="math" data-tags="圆周率 记忆" data-name="圆周率查询 查看圆周率小数点后 1000 位 圆周率 记忆"><div class="t-icon">π</div><div class="t-name">圆周率查询</div><div class="t-desc">查看圆周率小数点后 1000 位</div><div class="t-tags"><span class="tt">#圆周率</span><span class="tt">#记忆</span></div></a><a href="../basic-calculator/" class="t-card" data-cat="math" data-tags="计算器 四则运算" data-name="基础计算器 加减乘除百分比计算器 计算器 四则运算"><div class="t-icon">🔢</div><div class="t-name">基础计算器</div><div class="t-desc">加减乘除百分比计算器</div><div class="t-tags"><span class="tt">#计算器</span><span class="tt">#四则运算</span></div></a><a href="../percent-calc/" class="t-card" data-cat="math" data-tags="百分比 计算" data-name="百分比计算器 百分比、占比、涨跌幅一键计算 百分比 计算"><div class="t-icon">💹</div><div class="t-name">百分比计算器</div><div class="t-desc">百分比、占比、涨跌幅一键计算</div><div class="t-tags"><span class="tt">#百分比</span><span class="tt">#计算</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>骰子概率分布 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='dice-odds';}); _r.unshift('dice-odds'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var doI = document.getElementById('doI');
+var doN = document.getElementById('doN');
+var doGo = document.getElementById('doGo');
+var doOut = document.getElementById('doOut');
+
+function diceOutcomeStats(sides, num) {
+  sides = parseInt(sides, 10);
+  num = parseInt(num, 10);
+  if (isNaN(sides) || isNaN(num)) return null;
+  if (sides < 1 || sides > 20 || num < 1 || num > 20) return null;
+  if (sides === 1) {
+    var s1 = { min: num, max: num, mean: num, counts: { '1': [1] } };
+    return { min: num, max: num, mean: num, combinations: 1, counts: [{ sum: num, count: 1 }] };
+  }
+  var min = num, max = num * sides;
+  var mean = num * (sides + 1) / 2;
+  var dp = new Array(max + 1).fill(0);
+  dp[0] = 1;
+  for (var i = 0; i < num; i++) {
+    var nd = new Array(max + 1).fill(0);
+    for (var s = 0; s <= max; s++) {
+      if (!dp[s]) continue;
+      for (var f = 1; f <= sides; f++) nd[s + f] += dp[s];
+    }
+    dp = nd;
+  }
+  var totalComb = Math.pow(sides, num);
+  var counts = [];
+  for (var k = min; k <= max; k++) {
+    if (dp[k]) counts.push({ sum: k, count: dp[k], p: dp[k] / totalComb });
+  }
+  var most = counts.reduce(function (a, b) { return b.count > a.count ? b : a; }, counts[0]);
+  var probAbove = counts.filter(function (c) { return c.sum > mean; }).reduce(function (a, c) { return a + c.p; }, 0);
+  return {
+    min: min, max: max, mean: mean, combinations: totalComb,
+    counts: counts, most: most, pAboveMean: probAbove
+  };
+}
+
+doGo.addEventListener('click', function () {
+  var r = diceOutcomeStats(doI.value, doN.value);
+  if (r === null) { doOut.textContent = '请输入 1-20 面骰与 1-20 个。'; return; }
+  var html =
+    '<div class="stat"><div class="num">' + r.min + ' – ' + r.max + '</div><div class="label">可能点数范围</div></div>' +
+    '<div class="stat"><div class="num">' + r.mean.toFixed(1) + '</div><div class="label">期望值（平均）</div></div>' +
+    '<div class="stat"><div class="num">' + r.most.sum + '（' + (r.most.p * 100).toFixed(1) + '%）</div><div class="label">最可能点数</div></div>' +
+    '<div class="stat"><div class="num">' + (r.pAboveMean * 100).toFixed(1) + '%</div><div class="label">大于平均值的概率</div></div>';
+  html += '<div style="margin-top:8px;max-height:200px;overflow:auto;text-align:left;font-size:12px;color:#555">';
+  r.counts.forEach(function (c) {
+    html += '<div style="display:flex;align-items:center;border-bottom:1px solid #f0f0f0;padding:1px 0">' +
+      '<span style="width:64px">' + c.sum + '</span>' +
+      '<span style="width:80px">' + c.count + ' 种</span>' +
+      '<span>≈ ' + (c.p * 100).toFixed(1) + '%</span></div>';
+  });
+  html += '</div>';
+  doOut.innerHTML = html;
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
