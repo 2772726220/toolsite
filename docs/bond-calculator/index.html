@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线债券价格计算器</title>
+  <meta name="description" content="由面值、票息率、到期收益率与期限计算债券价格，区分平价/溢价/折价。" />
+  <meta name="keywords" content="债券,价格,票息,到期收益率,折价,溢价,current yield">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/bond-calculator/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线债券价格计算器" /><meta property="og:description" content="由面值、票息率、到期收益率与期限计算债券价格，区分平价/溢价/折价。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/bond-calculator/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线债券价格计算器" /><meta name="twitter:description" content="由面值、票息率、到期收益率与期限计算债券价格，区分平价/溢价/折价。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "债券价格计算", "description": "由面值、票息率、到期收益率与期限计算债券价格，区分平价/溢价/折价。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/bond-calculator/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "财务计算"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "财务计算", "item": "https://2772726220.github.io/toolsite/category/finance/"}, {"@type": "ListItem", "position": 3, "name": "债券价格计算", "item": "https://2772726220.github.io/toolsite/bond-calculator/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u4ed8\u606f\u9891\u7387\u8d77\u4ec0\u4e48\u4f5c\u7528\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5e74\u4ed8\u606f\u6b21\u6570\uff08\u5982\u6bcf\u5e74 1 \u6b21\u6216 2 \u6b21\uff09\u4f1a\u628a\u5e74\u5316\u7968\u606f\u7387\u4e0e\u5230\u671f\u6536\u76ca\u7387\u6298\u7b97\u5230\u6bcf\u4e00\u671f\uff0c\u9891\u7387\u8d8a\u9ad8\u6298\u73b0\u7ec6\u8282\u8d8a\u591a\u3001\u7ed3\u679c\u7565\u6709\u5dee\u5f02\u3002"}},{"@type":"Question","name":"\u8f93\u5165\u7684\u6536\u76ca\u7387\u662f\u5e74\u5316\u7684\u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u662f\uff0c\u7968\u606f\u7387\u4e0e\u5230\u671f\u6536\u76ca\u7387\u90fd\u6309\u5e74\u5316\u586b\u5199\uff0c\u5de5\u5177\u6309\u5e74\u4ed8\u606f\u6b21\u6570\u81ea\u52a8\u6298\u7b97\u5230\u6bcf\u671f\u8ba1\u7b97\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u5305\u542b\u54ea\u4e9b\u5185\u5bb9\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u8f93\u51fa\u503a\u5238\u4ef7\u683c\uff08\u6e05\u9664\u4ef7\uff09\u3001\u5e73\u4ef7/\u6ea2\u4ef7/\u6298\u4ef7\u72b6\u6001\u4e0e\u5f53\u671f\u6536\u76ca\u7387\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>📊 债券价格计算</h1>
+    <p>算债券价格，判别平价/溢价/折价</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">债券价格计算</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#债券</span><span class="badge">#价格</span><span class="badge">#票息</span>
+<div class="field-row">
+  <div class="field"><label for="bdFv">面值</label><input id="bdFv" value="1000"></div>
+  <div class="field"><label for="bdCoupon">票息率（%）</label><input id="bdCoupon" value="5"></div>
+  <div class="field"><label for="bdYtm">到期收益率（%）</label><input id="bdYtm" value="6"></div>
+  <div class="field"><label for="bdYears">期限（年）</label><input id="bdYears" value="10"></div>
+  <div class="field"><label for="bdFreq">付息频率/年</label><input id="bdFreq" value="2"></div>
+</div>
+<div class="actions">
+  <button class="btn" id="bdGo" type="button">计算价格</button>
+</div>
+<div class="result-box" id="bdOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>债券价格怎么算？</h2><p>债券价格是未来票息与面值的现值之和：每期票息 = 面值 × 票息率 ÷ 年付息次数，再用到期收益率逐期折现：价格 = Σ[票息/(1+r/频率)^t] + 面值/(1+r/频率)^总期数。</p><h2>平价、溢价、折价怎么判断？</h2><p>把算出的价格与面值比较：票息率等于到期收益率时为平价，票息率高于到期收益率为溢价，反之折价。工具自动标注当前所处的状态。</p><h2>当期收益率是什么？</h2><p>当期收益率 = 年票息金额 ÷ 债券价格 × 100%，衡量每投入 1 元当年能收回多少利息，工具会在算价的同时一并给出。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>付息频率起什么作用？</summary><p>年付息次数（如每年 1 次或 2 次）会把年化票息率与到期收益率折算到每一期，频率越高折现细节越多、结果略有差异。</p></details><details class="faq-item"><summary>输入的收益率是年化的吗？</summary><p>是，票息率与到期收益率都按年化填写，工具按年付息次数自动折算到每期计算。</p></details><details class="faq-item"><summary>结果包含哪些内容？</summary><p>输出债券价格（清除价）、平价/溢价/折价状态与当期收益率。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 实时汇率换算，美元/欧元/日元等八种货币 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">实时汇率换算，美元/欧元/日元等八种货币</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>债券价格计算 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='bond-calculator';}); _r.unshift('bond-calculator'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var bdFv = document.getElementById('bdFv');
+var bdCoupon = document.getElementById('bdCoupon');
+var bdYtm = document.getElementById('bdYtm');
+var bdYears = document.getElementById('bdYears');
+var bdFreq = document.getElementById('bdFreq');
+var bdGo = document.getElementById('bdGo');
+var bdOut = document.getElementById('bdOut');
+
+function bondPrice(fv, couponRate, ytm, years, freq) {
+  fv = parseFloat(fv); couponRate = parseFloat(couponRate); ytm = parseFloat(ytm); years = parseFloat(years);
+  freq = parseInt(freq, 10) || 1;
+  if (isNaN(fv) || isNaN(couponRate) || isNaN(ytm) || isNaN(years) || fv <= 0 || years <= 0 || (couponRate < 0 || ytm < 0)) return null;
+  var per = years * freq;
+  var cpn = fv * (couponRate / 100) / freq;
+  var ri = ytm / 100 / freq;
+  var price = 0;
+  for (var t = 1; t <= per; t++) {
+    price += cpn / Math.pow(1 + ri, t);
+  }
+  price += fv / Math.pow(1 + ri, per);
+  return price;
+}
+
+function currentYield(price, annualCoupon) {
+  price = parseFloat(price); annualCoupon = parseFloat(annualCoupon);
+  if (isNaN(price) || isNaN(annualCoupon) || price <= 0) return null;
+  return annualCoupon / price * 100;
+}
+
+bdGo.addEventListener('click', function () {
+  var fv = parseFloat(bdFv.value) || 1000;
+  var couponRate = parseFloat(bdCoupon.value);
+  var price = bondPrice(fv, bdCoupon.value, bdYtm.value, bdYears.value, bdFreq.value);
+  if (price === null) { bdOut.textContent = '请输入有效的面值、票息、到期收益率与期限。'; return; }
+  var couponAmt = fv * couponRate / 100;
+  var diff = price - fv;
+  var cy = currentYield(price, couponAmt);
+  var state = Math.abs(diff) < 0.01 ? '平价' : diff > 0 ? '溢价' : '折价';
+  bdOut.innerHTML =
+    '<div class="stat"><div class="num">' + price.toFixed(2) + '</div><div class="label">债券价格（清除价）</div></div>' +
+    '<div class="stat"><div class="num">' + state + '</div><div class="label">' + (Math.abs(diff) < 0.01 ? '票息 = 到期收益率' : diff > 0 ? '票息高于市况' : '票息低于市况') + '</div></div>' +
+    '<div class="stat"><div class="num">' + cy.toFixed(2) + '%</div><div class="label">当期收益率（年票息/价格）</div></div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
