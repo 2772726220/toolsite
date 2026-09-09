@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线单利复利对比计算器</title>
+  <meta name="description" content="单利与复利对比计算器：同一本金利率年数下计算两者利息差与本息合计，支持按月/季/日/连续复利。" />
+  <meta name="keywords" content="单利,复利,利息,对比,复利频率,本息">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://2772726220.github.io/toolsite/simple-vs-compound/" />
+  <meta property="og:site_name" content="在线工具箱" /><meta property="og:locale" content="zh_CN" /><meta property="og:type" content="article" /><meta property="og:title" content="在线单利复利对比计算器" /><meta property="og:description" content="单利与复利对比计算器：同一本金利率年数下计算两者利息差与本息合计，支持按月/季/日/连续复利。" /><meta property="og:url" content="https://2772726220.github.io/toolsite/simple-vs-compound/" /><meta property="og:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="在线单利复利对比计算器" /><meta name="twitter:description" content="单利与复利对比计算器：同一本金利率年数下计算两者利息差与本息合计，支持按月/季/日/连续复利。" /><meta name="twitter:image" content="https://2772726220.github.io/toolsite/assets/icon-512.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+  <meta name="theme-color" content="#4f46e5"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="工具箱"><link rel="apple-touch-icon" href="../assets/icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-512.png">
+  <link rel="stylesheet" href="../assets/app.css">
+  <script>
+(function(){try{var t=localStorage.getItem('ts-theme');var dark=t?t==='dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();
+</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "单利复利对比", "description": "单利与复利对比计算器：同一本金利率年数下计算两者利息差与本息合计，支持按月/季/日/连续复利。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (Web)", "url": "https://2772726220.github.io/toolsite/simple-vs-compound/", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "category": "财务计算"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "在线工具箱", "item": "https://2772726220.github.io/toolsite/"}, {"@type": "ListItem", "position": 2, "name": "财务计算", "item": "https://2772726220.github.io/toolsite/category/finance/"}, {"@type": "ListItem", "position": 3, "name": "单利复利对比", "item": "https://2772726220.github.io/toolsite/simple-vs-compound/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"\u8fde\u7eed\u590d\u5229\u662f\u600e\u4e48\u7b97\u7684\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u7528 e \u7684\u6307\u6570\u5f62\u5f0f\u8ba1\u7b97\uff1a\u5229\u606f = \u672c\u91d1 \u00d7 (e^(\u5229\u7387\u00d7\u5e74\u9650) - 1)\uff0c\u662f\u91d1\u878d\u6559\u6750\u4e0e\u8ba1\u7b97\u9898\u4e2d\u5e38\u89c1\u7684\u7406\u60f3\u5316\u9891\u7387\u3002"}},{"@type":"Question","name":"\u672c\u91d1\u548c\u5229\u7387\u53ef\u4ee5\u662f 0 \u5417\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u672c\u91d1\u53ef\u4ee5\u4e3a\u96f6\uff08\u7ed3\u679c\u5168\u4e3a 0\uff09\uff0c\u5e74\u6570\u9700\u4e3a\u975e\u8d1f\uff0c\u5229\u7387\u4e0b\u9650\u4e3a -1\uff08\u907f\u514d\u672c\u91d1\u4e8f\u6210\u8d1f\u6570\uff09\u3002"}},{"@type":"Question","name":"\u7ed3\u679c\u4fdd\u7559\u51e0\u4f4d\u5c0f\u6570\uff1f","acceptedAnswer":{"@type":"Answer","text":"\u5229\u606f\u4e0e\u672c\u606f\u5408\u8ba1\u5747\u4fdd\u7559 2 \u4f4d\u5c0f\u6570\uff0c\u4ee5\u5143\u4e3a\u5355\u4f4d\u8f93\u51fa\u3002"}}]}</script>
+</head>
+<body>
+<noscript><div class="noscript">此工具需要启用 JavaScript 才能正常使用。</div></noscript>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<button class="theme-toggle" id="themeToggle" onclick="window.toggleTheme()" aria-label="切换深浅色主题">🌙</button>
+<header>
+  <div class="container">
+    <h1>⚖️ 单利复利对比</h1>
+    <p>单利 vs 复利利息与本金差对比</p>
+    <div class="badges"><span class="badge">🔒 本地处理不上传</span><span class="badge">💯 永久免费</span><span class="badge">⚡ 即开即用</span></div>
+  </div>
+</header>
+<nav class="site-nav"><div class="container"><a class="home" href="../">🗜️ 在线工具箱</a><span class="crumb-sep">›</span><a href="../category/finance/">💰 财务计算</a><span class="crumb-sep">›</span><span class="crumb-cur">单利复利对比</span><button class="copy-link" onclick="window.copyLink()" title="复制本工具链接">🔗 复制链接</button><button class="copy-link" onclick="window.shareTool()" title="分享本工具">📤 分享</button></div></nav>
+<main class="container" id="main">
+  <section class="tool-card">
+<span class="badge">#单利</span><span class="badge">#复利</span><span class="badge">#利息</span>
+<div class="field-row">
+  <div class="field"><label for="svP">本金</label><input id="svP" value="1000"></div>
+  <div class="field"><label for="svR">年利率（%）</label><input id="svR" value="5"></div>
+  <div class="field"><label for="svN">年数</label><input id="svN" value="10"></div>
+</div>
+<div class="field">
+  <label for="svFreq">复利频率</label>
+  <select id="svFreq">
+    <option value="annual">按年（1 次/年）</option>
+    <option value="quarterly">按季（4 次/年）</option>
+    <option value="monthly">按月（12 次/年）</option>
+    <option value="daily">按日（365 次/年）</option>
+    <option value="continuous">连续复利</option>
+  </select>
+</div>
+<div class="actions">
+  <button class="btn" id="svGo" type="button">计算</button>
+</div>
+<div class="result-box" id="svOut"></div>
+  </section>
+  <div class="ad-slot" id="ad-top" aria-hidden="true"></div>
+  <section class="content-block">
+<h2>单利和复利差在哪？</h2><p>单利只按最初本金计息：利息 = 本金 × 利率 × 年限；复利把每期利息并入本金再计息，时间越长差距越明显，所以常说复利是「时间的魔法」。</p><h2>怎么直观对比两者的区别？</h2><p>输入本金、年利率与年数，工具分别算出单利利息、复利利息、两者差额（含差额占单利利息的百分比），以及两种方式的本息合计。</p><h2>复利频率影响大吗？</h2><p>复利可每年、每季、每月、每日甚至连续复利。频率越高实际到手的利息略多，其中连续复利用公式 P × e^(rt) 计算，是理论上最大的复利频率。</p>
+    <h2>常见问题</h2>
+    <div class="faq"><details class="faq-item"><summary>连续复利是怎么算的？</summary><p>用 e 的指数形式计算：利息 = 本金 × (e^(利率×年限) - 1)，是金融教材与计算题中常见的理想化频率。</p></details><details class="faq-item"><summary>本金和利率可以是 0 吗？</summary><p>本金可以为零（结果全为 0），年数需为非负，利率下限为 -1（避免本金亏成负数）。</p></details><details class="faq-item"><summary>结果保留几位小数？</summary><p>利息与本息合计均保留 2 位小数，以元为单位输出。</p></details></div>
+  </section>
+<section class="content-block"><h2>更多财务计算工具</h2><p style="font-size:13px;color:var(--muted);">同类工具，也许你会用得上：</p><div class="tool-grid"><a href="../amount-uppercase/" class="t-card" data-cat="finance" data-tags="金额 大写" data-name="金额大写转换 阿拉伯数字转人民币大写 金额 大写"><div class="t-icon">💴</div><div class="t-name">金额大写转换</div><div class="t-desc">阿拉伯数字转人民币大写</div><div class="t-tags"><span class="tt">#金额</span><span class="tt">#大写</span></div></a><a href="../mortgage-calc/" class="t-card" data-cat="finance" data-tags="房贷 月供" data-name="房贷计算器 等额本息/等额本金月供明细 房贷 月供"><div class="t-icon">🏠</div><div class="t-name">房贷计算器</div><div class="t-desc">等额本息/等额本金月供明细</div><div class="t-tags"><span class="tt">#房贷</span><span class="tt">#月供</span></div></a><a href="../loan-interest/" class="t-card" data-cat="finance" data-tags="贷款 利息" data-name="贷款利息计算 计算贷款总利息与还款计划 贷款 利息"><div class="t-icon">💰</div><div class="t-name">贷款利息计算</div><div class="t-desc">计算贷款总利息与还款计划</div><div class="t-tags"><span class="tt">#贷款</span><span class="tt">#利息</span></div></a><a href="../compound-interest/" class="t-card" data-cat="finance" data-tags="复利 投资" data-name="复利计算器 本金+定投+复利，算清钱生钱 复利 投资"><div class="t-icon">📈</div><div class="t-name">复利计算器</div><div class="t-desc">本金+定投+复利，算清钱生钱</div><div class="t-tags"><span class="tt">#复利</span><span class="tt">#投资</span></div></a><a href="../currency-convert/" class="t-card" data-cat="finance" data-tags="汇率 货币" data-name="货币换算 实时汇率换算，美元/欧元/日元等八种货币 汇率 货币"><div class="t-icon">💱</div><div class="t-name">货币换算</div><div class="t-desc">实时汇率换算，美元/欧元/日元等八种货币</div><div class="t-tags"><span class="tt">#汇率</span><span class="tt">#货币</span></div></a><a href="../vat-calculator/" class="t-card" data-cat="finance" data-tags="含税 增值税" data-name="含税价计算 含税/不含税/税额一键互算 含税 增值税"><div class="t-icon">🧾</div><div class="t-name">含税价计算</div><div class="t-desc">含税/不含税/税额一键互算</div><div class="t-tags"><span class="tt">#含税</span><span class="tt">#增值税</span></div></a></div></section>
+</main>
+<footer>
+  <div class="container">
+    <p>单利复利对比 · <a href="../">在线工具箱首页</a></p>
+    <div class="footer-cats"><a href="../category/image/">🖼️ 图片处理</a><a href="../category/design/">🎨 颜色设计</a><a href="../category/text/">✍️ 文本工具</a><a href="../category/dev/">💻 开发编码</a><a href="../category/date/">📅 日期时间</a><a href="../category/math/">🧮 计算数学</a><a href="../category/finance/">💰 财务计算</a><a href="../category/health/">🏥 健康生活</a><a href="../category/fun/">🎮 娱乐游戏</a></div>
+    <p style="margin-top:10px;font-size:12px;">© 在线工具箱 · 全部工具浏览器本地运行，不上传任何数据</p>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+<script>
+(function() {
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  window.showToast = function(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  };
+  window.formatSize = function(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  window.download = function(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+  window.copyLink = function () {
+    try {
+      navigator.clipboard.writeText(location.href);
+      showToast('已复制本工具链接');
+    } catch (e) { showToast('复制失败，请手动复制地址栏'); }
+  };
+  window.shareTool = function () {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    } else {
+      try { navigator.clipboard.writeText(location.href); showToast('已复制本工具链接，可分享给好友'); }
+      catch (e) { showToast('请手动复制地址栏链接'); }
+    }
+  };
+try { var _r = JSON.parse(localStorage.getItem('ts-recent') || '[]'); _r = _r.filter(function(s){return s!=='simple-vs-compound';}); _r.unshift('simple-vs-compound'); localStorage.setItem('ts-recent', JSON.stringify(_r.slice(0,8))); } catch(e) {}
+var svP = document.getElementById('svP');
+var svR = document.getElementById('svR');
+var svN = document.getElementById('svN');
+var svFreq = document.getElementById('svFreq');
+var svGo = document.getElementById('svGo');
+var svOut = document.getElementById('svOut');
+
+function simpleVsCompound(principal, ratePct, years, freq) {
+  var p = parseFloat(principal);
+  var r = parseFloat(ratePct) / 100;
+  var y = parseFloat(years);
+  if (!isFinite(p) || !isFinite(r) || !isFinite(y)) return null;
+  if (p < 0 || y < 0 || r < -1) return null;
+  var simple = p * r * y;
+  var compR = r;
+  var compounds = 1;
+  if (freq === 'monthly') { compR = r / 12; compounds = 12; }
+  else if (freq === 'quarterly') { compR = r / 4; compounds = 4; }
+  else if (freq === 'daily') { compR = r / 365; compounds = 365; }
+  else if (freq === 'continuous') { compR = r; compounds = 0; }
+  var compound;
+  if (compounds === 0) compound = p * (Math.exp(r * y) - 1);
+  else compound = p * (Math.pow(1 + compR, compounds * y) - 1);
+  return { simple: simple, compound: compound, diff: compound - simple, simpleTotal: p + simple, compoundTotal: p + compound };
+}
+
+svGo.addEventListener('click', function () {
+  var r = simpleVsCompound(svP.value, svR.value, svN.value, svFreq.value);
+  if (r === null) { svOut.textContent = '请输入有效的本金、利率与年数。'; return; }
+  svOut.innerHTML =
+    '<div class="stat"><div class="num">' + r.simple.toFixed(2) + ' 元</div><div class="label">单利利息</div></div>' +
+    '<div class="stat"><div class="num">' + r.compound.toFixed(2) + ' 元</div><div class="label">复利利息</div></div>' +
+    '<div class="stat"><div class="num">' + r.diff.toFixed(2) + ' 元</div><div class="label">复利比单利多出（差额 ' + (r.diff / (r.simple || 1) * 100).toFixed(1) + '%）</div></div>' +
+    '<div class="stat"><div class="num">' + r.simpleTotal.toFixed(2) + ' / ' + r.compoundTotal.toFixed(2) + ' 元</div><div class="label">单利/复利本息合计</div></div>';
+});
+  window.toggleTheme = function () {
+    var r = document.documentElement;
+    if (r.getAttribute('data-theme') === 'dark') { r.removeAttribute('data-theme'); try { localStorage.setItem('ts-theme', 'light'); } catch (e) {} }
+    else { r.setAttribute('data-theme', 'dark'); try { localStorage.setItem('ts-theme', 'dark'); } catch (e) {} }
+    updateThemeIcon();
+  };
+  function updateThemeIcon() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+  var scrollTopBtn = document.getElementById('scrollTop');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+  updateThemeIcon();
+  if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { window.addEventListener('load', function () { var p = location.pathname; var rel = (p.endsWith('/') && p !== '/') ? '../' : ''; navigator.serviceWorker.register(rel + 'assets/sw.js').catch(function () {}); }); }
+  var toolCard = (typeof document !== 'undefined' && document.querySelector) ? document.querySelector('.tool-card') : null;
+  if (toolCard) {
+    toolCard.addEventListener('click', function () {
+      if (document.getElementById('resultCopy')) return;
+      var box = document.querySelector('.tool-card .result-box');
+      if (!box || !box.parentNode) return;
+      var shown = box.hasAttribute('hidden') ? !box.hidden : true;
+      if (!shown && box.style && box.style.display !== 'none') shown = true;
+      if (!shown) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-sm result-copy';
+      btn.id = 'resultCopy';
+      btn.textContent = '📋 复制结果';
+      box.parentNode.insertBefore(btn, box.nextSibling);
+      btn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var txt = (box.innerText || box.textContent || '').replace(/\n\s*\n/g, '\n').trim();
+        if (!txt) { showToast('暂无可复制的内容'); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () { showToast('结果已复制'); }).catch(function () { showToast('复制失败，请手动复制'); });
+        } else { showToast('当前浏览器不支持一键复制'); }
+      });
+    });
+  }
+  (function () {
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (ev.key !== 'Enter' || !t || t.tagName !== 'INPUT') return;
+      var card = (t.closest) ? t.closest('.tool-card') : null;
+      if (!card || !card.querySelector) return;
+      var btn = card.querySelector('button.btn-primary');
+      if (btn) { ev.preventDefault(); if (btn.click) btn.click(); }
+    });
+  })();
+  if (typeof document !== 'undefined' && document.querySelectorAll) {
+    var rbs = document.querySelectorAll('.result-box');
+    for (var _i = 0; _i < rbs.length; _i++) { rbs[_i].setAttribute('aria-live', 'polite'); }
+  }
+})();
+</script>
+
+</body>
+</html>
